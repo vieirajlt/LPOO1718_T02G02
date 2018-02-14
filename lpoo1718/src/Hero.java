@@ -31,7 +31,6 @@ public class Hero {
 			return true;
 		else if(map.getMapPosition(X, Y) == 'S') {
 			escaped = true;
-			return true;
 		}
 		return false;
 	}

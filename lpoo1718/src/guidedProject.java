@@ -35,9 +35,15 @@ public class guidedProject {
 			}
 			
 			hero.updateHeroPosition(map, command);
+			guard.updateGuardPosition(map);
 			
-			if(guard.isCaptured(hero) || hero.escaped)
+			if(guard.isCaptured(hero)) {
+				System.out.println("You got captured, better luck next time!");
 				break;
+			} else if(hero.escaped) {
+				System.out.println("Congratz, you did it!");
+				break;
+			}
 		}
 		
 		System.out.println("Closing...");
