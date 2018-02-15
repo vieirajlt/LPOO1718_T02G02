@@ -1,13 +1,10 @@
 
-public class Guard {
-	private int X;
-	private int Y;
+public class Guard extends Character{
 	private char route[];
 	private int routeStep;
 
 	public Guard(int newX, int newY) {
-		X = newX;
-		Y = newY;
+		super(newX, newY, 'G');
 		initializeRoute();
 	}
 
@@ -32,56 +29,18 @@ public class Guard {
 			route[i] = 'u';
 	}
 
-	public void updateGuardPosition(Map map) {
-
-		switch(route[routeStep++]) {
-		case 'u': case 'U':
-			--Y;
-			map.setMapPosition(X, Y+1, ' ');
-			map.setMapPosition(X, Y, 'G');
-			break;
-		case 'd': case 'D':
-			++Y;
-			map.setMapPosition(X, Y-1, ' ');
-			map.setMapPosition(X, Y, 'G');
-			break;
-		case 'l': case 'L':
-			--X;
-			map.setMapPosition(X+1, Y, ' ');
-			map.setMapPosition(X, Y, 'G');
-			break;
-		case 'r': case 'R':
-			++X;
-			map.setMapPosition(X-1, Y, ' ');
-			map.setMapPosition(X, Y, 'G');
-			break;
-		default:
-			break;
-		}
+	public char updateGuard() {
+		char command = route[routeStep++];
 		routeStep %= route.length;
+		return command;
 	}
 
 	public boolean isCaptured(Hero hero) {
 		//if distance to guard is equal or inferior to 1, get captured
-		if((Math.abs(hero.getY()-Y) + Math.abs(hero.getX()-X)) <= 1) {
+		if((Math.abs(hero.getY()-super.getY()) + Math.abs(hero.getX()-super.getX())) <= 1) {
 			return true;
 		}
 		return false;
 	}
 
-	public void setX(int newX) {
-		X = newX;
-	}
-
-	public void setY(int newY) {
-		Y = newY;
-	}
-
-	public int getX() {
-		return X;
-	}
-
-	public int getY() {
-		return Y;
-	}
 }

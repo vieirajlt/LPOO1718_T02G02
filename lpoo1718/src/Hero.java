@@ -1,108 +1,97 @@
 
-public class Hero {
-	private int X;
-	private int Y;
+public class Hero extends Character{
 	boolean escaped;
+	boolean wallColliding; //for collisions with closed doors and common walls
+	boolean objectColliding; //for collisions with levers/keys
+	boolean exitColliding;
+	boolean exitOpened;
+	boolean captured;
 	
 	public Hero(int valX, int valY) {
-		X = valX;
-		Y = valY;
+		super(valX, valY, 'H');
 		escaped = false;
+		objectColliding = false;
+		wallColliding = false;
+		captured = false;
+		exitOpened = false;
 	}
 
-	public int getX() {
-		return X;
-	}
-
-	public int getY() {
-		return Y;
-	}
-
-	public void setX(int newX) {
-		X = newX;
-	}
-
-	public void setY(int newY) {
-		Y = newY;
-	}
-
-	public boolean isColliding(Map map) {
-		if((map.getMapPosition(X, Y) == 'X') || (map.getMapPosition(X, Y) == 'I'))
-			return true;
-		else if(map.getMapPosition(X, Y) == 'S') {
-			escaped = true;
-		}
-		return false;
-	}
-
-	public boolean isLeverReached(Map map) {
-		if(map.getMapPosition(X, Y) == 'k')
-			return true;
-		return false;
+	public boolean getWallColliding() {
+		return wallColliding;
 	}
 	
-	public void updateHeroPosition(Map map, char command) {
+	public void setWallColliding(boolean newCol) {
+		wallColliding = newCol;
+	}
+	
+	public boolean getExitOpened() {
+		return exitOpened;
+	}
+	
+	public void setExitOpened(boolean newSet) {
+		exitOpened = newSet;
+	}
+	
 
-		switch(command) {
-		case 'u': case 'U':
-			--Y;
-			if(isColliding(map)) {
-				System.out.println("Ouch, try not to faceplant next time!");
-				++Y;
-			} else if(isLeverReached(map)) {
+	public boolean getExitColliding() {
+		return exitColliding;
+	}
+	
+	public void setExitColliding(boolean newCol) {
+		exitColliding = newCol;
+	}
+	
+	public boolean getObjectColliding() {
+		return objectColliding;
+	}
+	
+	public void setObjectColliding(boolean newCol) {
+		objectColliding = newCol;
+	}
+	
+	public boolean getCaptured() {
+		return captured;
+	}
+	
+	public void setCaptured(boolean newCap) {
+		captured = newCap;
+	}
+	
+	public boolean getEscaped() {
+		return escaped;
+	}
+	
+	public void setEscaped(boolean newE) {
+		escaped = newE;
+	}
+	
+	public void updateHero() {
+		
+		if(wallColliding) {
+			System.out.println("Ouch, try not to faceplant next time!");
+			super.setToPreviousPosition();
+			wallColliding = false;
+		} else if(objectColliding) {
+			if(super.getSymbol() == 'K')
+				System.out.println("Key aquired.");
+			else {
 				System.out.println("Exit opened, time to escape!");
-				++Y;
-				map.leverReached();
-			} else {
-				map.setMapPosition(X, Y+1, ' ');
-				map.setMapPosition(X, Y, 'H');
+				super.setToPreviousPosition();
+				exitOpened = true;
 			}
-			break;
-		case 'd': case 'D':
-			++Y;
-			if(isColliding(map)) {
-				System.out.println("Ouch, try not to faceplant next time!");
-				--Y;
-			} else if(isLeverReached(map)) {
+			objectColliding = false;
+		} else if(exitColliding) {
+			if(exitOpened) {
+				escaped = true;
+			} else if(super.getSymbol() == 'K') {
 				System.out.println("Exit opened, time to escape!");
-				--Y;
-				map.leverReached();
-			} else {
-				map.setMapPosition(X, Y-1, ' ');
-				map.setMapPosition(X, Y, 'H');
-			}
-			break;
-		case 'l': case 'L':
-			--X;
-			if(isColliding(map)) {
+				super.setToPreviousPosition();
+				exitOpened = true;
+			} else {//is like a closed door
 				System.out.println("Ouch, try not to faceplant next time!");
-				++X;
-			} else if(isLeverReached(map)) {
-				System.out.println("Exit opened, time to escape!");
-				++X;
-				map.leverReached();
-			} else {
-				map.setMapPosition(X+1, Y, ' ');
-				map.setMapPosition(X, Y, 'H');
+				super.setToPreviousPosition();
 			}
-			break;
-		case 'r': case 'R':
-			++X;
-			if(isColliding(map)) {
-				System.out.println("Ouch, try not to faceplant next time!");
-				--X;
-			} else if(isLeverReached(map)) {
-				System.out.println("Exit opened, time to escape!");
-				--X;
-				map.leverReached();
-			} else {
-				map.setMapPosition(X-1, Y, ' ');
-				map.setMapPosition(X, Y, 'H');
-			}
-			break;
-		default:
-			System.out.println("Wrong input\n");
-			break;
+			exitColliding = false;
 		}
 
 	}
