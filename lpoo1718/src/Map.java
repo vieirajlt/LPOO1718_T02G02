@@ -1,6 +1,7 @@
 import java.util.Arrays;
 
 public class Map {
+	private static final char EMPTY = ' ';
 	private static final char WALL = 'X';
 	private static final char DOOR = 'I';
 	private static final char HERO = 'H';
@@ -8,15 +9,19 @@ public class Map {
 	private static final char LEVER = 'k';
 	private static final char STAIRS = 'S';
 	private static final char OGRE = 'O';
-	private static final char KEYHERO = 'K';
+	private static final char KEYHERO = 'K'; //hero with key
+	private static final char CLUB = '*';
+	private static final char KEYCLUB = '$'; //club that hit key at a certain point
 
 	private char map[][];
 	private int exitPosition[]; //Position in pairs (Y,X)
+	private Character characters[];
 	private int level;
 	private int maxLevel;
-	private Character characters[];
-	boolean isLever; //or Key
-
+	private boolean isLever; //or Key
+	
+	//CONSTRUCTORS
+	
 	public Map(int size, int lvl) {
 		map = new char[size][size];
 		level = lvl;
@@ -27,33 +32,53 @@ public class Map {
 
 	public Map(int size) {
 		map = new char[size][size];
-		level = 1; 
+		level = 2; 
 		maxLevel = 2;
 		isLever = true;
 		initializeMap();
 	}
+	
+	//GET FUNCTIONS
+	public char getMapPosition(int x, int y) {
+		return map[y][x];
+	}
+	
+	public Character[] getCharacters() {
+		return characters;
+	}
 
-	public boolean getIsLever() {
+	public int getLevel() {
+		return level;
+	}
+
+	public int getMaxLevel() {
+		return maxLevel;
+	}
+	
+	public boolean isLever() {
 		return isLever;
+	}
+	
+	//SET FUNCTIONS
+	public void setMapPosition(int x, int y, char c) {
+		map[y][x] = c;
+	}
+
+	public void setLevel(int newLvl) {
+		level = newLvl;
+		initializeMap();
+	}
+	
+	public void setMaxLevel(int newMax) {
+		maxLevel = newMax;
 	}
 
 	public void setIsLever(boolean newOp) {
 		isLever = newOp;
 	}
 
-	public void getToNextLevel() {
-		++level;
-		initializeMap();
-	}
-
-	public int getMaxLevel() {
-		return maxLevel;
-	}
-
-	public void setMaxLevel(int newMax) {
-		maxLevel = newMax;
-	}
-
+	//COLLISIONS RELATED FUNCTIONS
+	
 	public boolean isWallColliding(Character c) {
 		int X = c.getX();
 		int Y = c.getY();
@@ -62,6 +87,20 @@ public class Map {
 			return true;
 		else if((c.getSymbol() == OGRE) && (getMapPosition(X, Y) == LEVER))
 			return true;
+		return false;
+	}
+	
+	public boolean isClubColliding(Character c) {
+		int X = ((Ogre) c).getClub().getX();
+		int Y = ((Ogre) c).getClub().getY();
+
+		if((getMapPosition(X, Y) == WALL) || (getMapPosition(X, Y) == DOOR))
+			return true;
+		else if(getMapPosition(X, Y) == LEVER) {
+			((Club) (((Ogre) c).getClub())).setAboveKey(true);
+			return false;
+		} else
+			((Club) (((Ogre) c).getClub())).setAboveKey(false);
 		return false;
 	}
 
@@ -83,6 +122,8 @@ public class Map {
 		return false;
 	}
 
+	//MAP INITIALIZATION FUNCTIONS
+	
 	public void initializeMap() {
 		switch(level) {
 		case 1:
@@ -102,100 +143,6 @@ public class Map {
 		}
 	}
 
-	public Character[] getCharacters() {
-		return characters;
-	}
-
-	public void updateHeroMapObjects(Character c) {
-		//Check if exit has been reached
-		if(isExitColliding(c)) {
-			((Hero) c).setExitColliding(true);
-			//if hero is carrying a key, open exit
-			if(c.getSymbol() == KEYHERO) {
-				openExit();
-			}
-		} 
-		//Check general objects collisions
-		else if(isWallColliding(c))
-			((Hero) c).setWallColliding(true);
-		//check if lever/key is reached
-		if(asReachedLever(c)) {
-			((Hero) c).setObjectColliding(true);
-			//if it is not a lever - is a key
-			if(!(isLever)) {
-				//make hero symbol a KEYHERO symbol
-				c.setSymbol(KEYHERO);
-			} 
-			//if it is a lever
-			else {
-				openExit();
-			}
-		}
-	}
-
-	public void updateOgrePosition(Character c) {
-		char ogreCommand;
-		boolean collision;
-		do {
-			collision = false;
-			ogreCommand = ((Ogre) c).getNextMove();
-			c.updatePosition(ogreCommand);
-			if(isWallColliding(c)) {
-				c.setToPreviousPosition();
-				collision = true;
-			}
-		} while(collision);
-	}
-
-	public void updateMap(char heroCommand) {
-		for(int i = 0; i < characters.length; ++i) {
-			char symbol = characters[i].getSymbol();
-			int X = characters[i].getX();
-			int Y = characters[i].getY();
-			setMapPosition(X, Y, ' ');
-
-			switch(symbol) {
-			case HERO: case KEYHERO:
-				characters[i].updatePosition(heroCommand);
-				updateHeroMapObjects(characters[i]);
-				((Hero) characters[i]).updateHero();
-				break;
-			case GUARD:
-				char guardCommand = ((Guard) characters[i]).updateGuard();
-				characters[i].updatePosition(guardCommand);
-				if(((Guard) characters[i]).isCaptured((Hero) characters[0]))
-					((Hero) characters[0]).setCaptured(true);
-				break;
-			case OGRE:
-				updateOgrePosition(characters[i]);
-				if(((Ogre) characters[i]).isCaptured((Hero) characters[0]))
-					((Hero) characters[0]).setCaptured(true);
-				break;
-			default:
-				break;
-			}
-
-			X = characters[i].getX();
-			Y = characters[i].getY();
-			symbol = characters[i].getSymbol();
-			setMapPosition(X, Y, symbol);
-		}
-	}
-
-	public void openExit() {
-		for(int j = 0; j < exitPosition.length; j+=2) {
-			setMapPosition(exitPosition[j+1], exitPosition[j], STAIRS);
-		}
-	}
-
-	public boolean isExit(int x, int y) {
-		for(int j = 0; j < exitPosition.length; j+=2) {
-			if((x == exitPosition[j+1]) && (y == exitPosition[j]))
-				return true;
-		}
-		return false;
-	}
-
 	public void initializeLvlOne() {
 
 		exitPosition = new int[4];
@@ -205,7 +152,7 @@ public class Map {
 		exitPosition[3] = 0;
 
 		for(int i = 1; i < map.length-1; ++i) {
-			Arrays.fill(map[i], ' ');
+			Arrays.fill(map[i], EMPTY);
 		}
 
 		int size = map.length;
@@ -267,7 +214,7 @@ public class Map {
 		exitPosition[1] = 0;
 
 		for(int i = 1; i < map.length-1; ++i) {
-			Arrays.fill(map[i], ' ');
+			Arrays.fill(map[i], EMPTY);
 		}
 
 		int size = map.length;
@@ -289,11 +236,134 @@ public class Map {
 
 		//define ogre position OGRE
 		map[1][4] = OGRE;
+		map[1][3] = CLUB;
 
 		//define lever position LEVER
 		map[1][8] = LEVER;
 	}
+	
+	//MAP MANAGEMENTS FUNCTIONS
+	
+	public void getToNextLevel() {
+		++level;
+		initializeMap();
+	}
+	
+	public void updateHeroMapObjects(Character c) {
+		//Check if exit has been reached
+		if(isExitColliding(c)) {
+			((Hero) c).setExitColliding(true);
+			//if hero is carrying a key, open exit
+			if(c.getSymbol() == KEYHERO) {
+				openExit();
+			}
+		} 
+		//Check general objects collisions
+		else if(isWallColliding(c))
+			((Hero) c).setWallColliding(true);
+		//check if lever/key is reached
+		if(asReachedLever(c)) {
+			((Hero) c).setObjectColliding(true);
+			//if it is not a lever - is a key
+			if(!(isLever)) {
+				//make hero symbol a KEYHERO symbol
+				c.setSymbol(KEYHERO);
+			} 
+			//if it is a lever
+			else {
+				openExit();
+			}
+		}
+	}
 
+	public void updateOgrePosition(Character c) {
+		int X = ((Ogre) c).getClub().getX();
+		int Y = ((Ogre) c).getClub().getY();
+		
+		//reput lever on position
+		if(((Ogre) c).getClub().getSymbol() == KEYCLUB)
+			map[Y][X] = LEVER;
+		else
+			map[Y][X] = EMPTY;
+		
+		char ogreCommand;
+		char clubCommand;
+		boolean collision;
+		do {
+			collision = false;
+			ogreCommand = ((Ogre) c).getNextMove();
+			clubCommand = ((Ogre) c).getNextMove();
+			((Ogre) c).updatePosition(ogreCommand, clubCommand);
+			if(isWallColliding(c) || isClubColliding(c)) {
+				c.setToPreviousPosition();
+				((Ogre) c).getClub().setToPreviousPosition();
+				collision = true;
+			}
+		} while(collision);
+		
+		if(((Club) (((Ogre) c).getClub())).isAboveKey()) {
+			((Ogre) c).getClub().setSymbol(KEYCLUB);
+		} else
+			((Ogre) c).getClub().setSymbol(CLUB);
+		
+		X = ((Ogre) c).getClub().getX();
+		Y = ((Ogre) c).getClub().getY();
+		map[Y][X] = ((Ogre) c).getClub().getSymbol();
+	}
+
+	public void updateMap(char heroCommand) {
+		for(int i = 0; i < characters.length; ++i) {
+			char symbol = characters[i].getSymbol();
+			int X = characters[i].getX();
+			int Y = characters[i].getY();
+			setMapPosition(X, Y, EMPTY);
+
+			switch(symbol) {
+			case HERO: case KEYHERO:
+				characters[i].updatePosition(heroCommand);
+				updateHeroMapObjects(characters[i]);
+				((Hero) characters[i]).updateHero();
+				break;
+			case GUARD:
+				char guardCommand = ((Guard) characters[i]).updateGuard();
+				characters[i].updatePosition(guardCommand);
+				if(((Guard) characters[i]).isCaptured((Hero) characters[0]))
+					((Hero) characters[0]).setCaptured(true);
+				break;
+			case OGRE:
+				updateOgrePosition(characters[i]);
+				if(((Ogre) characters[i]).isCaptured((Hero) characters[0]))
+					((Hero) characters[0]).setCaptured(true);
+				if(((Ogre) characters[i]).isHit((Hero) characters[0]))
+					((Hero) characters[0]).setFatality(true);
+				break;
+			default:
+				break;
+			}
+
+			X = characters[i].getX();
+			Y = characters[i].getY();
+			symbol = characters[i].getSymbol();
+			setMapPosition(X, Y, symbol);
+		}
+	}
+
+	public void openExit() {
+		for(int j = 0; j < exitPosition.length; j+=2) {
+			setMapPosition(exitPosition[j+1], exitPosition[j], STAIRS);
+		}
+	}
+
+	public boolean isExit(int x, int y) {
+		for(int j = 0; j < exitPosition.length; j+=2) {
+			if((x == exitPosition[j+1]) && (y == exitPosition[j]))
+				return true;
+		}
+		return false;
+	}
+
+	//MAP PRINTING
+	
 	public void printMap() {
 		int size = map.length;
 
@@ -303,20 +373,7 @@ public class Map {
 
 	}
 
-	public void setMapPosition(int x, int y, char c) {
-		map[y][x] = c;
-	}
-
-	public char getMapPosition(int x, int y) {
-		return map[y][x];
-	}
-
-	public void setLevel(int newLvl) {
-		level = newLvl;
-		initializeMap();
-	}
-
-	public int getLevel() {
-		return level;
-	}
+	
+	
+	
 }

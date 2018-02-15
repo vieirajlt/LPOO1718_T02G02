@@ -13,6 +13,7 @@ public class guidedProject {
 		
 		map.printMap();
 		
+		//game cycle
 		while(!endGame) {
 			System.out.println("Where do you wanna go? (u/d/l/r)");
 			
@@ -40,12 +41,16 @@ public class guidedProject {
 		scanCommand.close();
 	}
 	
+	//GAME MANAGEMENT FUNCTION
 	public static void updateGame(Map map, char command) {
 		
 		map.updateMap(command);
 		
 		if(((Hero) map.getCharacters()[0]).getCaptured()) {
 			System.out.println("You got captured, better luck next time!");
+			endGame = true;
+		} else if(((Hero) map.getCharacters()[0]).getFatality()) {
+			System.out.println("You got deadly hit, better luck next time!");
 			endGame = true;
 		} else if(((Hero) map.getCharacters()[0]).getEscaped()) {
 			if(map.getLevel() != map.getMaxLevel()) {

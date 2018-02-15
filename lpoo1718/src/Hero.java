@@ -6,6 +6,9 @@ public class Hero extends Character{
 	boolean exitColliding;
 	boolean exitOpened;
 	boolean captured;
+	boolean fatality;
+	
+	//CONSTRUCTORS
 	
 	public Hero(int valX, int valY) {
 		super(valX, valY, 'H');
@@ -14,56 +17,70 @@ public class Hero extends Character{
 		wallColliding = false;
 		captured = false;
 		exitOpened = false;
+		fatality = false;
 	}
 
+	//GET FUNCTIONS
+	
+	public boolean getEscaped() {
+		return escaped;
+	}
+	
 	public boolean getWallColliding() {
 		return wallColliding;
-	}
-	
-	public void setWallColliding(boolean newCol) {
-		wallColliding = newCol;
-	}
-	
-	public boolean getExitOpened() {
-		return exitOpened;
-	}
-	
-	public void setExitOpened(boolean newSet) {
-		exitOpened = newSet;
-	}
-	
-
-	public boolean getExitColliding() {
-		return exitColliding;
-	}
-	
-	public void setExitColliding(boolean newCol) {
-		exitColliding = newCol;
 	}
 	
 	public boolean getObjectColliding() {
 		return objectColliding;
 	}
 	
-	public void setObjectColliding(boolean newCol) {
-		objectColliding = newCol;
+	public boolean getExitColliding() {
+		return exitColliding;
+	}
+	
+	public boolean getExitOpened() {
+		return exitOpened;
 	}
 	
 	public boolean getCaptured() {
 		return captured;
 	}
 	
-	public void setCaptured(boolean newCap) {
-		captured = newCap;
+	public boolean getFatality() {
+		return fatality;
 	}
 	
-	public boolean getEscaped() {
-		return escaped;
-	}
+	//SET FUNCTIONS
 	
 	public void setEscaped(boolean newE) {
 		escaped = newE;
 	}
+	
+	public void setWallColliding(boolean newCol) {
+		wallColliding = newCol;
+	}
+	
+	public void setObjectColliding(boolean newCol) {
+		objectColliding = newCol;
+	}
+	
+	public void setExitColliding(boolean newCol) {
+		exitColliding = newCol;
+	}
+	
+	public void setExitOpened(boolean newSet) {
+		exitOpened = newSet;
+	}
+	
+	public void setCaptured(boolean newCap) {
+		captured = newCap;
+	}
+	
+	public void setFatality(boolean newFat) {
+		fatality = newFat;
+	}
+	
+	//HERO MANAGEMENT FUNCTION
 	
 	public void updateHero() {
 		

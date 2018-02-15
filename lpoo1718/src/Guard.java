@@ -3,11 +3,15 @@ public class Guard extends Character{
 	private char route[];
 	private int routeStep;
 
+	//CONSTRUCTORS
+	
 	public Guard(int newX, int newY) {
 		super(newX, newY, 'G');
 		initializeRoute();
 	}
 
+	//POSITIONS RELATED FUNCTIONS
+	
 	public void initializeRoute() {
 		routeStep = 0;
 		route = new char[24];
@@ -35,6 +39,8 @@ public class Guard extends Character{
 		return command;
 	}
 
+	//HERO RELATED FUNCTIONS
+	
 	public boolean isCaptured(Hero hero) {
 		//if distance to guard is equal or inferior to 1, get captured
 		if((Math.abs(hero.getY()-super.getY()) + Math.abs(hero.getX()-super.getX())) <= 1) {

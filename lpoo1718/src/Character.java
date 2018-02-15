@@ -6,6 +6,8 @@ public class Character {
 	private int prevY;
 	private char symbol;
 	
+	//CONSTRUCTORS
+	
 	public Character(int newX, int newY, char newSymbol) {
 		X = newX;
 		Y = newY;
@@ -14,29 +16,7 @@ public class Character {
 		prevY = -1;
 	}
 
-	public void updatePosition(char command) {
-		switch(command) {
-		case 'u': case 'U':
-			moveUp();
-			break;
-		case 'd': case 'D':
-			moveDown();
-			break;
-		case 'l': case 'L':
-			moveLeft();
-			break;
-		case 'r': case 'R':
-			moveRigth();
-			break;
-		default:
-			System.out.println("Wrong input\n");
-			return;
-		}
-	}
-	
-	public char getSymbol() {
-		return symbol;
-	}
+	//SET FUNCTIONS
 	
 	public void setSymbol(char newSymbol) {
 		symbol = newSymbol;
@@ -52,6 +32,8 @@ public class Character {
 		Y = newY;
 	}
 
+	//GET FUNCTIONS
+	
 	public int getX() {
 		return X;
 	}
@@ -68,6 +50,12 @@ public class Character {
 		return prevY;
 	}
 
+	public char getSymbol() {
+		return symbol;
+	}
+	
+	//POSITION COMMANDS
+	
 	public void moveUp() {
 		prevY = Y;
 		prevX = X;
@@ -92,6 +80,26 @@ public class Character {
 		++X;
 	}
 
+	public void updatePosition(char command) {
+		switch(command) {
+		case 'u': case 'U':
+			moveUp();
+			break;
+		case 'd': case 'D':
+			moveDown();
+			break;
+		case 'l': case 'L':
+			moveLeft();
+			break;
+		case 'r': case 'R':
+			moveRigth();
+			break;
+		default:
+			System.out.println("Wrong input\n");
+			return;
+		}
+	}
+	
 	public void setToPreviousPosition() {
 		int tmp = prevX;
 		prevX = X;
