@@ -7,6 +7,7 @@ public class Map {
 	private static final char DOOR = 'I';
 	private static final char HERO = 'H';
 	private static final char GUARD = 'G';
+	private static final char SLEEPINGGUARD = 'g';
 	private static final char LEVER = 'k';
 	private static final char STAIRS = 'S';
 	private static final char OGRE = 'O';
@@ -139,7 +140,7 @@ public class Map {
 
 		characters = new Character[2]; //hero & guard
 		characters[0] = new Hero(1,1);
-		characters[1] = new Guard(8,1);
+		characters[1] = new Drunken(8,1);
 		
 		doors = new Door[2];
 		doors[0] = new Door(0,5);
@@ -328,7 +329,7 @@ public class Map {
 				updateHeroMapObjects(characters[i]);
 				((Hero) characters[i]).updateHero();
 				break;
-			case GUARD:
+			case GUARD: case SLEEPINGGUARD:
 				char guardCommand = ((Guard) characters[i]).updateGuard();
 				characters[i].updatePosition(guardCommand);
 				if(((Guard) characters[i]).isCaptured((Hero) characters[0]))

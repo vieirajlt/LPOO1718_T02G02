@@ -95,6 +95,8 @@ public class Character {
 		case 'r': case 'R':
 			moveRight();
 			break;
+		case 'E':
+			break;
 		default:
 			System.out.println("Wrong input\n");
 			return;

@@ -1,7 +1,11 @@
+package logic;
 import java.util.Scanner;
+
+import cli.gameStatusDisplay;
 
 public class guidedProject {
 	private static boolean endGame = false;
+	private static gameStatusDisplay display = new gameStatusDisplay();
 	
 	public static void main(String[] args) {
 		//initialize map
@@ -47,17 +51,17 @@ public class guidedProject {
 		map.updateMap(command);
 		
 		if(((Hero) map.getCharacters()[0]).getCaptured()) {
-			System.out.println("You got captured, better luck next time!");
+			display.captured();
 			endGame = true;
 		} else if(((Hero) map.getCharacters()[0]).getFatality()) {
-			System.out.println("You got deadly hit, better luck next time!");
+			display.fatality();
 			endGame = true;
 		} else if(((Hero) map.getCharacters()[0]).getEscaped()) {
 			if(map.getLevel() != map.getMaxLevel()) {
-				System.out.println("Your challenge is not over...");
+				display.nextLevel();
 				map.getToNextLevel();
 			} else {
-				System.out.println("Congratz, you did it!");
+				display.gameWon();
 				endGame = true;
 			}
 		}
