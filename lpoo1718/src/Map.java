@@ -14,7 +14,7 @@ public class Map {
 	private static final char KEYCLUB = '$'; //club that hit key at a certain point
 
 	private char map[][];
-	private int exitPosition[]; //Position in pairs (Y,X)
+	private Door doors[]; //Position in pairs (Y,X)
 	private Character characters[];
 	private int level;
 	private int maxLevel;
@@ -32,7 +32,7 @@ public class Map {
 
 	public Map(int size) {
 		map = new char[size][size];
-		level = 2; 
+		level = 1; 
 		maxLevel = 2;
 		isLever = true;
 		initializeMap();
@@ -145,11 +145,9 @@ public class Map {
 
 	public void initializeLvlOne() {
 
-		exitPosition = new int[4];
-		exitPosition[0] = 5;
-		exitPosition[1] = 0;
-		exitPosition[2] = 6;
-		exitPosition[3] = 0;
+		doors = new Door[2];
+		doors[0] = new Door(0,5);
+		doors[1] = new Door(0,6);
 
 		for(int i = 1; i < map.length-1; ++i) {
 			Arrays.fill(map[i], EMPTY);
@@ -209,9 +207,8 @@ public class Map {
 
 	public void initializeLvlTwo() {
 
-		exitPosition = new int[2];
-		exitPosition[0] = 1;
-		exitPosition[1] = 0;
+		doors = new Door[1];
+		doors[0] = new Door(0,1);
 
 		for(int i = 1; i < map.length-1; ++i) {
 			Arrays.fill(map[i], EMPTY);
@@ -349,14 +346,14 @@ public class Map {
 	}
 
 	public void openExit() {
-		for(int j = 0; j < exitPosition.length; j+=2) {
-			setMapPosition(exitPosition[j+1], exitPosition[j], STAIRS);
+		for(int j = 0; j < doors.length; j++) {
+			setMapPosition(doors[j].getX(), doors[j].getY(), STAIRS);
 		}
 	}
 
 	public boolean isExit(int x, int y) {
-		for(int j = 0; j < exitPosition.length; j+=2) {
-			if((x == exitPosition[j+1]) && (y == exitPosition[j]))
+		for(int j = 0; j < doors.length; j++) {
+			if((x == doors[j].getX()) && (y == doors[j].getY()))
 				return true;
 		}
 		return false;
