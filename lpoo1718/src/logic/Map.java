@@ -1,3 +1,4 @@
+package logic;
 import java.util.Arrays;
 
 public class Map {
@@ -16,9 +17,9 @@ public class Map {
 	private char map[][];
 	private Door doors[]; //Position in pairs (Y,X)
 	private Character characters[];
+	private Unlocker unlockers[];
 	private int level;
 	private int maxLevel;
-	private boolean isLever; //or Key
 	
 	//CONSTRUCTORS
 	
@@ -26,7 +27,6 @@ public class Map {
 		map = new char[size][size];
 		level = lvl;
 		maxLevel = 2;
-		isLever = true;
 		initializeMap();
 	}
 
@@ -34,7 +34,6 @@ public class Map {
 		map = new char[size][size];
 		level = 1; 
 		maxLevel = 2;
-		isLever = true;
 		initializeMap();
 	}
 	
@@ -55,9 +54,7 @@ public class Map {
 		return maxLevel;
 	}
 	
-	public boolean isLever() {
-		return isLever;
-	}
+	
 	
 	//SET FUNCTIONS
 	public void setMapPosition(int x, int y, char c) {
@@ -73,9 +70,7 @@ public class Map {
 		maxLevel = newMax;
 	}
 
-	public void setIsLever(boolean newOp) {
-		isLever = newOp;
-	}
+
 
 	//COLLISIONS RELATED FUNCTIONS
 	
@@ -113,13 +108,16 @@ public class Map {
 		return false;
 	}
 
-	public boolean asReachedLever(Character c) {
+	public int hasReachedLever(Character c) {
 		int X = c.getX();
 		int Y = c.getY();
+		for (int i = 0; i < unlockers.length; i++)
+		{
+		  if (unlockers[i].hasReackedUnlocker(X, Y))
+			  return i;
+		}
+		return -1;
 
-		if(getMapPosition(X, Y) == LEVER)
-			return true;
-		return false;
 	}
 
 	//MAP INITIALIZATION FUNCTIONS
@@ -128,26 +126,27 @@ public class Map {
 		switch(level) {
 		case 1:
 			initializeLvlOne();
-			isLever = true;
-			characters = new Character[2]; //hero & guard
-			characters[0] = new Hero(1,1);
-			characters[1] = new Guard(8,1);
+			
 			break;
 		case 2:
 			initializeLvlTwo();
-			isLever = false;
-			characters = new Character[2]; //hero & ogre
-			characters[0] = new Hero(1,8);
-			characters[1] = new Ogre(4,1);
+			
 			break;
 		}
 	}
 
 	public void initializeLvlOne() {
 
+		characters = new Character[2]; //hero & guard
+		characters[0] = new Hero(1,1);
+		characters[1] = new Guard(8,1);
+		
 		doors = new Door[2];
 		doors[0] = new Door(0,5);
 		doors[1] = new Door(0,6);
+		
+		unlockers = new Unlocker[1];
+		unlockers[0] = new Unlocker(7,8, LEVER, true);
 
 		for(int i = 1; i < map.length-1; ++i) {
 			Arrays.fill(map[i], EMPTY);
@@ -207,8 +206,15 @@ public class Map {
 
 	public void initializeLvlTwo() {
 
+		characters = new Character[2]; //hero & ogre
+		characters[0] = new Hero(1,8);
+		characters[1] = new Ogre(4,1);
+		
 		doors = new Door[1];
 		doors[0] = new Door(0,1);
+		
+		unlockers = new Unlocker[1];
+		unlockers[0] = new Unlocker(8,1, LEVER, false);
 
 		for(int i = 1; i < map.length-1; ++i) {
 			Arrays.fill(map[i], EMPTY);
@@ -259,10 +265,11 @@ public class Map {
 		else if(isWallColliding(c))
 			((Hero) c).setWallColliding(true);
 		//check if lever/key is reached
-		if(asReachedLever(c)) {
+		int position = hasReachedLever(c);
+		if(position != -1) {
 			((Hero) c).setObjectColliding(true);
 			//if it is not a lever - is a key
-			if(!(isLever)) {
+			if(!(unlockers[position].isLever())) {
 				//make hero symbol a KEYHERO symbol
 				c.setSymbol(KEYHERO);
 			} 

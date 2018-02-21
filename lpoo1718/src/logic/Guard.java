@@ -1,3 +1,4 @@
+package logic;
 
 public class Guard extends Character{
 	private char route[];

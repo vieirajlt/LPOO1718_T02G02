@@ -1,3 +1,4 @@
+package logic;
 
 public class Character {
 	private int X;
@@ -74,7 +75,7 @@ public class Character {
 		--X;
 	}
 	
-	public void moveRigth() {
+	public void moveRight() {
 		prevY = Y;
 		prevX = X;
 		++X;
@@ -92,7 +93,7 @@ public class Character {
 			moveLeft();
 			break;
 		case 'r': case 'R':
-			moveRigth();
+			moveRight();
 			break;
 		default:
 			System.out.println("Wrong input\n");

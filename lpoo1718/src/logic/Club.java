@@ -1,3 +1,4 @@
+package logic;
 
 public class Club extends Character {
 	private boolean aboveKey;

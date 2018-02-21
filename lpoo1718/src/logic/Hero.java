@@ -1,12 +1,16 @@
+package logic;
+import cli.heroStatusDisplay;
 
 public class Hero extends Character{
-	boolean escaped;
-	boolean wallColliding; //for collisions with closed doors and common walls
-	boolean objectColliding; //for collisions with levers/keys
-	boolean exitColliding;
-	boolean exitOpened;
-	boolean captured;
-	boolean fatality;
+	private boolean escaped;
+	private boolean wallColliding; //for collisions with closed doors and common walls
+	private boolean objectColliding; //for collisions with levers/keys
+	private boolean exitColliding;
+	private boolean exitOpened;
+	private boolean captured;
+	private boolean fatality;
+	private heroStatusDisplay display;
+	
 	
 	//CONSTRUCTORS
 	
@@ -18,6 +22,7 @@ public class Hero extends Character{
 		captured = false;
 		exitOpened = false;
 		fatality = false;
+		display = new heroStatusDisplay();
 	}
 
 	//GET FUNCTIONS
@@ -85,14 +90,14 @@ public class Hero extends Character{
 	public void updateHero() {
 		
 		if(wallColliding) {
-			System.out.println("Ouch, try not to faceplant next time!");
+			display.wallColliding();
 			super.setToPreviousPosition();
 			wallColliding = false;
 		} else if(objectColliding) {
 			if(super.getSymbol() == 'K')
-				System.out.println("Key aquired.");
+				display.keyColliding();
 			else {
-				System.out.println("Exit opened, time to escape!");
+				display.doorColliding();
 				super.setToPreviousPosition();
 				exitOpened = true;
 			}
@@ -101,11 +106,11 @@ public class Hero extends Character{
 			if(exitOpened) {
 				escaped = true;
 			} else if(super.getSymbol() == 'K') {
-				System.out.println("Exit opened, time to escape!");
+				display.exitOpen();
 				super.setToPreviousPosition();
 				exitOpened = true;
 			} else {//is like a closed door
-				System.out.println("Ouch, try not to faceplant next time!");
+				display.wallColliding();
 				super.setToPreviousPosition();
 			}
 			exitColliding = false;
