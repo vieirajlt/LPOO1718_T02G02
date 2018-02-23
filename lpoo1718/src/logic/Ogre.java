@@ -1,28 +1,30 @@
 package logic;
 import java.util.Random;
 
+import cli.ogreStatusDisplay;
+
 public class Ogre extends Character {
-	private Character club;
+	
+	private boolean stunned;
+	private int stunCount;
+	
+	private ogreStatusDisplay display;
 
 	//CONSTRUCTOR
 	
 	public Ogre(int newX, int newY) {
-		super(newX, newY, 'O');
-		//club starts at rigth side of Ogre
-		club = new Club(newX-1, newY);
+		super(newX, newY, 'O', true);
+		//club starts at right side of Ogre
+		Club club = new Club(newX-1, newY);
+		this.setWeapon(club);
+		stunned = false;
+		stunCount = 0;
+		display = new ogreStatusDisplay();
 	}
 	
 	//GET FUNCTIONS
-	
-	public Character getClub() {
-		return club;
-	}
 
 	//SET FUNCTIONS
-	
-	public void setClub(Character newClub) {
-		club = newClub;
-	}
 
 	//POSITIONS RELATED FUNCTIONS
 	
@@ -49,30 +51,44 @@ public class Ogre extends Character {
 	}
 	
 	public void updatePosition(char cOgre, char cClub) {
-		super.updatePosition(cOgre);
+		if(stunned) {
+			super.setSymbol('8');
+			++stunCount;
+			display.stunned(2-stunCount);
+			stunCount %= 2;
+			if(stunCount == 0)
+				stunned = false;
+		} else {
+			super.updatePosition(cOgre);
+			super.setSymbol('O');
+		}
+		
 		int X = super.getX();
 		int Y = super.getY();
-		club.setX(X);
-		club.setY(Y);
-		club.updatePosition(cClub);
+		super.getWeapon().setPosition(X, Y);
+		super.getWeapon().updatePosition(cClub);
+	}
+
+	public boolean isStunned() {
+		return stunned;
+	}
+
+	public void setStunned(boolean stunned) {
+		if(this.stunned != stunned) {
+			if(stunned)
+				display.justStunned();
+			this.stunned = stunned;
+		}
+	}
+
+	public int getStunCount() {
+		return stunCount;
+	}
+
+	public void setStunCount(int stunCount) {
+		this.stunCount = stunCount;
 	}
 
 	//HERO RELATED FUNCTIONS
-	
-	public boolean isCaptured(Hero hero) {
-		//if distance to ogre is equal or inferior to 1, get captured
-		if((Math.abs(hero.getY()-super.getY()) + Math.abs(hero.getX()-super.getX())) <= 1) {
-			return true;
-		}
-		return false;
-	}
-
-	public boolean isHit(Hero hero) {
-		//if distance to club is equal or inferior to 1, get fatality
-		if((Math.abs(hero.getY()-club.getY()) + Math.abs(hero.getX()-club.getX())) <= 1) {
-			return true;
-		}
-		return false;
-	}
 
 }

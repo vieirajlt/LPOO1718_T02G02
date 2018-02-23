@@ -2,6 +2,10 @@ package cli;
 
 public class gameStatusDisplay {
 
+	public void guardAwoken()
+	{
+		System.out.println("If you step the guard like that, how do you expect to escape?");
+	}
 	
 	public void captured()
 	{

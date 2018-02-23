@@ -7,7 +7,7 @@ public class Guard extends Character{
 	//CONSTRUCTORS
 
 	public Guard(int newX, int newY) {
-		super(newX, newY, 'G');
+		super(newX, newY, 'G', false);
 		initializeRoute();
 	}
 
@@ -48,7 +48,7 @@ public class Guard extends Character{
 			routeStep += route.length;
 			routeStep %= route.length;
 			command = route[routeStep];
-			command = reverseCommand(command);
+			command = super.reverseCommand(command);
 		}
 		else {
 			command = route[routeStep++];
@@ -58,22 +58,6 @@ public class Guard extends Character{
 	}
 
 	//HERO RELATED FUNCTIONS
-
-	private char reverseCommand(char command) {
-		switch(command)
-		{
-		case 'u': case 'U':
-			return 'd';
-		case 'd': case 'D':
-			return 'u';
-		case 'l': case 'L':
-			return 'r';
-		case 'r': case 'R':
-			return 'l';
-		default :
-			return 'E';
-		}
-	}
 
 	public boolean isCaptured(Hero hero) {
 		//if distance to guard is equal or inferior to 1, get captured

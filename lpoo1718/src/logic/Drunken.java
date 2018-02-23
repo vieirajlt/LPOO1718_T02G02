@@ -16,8 +16,6 @@ public class Drunken extends Guard{
 		sleepMax = 0;
 	}
 
-
-
 	public char updateGuard() {
 		Random rand = new Random();
 		int num = rand.nextInt(20);
@@ -46,14 +44,25 @@ public class Drunken extends Guard{
 
 	}
 
-
-
 	private void updateDrunkenStatus() {
 		if(isSleeping)
 			super.setSymbol('g');
 		else
 			super.setSymbol('G');
 
+	}
+	
+	public boolean isCaptured(Hero hero) {
+		if(isSleeping) {
+			//if guard is steped, he awakes
+			if((Math.abs(hero.getY()-super.getY()) + Math.abs(hero.getX()-super.getX())) < 1) {
+				isSleeping = false;
+				hero.setSteppedGuard(true);
+				return true;
+			}
+			return false;
+		} else
+			return super.isCaptured(hero);
 	}
 
 

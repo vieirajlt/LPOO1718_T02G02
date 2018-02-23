@@ -10,7 +10,7 @@ public class guidedProject {
 	public static void main(String[] args) {
 		//initialize map
 		int mapSize = 10;
-		Map map = new Map(mapSize);
+		Map map = new Map(mapSize, 1);
 
 		Scanner scanCommand = new Scanner(System.in);
 		char command = 0;
@@ -49,8 +49,10 @@ public class guidedProject {
 	public static void updateGame(Map map, char command) {
 		
 		map.updateMap(command);
-		
-		if(((Hero) map.getCharacters()[0]).getCaptured()) {
+		if(((Hero) map.getCharacters()[0]).hasSteppedGuard()) {
+			endGame = true;
+			display.guardAwoken();
+		} else if(((Hero) map.getCharacters()[0]).getCaptured()) {
 			display.captured();
 			endGame = true;
 		} else if(((Hero) map.getCharacters()[0]).getFatality()) {

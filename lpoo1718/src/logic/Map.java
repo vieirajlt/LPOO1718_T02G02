@@ -6,11 +6,13 @@ public class Map {
 	private static final char WALL = 'X';
 	private static final char DOOR = 'I';
 	private static final char HERO = 'H';
+	private static final char ARMEDHERO = 'A';
 	private static final char GUARD = 'G';
 	private static final char SLEEPINGGUARD = 'g';
 	private static final char LEVER = 'k';
 	private static final char STAIRS = 'S';
 	private static final char OGRE = 'O';
+	private static final char STUNNEDOGRE = '8';
 	private static final char KEYHERO = 'K'; //hero with key
 	private static final char CLUB = '*';
 	private static final char KEYCLUB = '$'; //club that hit key at a certain point
@@ -21,9 +23,9 @@ public class Map {
 	private Unlocker unlockers[];
 	private int level;
 	private int maxLevel;
-	
+
 	//CONSTRUCTORS
-	
+
 	public Map(int size, int lvl) {
 		map = new char[size][size];
 		level = lvl;
@@ -37,12 +39,12 @@ public class Map {
 		maxLevel = 2;
 		initializeMap();
 	}
-	
+
 	//GET FUNCTIONS
 	public char getMapPosition(int x, int y) {
 		return map[y][x];
 	}
-	
+
 	public Character[] getCharacters() {
 		return characters;
 	}
@@ -54,9 +56,9 @@ public class Map {
 	public int getMaxLevel() {
 		return maxLevel;
 	}
-	
-	
-	
+
+
+
 	//SET FUNCTIONS
 	public void setMapPosition(int x, int y, char c) {
 		map[y][x] = c;
@@ -66,7 +68,7 @@ public class Map {
 		level = newLvl;
 		initializeMap();
 	}
-	
+
 	public void setMaxLevel(int newMax) {
 		maxLevel = newMax;
 	}
@@ -74,7 +76,7 @@ public class Map {
 
 
 	//COLLISIONS RELATED FUNCTIONS
-	
+
 	public boolean isWallColliding(Character c) {
 		int X = c.getX();
 		int Y = c.getY();
@@ -85,18 +87,18 @@ public class Map {
 			return true;
 		return false;
 	}
-	
+
 	public boolean isClubColliding(Character c) {
-		int X = ((Ogre) c).getClub().getX();
-		int Y = ((Ogre) c).getClub().getY();
+		int X = c.getWeapon().getX();
+		int Y = c.getWeapon().getY();
 
 		if((getMapPosition(X, Y) == WALL) || (getMapPosition(X, Y) == DOOR))
 			return true;
 		else if(getMapPosition(X, Y) == LEVER) {
-			((Club) (((Ogre) c).getClub())).setAboveKey(true);
+			((Club) c.getWeapon()).setAboveKey(true);
 			return false;
 		} else
-			((Club) (((Ogre) c).getClub())).setAboveKey(false);
+			((Club) c.getWeapon()).setAboveKey(false);
 		return false;
 	}
 
@@ -114,24 +116,24 @@ public class Map {
 		int Y = c.getY();
 		for (int i = 0; i < unlockers.length; i++)
 		{
-		  if (unlockers[i].hasReackedUnlocker(X, Y))
-			  return i;
+			if (unlockers[i].hasReackedUnlocker(X, Y))
+				return i;
 		}
 		return -1;
 
 	}
 
 	//MAP INITIALIZATION FUNCTIONS
-	
+
 	public void initializeMap() {
 		switch(level) {
 		case 1:
 			initializeLvlOne();
-			
+
 			break;
 		case 2:
 			initializeLvlTwo();
-			
+
 			break;
 		}
 	}
@@ -141,11 +143,11 @@ public class Map {
 		characters = new Character[2]; //hero & guard
 		characters[0] = new Hero(1,1);
 		characters[1] = new Drunken(8,1);
-		
+
 		doors = new Door[2];
 		doors[0] = new Door(0,5);
 		doors[1] = new Door(0,6);
-		
+
 		unlockers = new Unlocker[1];
 		unlockers[0] = new Unlocker(7,8, LEVER, true);
 
@@ -208,12 +210,12 @@ public class Map {
 	public void initializeLvlTwo() {
 
 		characters = new Character[2]; //hero & ogre
-		characters[0] = new Hero(1,8);
+		characters[0] = new Hero(1,8, true);
 		characters[1] = new Ogre(4,1);
-		
+
 		doors = new Door[1];
 		doors[0] = new Door(0,1);
-		
+
 		unlockers = new Unlocker[1];
 		unlockers[0] = new Unlocker(8,1, LEVER, false);
 
@@ -235,8 +237,8 @@ public class Map {
 		//define door position DOOR
 		map[1][0] = DOOR;
 
-		//define hero position HERO
-		map[8][1] = HERO;
+		//define hero position HERO with CLUB
+		map[8][1] = ARMEDHERO;
 
 		//define ogre position OGRE
 		map[1][4] = OGRE;
@@ -245,14 +247,14 @@ public class Map {
 		//define lever position LEVER
 		map[1][8] = LEVER;
 	}
-	
+
 	//MAP MANAGEMENTS FUNCTIONS
-	
+
 	public void getToNextLevel() {
 		++level;
 		initializeMap();
 	}
-	
+
 	public void updateHeroMapObjects(Character c) {
 		//Check if exit has been reached
 		if(isExitColliding(c)) {
@@ -282,15 +284,15 @@ public class Map {
 	}
 
 	public void updateOgrePosition(Character c) {
-		int X = ((Ogre) c).getClub().getX();
-		int Y = ((Ogre) c).getClub().getY();
-		
+		int X = c.getWeapon().getX();
+		int Y = c.getWeapon().getY();
+
 		//reput lever on position
-		if(((Ogre) c).getClub().getSymbol() == KEYCLUB)
+		if(c.getWeapon().getSymbol() == KEYCLUB)
 			map[Y][X] = LEVER;
 		else
 			map[Y][X] = EMPTY;
-		
+
 		char ogreCommand;
 		char clubCommand;
 		boolean collision;
@@ -301,30 +303,23 @@ public class Map {
 			((Ogre) c).updatePosition(ogreCommand, clubCommand);
 			if(isWallColliding(c) || isClubColliding(c)) {
 				c.setToPreviousPosition();
-				((Ogre) c).getClub().setToPreviousPosition();
+				c.getWeapon().setToPreviousPosition();
 				collision = true;
 			}
 		} while(collision);
-		
-		if(((Club) (((Ogre) c).getClub())).isAboveKey()) {
-			((Ogre) c).getClub().setSymbol(KEYCLUB);
+
+		if(((Club) c.getWeapon()).isAboveKey()) {
+			c.getWeapon().setSymbol(KEYCLUB);
 		} else
-			((Ogre) c).getClub().setSymbol(CLUB);
-		
-		X = ((Ogre) c).getClub().getX();
-		Y = ((Ogre) c).getClub().getY();
-		map[Y][X] = ((Ogre) c).getClub().getSymbol();
+			c.getWeapon().setSymbol(CLUB);
 	}
 
 	public void updateMap(char heroCommand) {
 		for(int i = 0; i < characters.length; ++i) {
 			char symbol = characters[i].getSymbol();
-			int X = characters[i].getX();
-			int Y = characters[i].getY();
-			setMapPosition(X, Y, EMPTY);
 
 			switch(symbol) {
-			case HERO: case KEYHERO:
+			case HERO: case KEYHERO: case ARMEDHERO:
 				characters[i].updatePosition(heroCommand);
 				updateHeroMapObjects(characters[i]);
 				((Hero) characters[i]).updateHero();
@@ -335,22 +330,55 @@ public class Map {
 				if(((Guard) characters[i]).isCaptured((Hero) characters[0]))
 					((Hero) characters[0]).setCaptured(true);
 				break;
-			case OGRE:
+			case OGRE: case STUNNEDOGRE:
 				updateOgrePosition(characters[i]);
-				if(((Ogre) characters[i]).isCaptured((Hero) characters[0]))
+				//if hero as weapon, ogre can get stunned
+				if(characters[0].hasWeapon() && ((Hero) characters[0]).getWeapon().isHit(characters[i])) {
+					((Ogre) characters[i]).setStunned(true);
+					((Ogre) characters[i]).setSymbol(STUNNEDOGRE);
+					//Replace Hero
+					characters[0].setToPreviousPosition();
+					placeCharacter(characters[0]);
+				} 
+				//else hero gets cought
+				else if(((Ogre) characters[i]).isCaptured((Hero) characters[0]))
 					((Hero) characters[0]).setCaptured(true);
-				if(((Ogre) characters[i]).isHit((Hero) characters[0]))
+				
+				if(characters[i].getWeapon().isHit(characters[0]))
 					((Hero) characters[0]).setFatality(true);
 				break;
 			default:
 				break;
 			}
 
-			X = characters[i].getX();
-			Y = characters[i].getY();
-			symbol = characters[i].getSymbol();
+			placeCharacter(characters[i]);
+		}
+	}
+
+	public void placeCharacter(Character c) {
+		//Clear previous Character position
+		int X = c.getPrevX();
+		int Y = c.getPrevY();
+		setMapPosition(X, Y, EMPTY);
+		char symbol;
+		
+		if(c.hasWeapon() && c.getWeapon().isVisible()) {
+			//Clear previous Weapon position
+			X = c.getWeapon().getPrevX();
+			Y = c.getWeapon().getPrevY();
+			setMapPosition(X, Y, EMPTY);
+			//Set new position
+			X = c.getWeapon().getX();
+			Y = c.getWeapon().getY();
+			symbol = c.getWeapon().getSymbol();
 			setMapPosition(X, Y, symbol);
 		}
+
+		//Set new Character position
+		X = c.getX();
+		Y = c.getY();
+		symbol = c.getSymbol();
+		setMapPosition(X, Y, symbol);
 	}
 
 	public void openExit() {
@@ -368,7 +396,7 @@ public class Map {
 	}
 
 	//MAP PRINTING
-	
+
 	public void printMap() {
 		int size = map.length;
 
@@ -378,7 +406,7 @@ public class Map {
 
 	}
 
-	
-	
-	
+
+
+
 }

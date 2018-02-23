@@ -9,19 +9,40 @@ public class Hero extends Character{
 	private boolean exitOpened;
 	private boolean captured;
 	private boolean fatality;
+	private boolean steppedGuard;
+	
 	private heroStatusDisplay display;
 	
 	
 	//CONSTRUCTORS
 	
 	public Hero(int valX, int valY) {
-		super(valX, valY, 'H');
+		super(valX, valY, 'H', false);
 		escaped = false;
 		objectColliding = false;
 		wallColliding = false;
 		captured = false;
 		exitOpened = false;
 		fatality = false;
+		steppedGuard = false;
+		display = new heroStatusDisplay();
+	}
+	
+	public Hero(int valX, int valY, boolean hasClub) {
+		super(valX, valY, 'H', hasClub);
+		escaped = false;
+		objectColliding = false;
+		wallColliding = false;
+		captured = false;
+		exitOpened = false;
+		fatality = false;
+		steppedGuard = false;
+		if(this.hasWeapon()) {
+			Club club = new Club(valX+1, valY);
+			super.setWeapon(club);
+			super.setSymbol('A');
+			super.getWeapon().setVisible(false);
+		}
 		display = new heroStatusDisplay();
 	}
 
@@ -55,6 +76,10 @@ public class Hero extends Character{
 		return fatality;
 	}
 	
+	public boolean hasSteppedGuard() {
+		return steppedGuard;
+	}
+	
 	//SET FUNCTIONS
 	
 	public void setEscaped(boolean newE) {
@@ -85,6 +110,10 @@ public class Hero extends Character{
 		fatality = newFat;
 	}
 	
+	public void setSteppedGuard(boolean steppedGuard) {
+		this.steppedGuard = steppedGuard;
+	}
+	
 	//HERO MANAGEMENT FUNCTION
 	
 	public void updateHero() {
@@ -92,6 +121,8 @@ public class Hero extends Character{
 		if(wallColliding) {
 			display.wallColliding();
 			super.setToPreviousPosition();
+			if(super.hasWeapon())
+				super.getWeapon().setToPreviousPosition();
 			wallColliding = false;
 		} else if(objectColliding) {
 			if(super.getSymbol() == 'K')
@@ -99,6 +130,8 @@ public class Hero extends Character{
 			else {
 				display.doorColliding();
 				super.setToPreviousPosition();
+				if(super.hasWeapon())
+					super.getWeapon().setToPreviousPosition();
 				exitOpened = true;
 			}
 			objectColliding = false;
@@ -108,14 +141,26 @@ public class Hero extends Character{
 			} else if(super.getSymbol() == 'K') {
 				display.exitOpen();
 				super.setToPreviousPosition();
+				if(super.hasWeapon())
+					super.getWeapon().setToPreviousPosition();
 				exitOpened = true;
 			} else {//is like a closed door
 				display.wallColliding();
 				super.setToPreviousPosition();
+				if(super.hasWeapon())
+					super.getWeapon().setToPreviousPosition();
 			}
 			exitColliding = false;
 		}
 
 	}
 
+	public void updatePosition(char command) {
+		super.updatePosition(command);
+		
+		if(this.hasWeapon()) {
+			this.getWeapon().setPosition(super.getX(), super.getY());
+		}
+	}
+	
 }
