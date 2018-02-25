@@ -49,6 +49,7 @@ public class guidedProject {
 	public static void updateGame(Map map, char command) {
 		
 		map.updateMap(command);
+		map.updateMapDisplay();
 		if(((Hero) map.getCharacters()[0]).hasSteppedGuard()) {
 			endGame = true;
 			display.guardAwoken();

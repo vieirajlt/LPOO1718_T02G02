@@ -143,7 +143,7 @@ public class Map {
 		characters = new Character[2]; //hero & guard
 		characters[0] = new Hero(1,1);
 		characters[1] = new Drunken(8,1);
-		
+
 		ogres = new LinkedList<Character>();
 
 		doors = new Door[2];
@@ -213,7 +213,7 @@ public class Map {
 
 		characters = new Character[1]; //hero & ogre
 		characters[0] = new Hero(1,8, true);
-		
+
 		ogres = new LinkedList<Character>();
 		//all the ogres start at the same position
 		for (int i = 0; i < 2; i++)
@@ -288,7 +288,7 @@ public class Map {
 			}
 		}
 	}
-	
+
 	public void updateOgrePosition(Character c) {
 		int X = c.getWeapon().getX();
 		int Y = c.getWeapon().getY();
@@ -318,10 +318,10 @@ public class Map {
 			c.getWeapon().setSymbol(KEYCLUB);
 		} else
 			c.getWeapon().setSymbol(CLUB);
-		
+
 		X = c.getPrevX();
 		Y = c.getPrevY();
-			
+
 	}
 
 	public void updateMap(char heroCommand) {
@@ -343,53 +343,59 @@ public class Map {
 			default:
 				break;
 			}
-	
-			placeCharacter(characters[i]);
+
+			removeCharacter(characters[i]);
 		}
-	
+
 		//updates the ogres position
 		for(int i = 0; i < ogres.size(); i++)
 		{
 			updateOgrePosition(ogres.get(i));
+
+			//if hero gets on club range, game ends
+			if(ogres.get(i).getWeapon().isHit(characters[0]))
+				((Hero) characters[0]).setFatality(true);
 			//if hero as weapon, ogre can get stunned
-			if(characters[0].hasWeapon() && ((Hero) characters[0]).getWeapon().isHit(ogres.get(i))) {
+			else if(characters[0].hasWeapon() && ((Hero) characters[0]).getWeapon().isHit(ogres.get(i))) {
 				((Ogre)ogres.get(i)).setStunned(true);
 				ogres.get(i).setSymbol(STUNNEDOGRE);
-				//Replace Hero
-				int X = characters[0].getX(), Y = characters[0].getY();
-				//to clear the previous position, otherwise it wont 
-				setMapPosition(X,Y,EMPTY);
 				characters[0].setToPreviousPosition();
-				placeCharacter(characters[0]);
 			} 
 			//else hero gets cought
 			else if(ogres.get(i).isCaptured((Hero) characters[0]))
 				((Hero) characters[0]).setCaptured(true);
-			
-			if(ogres.get(i).getWeapon().isHit(characters[0]))
-				((Hero) characters[0]).setFatality(true);
+
+			removeCharacter(ogres.get(i));
 		}
-		
+	}
+
+	public void updateMapDisplay() {
 		//updates in the ogres positions in the map
 		for (int i = 0; i < ogres.size(); i++)
 			placeCharacter(ogres.get(i));
+
+		//update other characters positions in the map
+		for(int i = characters.length; i > 0; --i) {
+			int x = characters[i-1].getX();
+			int y = characters[i-1].getY();
+			char s = characters[i-1].getSymbol();
+			//Prioritizing Club to Ogre Symbol
+			if(getMapPosition(x, y) == CLUB)
+				s = CLUB;
+			placeCharacter(characters[i-1], s);
+		}
 	}
 
-	
 	public void placeCharacter(Character c) {
-		//Clear previous Character position
-		int X = c.getPrevX();
-		int Y = c.getPrevY();
-		if(!c.checkOgreinPreviousPosition(ogres) && c.getSymbol() != 'g')
-			setMapPosition(X, Y, EMPTY);
+		placeCharacter(c, c.getSymbol());
+	}
+	
+	public void placeCharacter(Character c, char s) {
+		int X;
+		int Y;
 		char symbol;
-		
+
 		if(c.hasWeapon() && c.getWeapon().isVisible()) {
-			//Clear previous Weapon position
-			X = c.getWeapon().getPrevX();
-			Y = c.getWeapon().getPrevY();
-			if(!c.getWeapon().checkOgreinPreviousPosition(ogres))
-				setMapPosition(X, Y, EMPTY);
 			//Set new position
 			X = c.getWeapon().getX();
 			Y = c.getWeapon().getY();
@@ -400,8 +406,22 @@ public class Map {
 		//Set new Character position
 		X = c.getX();
 		Y = c.getY();
-		symbol = c.getSymbol();
+		symbol = s;
 		setMapPosition(X, Y, symbol);
+	}
+
+	public void removeCharacter(Character c) {
+		//Clear previous Character position
+		int X = c.getPrevX();
+		int Y = c.getPrevY();
+		setMapPosition(X, Y, EMPTY);
+
+		if(c.hasWeapon() && c.getWeapon().isVisible()) {
+			//Clear previous Weapon position
+			X = c.getWeapon().getPrevX();
+			Y = c.getWeapon().getPrevY();
+			setMapPosition(X, Y, EMPTY);
+		}
 	}
 
 	public void openExit() {
