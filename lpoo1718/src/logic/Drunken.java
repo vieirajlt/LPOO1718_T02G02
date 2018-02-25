@@ -54,7 +54,7 @@ public class Drunken extends Guard{
 	
 	public boolean isCaptured(Hero hero) {
 		if(isSleeping) {
-			//if guard is steped, he awakes
+			//if guard is stepped, he awakes
 			if((Math.abs(hero.getY()-super.getY()) + Math.abs(hero.getX()-super.getX())) < 1) {
 				isSleeping = false;
 				hero.setSteppedGuard(true);

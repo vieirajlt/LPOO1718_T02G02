@@ -10,7 +10,7 @@ public class guidedProject {
 	public static void main(String[] args) {
 		//initialize map
 		int mapSize = 10;
-		Map map = new Map(mapSize, 2);
+		Map map = new Map(mapSize, 1);
 
 		Scanner scanCommand = new Scanner(System.in);
 		char command = 0;

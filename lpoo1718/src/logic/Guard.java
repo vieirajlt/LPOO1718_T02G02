@@ -60,8 +60,6 @@ public class Guard extends Character{
 	//HERO RELATED FUNCTIONS
 
 	public boolean isCaptured(Hero hero) {
-		if (super.getSymbol() == 'g')
-			return false;
 		//if distance to guard is equal or inferior to 1, get captured
 		if((Math.abs(hero.getY()-super.getY()) + Math.abs(hero.getX()-super.getX())) <= 1) {
 			return true;

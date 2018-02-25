@@ -358,7 +358,7 @@ public class Map {
 				//Replace Hero
 				int X = characters[0].getX(), Y = characters[0].getY();
 				//to clear the previous position, otherwise it wont 
-				map[Y][X] = EMPTY;
+				setMapPosition(X,Y,EMPTY);
 				characters[0].setToPreviousPosition();
 				placeCharacter(characters[0]);
 			} 
@@ -380,7 +380,7 @@ public class Map {
 		//Clear previous Character position
 		int X = c.getPrevX();
 		int Y = c.getPrevY();
-		if(!c.checkOgreinPreviousPosition(ogres))
+		if(!c.checkOgreinPreviousPosition(ogres) && c.getSymbol() != 'g')
 			setMapPosition(X, Y, EMPTY);
 		char symbol;
 		
