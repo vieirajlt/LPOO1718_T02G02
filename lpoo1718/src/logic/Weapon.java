@@ -1,5 +1,7 @@
 package logic;
 
+import java.util.LinkedList;
+
 public class Weapon {
 
 	private int X;
@@ -147,6 +149,17 @@ public class Weapon {
 
 	public void setVisible(boolean visible) {
 		this.visible = visible;
+	}
+	
+	public boolean checkOgreinPreviousPosition(LinkedList<Character> ogres)
+	{
+		for (int i = 0; i < ogres.size(); i++)
+		{
+			if ((prevX == ogres.get(i).getX() && prevY == ogres.get(i).getY())
+					|| (prevX == ogres.get(i).getWeapon().getX() && prevY == ogres.get(i).getWeapon().getY()))
+				return true;
+		}
+		return false;
 	}
 
 }

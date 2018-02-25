@@ -1,5 +1,7 @@
 package logic;
 
+import java.util.LinkedList;
+
 public class Character {
 	private int X;
 	private int Y;
@@ -147,6 +149,11 @@ public class Character {
 		default :
 			return 'E';
 		}
+	}
+	
+	public boolean checkOgreinPreviousPosition(LinkedList<Character> ogres)
+	{	
+		return false;
 	}
 	
 	public boolean isCaptured(Character c) {

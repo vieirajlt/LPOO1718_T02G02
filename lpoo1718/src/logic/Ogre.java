@@ -1,4 +1,5 @@
 package logic;
+import java.util.LinkedList;
 import java.util.Random;
 
 import cli.ogreStatusDisplay;
@@ -68,7 +69,8 @@ public class Ogre extends Character {
 		super.getWeapon().setPosition(X, Y);
 		super.getWeapon().updatePosition(cClub);
 	}
-
+	
+	
 	public boolean isStunned() {
 		return stunned;
 	}
@@ -87,6 +89,18 @@ public class Ogre extends Character {
 
 	public void setStunCount(int stunCount) {
 		this.stunCount = stunCount;
+	}
+	
+	
+	public boolean checkOgreinPreviousPosition(LinkedList<Character> ogres)
+	{
+		for (int i = 0; i < ogres.size(); i++)
+		{
+			if ((super.getPrevX() == ogres.get(i).getX() && super.getPrevY() == ogres.get(i).getY())
+					|| (super.getPrevX() == ogres.get(i).getWeapon().getX() && super.getPrevY() == ogres.get(i).getWeapon().getY()))
+				return true;
+		}
+		return false;
 	}
 
 	//HERO RELATED FUNCTIONS

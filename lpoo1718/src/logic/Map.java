@@ -1,5 +1,6 @@
 package logic;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 public class Map {
 	private static final char EMPTY = ' ';
@@ -20,6 +21,7 @@ public class Map {
 	private char map[][];
 	private Door doors[]; //Position in pairs (Y,X)
 	private Character characters[];
+	private LinkedList<Character> ogres;
 	private Unlocker unlockers[];
 	private int level;
 	private int maxLevel;
@@ -129,11 +131,9 @@ public class Map {
 		switch(level) {
 		case 1:
 			initializeLvlOne();
-
 			break;
 		case 2:
 			initializeLvlTwo();
-
 			break;
 		}
 	}
@@ -143,6 +143,8 @@ public class Map {
 		characters = new Character[2]; //hero & guard
 		characters[0] = new Hero(1,1);
 		characters[1] = new Drunken(8,1);
+		
+		ogres = new LinkedList<Character>();
 
 		doors = new Door[2];
 		doors[0] = new Door(0,5);
@@ -209,9 +211,13 @@ public class Map {
 
 	public void initializeLvlTwo() {
 
-		characters = new Character[2]; //hero & ogre
+		characters = new Character[1]; //hero & ogre
 		characters[0] = new Hero(1,8, true);
-		characters[1] = new Ogre(4,1);
+		
+		ogres = new LinkedList<Character>();
+		//all the ogres start at the same position
+		for (int i = 0; i < 2; i++)
+			ogres.add(new Ogre(4,1));
 
 		doors = new Door[1];
 		doors[0] = new Door(0,1);
@@ -282,7 +288,7 @@ public class Map {
 			}
 		}
 	}
-
+	
 	public void updateOgrePosition(Character c) {
 		int X = c.getWeapon().getX();
 		int Y = c.getWeapon().getY();
@@ -312,6 +318,10 @@ public class Map {
 			c.getWeapon().setSymbol(KEYCLUB);
 		} else
 			c.getWeapon().setSymbol(CLUB);
+		
+		X = c.getPrevX();
+		Y = c.getPrevY();
+			
 	}
 
 	public void updateMap(char heroCommand) {
@@ -329,44 +339,57 @@ public class Map {
 				characters[i].updatePosition(guardCommand);
 				if(((Guard) characters[i]).isCaptured((Hero) characters[0]))
 					((Hero) characters[0]).setCaptured(true);
-				break;
-			case OGRE: case STUNNEDOGRE:
-				updateOgrePosition(characters[i]);
-				//if hero as weapon, ogre can get stunned
-				if(characters[0].hasWeapon() && ((Hero) characters[0]).getWeapon().isHit(characters[i])) {
-					((Ogre) characters[i]).setStunned(true);
-					((Ogre) characters[i]).setSymbol(STUNNEDOGRE);
-					//Replace Hero
-					characters[0].setToPreviousPosition();
-					placeCharacter(characters[0]);
-				} 
-				//else hero gets cought
-				else if(((Ogre) characters[i]).isCaptured((Hero) characters[0]))
-					((Hero) characters[0]).setCaptured(true);
-				
-				if(characters[i].getWeapon().isHit(characters[0]))
-					((Hero) characters[0]).setFatality(true);
-				break;
+				break;			
 			default:
 				break;
 			}
-
+	
 			placeCharacter(characters[i]);
 		}
+	
+		//updates the ogres position
+		for(int i = 0; i < ogres.size(); i++)
+		{
+			updateOgrePosition(ogres.get(i));
+			//if hero as weapon, ogre can get stunned
+			if(characters[0].hasWeapon() && ((Hero) characters[0]).getWeapon().isHit(ogres.get(i))) {
+				((Ogre)ogres.get(i)).setStunned(true);
+				ogres.get(i).setSymbol(STUNNEDOGRE);
+				//Replace Hero
+				int X = characters[0].getX(), Y = characters[0].getY();
+				//to clear the previous position, otherwise it wont 
+				map[Y][X] = EMPTY;
+				characters[0].setToPreviousPosition();
+				placeCharacter(characters[0]);
+			} 
+			//else hero gets cought
+			else if(ogres.get(i).isCaptured((Hero) characters[0]))
+				((Hero) characters[0]).setCaptured(true);
+			
+			if(ogres.get(i).getWeapon().isHit(characters[0]))
+				((Hero) characters[0]).setFatality(true);
+		}
+		
+		//updates in the ogres positions in the map
+		for (int i = 0; i < ogres.size(); i++)
+			placeCharacter(ogres.get(i));
 	}
 
+	
 	public void placeCharacter(Character c) {
 		//Clear previous Character position
 		int X = c.getPrevX();
 		int Y = c.getPrevY();
-		setMapPosition(X, Y, EMPTY);
+		if(!c.checkOgreinPreviousPosition(ogres))
+			setMapPosition(X, Y, EMPTY);
 		char symbol;
 		
 		if(c.hasWeapon() && c.getWeapon().isVisible()) {
 			//Clear previous Weapon position
 			X = c.getWeapon().getPrevX();
 			Y = c.getWeapon().getPrevY();
-			setMapPosition(X, Y, EMPTY);
+			if(!c.getWeapon().checkOgreinPreviousPosition(ogres))
+				setMapPosition(X, Y, EMPTY);
 			//Set new position
 			X = c.getWeapon().getX();
 			Y = c.getWeapon().getY();
@@ -405,8 +428,5 @@ public class Map {
 		}
 
 	}
-
-
-
 
 }
