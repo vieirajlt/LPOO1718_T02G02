@@ -186,7 +186,7 @@ public class Map {
 					unlockers.add(new Unlocker(j,i,true));
 					break;
 				case GUARD:
-					characters.add(new Guard(j,i, true));
+					characters.add(new Guard(j,i, false));
 					break;
 				case OGRE:
 					ogres.add(new Ogre(j,i));
@@ -473,7 +473,8 @@ public class Map {
 		//Clear previous Character position
 		int X = c.getPrevX();
 		int Y = c.getPrevY();
-		setMapPosition(X, Y, EMPTY);
+		if(X != - 1 && Y != -1)
+			setMapPosition(X, Y, EMPTY);
 
 		if(c.hasWeapon() && c.getWeapon().isVisible()) {
 			//Clear previous Weapon position
