@@ -20,7 +20,6 @@ public class TestDungeonGameLogic {
 		assertEquals(game.getMap().getMapPosition(1, 1), game.getMap().getCharacters().get(0).getSymbol());
 		game.updateGame('d');
 		assertEquals(game.getMap().getMapPosition(1, 2), game.getMap().getCharacters().get(0).getSymbol());	
-		game.getMap().printMap();
 	}
 
 	@Test
@@ -64,7 +63,15 @@ public class TestDungeonGameLogic {
 
 	@Test
 	public void testMoveHeroIntoOpenExit() {
-
+		Game game = new Game(map);
+		assertEquals(game.getMap().getMapPosition(1, 1), game.getMap().getCharacters().get(0).getSymbol());
+		game.updateGame('d');
+		game.updateGame('d');
+		game.updateGame('l');
+		int X = game.getMap().getDoors().get(0).getX();
+		int Y = game.getMap().getDoors().get(0).getY();
+		assertEquals(game.getMap().getMapPosition(X, Y), game.getMap().getCharacters().get(0).getSymbol());
+		assertEquals(game.isEndGame(),true);
 	}
 
 
