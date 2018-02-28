@@ -3,11 +3,17 @@ package logic;
 public class Guard extends Character{
 	private char route[];
 	private int routeStep;
+	private boolean doRoute;
 
 	//CONSTRUCTORS
 
 	public Guard(int newX, int newY) {
+		this(newX, newY, true);
+	}
+	
+	public Guard(int newX, int newY, boolean newDoRoute) {
 		super(newX, newY, 'G', false);
+		doRoute = newDoRoute;
 		initializeRoute();
 	}
 
@@ -35,13 +41,17 @@ public class Guard extends Character{
 	}
 
 	public char updateGuard() {
+		if(!doRoute)
+			return 'E';
+		
 		char command = route[routeStep++];
 		routeStep %= route.length;
 		return command;
 	}
 
 	public char updateGuard(boolean isReverse) {
-
+		if(!doRoute)
+			return 'E';
 		char command;
 		if (isReverse) {
 			--routeStep;

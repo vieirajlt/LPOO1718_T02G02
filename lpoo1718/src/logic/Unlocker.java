@@ -15,6 +15,11 @@ public class Unlocker {
 		this.isLever = isLever;
 	}
 	
+	public Unlocker(int x, int y,boolean isLever)
+	{
+		this(x,y,'k',isLever);
+	}
+	
 	
 	public int getX() {
 		return x;

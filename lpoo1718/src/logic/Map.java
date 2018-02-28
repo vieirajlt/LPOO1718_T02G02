@@ -1,4 +1,5 @@
 package logic;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -19,10 +20,10 @@ public class Map {
 	private static final char KEYCLUB = '$'; //club that hit key at a certain point
 
 	private char map[][];
-	private Door doors[]; //Position in pairs (Y,X)
-	private Character characters[];
+	private ArrayList<Door> doors;	
+	private ArrayList<Character> characters;
 	private LinkedList<Character> ogres;
-	private Unlocker unlockers[];
+	private ArrayList<Unlocker> unlockers;
 	private int level;
 	private int maxLevel;
 
@@ -32,6 +33,10 @@ public class Map {
 		map = new char[size][size];
 		level = lvl;
 		maxLevel = 2;
+		characters = new ArrayList<Character>(); //hero & guard
+		ogres = new LinkedList<Character>();
+		doors = new ArrayList<Door>();
+		unlockers = new ArrayList<Unlocker>();
 		initializeMap();
 	}
 
@@ -39,7 +44,23 @@ public class Map {
 		map = new char[size][size];
 		level = 1; 
 		maxLevel = 2;
+		characters = new ArrayList<Character>(); 
+		ogres = new LinkedList<Character>();
+		doors = new ArrayList<Door>();
+		unlockers = new ArrayList<Unlocker>();
 		initializeMap();
+	}
+	
+	public Map(char[][] newMap) {
+		int size = newMap.length;
+		map = new char[size][size];
+		level = 1; 
+		maxLevel = 1;
+		characters = new ArrayList<Character>(); 
+		ogres = new LinkedList<Character>();
+		doors = new ArrayList<Door>();
+		unlockers = new ArrayList<Unlocker>();
+		initializeMap(newMap);
 	}
 
 	//GET FUNCTIONS
@@ -47,7 +68,7 @@ public class Map {
 		return map[y][x];
 	}
 
-	public Character[] getCharacters() {
+	public ArrayList<Character> getCharacters() {
 		return characters;
 	}
 
@@ -59,6 +80,13 @@ public class Map {
 		return maxLevel;
 	}
 
+	public ArrayList<Unlocker> getUnlockers() {
+		return unlockers;
+	}
+
+	public void setUnlockers(ArrayList<Unlocker> unlockers) {
+		this.unlockers = unlockers;
+	}
 
 
 	//SET FUNCTIONS
@@ -116,9 +144,9 @@ public class Map {
 	public int hasReachedLever(Character c) {
 		int X = c.getX();
 		int Y = c.getY();
-		for (int i = 0; i < unlockers.length; i++)
+		for (int i = 0; i < unlockers.size(); i++)
 		{
-			if (unlockers[i].hasReackedUnlocker(X, Y))
+			if (unlockers.get(i).hasReackedUnlocker(X, Y))
 				return i;
 		}
 		return -1;
@@ -137,21 +165,56 @@ public class Map {
 			break;
 		}
 	}
+	
+	
+	public void initializeMap(char [][] newMap) {
+		this.map = newMap;
+		characters.add(new Hero(0,0));
+		for(int i = 0; i < map.length; i++)
+		{
+			for (int j= 0;j < map[i].length; j++ )
+			{
+				switch(map[i][j])
+				{
+				case HERO :
+					characters.get(0).setPosition(j, i);
+					break;
+				case DOOR:
+					doors.add(new Door(j,i));
+					break;
+				case LEVER:
+					unlockers.add(new Unlocker(j,i,true));
+					break;
+				case GUARD:
+					characters.add(new Guard(j,i, true));
+					break;
+				case OGRE:
+					ogres.add(new Ogre(j,i));
+					break;
+				default:
+					break;
+				}
+			}
+		}
+	}
+
+	public ArrayList<Door> getDoors() {
+		return doors;
+	}
+
+	public void setDoors(ArrayList<Door> doors) {
+		this.doors = doors;
+	}
 
 	public void initializeLvlOne() {
 
-		characters = new Character[2]; //hero & guard
-		characters[0] = new Hero(1,1);
-		characters[1] = new Drunken(8,1);
+		characters.add(new Hero(1,1));
+		characters.add(new Drunken(8,1));
+				
+		doors.add(new Door(0,5));
+		doors.add(new Door(0,6));
 
-		ogres = new LinkedList<Character>();
-
-		doors = new Door[2];
-		doors[0] = new Door(0,5);
-		doors[1] = new Door(0,6);
-
-		unlockers = new Unlocker[1];
-		unlockers[0] = new Unlocker(7,8, LEVER, true);
+		unlockers.add(new Unlocker(7,8, LEVER, true));
 
 		for(int i = 1; i < map.length-1; ++i) {
 			Arrays.fill(map[i], EMPTY);
@@ -211,19 +274,15 @@ public class Map {
 
 	public void initializeLvlTwo() {
 
-		characters = new Character[1]; //hero & ogre
-		characters[0] = new Hero(1,8, true);
-
-		ogres = new LinkedList<Character>();
+		characters.add(new Hero(1,8,true));
+		
 		//all the ogres start at the same position
 		for (int i = 0; i < 2; i++)
 			ogres.add(new Ogre(4,1));
 
-		doors = new Door[1];
-		doors[0] = new Door(0,1);
+		doors.add(new Door(0,1));
 
-		unlockers = new Unlocker[1];
-		unlockers[0] = new Unlocker(8,1, LEVER, false);
+		unlockers.add(new Unlocker(8,1, LEVER, false));
 
 		for(int i = 1; i < map.length-1; ++i) {
 			Arrays.fill(map[i], EMPTY);
@@ -278,7 +337,7 @@ public class Map {
 		if(position != -1) {
 			((Hero) c).setObjectColliding(true);
 			//if it is not a lever - is a key
-			if(!(unlockers[position].isLever())) {
+			if(!(unlockers.get(position).isLever())) {
 				//make hero symbol a KEYHERO symbol
 				c.setSymbol(KEYHERO);
 			} 
@@ -325,26 +384,26 @@ public class Map {
 	}
 
 	public void updateMap(char heroCommand) {
-		for(int i = 0; i < characters.length; ++i) {
-			char symbol = characters[i].getSymbol();
+		for(int i = 0; i < characters.size(); ++i) {
+			char symbol = characters.get(i).getSymbol();
 
 			switch(symbol) {
 			case HERO: case KEYHERO: case ARMEDHERO:
-				characters[i].updatePosition(heroCommand);
-				updateHeroMapObjects(characters[i]);
-				((Hero) characters[i]).updateHero();
+				characters.get(i).updatePosition(heroCommand);
+				updateHeroMapObjects(characters.get(i));
+				((Hero) characters.get(i)).updateHero();
 				break;
 			case GUARD: case SLEEPINGGUARD:
-				char guardCommand = ((Guard) characters[i]).updateGuard();
-				characters[i].updatePosition(guardCommand);
-				if(((Guard) characters[i]).isCaptured((Hero) characters[0]))
-					((Hero) characters[0]).setCaptured(true);
+				char guardCommand = ((Guard) characters.get(i)).updateGuard();
+				characters.get(i).updatePosition(guardCommand);
+				if(((Guard) characters.get(i)).isCaptured((Hero) characters.get(0)))
+					((Hero) characters.get(0)).setCaptured(true);
 				break;			
 			default:
 				break;
 			}
 
-			removeCharacter(characters[i]);
+			removeCharacter(characters.get(i));
 		}
 
 		//updates the ogres position
@@ -353,17 +412,17 @@ public class Map {
 			updateOgrePosition(ogres.get(i));
 
 			//if hero gets on club range, game ends
-			if(ogres.get(i).getWeapon().isHit(characters[0]))
-				((Hero) characters[0]).setFatality(true);
+			if(ogres.get(i).getWeapon().isHit(characters.get(0)))
+				((Hero) characters.get(0)).setFatality(true);
 			//if hero as weapon, ogre can get stunned
-			else if(characters[0].hasWeapon() && ((Hero) characters[0]).getWeapon().isHit(ogres.get(i))) {
+			else if(characters.get(0).hasWeapon() && ((Hero) characters.get(0)).getWeapon().isHit(ogres.get(i))) {
 				((Ogre)ogres.get(i)).setStunned(true);
 				ogres.get(i).setSymbol(STUNNEDOGRE);
-				characters[0].setToPreviousPosition();
+				characters.get(0).setToPreviousPosition();
 			} 
 			//else hero gets cought
-			else if(ogres.get(i).isCaptured((Hero) characters[0]))
-				((Hero) characters[0]).setCaptured(true);
+			else if(ogres.get(i).isCaptured((Hero) characters.get(0)))
+				((Hero) characters.get(0)).setCaptured(true);
 
 			removeCharacter(ogres.get(i));
 		}
@@ -375,14 +434,14 @@ public class Map {
 			placeCharacter(ogres.get(i));
 
 		//update other characters positions in the map
-		for(int i = characters.length; i > 0; --i) {
-			int x = characters[i-1].getX();
-			int y = characters[i-1].getY();
-			char s = characters[i-1].getSymbol();
+		for(int i = characters.size(); i > 0; --i) {
+			int x = characters.get(i-1).getX();
+			int y = characters.get(i-1).getY();
+			char s = characters.get(i-1).getSymbol();
 			//Prioritizing Club to Ogre Symbol
 			if(getMapPosition(x, y) == CLUB)
 				s = CLUB;
-			placeCharacter(characters[i-1], s);
+			placeCharacter(characters.get(i-1), s);
 		}
 	}
 
@@ -425,14 +484,14 @@ public class Map {
 	}
 
 	public void openExit() {
-		for(int j = 0; j < doors.length; j++) {
-			setMapPosition(doors[j].getX(), doors[j].getY(), STAIRS);
+		for(int j = 0; j < doors.size(); j++) {
+			setMapPosition(doors.get(j).getX(), doors.get(j).getY(), STAIRS);
 		}
 	}
 
 	public boolean isExit(int x, int y) {
-		for(int j = 0; j < doors.length; j++) {
-			if((x == doors[j].getX()) && (y == doors[j].getY()))
+		for(int j = 0; j < doors.size(); j++) {
+			if((x == doors.get(j).getX()) && (y == doors.get(j).getY()))
 				return true;
 		}
 		return false;

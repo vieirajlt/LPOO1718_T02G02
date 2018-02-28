@@ -1,6 +1,5 @@
 package logic;
 
-import java.util.LinkedList;
 
 public class Character {
 	private int X;
@@ -151,10 +150,7 @@ public class Character {
 		}
 	}
 	
-	public boolean checkOgreinPreviousPosition(LinkedList<Character> ogres)
-	{	
-		return false;
-	}
+
 	
 	public boolean isCaptured(Character c) {
 		//if distance to this is equal or inferior to 1, get captured

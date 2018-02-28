@@ -1,6 +1,6 @@
 package cli;
 
-public class gameStatusDisplay {
+public class GameStatusDisplay {
 
 	public void guardAwoken()
 	{
