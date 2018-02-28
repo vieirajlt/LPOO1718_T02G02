@@ -1,7 +1,5 @@
 package logic;
 
-import java.util.LinkedList;
-
 public class Weapon {
 
 	private int X;
@@ -9,18 +7,24 @@ public class Weapon {
 	private int prevX;
 	private int prevY;
 	private char symbol;
+	private boolean move;
 	
 	private boolean visible;
 
 	//CONSTRUCTORS
 
-	public Weapon(int newX, int newY, char newSymbol) {
+	public Weapon(int newX, int newY, char newSymbol, boolean newMove) {
 		X = newX;
 		Y = newY;
 		symbol = newSymbol;
 		prevX = -1;
 		prevY = -1;
 		visible = true;
+		move = newMove;
+	}
+	
+	public Weapon(int newX, int newY, char newSymbol) {
+		this(newX,newY,newSymbol,true);
 	}
 
 	//SET FUNCTIONS
@@ -43,6 +47,7 @@ public class Weapon {
 		setX(newX);
 		setY(newY);
 	}
+
 
 	//GET FUNCTIONS
 
@@ -93,6 +98,11 @@ public class Weapon {
 	}
 
 	public void updatePosition(char command) {
+		if(!move)
+		{
+			setToPreviousPosition();
+			return;
+		}
 		switch(command) {
 		case 'u': case 'U':
 			moveUp();
@@ -151,15 +161,4 @@ public class Weapon {
 		this.visible = visible;
 	}
 	
-	public boolean checkOgreinPreviousPosition(LinkedList<Character> ogres)
-	{
-		for (int i = 0; i < ogres.size(); i++)
-		{
-			if ((prevX == ogres.get(i).getX() && prevY == ogres.get(i).getY())
-					|| (prevX == ogres.get(i).getWeapon().getX() && prevY == ogres.get(i).getWeapon().getY()))
-				return true;
-		}
-		return false;
-	}
-
 }

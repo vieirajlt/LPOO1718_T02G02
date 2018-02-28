@@ -17,15 +17,7 @@ public class Hero extends Character{
 	//CONSTRUCTORS
 	
 	public Hero(int valX, int valY) {
-		super(valX, valY, 'H', false);
-		escaped = false;
-		objectColliding = false;
-		wallColliding = false;
-		captured = false;
-		exitOpened = false;
-		fatality = false;
-		steppedGuard = false;
-		display = new heroStatusDisplay();
+		this(valX,valY,false);
 	}
 	
 	public Hero(int valX, int valY, boolean hasClub) {

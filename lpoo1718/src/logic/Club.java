@@ -5,9 +5,13 @@ public class Club extends Weapon {
 	
 	//CONSTRUCTORS
 	
-	public Club(int newX, int newY) {
-		super(newX, newY, '*');
+	public Club(int newX, int newY, boolean newMove) {
+		super(newX, newY, '*',newMove);
 		setAboveKey(false);
+	}
+	
+	public Club(int newX, int newY) {
+		this(newX,newY,true);
 	}
 
 	//GET FUNCTIONS

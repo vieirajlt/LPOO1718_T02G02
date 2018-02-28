@@ -14,6 +14,17 @@ public class TestDungeonGameLogic {
 			{'I',' ',' ',' ','X'},
 			{'I','k',' ',' ','X'},
 			{'X','X','X','X','X'}};
+	
+	char [][] map2 = {
+			{'X','X','X','X','X','X','X','X','X'},
+			{'I',' ',' ','*','O',' ',' ','k','X'},
+			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'X','H',' ',' ',' ',' ',' ',' ','X'},
+			{'X','X','X','X','X','X','X','X','X'}};
 	@Test
 	public void testMoveHeroIntoFreeCell() {
 		Game game = new Game(map);
@@ -62,7 +73,7 @@ public class TestDungeonGameLogic {
 	}
 
 	@Test
-	public void testMoveHeroIntoOpenExit() {
+	public void testMoveHeroIntoOpenDoor() {
 		Game game = new Game(map);
 		assertEquals(game.getMap().getMapPosition(1, 1), game.getMap().getCharacters().get(0).getSymbol());
 		game.updateGame('d');
@@ -74,8 +85,128 @@ public class TestDungeonGameLogic {
 		assertEquals(game.isEndGame(),true);
 	}
 
+	
+	
+	@Test
+	public void  testHeroIsDefeatedByOgre()
+	{
+		Game game = new Game(map2);
+		assertEquals(game.getMap().getMapPosition(1, 7), game.getMap().getCharacters().get(0).getSymbol());
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('r');
+		assertEquals(((Hero)game.getMap().getCharacters().get(0)).getFatality(), true);
+	}
+	
+	
+	
+	@Test
+	public void testHeroHasKey() {
+		Game game = new Game(map2,false);
+		assertEquals(game.getMap().getMapPosition(1, 7), game.getMap().getCharacters().get(0).getSymbol());
+		game.updateGame('r');
+		game.updateGame('r');
+		game.updateGame('r');
+		game.updateGame('r');
+		game.updateGame('r');
+		game.updateGame('r');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		assertEquals(game.getMap().getMapPosition(7, 1), game.getMap().getCharacters().get(0).getSymbol());
+		assertEquals('K',game.getMap().getCharacters().get(0).getSymbol());
+	}
+	
+	@Test 
+	public void testMoveHeroIntoClosedExit() {
+		Game game = new Game(map2,false);
+		assertEquals(game.getMap().getMapPosition(1, 7), game.getMap().getCharacters().get(0).getSymbol());
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('l');
+		game.updateGame('l');
+		assertEquals(game.getMap().getMapPosition(1, 1), game.getMap().getCharacters().get(0).getSymbol());
+		assertEquals(((Hero)game.getMap().getCharacters().get(0)).getExitOpened(),false);
+		assertEquals(game.isEndGame(),false);
+	}
 
-
+	@Test
+	public void testMoveHeroIntoOpenExit() {
+		Game game = new Game(map2,false);
+		assertEquals(game.getMap().getMapPosition(1, 7), game.getMap().getCharacters().get(0).getSymbol());
+		game.updateGame('r');
+		game.updateGame('r');
+		game.updateGame('r');
+		game.updateGame('r');
+		game.updateGame('r');
+		game.updateGame('r');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		assertEquals(game.getMap().getMapPosition(7, 1), game.getMap().getCharacters().get(0).getSymbol());
+		assertEquals('K',game.getMap().getCharacters().get(0).getSymbol());
+		game.updateGame('l');
+		game.updateGame('d');
+		game.updateGame('d');
+		game.updateGame('l');
+		game.updateGame('l');
+		game.updateGame('l');
+		game.updateGame('l');
+		game.updateGame('l');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('l');
+		game.updateGame('l');
+		assertEquals(((Hero)game.getMap().getCharacters().get(0)).getExitOpened(),true);
+	}
+	
+	@Test
+	public void testGameWon() {
+		Game game = new Game(map2,false);
+		assertEquals(game.getMap().getMapPosition(1, 7), game.getMap().getCharacters().get(0).getSymbol());
+		game.updateGame('r');
+		game.updateGame('r');
+		game.updateGame('r');
+		game.updateGame('r');
+		game.updateGame('r');
+		game.updateGame('r');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('u');
+		assertEquals(game.getMap().getMapPosition(7, 1), game.getMap().getCharacters().get(0).getSymbol());
+		assertEquals('K',game.getMap().getCharacters().get(0).getSymbol());
+		game.updateGame('l');
+		game.updateGame('d');
+		game.updateGame('d');
+		game.updateGame('l');
+		game.updateGame('l');
+		game.updateGame('l');
+		game.updateGame('l');
+		game.updateGame('l');
+		game.updateGame('u');
+		game.updateGame('u');
+		game.updateGame('l');
+		game.updateGame('l');
+		assertEquals(((Hero)game.getMap().getCharacters().get(0)).getExitOpened(),true);
+		assertEquals(game.isEndGame(),true);
+	}
 
 
 

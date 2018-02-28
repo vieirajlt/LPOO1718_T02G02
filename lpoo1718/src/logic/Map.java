@@ -41,17 +41,10 @@ public class Map {
 	}
 
 	public Map(int size) {
-		map = new char[size][size];
-		level = 1; 
-		maxLevel = 2;
-		characters = new ArrayList<Character>(); 
-		ogres = new LinkedList<Character>();
-		doors = new ArrayList<Door>();
-		unlockers = new ArrayList<Unlocker>();
-		initializeMap();
+		this(size,1);
 	}
 	
-	public Map(char[][] newMap) {
+	public Map(char[][] newMap,boolean isLever) {
 		int size = newMap.length;
 		map = new char[size][size];
 		level = 1; 
@@ -60,7 +53,11 @@ public class Map {
 		ogres = new LinkedList<Character>();
 		doors = new ArrayList<Door>();
 		unlockers = new ArrayList<Unlocker>();
-		initializeMap(newMap);
+		initializeMap(newMap,isLever);
+	}
+	
+	public Map(char[][] newMap) {
+		this(newMap,true);
 	}
 
 	//GET FUNCTIONS
@@ -167,7 +164,7 @@ public class Map {
 	}
 	
 	
-	public void initializeMap(char [][] newMap) {
+	public void initializeMap(char [][] newMap, boolean isLever) {
 		this.map = newMap;
 		characters.add(new Hero(0,0));
 		for(int i = 0; i < map.length; i++)
@@ -183,19 +180,27 @@ public class Map {
 					doors.add(new Door(j,i));
 					break;
 				case LEVER:
-					unlockers.add(new Unlocker(j,i,true));
+					unlockers.add(new Unlocker(j,i,isLever));
 					break;
 				case GUARD:
 					characters.add(new Guard(j,i, false));
 					break;
 				case OGRE:
-					ogres.add(new Ogre(j,i));
+					ogres.add(new Ogre(j,i,false,false));
 					break;
 				default:
 					break;
 				}
 			}
 		}
+	}
+
+	public LinkedList<Character> getOgres() {
+		return ogres;
+	}
+
+	public void setOgres(LinkedList<Character> ogres) {
+		this.ogres = ogres;
 	}
 
 	public ArrayList<Door> getDoors() {
@@ -205,7 +210,7 @@ public class Map {
 	public void setDoors(ArrayList<Door> doors) {
 		this.doors = doors;
 	}
-
+	
 	public void initializeLvlOne() {
 
 		characters.add(new Hero(1,1));
@@ -274,14 +279,17 @@ public class Map {
 
 	public void initializeLvlTwo() {
 
+		characters.clear();
 		characters.add(new Hero(1,8,true));
 		
 		//all the ogres start at the same position
 		for (int i = 0; i < 2; i++)
 			ogres.add(new Ogre(4,1));
 
+		doors.clear();
 		doors.add(new Door(0,1));
 
+		unlockers.clear();
 		unlockers.add(new Unlocker(8,1, LEVER, false));
 
 		for(int i = 1; i < map.length-1; ++i) {

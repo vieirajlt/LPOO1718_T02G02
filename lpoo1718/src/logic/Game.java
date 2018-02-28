@@ -42,7 +42,12 @@ public class Game {
 	
 	public Game(char[][] newMapConfig)
 	{
-		map = new Map(newMapConfig);
+		this(newMapConfig,true);
+	}
+	
+	public Game(char[][] newMapConfig,boolean isLever)
+	{
+		map = new Map(newMapConfig,isLever);
 		endGame = false;
 		display = new GameStatusDisplay();
 	}
