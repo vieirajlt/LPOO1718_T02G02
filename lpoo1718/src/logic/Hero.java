@@ -21,7 +21,7 @@ public class Hero extends Character{
 	}
 	
 	public Hero(int valX, int valY, boolean hasClub) {
-		super(valX, valY, 'H', hasClub);
+		super(valX, valY, 'H', hasClub, true);
 		escaped = false;
 		objectColliding = false;
 		wallColliding = false;

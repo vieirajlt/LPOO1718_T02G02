@@ -11,10 +11,11 @@ public class Character {
 	private boolean hasWeapon;
 	private Weapon weapon;
 	private boolean showCli;
+	private boolean move;
 
 	//CONSTRUCTORS
 
-	public Character(int newX, int newY, char newSymbol, boolean hasWeapon) {
+	public Character(int newX, int newY, char newSymbol, boolean hasWeapon, boolean move) {
 		X = newX;
 		Y = newY;
 		symbol = newSymbol;
@@ -22,6 +23,7 @@ public class Character {
 		prevY = -1;
 		this.hasWeapon = hasWeapon;
 		setShowCli(true);
+		this.move = move;
 	}
 
 	//SET FUNCTIONS
@@ -168,6 +170,14 @@ public class Character {
 				return true;
 			}
 		return false;
+	}
+
+	public boolean isMove() {
+		return move;
+	}
+
+	public void setMove(boolean move) {
+		this.move = move;
 	}
 }
 

@@ -8,12 +8,17 @@ public class Drunken extends Guard{
 	private int sleepCount;
 	private int sleepMax;
 
-	public Drunken(int x, int y)
+	public Drunken(int x, int y, boolean move)
 	{
-		super(x, y);
+		super(x, y, move);
 		isSleeping = false;
 		sleepCount = 0;
 		sleepMax = 0;
+	}
+	
+	public Drunken(int x, int y)
+	{
+		this(x, y, true);
 	}
 
 	public char updateGuard() {

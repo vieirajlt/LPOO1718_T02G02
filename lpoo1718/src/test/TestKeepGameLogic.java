@@ -5,7 +5,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import logic.Game;
+import logic.Guard;
 import logic.Hero;
+import logic.Suspicious;
 
 public class TestKeepGameLogic {
 	
@@ -16,6 +18,7 @@ public class TestKeepGameLogic {
 	public void  testHeroIsDefeatedByOgre()
 	{
 		Game game = new Game(map.getMap2());
+		game.setShowCli(false);
 		assertEquals(game.getMap().getMapPosition(1, 7), game.getMap().getCharacters().get(0).getSymbol());
 		game.updateGame('u');
 		game.updateGame('u');
@@ -34,6 +37,7 @@ public class TestKeepGameLogic {
 	//2
 	public void testHeroHasKey() {
 		Game game = new Game(map.getMap2(),false);
+		game.setShowCli(false);
 		assertEquals(game.getMap().getMapPosition(1, 7), game.getMap().getCharacters().get(0).getSymbol());
 		game.updateGame('r');
 		game.updateGame('r');
@@ -55,6 +59,7 @@ public class TestKeepGameLogic {
 	//3
 	public void testMoveHeroIntoClosedExit() {
 		Game game = new Game(map.getMap2(),false);
+		game.setShowCli(false);
 		assertEquals(game.getMap().getMapPosition(1, 7), game.getMap().getCharacters().get(0).getSymbol());
 		game.updateGame('u');
 		game.updateGame('u');
@@ -73,6 +78,7 @@ public class TestKeepGameLogic {
 	//4
 	public void testMoveHeroIntoExitWithKey() {
 		Game game = new Game(map.getMap2(),false);
+		game.setShowCli(false);
 		assertEquals(game.getMap().getMapPosition(1, 7), game.getMap().getCharacters().get(0).getSymbol());
 		game.updateGame('r');
 		game.updateGame('r');
@@ -107,6 +113,7 @@ public class TestKeepGameLogic {
 	//5
 	public void testMoveHeroIntoOpenExit() {
 		Game game = new Game(map.getMap2(),false);
+		game.setShowCli(false);
 		assertEquals(game.getMap().getMapPosition(1, 7), game.getMap().getCharacters().get(0).getSymbol());
 		game.updateGame('r');
 		game.updateGame('r');
@@ -136,6 +143,49 @@ public class TestKeepGameLogic {
 		game.updateGame('l');
 		assertEquals(((Hero)game.getMap().getCharacters().get(0)).getExitOpened(),true);
 		assertEquals(game.isEndGame(),true);
+	}
+	
+	@Test(timeout=1000)
+	public void testDrunkenGuard() {
+		Game game = new Game(map.getMap(),false);
+		game.setShowCli(false);
+		game.getMap().setGuardType('d');
+		
+		boolean isSleeping = false;
+		boolean hasWoken = false;
+		
+		Guard g = (Guard) game.getMap().getGuard();
+		
+		while(!isSleeping || !hasWoken) {
+			game.updateGame('u');
+			if(g.getSymbol() == 'g')
+				isSleeping = true;
+			if(isSleeping && g.getSymbol() == 'G')
+				hasWoken = true;
+		}
+		
+		assertEquals(isSleeping && hasWoken,true);
+		
+	}
+	
+	@Test(timeout=1000)
+	public void testSuspiciousGuard() {
+		Game game = new Game(map.getMap(),false);
+		game.setShowCli(false);
+		game.getMap().setGuardType('s');
+		
+		boolean hasReversed = false;
+		
+		Suspicious s = (Suspicious) game.getMap().getGuard();
+		
+		while(!hasReversed) {
+			game.updateGame('u');
+			if(s.isReverse()) {
+				hasReversed = true;
+				assertEquals(s.isReverse(),true);
+			}
+		}
+		
 	}
 	
 }

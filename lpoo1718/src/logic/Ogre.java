@@ -8,20 +8,18 @@ public class Ogre extends Character {
 	
 	private boolean stunned;
 	private int stunCount;
-	private boolean move;
 	
 	private ogreStatusDisplay display;
 
 	//CONSTRUCTOR
 	
 	public Ogre(int newX, int newY, boolean newMove, boolean MoveClub) {
-		super(newX, newY, 'O', true);
+		super(newX, newY, 'O', true, newMove);
 		//club starts at right side of Ogre
 		Club club = new Club(newX-1, newY,MoveClub);
 		this.setWeapon(club);
 		stunned = false;
 		stunCount = 0;
-		move = newMove;
 		display = new ogreStatusDisplay();
 	}
 	
@@ -33,12 +31,8 @@ public class Ogre extends Character {
 
 	//SET FUNCTIONS
 	
-	public void setMove(boolean move) {
-		this.move = move;
-	}
-	
 	public void setRandomMovement(boolean op) {
-		move = op;
+		this.setMove(op);
 		this.getWeapon().setMove(op);
 	}
 
@@ -46,7 +40,7 @@ public class Ogre extends Character {
 	
 	public char getNextMove() {
 		char retChar = 'E';
-		if (!move)
+		if (!isMove())
 			return retChar;
 		Random rand = new Random();
 

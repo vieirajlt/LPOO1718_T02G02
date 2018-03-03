@@ -40,12 +40,7 @@ public class TestOgreRandomMovement {
 				left = true;
 			else if(oX+1 == oPx && oY == oPy)
 				rigth = true;
-			else if(game.isEndGame()) {
-				game = new Game(map.getMap2());
-				game.setShowCli(false);
-				game.getMap().getOgres().getLast().setRandomMovement(true);
-				game.updateGame('d');
-			} else
+			else
 				fail("Not moving");
 
 		}
@@ -70,10 +65,6 @@ public class TestOgreRandomMovement {
 			wY = w.getY();
 			oX = o.getX();
 			oY = o.getY();
-			System.out.println(wX);
-			System.out.println(wY);
-			System.out.println(oX);
-			System.out.println(oX);
 			
 			if(wX == oX && wY-1 == oY)
 				down = true;
@@ -83,12 +74,7 @@ public class TestOgreRandomMovement {
 				left = true;
 			else if(wX+1 == oX && wY == oY)
 				rigth = true;
-			else if(game.isEndGame()) {
-				game = new Game(map.getMap2());
-				game.setShowCli(false);
-				game.getMap().getOgres().getLast().setRandomMovement(true);
-				game.updateGame('d');
-			} else
+			else
 				fail("Not moving");
 		}
 		

@@ -13,6 +13,7 @@ public class TestDungeonGameLogic {
 	//1
 	public void testMoveHeroIntoFreeCell() {
 		Game game = new Game(map.getMap());
+		game.setShowCli(false);
 		assertEquals(game.getMap().getMapPosition(1, 1), game.getMap().getCharacters().get(0).getSymbol());
 		game.updateGame('d');
 		assertEquals(game.getMap().getMapPosition(1, 2), game.getMap().getCharacters().get(0).getSymbol());	
@@ -22,6 +23,7 @@ public class TestDungeonGameLogic {
 	//2
 	public void testMoveHeroIntoWall() {
 		Game game = new Game(map.getMap());
+		game.setShowCli(false);
 		assertEquals(game.getMap().getMapPosition(1, 1), game.getMap().getCharacters().get(0).getSymbol());
 		game.updateGame('u');
 		assertEquals(game.getMap().getMapPosition(1, 1), game.getMap().getCharacters().get(0).getSymbol());	
@@ -32,6 +34,7 @@ public class TestDungeonGameLogic {
 	//3
 	public void testHeroIsCapturedByGuard() {
 		Game game = new Game(map.getMap());
+		game.setShowCli(false);
 		assertEquals(game.getMap().getMapPosition(1, 1), game.getMap().getCharacters().get(0).getSymbol());
 		game.updateGame('r');
 		assertEquals(game.getMap().getMapPosition(2, 1), game.getMap().getCharacters().get(0).getSymbol());	
@@ -42,6 +45,7 @@ public class TestDungeonGameLogic {
 	//4
 	public void testMoveHeroIntoClosedDoor() {
 		Game game = new Game(map.getMap());
+		game.setShowCli(false);
 		assertEquals(game.getMap().getMapPosition(1, 1), game.getMap().getCharacters().get(0).getSymbol());
 		game.updateGame('d');
 		game.updateGame('l');
@@ -52,6 +56,7 @@ public class TestDungeonGameLogic {
 	//5
 	public void testMoveHeroIntoLever() {
 		Game game = new Game(map.getMap());
+		game.setShowCli(false);
 		assertEquals(game.getMap().getMapPosition(1, 1), game.getMap().getCharacters().get(0).getSymbol());
 		game.updateGame('d');
 		game.updateGame('d');
@@ -65,6 +70,7 @@ public class TestDungeonGameLogic {
 	//6
 	public void testMoveHeroIntoOpenDoor() {
 		Game game = new Game(map.getMap());
+		game.setShowCli(false);
 		assertEquals(game.getMap().getMapPosition(1, 1), game.getMap().getCharacters().get(0).getSymbol());
 		game.updateGame('d');
 		game.updateGame('d');

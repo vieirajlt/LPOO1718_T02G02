@@ -43,7 +43,7 @@ public class Map {
 	public Map(int size) {
 		this(size,1);
 	}
-	
+
 	public Map(char[][] newMap,boolean isLever) {
 		int size = newMap.length;
 		map = new char[size][size];
@@ -55,7 +55,7 @@ public class Map {
 		unlockers = new ArrayList<Unlocker>();
 		initializeMap(newMap,isLever);
 	}
-	
+
 	public Map(char[][] newMap) {
 		this(newMap,true);
 	}
@@ -87,6 +87,33 @@ public class Map {
 
 
 	//SET FUNCTIONS
+	public void setGuardType(char type) {
+		if(this.level != 1)
+			return;
+		int x = characters.get(1).getX();
+		int y = characters.get(1).getY();
+		characters.remove(1);
+
+		switch(type) {
+		case 'd': case 'D':
+			characters.add(new Drunken(x, y, false));
+			break;
+		case 'r': case 'R':
+			characters.add(new Rookie(x, y, false));
+			break;
+		case 's': case 'S':
+			characters.add(new Suspicious(x, y, false));
+			break;
+		default:
+			characters.add(new Guard(x, y));
+			break;
+		}
+	}
+	
+	public Character getGuard() {
+		return characters.get(1);
+	}
+
 	public void setMapPosition(int x, int y, char c) {
 		map[y][x] = c;
 	}
@@ -104,7 +131,7 @@ public class Map {
 		for(Character c : characters) {
 			c.setShowCli(showCli);
 		}
-		
+
 		for(Ogre o : ogres) {
 			o.setShowCli(showCli);
 		}
@@ -170,8 +197,8 @@ public class Map {
 			break;
 		}
 	}
-	
-	
+
+
 	public void initializeMap(char [][] newMap, boolean isLever) {
 		this.map = newMap;
 		characters.add(new Hero(0,0));
@@ -203,13 +230,13 @@ public class Map {
 			}
 		}
 	}
-	
+
 	public void placeClub(Ogre o, char[][] map) {
 		int x = o.getX();
 		int y = o.getY();
-		
+
 		int wX = x, wY = y;
-		
+
 		if(map[y+1][x] == CLUB)
 			++wY;
 		else if(map[y-1][x] == CLUB)
@@ -218,7 +245,7 @@ public class Map {
 			++wX;
 		else if(map[y][x-1] == CLUB)
 			--wX;
-		
+
 		o.getWeapon().setPosition(wX, wY);
 		//ogres.getLast().getWeapon().setPosition(wX, wY);
 	}
@@ -238,12 +265,12 @@ public class Map {
 	public void setDoors(ArrayList<Door> doors) {
 		this.doors = doors;
 	}
-	
+
 	public void initializeLvlOne() {
 
 		characters.add(new Hero(1,1));
 		characters.add(new Drunken(8,1));
-				
+
 		doors.add(new Door(0,5));
 		doors.add(new Door(0,6));
 
@@ -309,7 +336,7 @@ public class Map {
 
 		characters.clear();
 		characters.add(new Hero(1,8,true));
-		
+
 		//all the ogres start at the same position
 		for (int i = 0; i < 2; i++)
 			ogres.add(new Ogre(4,1));
@@ -484,7 +511,7 @@ public class Map {
 	public void placeCharacter(Character c) {
 		placeCharacter(c, c.getSymbol());
 	}
-	
+
 	public void placeCharacter(Character c, char s) {
 		int X;
 		int Y;
