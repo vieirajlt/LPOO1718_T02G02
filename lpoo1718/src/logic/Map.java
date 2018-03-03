@@ -19,10 +19,10 @@ public class Map {
 	private static final char CLUB = '*';
 	private static final char KEYCLUB = '$'; //club that hit key at a certain point
 
-	private char map[][];
+	private char map[][]; //[Y][X]
 	private ArrayList<Door> doors;	
 	private ArrayList<Character> characters;
-	private LinkedList<Character> ogres;
+	private LinkedList<Ogre> ogres;
 	private ArrayList<Unlocker> unlockers;
 	private int level;
 	private int maxLevel;
@@ -34,7 +34,7 @@ public class Map {
 		level = lvl;
 		maxLevel = 2;
 		characters = new ArrayList<Character>(); //hero & guard
-		ogres = new LinkedList<Character>();
+		ogres = new LinkedList<Ogre>();
 		doors = new ArrayList<Door>();
 		unlockers = new ArrayList<Unlocker>();
 		initializeMap();
@@ -50,7 +50,7 @@ public class Map {
 		level = 1; 
 		maxLevel = 1;
 		characters = new ArrayList<Character>(); 
-		ogres = new LinkedList<Character>();
+		ogres = new LinkedList<Ogre>();
 		doors = new ArrayList<Door>();
 		unlockers = new ArrayList<Unlocker>();
 		initializeMap(newMap,isLever);
@@ -100,7 +100,15 @@ public class Map {
 		maxLevel = newMax;
 	}
 
-
+	public void setShowCli(boolean showCli) {
+		for(Character c : characters) {
+			c.setShowCli(showCli);
+		}
+		
+		for(Ogre o : ogres) {
+			o.setShowCli(showCli);
+		}
+	}
 
 	//COLLISIONS RELATED FUNCTIONS
 
@@ -187,6 +195,7 @@ public class Map {
 					break;
 				case OGRE:
 					ogres.add(new Ogre(j,i,false,false));
+					placeClub(ogres.getLast(), newMap);
 					break;
 				default:
 					break;
@@ -194,12 +203,31 @@ public class Map {
 			}
 		}
 	}
+	
+	public void placeClub(Ogre o, char[][] map) {
+		int x = o.getX();
+		int y = o.getY();
+		
+		int wX = x, wY = y;
+		
+		if(map[y+1][x] == CLUB)
+			++wY;
+		else if(map[y-1][x] == CLUB)
+			--wY;
+		else if(map[y][x+1] == CLUB)
+			++wX;
+		else if(map[y][x-1] == CLUB)
+			--wX;
+		
+		o.getWeapon().setPosition(wX, wY);
+		//ogres.getLast().getWeapon().setPosition(wX, wY);
+	}
 
-	public LinkedList<Character> getOgres() {
+	public LinkedList<Ogre> getOgres() {
 		return ogres;
 	}
 
-	public void setOgres(LinkedList<Character> ogres) {
+	public void setOgres(LinkedList<Ogre> ogres) {
 		this.ogres = ogres;
 	}
 
@@ -364,7 +392,7 @@ public class Map {
 		if(c.getWeapon().getSymbol() == KEYCLUB)
 			map[Y][X] = LEVER;
 		else
-			map[Y][X] = EMPTY;
+			map[Y][X] = EMPTY; 
 
 		char ogreCommand;
 		char clubCommand;
@@ -419,8 +447,8 @@ public class Map {
 		{
 			updateOgrePosition(ogres.get(i));
 
-			//if hero gets on club range, game ends
-			if(ogres.get(i).getWeapon().isHit(characters.get(0)))
+			//if hero gets on club range, game ends || if hero is captured
+			if(ogres.get(i).getWeapon().isHit(characters.get(0)) || ogres.get(i).isCaptured(characters.get(0)))
 				((Hero) characters.get(0)).setFatality(true);
 			//if hero as weapon, ogre can get stunned
 			else if(characters.get(0).hasWeapon() && ((Hero) characters.get(0)).getWeapon().isHit(ogres.get(i))) {

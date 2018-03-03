@@ -3,11 +3,37 @@ package logic;
 import cli.GameStatusDisplay;
 
 public class Game {
-	private  boolean endGame;
+	private boolean endGame;
+	private boolean showCli;
 	private static GameStatusDisplay display;
 	private Map map;
 
+	public Game()
+	{
+		int mapSize = 10;
+		map = new Map(mapSize);
+		endGame = false;
+		display = new GameStatusDisplay();
+		setShowCli(true);
+	}
 	
+	public Game(char[][] newMapConfig)
+	{
+		this(newMapConfig,true);
+	}
+	
+	public Game(char[][] newMapConfig,boolean isLever)
+	{
+		map = new Map(newMapConfig,isLever);
+		endGame = false;
+		display = new GameStatusDisplay();
+	}
+	
+	public void setShowCli(boolean showCli) {
+		this.showCli = showCli;
+		map.setShowCli(showCli);
+	}
+
 	public boolean isEndGame() {
 		return endGame;
 	}
@@ -31,26 +57,6 @@ public class Game {
 	public void setMap(Map map) {
 		this.map = map;
 	}
-
-	public Game()
-	{
-		int mapSize = 10;
-		map = new Map(mapSize);
-		endGame = false;
-		display = new GameStatusDisplay();
-	}
-	
-	public Game(char[][] newMapConfig)
-	{
-		this(newMapConfig,true);
-	}
-	
-	public Game(char[][] newMapConfig,boolean isLever)
-	{
-		map = new Map(newMapConfig,isLever);
-		endGame = false;
-		display = new GameStatusDisplay();
-	}
 	
 	
 	//GAME MANAGEMENT FUNCTION
@@ -60,19 +66,19 @@ public class Game {
 		map.updateMapDisplay();
 		if(((Hero) map.getCharacters().get(0)).hasSteppedGuard()) {
 			endGame = true;
-			display.guardAwoken();
+			display.guardAwoken(showCli);
 		} else if(((Hero) map.getCharacters().get(0)).getCaptured()) {
-			display.captured();
+			display.captured(showCli);
 			endGame = true;
-		} else if(((Hero) map.getCharacters().get(0)).getFatality()) {
-			display.fatality();
+		} else if(((Hero) map.getCharacters().get(0)).getFatality()) { 
+			display.fatality(showCli);
 			endGame = true;
 		} else if(((Hero) map.getCharacters().get(0)).getEscaped()) {
 			if(map.getLevel() != map.getMaxLevel()) {
-				display.nextLevel();
+				display.nextLevel(showCli);
 				map.getToNextLevel();
 			} else {
-				display.gameWon();
+				display.gameWon(showCli);
 				endGame = true;
 			}
 		}

@@ -2,23 +2,27 @@ package cli;
 
 public class heroStatusDisplay {
 
-	public void wallColliding()
+	public void wallColliding(boolean show)
 	{
-		System.out.println("Ouch, try not to faceplant next time!");
+		if(show)
+			System.out.println("Ouch, try not to faceplant next time!");
 	}
-	
-	public void keyColliding()
+
+	public void keyColliding(boolean show)
 	{
-		System.out.println("Key aquired.");
+		if(show)
+			System.out.println("Key aquired.");
 	}
-	
-	public void doorColliding()
+
+	public void doorColliding(boolean show)
 	{
-		System.out.println("Exit opened, time to escape!");
+		if(show)
+			System.out.println("Exit opened, time to escape!");
 	}
-	
-	public void exitOpen()
+
+	public void exitOpen(boolean show)
 	{
-		System.out.println("Exit opened, time to escape!");
+		if(show)
+			System.out.println("Exit opened, time to escape!");
 	}
 }

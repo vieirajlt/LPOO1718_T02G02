@@ -2,28 +2,33 @@ package cli;
 
 public class GameStatusDisplay {
 
-	public void guardAwoken()
+	public void guardAwoken(boolean show)
 	{
-		System.out.println("If you step the guard like that, how do you expect to escape?");
+		if(show)
+			System.out.println("If you step the guard like that, how do you expect to escape?");
 	}
-	
-	public void captured()
+
+	public void captured(boolean show)
 	{
-		System.out.println("You got captured, better luck next time!");
+		if(show)
+			System.out.println("You got captured, better luck next time!");
 	}
-	
-	public void fatality()
+
+	public void fatality(boolean show)
 	{
-		System.out.println("You got deadly hit, better luck next time!");
+		if(show)
+			System.out.println("You got deadly hit, better luck next time!");
 	}
-	
-	public void nextLevel()
+
+	public void nextLevel(boolean show)
 	{
-		System.out.println("Your challenge is not over...");
+		if(show)
+			System.out.println("Your challenge is not over...");
 	}
-	
-	public void gameWon()
+
+	public void gameWon(boolean show)
 	{
-		System.out.println("Congratz, you did it!");
+		if(show)
+			System.out.println("Congratz, you did it!");
 	}
 }

@@ -7,9 +7,10 @@ public class Character {
 	private int prevX;
 	private int prevY;
 	private char symbol;
-	
+
 	private boolean hasWeapon;
 	private Weapon weapon;
+	private boolean showCli;
 
 	//CONSTRUCTORS
 
@@ -20,9 +21,13 @@ public class Character {
 		prevX = -1;
 		prevY = -1;
 		this.hasWeapon = hasWeapon;
+		setShowCli(true);
 	}
 
 	//SET FUNCTIONS
+	public void setShowCli(boolean showCli) {
+		this.showCli = showCli;
+	}
 
 	public void setSymbol(char newSymbol) {
 		symbol = newSymbol;
@@ -37,21 +42,24 @@ public class Character {
 		prevY = Y;
 		Y = newY;
 	}
-	
+
 	public void setPosition(int newX, int newY) {
 		setX(newX);
 		setY(newY);
 	}
-	
+
 	public void setHasWeapon(boolean hasWeapon) {
 		this.hasWeapon = hasWeapon;
 	}
-	
+
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
 	}
 
 	//GET FUNCTIONS
+	public boolean isShowCli() {
+		return showCli;
+	}
 
 	public int getX() {
 		return X;
@@ -72,15 +80,15 @@ public class Character {
 	public char getSymbol() {
 		return symbol;
 	}
-	
+
 	public boolean hasWeapon() {
 		return hasWeapon;
 	}
-	
+
 	public Weapon getWeapon() {
 		return weapon;
 	}
-	
+
 	//POSITION COMMANDS
 
 	public void moveUp() {
@@ -149,14 +157,16 @@ public class Character {
 			return 'E';
 		}
 	}
-	
 
-	
+
+
 	public boolean isCaptured(Character c) {
-		//if distance to this is equal or inferior to 1, get captured
-		if((Math.abs(c.getY()-this.getY()) + Math.abs(c.getX()-this.getX())) <= 1) {
-			return true;
-		}
+		//if c has weapon, he will stun this, instead of being captured
+		if(!c.hasWeapon())
+			//if distance to this is equal or inferior to 1, get captured
+			if((Math.abs(c.getY()-this.getY()) + Math.abs(c.getX()-this.getX())) <= 1) {
+				return true;
+			}
 		return false;
 	}
 }

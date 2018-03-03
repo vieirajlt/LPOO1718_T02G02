@@ -47,6 +47,10 @@ public class Weapon {
 		setX(newX);
 		setY(newY);
 	}
+	
+	public void setMove(boolean move) {
+		this.move = move;
+	}
 
 
 	//GET FUNCTIONS

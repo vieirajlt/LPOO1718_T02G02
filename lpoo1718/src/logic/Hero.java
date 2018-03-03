@@ -111,16 +111,16 @@ public class Hero extends Character{
 	public void updateHero() {
 		
 		if(wallColliding) {
-			display.wallColliding();
+			display.wallColliding(isShowCli());
 			super.setToPreviousPosition();
 			if(super.hasWeapon())
 				super.getWeapon().setToPreviousPosition();
 			wallColliding = false;
 		} else if(objectColliding) {
 			if(super.getSymbol() == 'K')
-				display.keyColliding();
+				display.keyColliding(isShowCli());
 			else {
-				display.doorColliding();
+				display.doorColliding(isShowCli());
 				super.setToPreviousPosition();
 				if(super.hasWeapon())
 					super.getWeapon().setToPreviousPosition();
@@ -131,13 +131,13 @@ public class Hero extends Character{
 			if(exitOpened) {
 				escaped = true;
 			} else if(super.getSymbol() == 'K') {
-				display.exitOpen();
+				display.exitOpen(isShowCli());
 				super.setToPreviousPosition();
 				if(super.hasWeapon())
 					super.getWeapon().setToPreviousPosition();
 				exitOpened = true;
 			} else {//is like a closed door
-				display.wallColliding();
+				display.wallColliding(isShowCli());
 				super.setToPreviousPosition();
 				if(super.hasWeapon())
 					super.getWeapon().setToPreviousPosition();

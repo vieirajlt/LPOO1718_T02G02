@@ -32,6 +32,15 @@ public class Ogre extends Character {
 	//GET FUNCTIONS
 
 	//SET FUNCTIONS
+	
+	public void setMove(boolean move) {
+		this.move = move;
+	}
+	
+	public void setRandomMovement(boolean op) {
+		move = op;
+		this.getWeapon().setMove(op);
+	}
 
 	//POSITIONS RELATED FUNCTIONS
 	
@@ -63,7 +72,7 @@ public class Ogre extends Character {
 		if(stunned) {
 			super.setSymbol('8');
 			++stunCount;
-			display.stunned(2-stunCount);
+			display.stunned(2-stunCount, isShowCli());
 			stunCount %= 2;
 			if(stunCount == 0)
 				stunned = false;
@@ -86,7 +95,7 @@ public class Ogre extends Character {
 	public void setStunned(boolean stunned) {
 		if(this.stunned != stunned) {
 			if(stunned)
-				display.justStunned();
+				display.justStunned(isShowCli());
 			this.stunned = stunned;
 		}
 	}
