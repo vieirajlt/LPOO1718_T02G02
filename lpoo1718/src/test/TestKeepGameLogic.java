@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import logic.Game;
 import logic.Guard;
+import logic.Club;
+import logic.Drunken;
 import logic.Hero;
 import logic.Suspicious;
 
@@ -19,6 +21,7 @@ public class TestKeepGameLogic {
 	{
 		Game game = new Game(map.getMap2());
 		game.setShowCli(false);
+		assertEquals(((Club)game.getMap().getOgres().get(0).getWeapon()).isAboveKey(),false);
 		assertEquals(game.getMap().getMapPosition(1, 7), game.getMap().getCharacters().get(0).getSymbol());
 		game.updateGame('u');
 		game.updateGame('u');
@@ -27,7 +30,7 @@ public class TestKeepGameLogic {
 		game.updateGame('u');
 		game.updateGame('u');
 		game.updateGame('r');
-		
+		assertEquals(game.getMap().getOgres().get(0).isStunned(),false);
 		assertEquals(((Hero)game.getMap().getCharacters().get(0)).getFatality(), true);
 	}
 	
@@ -155,7 +158,6 @@ public class TestKeepGameLogic {
 		boolean hasWoken = false;
 		
 		Guard g = (Guard) game.getMap().getGuard();
-		
 		while(!isSleeping || !hasWoken) {
 			game.updateGame('u');
 			if(g.getSymbol() == 'g')

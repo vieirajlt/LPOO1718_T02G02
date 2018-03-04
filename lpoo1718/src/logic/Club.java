@@ -1,7 +1,7 @@
 package logic;
 
 public class Club extends Weapon {
-	private boolean aboveKey;
+	private boolean aboveKey ;
 	
 	//CONSTRUCTORS
 	

@@ -159,6 +159,12 @@ public class Character {
 			return 'E';
 		}
 	}
+	
+	//used for testing only
+	public char revCommand(char command)
+	{
+		return reverseCommand(command);
+	}
 
 
 

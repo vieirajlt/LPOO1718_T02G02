@@ -178,7 +178,7 @@ public class Map {
 		int Y = c.getY();
 		for (int i = 0; i < unlockers.size(); i++)
 		{
-			if (unlockers.get(i).hasReackedUnlocker(X, Y))
+			if (unlockers.get(i).hasReackedUnlocker(X, Y) && this.getMapPosition(X, Y) == LEVER)
 				return i;
 		}
 		return -1;

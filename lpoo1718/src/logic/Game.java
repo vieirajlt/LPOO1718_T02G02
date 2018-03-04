@@ -29,6 +29,12 @@ public class Game {
 		display = new GameStatusDisplay();
 	}
 	
+	public boolean isShowCli()
+	{
+		return this.showCli;
+	}
+	
+	
 	public void setShowCli(boolean showCli) {
 		this.showCli = showCli;
 		map.setShowCli(showCli);

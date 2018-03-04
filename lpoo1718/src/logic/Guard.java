@@ -64,5 +64,10 @@ public class Guard extends Character{
 		}
 		return command;
 	}
-
+	
+	public char[] getRoute()
+	{
+		return this.route;
+	}
+	
 }

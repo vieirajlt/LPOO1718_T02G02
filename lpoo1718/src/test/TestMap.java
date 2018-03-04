@@ -19,6 +19,7 @@ public class TestMap {
 			{'X',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X','H',' ',' ',' ',' ',' ',' ','X'},
 			{'X','X','X','X','X','X','X','X','X'}};
+
 	
 	public char[][] getMap() {
 		return map;
@@ -27,4 +28,5 @@ public class TestMap {
 	public char[][] getMap2() {
 		return map2;
 	}
+
 }

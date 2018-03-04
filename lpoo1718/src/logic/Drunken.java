@@ -43,7 +43,6 @@ public class Drunken extends Guard{
 			isSleeping = false;
 			ret = super.updateGuard();
 		}
-
 		updateDrunkenStatus();
 		return ret;
 
@@ -57,17 +56,19 @@ public class Drunken extends Guard{
 
 	}
 	
-	public boolean isCaptured(Hero hero) {
+	
+	public boolean isCaptured(Character c) {
 		if(isSleeping) {
 			//if guard is stepped, he awakes
-			if((Math.abs(hero.getY()-super.getY()) + Math.abs(hero.getX()-super.getX())) < 1) {
+			if((Math.abs(c.getY()-super.getY()) + Math.abs(c.getX()-super.getX())) < 1) {
 				isSleeping = false;
-				hero.setSteppedGuard(true);
+				((Hero)c).setSteppedGuard(true);
 				return true;
 			}
 			return false;
-		} else
-			return super.isCaptured(hero);
+		} else {
+			return super.isCaptured(c);
+		}
 	}
 
 

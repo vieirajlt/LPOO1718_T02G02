@@ -149,6 +149,13 @@ public class Weapon {
 		}
 	}
 	
+	//used for testing
+	public char revCommand(char command)
+	{
+		return reverseCommand(command);
+	}
+	
+	
 	public boolean isHit(Character c) {
 		//if distance to weapon is equal or inferior to 1, get fatality
 		if((Math.abs(c.getY()-this.getY()) + Math.abs(c.getX()-this.getX())) <= 1) {
