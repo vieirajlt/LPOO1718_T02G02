@@ -8,6 +8,8 @@ public class Drunken extends Guard{
 	private int sleepCount;
 	private int sleepMax;
 
+	/*******************CONSTRUCTORS*******************/
+	
 	public Drunken(int x, int y, boolean move)
 	{
 		super(x, y, move);
@@ -20,7 +22,37 @@ public class Drunken extends Guard{
 	{
 		this(x, y, true);
 	}
+	
+	/*******************GET fUNCTIONS*******************/
+	
+	public boolean isSleeping() {
+		return isSleeping;
+	}
 
+	public int getSleepCount() {
+		return sleepCount;
+	}
+
+	public int getSleepMax() {
+		return sleepMax;
+	}
+
+	/*******************SET fUNCTIONS*******************/
+
+	public void setSleeping(boolean isSleeping) {
+		this.isSleeping = isSleeping;
+	}
+	
+	public void setSleepCount(int sleepCount) {
+		this.sleepCount = sleepCount;
+	}
+	
+	public void setSleepMax(int sleepMax) {
+		this.sleepMax = sleepMax;
+	}
+	
+	/*******************UPDATES MANAGEMENT*******************/
+	
 	public char updateGuard() {
 		Random rand = new Random();
 		int num = rand.nextInt(20);
@@ -70,30 +102,5 @@ public class Drunken extends Guard{
 			return super.isCaptured(c);
 		}
 	}
-
-	public boolean isSleeping() {
-		return isSleeping;
-	}
-
-	public void setSleeping(boolean isSleeping) {
-		this.isSleeping = isSleeping;
-	}
-
-	public int getSleepCount() {
-		return sleepCount;
-	}
-
-	public void setSleepCount(int sleepCount) {
-		this.sleepCount = sleepCount;
-	}
-
-	public int getSleepMax() {
-		return sleepMax;
-	}
-
-	public void setSleepMax(int sleepMax) {
-		this.sleepMax = sleepMax;
-	}
-
 
 }

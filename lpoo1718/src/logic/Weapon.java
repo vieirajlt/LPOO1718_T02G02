@@ -11,7 +11,7 @@ public class Weapon {
 
 	private boolean visible;
 
-	//CONSTRUCTORS
+	/*******************CONSTRUCTORS*******************/
 
 	public Weapon(int newX, int newY, char newSymbol, boolean newMove) {
 		X = newX;
@@ -22,39 +22,13 @@ public class Weapon {
 		visible = true;
 		move = newMove;
 	}
-	
+
 	public Weapon(int newX, int newY, char newSymbol) {
 		this(newX,newY,newSymbol,true);
 	}
 
-	//SET FUNCTIONS
+	/*******************GET FUNCTIONS*******************/
 
-	public void setSymbol(char newSymbol) {
-		symbol = newSymbol;
-	}
-
-	public void setX(int newX) {
-		prevX = X;
-		X = newX;
-	}
-
-	public void setY(int newY) {
-		prevY = Y;
-		Y = newY;
-	}
-
-	public void setPosition(int newX, int newY) {
-		setX(newX);
-		setY(newY);
-	}
-	
-	public void setMove(boolean move) {
-		this.move = move;
-	}
-
-
-	//GET FUNCTIONS
-	
 	public boolean isMove() {
 		return move;
 	}
@@ -79,7 +53,40 @@ public class Weapon {
 		return symbol;
 	}
 
-	//POSITION COMMANDS
+	public boolean isVisible() {
+		return visible;
+	}
+
+	/*******************SET FUNCTIONS*******************/
+
+	public void setSymbol(char newSymbol) {
+		symbol = newSymbol;
+	}
+
+	public void setX(int newX) {
+		prevX = X;
+		X = newX;
+	}
+
+	public void setY(int newY) {
+		prevY = Y;
+		Y = newY;
+	}
+
+	public void setPosition(int newX, int newY) {
+		setX(newX);
+		setY(newY);
+	}
+
+	public void setMove(boolean move) {
+		this.move = move;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
+	/*******************UPDATES MANAGEMENT*******************/
 
 	public void moveUp() {
 		prevY = Y;
@@ -137,7 +144,7 @@ public class Weapon {
 		Y = prevY;
 	}
 
-	protected char reverseCommand(char command) {
+	public char reverseCommand(char command) {
 		switch(command)
 		{
 		case 'u': case 'U':
@@ -152,14 +159,7 @@ public class Weapon {
 			return 'E';
 		}
 	}
-	
-	//used for testing
-	public char revCommand(char command)
-	{
-		return reverseCommand(command);
-	}
-	
-	
+
 	public boolean isHit(Character c) {
 		//if distance to weapon is equal or inferior to 1, get fatality
 		if((Math.abs(c.getY()-this.getY()) + Math.abs(c.getX()-this.getX())) <= 1) {
@@ -168,12 +168,4 @@ public class Weapon {
 		return false;
 	}
 
-	public boolean isVisible() {
-		return visible;
-	}
-
-	public void setVisible(boolean visible) {
-		this.visible = visible;
-	}
-	
 }

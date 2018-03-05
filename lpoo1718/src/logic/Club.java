@@ -3,7 +3,7 @@ package logic;
 public class Club extends Weapon {
 	private boolean aboveKey ;
 	
-	//CONSTRUCTORS
+	/*******************CONSTRUCTORS*******************/
 	
 	public Club(int newX, int newY, boolean newMove) {
 		super(newX, newY, '*',newMove);
@@ -14,17 +14,16 @@ public class Club extends Weapon {
 		this(newX,newY,true);
 	}
 
-	//GET FUNCTIONS
+	/*******************GET FUNCTIONS*******************/
 	
 	public boolean isAboveKey() {
 		return aboveKey;
 	}
 
-	//SET FUNCTIONS
+	/*******************SET FUNCTIONS*******************/
 	
 	public void setAboveKey(boolean aboveKey) {
 		this.aboveKey = aboveKey;
 	}
-	
-	
+		
 }

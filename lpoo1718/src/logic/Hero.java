@@ -14,7 +14,7 @@ public class Hero extends Character{
 	static private heroStatusDisplay display = new heroStatusDisplay();
 	
 	
-	//CONSTRUCTORS
+	/*******************CONSTRUCTORS*******************/
 	
 	public Hero(int valX, int valY) {
 		this(valX,valY,false);
@@ -37,7 +37,7 @@ public class Hero extends Character{
 		}
 	}
 
-	//GET FUNCTIONS
+	/*******************GET FUNCTIONS*******************/
 	
 	public boolean getEscaped() {
 		return escaped;
@@ -71,7 +71,7 @@ public class Hero extends Character{
 		return steppedGuard;
 	}
 	
-	//SET FUNCTIONS
+	/*******************SET FUNCTIONS*******************/
 	
 	public void setEscaped(boolean newE) {
 		escaped = newE;
@@ -105,7 +105,7 @@ public class Hero extends Character{
 		this.steppedGuard = steppedGuard;
 	}
 	
-	//HERO MANAGEMENT FUNCTION
+	/*******************HERO MANAGEMENT FUNCTION*******************/
 	
 	public void updateHero() {
 		

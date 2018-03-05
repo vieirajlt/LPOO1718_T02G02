@@ -3,6 +3,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import cli.MapStatusDisplay;
+
 public class Map {
 	private static final char EMPTY = ' ';
 	private static final char WALL = 'X';
@@ -26,8 +28,11 @@ public class Map {
 	private ArrayList<Unlocker> unlockers;
 	private int level;
 	private int maxLevel;
+	
+	private boolean showCli;
+	static private MapStatusDisplay display = new MapStatusDisplay();
 
-	//CONSTRUCTORS
+	/*******************CONSTRUCTORS*******************/
 
 	public Map(int size, int lvl) {
 		map = new char[size][size];
@@ -37,6 +42,7 @@ public class Map {
 		ogres = new LinkedList<Ogre>();
 		doors = new ArrayList<Door>();
 		unlockers = new ArrayList<Unlocker>();
+		showCli = true;
 		initializeMap();
 	}
 
@@ -53,6 +59,7 @@ public class Map {
 		ogres = new LinkedList<Ogre>();
 		doors = new ArrayList<Door>();
 		unlockers = new ArrayList<Unlocker>();
+		showCli = true;
 		initializeMap(newMap,isLever);
 	}
 
@@ -60,132 +67,7 @@ public class Map {
 		this(newMap,true);
 	}
 
-	//GET FUNCTIONS
-	public char getMapPosition(int x, int y) {
-		return map[y][x];
-	}
-
-	public ArrayList<Character> getCharacters() {
-		return characters;
-	}
-
-	public int getLevel() {
-		return level;
-	}
-
-	public int getMaxLevel() {
-		return maxLevel;
-	}
-
-	public ArrayList<Unlocker> getUnlockers() {
-		return unlockers;
-	}
-
-	public void setUnlockers(ArrayList<Unlocker> unlockers) {
-		this.unlockers = unlockers;
-	}
-
-
-	//SET FUNCTIONS
-	public void setGuardType(char type) {
-		if(this.level != 1)
-			return;
-		int x = characters.get(1).getX();
-		int y = characters.get(1).getY();
-		characters.remove(1);
-
-		switch(type) {
-		case 'd': case 'D':
-			characters.add(new Drunken(x, y, false));
-			break;
-		case 'r': case 'R':
-			characters.add(new Rookie(x, y, false));
-			break;
-		case 's': case 'S':
-			characters.add(new Suspicious(x, y, false));
-			break;
-		default:
-			characters.add(new Guard(x, y));
-			break;
-		}
-	}
-
-	public Character getGuard() {
-		return characters.get(1);
-	}
-
-	public void setMapPosition(int x, int y, char c) {
-		map[y][x] = c;
-	}
-
-	public void setLevel(int newLvl) {
-		level = newLvl;
-		initializeMap();
-	}
-
-	public void setMaxLevel(int newMax) {
-		maxLevel = newMax;
-	}
-
-	public void setShowCli(boolean showCli) {
-		for(Character c : characters) {
-			c.setShowCli(showCli);
-		}
-
-		for(Ogre o : ogres) {
-			o.setShowCli(showCli);
-		}
-	}
-
-	//COLLISIONS RELATED FUNCTIONS
-
-	public boolean isWallColliding(Character c) {
-		int X = c.getX();
-		int Y = c.getY();
-
-		if((getMapPosition(X, Y) == WALL) || (getMapPosition(X, Y) == DOOR))
-			return true;
-		else if((c.getSymbol() == OGRE) && (getMapPosition(X, Y) == LEVER))
-			return true;
-		return false;
-	}
-
-	public boolean isClubColliding(Character c) {
-		int X = c.getWeapon().getX();
-		int Y = c.getWeapon().getY();
-
-		if((getMapPosition(X, Y) == WALL) || (getMapPosition(X, Y) == DOOR))
-			return true;
-		else if(getMapPosition(X, Y) == LEVER) {
-			((Club) c.getWeapon()).setAboveKey(true);
-			return false;
-		} else
-			((Club) c.getWeapon()).setAboveKey(false);
-		return false;
-	}
-
-	public boolean isExitColliding(Character c) {
-		int X = c.getX();
-		int Y = c.getY();
-
-		if(isExit(X, Y))
-			return true;
-		return false;
-	}
-
-	public int hasReachedLever(Character c) {
-		int X = c.getX();
-		int Y = c.getY();
-		for (int i = 0; i < unlockers.size(); i++)
-		{
-			if (unlockers.get(i).hasReackedUnlocker(X, Y) && this.getMapPosition(X, Y) == LEVER)
-				return i;
-		}
-		return -1;
-
-	}
-
-	//MAP INITIALIZATION FUNCTIONS
+	/*******************MAP INITIALIZATION FUNCTIONS*******************/
 
 	public void initializeMap() {
 		switch(level) {
@@ -199,7 +81,6 @@ public class Map {
 			break;
 		}
 	}
-
 
 	public void initializeMap(char [][] newMap, boolean isLever) {
 		this.map = newMap;
@@ -250,22 +131,6 @@ public class Map {
 
 		o.getWeapon().setPosition(wX, wY);
 		//ogres.getLast().getWeapon().setPosition(wX, wY);
-	}
-
-	public LinkedList<Ogre> getOgres() {
-		return ogres;
-	}
-
-	public void setOgres(LinkedList<Ogre> ogres) {
-		this.ogres = ogres;
-	}
-
-	public ArrayList<Door> getDoors() {
-		return doors;
-	}
-
-	public void setDoors(ArrayList<Door> doors) {
-		this.doors = doors;
 	}
 
 	public void initializeLvlOne() {
@@ -377,8 +242,164 @@ public class Map {
 		//define lever position LEVER
 		map[1][8] = LEVER;
 	}
+	
+	/*******************GET FUNCTIONS*******************/
+	
+	public char getMapPosition(int x, int y) {
+		return map[y][x];
+	}
 
-	//MAP MANAGEMENTS FUNCTIONS
+	public ArrayList<Character> getCharacters() {
+		return characters;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public int getMaxLevel() {
+		return maxLevel;
+	}
+
+	public ArrayList<Unlocker> getUnlockers() {
+		return unlockers;
+	}
+
+	public void setUnlockers(ArrayList<Unlocker> unlockers) {
+		this.unlockers = unlockers;
+	}
+	
+	public char[][] getMapScheme() {
+		return map;
+	}
+	
+	public boolean isShowCli() {
+		return showCli;
+	}
+
+	public Character getGuard() {
+		return characters.get(1);
+	}
+	
+	public LinkedList<Ogre> getOgres() {
+		return ogres;
+	}
+	
+	public ArrayList<Door> getDoors() {
+		return doors;
+	}
+	
+	/*******************SET FUNCTIONS*******************/
+	
+	public void setGuardType(char type) {
+		if(this.level != 1)
+			return;
+		int x = characters.get(1).getX();
+		int y = characters.get(1).getY();
+		characters.remove(1);
+
+		switch(type) {
+		case 'd': case 'D':
+			characters.add(new Drunken(x, y, false));
+			break;
+		case 'r': case 'R':
+			characters.add(new Rookie(x, y, false));
+			break;
+		case 's': case 'S':
+			characters.add(new Suspicious(x, y, false));
+			break;
+		default:
+			characters.add(new Guard(x, y));
+			break;
+		}
+	}
+
+	public void setMapPosition(int x, int y, char c) {
+		map[y][x] = c;
+	}
+
+	public void setLevel(int newLvl) {
+		level = newLvl;
+		initializeMap();
+	}
+
+	public void setMaxLevel(int newMax) {
+		maxLevel = newMax;
+	}
+
+	public void setShowCli(boolean showCli) {
+		this.showCli = showCli;
+		
+		for(Character c : characters) {
+			c.setShowCli(showCli);
+		}
+
+		for(Ogre o : ogres) {
+			o.setShowCli(showCli);
+		}
+	}
+
+	public void setMapScheme(char[][] map) {
+		this.map = map;
+	}
+	
+	public void setOgres(LinkedList<Ogre> ogres) {
+		this.ogres = ogres;
+	}
+	
+	public void setDoors(ArrayList<Door> doors) {
+		this.doors = doors;
+	}
+	
+	/*******************COLLISIONS RELATED FUNCTIONS*******************/
+
+	public boolean isWallColliding(Character c) {
+		int X = c.getX();
+		int Y = c.getY();
+
+		if((getMapPosition(X, Y) == WALL) || (getMapPosition(X, Y) == DOOR))
+			return true;
+		else if((c.getSymbol() == OGRE) && (getMapPosition(X, Y) == LEVER))
+			return true;
+		return false;
+	}
+
+	public boolean isClubColliding(Character c) {
+		int X = c.getWeapon().getX();
+		int Y = c.getWeapon().getY();
+
+		if((getMapPosition(X, Y) == WALL) || (getMapPosition(X, Y) == DOOR))
+			return true;
+		else if(getMapPosition(X, Y) == LEVER) {
+			((Club) c.getWeapon()).setAboveKey(true);
+			return false;
+		} else
+			((Club) c.getWeapon()).setAboveKey(false);
+		return false;
+	}
+
+	public boolean isExitColliding(Character c) {
+		int X = c.getX();
+		int Y = c.getY();
+
+		if(isExit(X, Y))
+			return true;
+		return false;
+	}
+
+	public int hasReachedLever(Character c) {
+		int X = c.getX();
+		int Y = c.getY();
+		for (int i = 0; i < unlockers.size(); i++)
+		{
+			if (unlockers.get(i).hasReackedUnlocker(X, Y) && this.getMapPosition(X, Y) == LEVER)
+				return i;
+		}
+		return -1;
+
+	}
+
+	/*******************MAP MANAGEMENTS FUNCTIONS*******************/
 
 	public void getToNextLevel() {
 		++level;
@@ -562,24 +583,11 @@ public class Map {
 		}
 		return false;
 	}
-
-	//MAP PRINTING
-
-	public void printMap() {
-		int size = map.length;
-
-		for(int i = 0; i < size; ++i) {
-			System.out.println(map[i]);
-		}
-
-	}
-
-	public char[][] getMapScheme() {
-		return map;
-	}
-
-	public void setMapScheme(char[][] map) {
-		this.map = map;
+	
+	/*******************DISPLAY*******************/
+	
+	public void displayMap() {
+		display.printMap(map, showCli);
 	}
 
 }

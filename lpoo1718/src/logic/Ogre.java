@@ -11,7 +11,7 @@ public class Ogre extends Character {
 	
 	static private ogreStatusDisplay display = new ogreStatusDisplay();
 
-	//CONSTRUCTOR
+	/*******************CONSTRUCTOR*******************/
 	
 	public Ogre(int newX, int newY, boolean newMove, boolean MoveClub) {
 		super(newX, newY, 'O', true, newMove);
@@ -26,16 +26,36 @@ public class Ogre extends Character {
 		this(newX,newY,true,true);
 	}
 	
-	//GET FUNCTIONS
+	/*******************GET FUNCTIONS*******************/
+	
+	public boolean isStunned() {
+		return stunned;
+	}
 
-	//SET FUNCTIONS
+	public int getStunCount() {
+		return stunCount;
+	}
+
+	/*******************SET FUNCTIONS*******************/
 	
 	public void setRandomMovement(boolean op) {
 		this.setMove(op);
 		this.getWeapon().setMove(op);
 	}
+	
+	public void setStunned(boolean stunned) {
+		if(this.stunned != stunned) {
+			if(stunned)
+				display.justStunned(isShowCli());
+			this.stunned = stunned;
+		}
+	}
+	
+	public void setStunCount(int stunCount) {
+		this.stunCount = stunCount;
+	}
 
-	//POSITIONS RELATED FUNCTIONS
+	/*******************UPDATES MANAGEMENT*******************/
 	
 	public char getNextMove() {
 		char retChar = 'E';
@@ -79,29 +99,5 @@ public class Ogre extends Character {
 		super.getWeapon().setPosition(X, Y);
 		super.getWeapon().updatePosition(cClub);
 	}
-	
-	
-	public boolean isStunned() {
-		return stunned;
-	}
-
-	public void setStunned(boolean stunned) {
-		if(this.stunned != stunned) {
-			if(stunned)
-				display.justStunned(isShowCli());
-			this.stunned = stunned;
-		}
-	}
-
-	public int getStunCount() {
-		return stunCount;
-	}
-
-	public void setStunCount(int stunCount) {
-		this.stunCount = stunCount;
-	}
-	
-
-	//HERO RELATED FUNCTIONS
 
 }

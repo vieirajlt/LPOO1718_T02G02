@@ -4,7 +4,7 @@ public class Guard extends Character{
 	private char route[];
 	private int routeStep;
 
-	//CONSTRUCTORS
+	/*******************CONSTRUCTORS*******************/
 
 	public Guard(int newX, int newY) {
 		this(newX, newY, true);
@@ -14,8 +14,29 @@ public class Guard extends Character{
 		super(newX, newY, 'G', false, move);
 		initializeRoute();
 	}
+	
+	/*******************GET FUNTIONS*******************/
+	
+	public char[] getRoute()
+	{
+		return this.route;
+	}
+	
+	public int getRouteStep() {
+		return routeStep;
+	}
+	
+	/*******************SET FUNCTIONS*******************/
+	
+	public void setRouteStep(int routeStep) {
+		this.routeStep = routeStep;
+	}
 
-	//POSITIONS RELATED FUNCTIONS
+	public void setRoute(char[] route) {
+		this.route = route;
+	}
+
+	/*******************UPDATES MANAGEMENT*******************/
 
 	public void initializeRoute() {
 		routeStep = 0;
@@ -63,19 +84,6 @@ public class Guard extends Character{
 			routeStep %= route.length;
 		}
 		return command;
-	}
-	
-	public char[] getRoute()
-	{
-		return this.route;
-	}
-
-	public int getRouteStep() {
-		return routeStep;
-	}
-
-	public void setRouteStep(int routeStep) {
-		this.routeStep = routeStep;
 	}
 	
 }

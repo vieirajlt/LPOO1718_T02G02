@@ -17,7 +17,7 @@ public class Character {
 	
 	static private CharacterStatusDisplay display = new CharacterStatusDisplay();
 
-	//CONSTRUCTORS
+	/*******************CONSTRUCTORS*******************/
 
 	public Character(int newX, int newY, char newSymbol, boolean hasWeapon, boolean move) {
 		X = newX;
@@ -30,39 +30,8 @@ public class Character {
 		this.move = move;
 	}
 
-	//SET FUNCTIONS
-	public void setShowCli(boolean showCli) {
-		this.showCli = showCli;
-	}
-
-	public void setSymbol(char newSymbol) {
-		symbol = newSymbol;
-	}
-
-	public void setX(int newX) {
-		prevX = X;
-		X = newX;
-	}
-
-	public void setY(int newY) {
-		prevY = Y;
-		Y = newY;
-	}
-
-	public void setPosition(int newX, int newY) {
-		setX(newX);
-		setY(newY);
-	}
-
-	public void setHasWeapon(boolean hasWeapon) {
-		this.hasWeapon = hasWeapon;
-	}
-
-	public void setWeapon(Weapon weapon) {
-		this.weapon = weapon;
-	}
-
-	//GET FUNCTIONS
+	/*******************GET FUNCTIONS*******************/
+	
 	public boolean isShowCli() {
 		return showCli;
 	}
@@ -94,8 +63,49 @@ public class Character {
 	public Weapon getWeapon() {
 		return weapon;
 	}
+	
+	public boolean isMove() {
+		return move;
+	}
+	
+	/*******************SET FUNCTIONS*******************/
+	
+	public void setShowCli(boolean showCli) {
+		this.showCli = showCli;
+	}
 
-	//POSITION COMMANDS
+	public void setSymbol(char newSymbol) {
+		symbol = newSymbol;
+	}
+
+	public void setX(int newX) {
+		prevX = X;
+		X = newX;
+	}
+
+	public void setY(int newY) {
+		prevY = Y;
+		Y = newY;
+	}
+
+	public void setPosition(int newX, int newY) {
+		setX(newX);
+		setY(newY);
+	}
+
+	public void setHasWeapon(boolean hasWeapon) {
+		this.hasWeapon = hasWeapon;
+	}
+
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
+	}
+	
+	public void setMove(boolean move) {
+		this.move = move;
+	}
+
+	/*******************POSITION COMMANDS*******************/
 
 	public void moveUp() {
 		prevY = Y;
@@ -148,7 +158,7 @@ public class Character {
 		Y = prevY;
 	}
 
-	protected char reverseCommand(char command) {
+	public char reverseCommand(char command) {
 		switch(command)
 		{
 		case 'u': case 'U':
@@ -163,14 +173,6 @@ public class Character {
 			return 'E';
 		}
 	}
-	
-	//used for testing only
-	public char revCommand(char command)
-	{
-		return reverseCommand(command);
-	}
-
-
 
 	public boolean isCaptured(Character c) {
 		//if c has weapon, he will stun this, instead of being captured
@@ -182,12 +184,5 @@ public class Character {
 		return false;
 	}
 
-	public boolean isMove() {
-		return move;
-	}
-
-	public void setMove(boolean move) {
-		this.move = move;
-	}
 }
 

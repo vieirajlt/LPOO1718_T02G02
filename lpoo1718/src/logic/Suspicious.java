@@ -6,6 +6,8 @@ public class Suspicious extends Guard {
 	
 	private boolean isReverse;
 	
+	/*******************CONSTRUCTORS*******************/
+	
 	public Suspicious(int x, int y, boolean move)
 	{
 		super(x, y, move);
@@ -17,13 +19,19 @@ public class Suspicious extends Guard {
 		this(x, y, true);
 	}
 	
+	/*******************GET FUNTIONS*******************/
+	
 	public boolean isReverse() {
 		return isReverse;
 	}
 
+	/*******************SET FUNTIONS*******************/
+	
 	public void setReverse(boolean isReverse) {
 		this.isReverse = isReverse;
 	}
+	
+	/*******************UPDATE MANAGEMENT*******************/
 	
 	public char updateGuard()
 	{

@@ -11,7 +11,7 @@ public class GuidedProject {
 		Scanner scanCommand = new Scanner(System.in);
 		char command = 0;
 		
-		game.getMap().printMap();
+		game.getMap().displayMap();
 		
 		//game cycle
 		while(!(game.isEndGame())){
@@ -33,7 +33,7 @@ public class GuidedProject {
 			}
 			
 			game.updateGame(command);
-			game.getMap().printMap();
+			game.getMap().displayMap();
 		}
 		
 		System.out.println("Closing...");

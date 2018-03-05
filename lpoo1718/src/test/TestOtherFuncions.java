@@ -15,19 +15,19 @@ public class TestOtherFuncions {
 	@Test 
 	public void testReverseCommandFunctions() {
 		Character c = new Character(1,1,'c',false,false);
-		assertEquals(c.revCommand('r'), 'l');
-		assertEquals(c.revCommand('l'), 'r');
-		assertEquals(c.revCommand('u'), 'd');
-		assertEquals(c.revCommand('d'), 'u');
-		assertEquals(c.revCommand('e'), 'E');
+		assertEquals(c.reverseCommand('r'), 'l');
+		assertEquals(c.reverseCommand('l'), 'r');
+		assertEquals(c.reverseCommand('u'), 'd');
+		assertEquals(c.reverseCommand('d'), 'u');
+		assertEquals(c.reverseCommand('e'), 'E');
 
 		
 		Weapon w = new Weapon(1,1,'w',true);
-		assertEquals(w.revCommand('r'), 'l');
-		assertEquals(w.revCommand('l'), 'r');
-		assertEquals(w.revCommand('u'), 'd');
-		assertEquals(w.revCommand('d'), 'u');
-		assertEquals(w.revCommand('e'), 'E');
+		assertEquals(w.reverseCommand('r'), 'l');
+		assertEquals(w.reverseCommand('l'), 'r');
+		assertEquals(w.reverseCommand('u'), 'd');
+		assertEquals(w.reverseCommand('d'), 'u');
+		assertEquals(w.reverseCommand('e'), 'E');
 	}
 	
 	@Test

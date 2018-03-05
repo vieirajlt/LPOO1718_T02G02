@@ -9,6 +9,8 @@ public class Game {
 	
 	private static GameStatusDisplay display = new GameStatusDisplay();
 
+	/*******************CONSTRUCTORS*******************/
+	
 	public Game()
 	{
 		int mapSize = 10;
@@ -28,43 +30,45 @@ public class Game {
 		endGame = false;
 	}
 	
+	/*******************GET FUNTIONS*******************/
+	
 	public boolean isShowCli()
 	{
 		return this.showCli;
 	}
 	
+	public boolean isEndGame() {
+		return endGame;
+	}
+	
+	public GameStatusDisplay getDisplay() {
+		return display;
+	}
+	
+	public Map getMap() {
+		return map;
+	}
+	
+	/*******************SET FUNCTIONS*******************/
 	
 	public void setShowCli(boolean showCli) {
 		this.showCli = showCli;
 		map.setShowCli(showCli);
 	}
 
-	public boolean isEndGame() {
-		return endGame;
-	}
-
 	public  void setEndGame(boolean endGame) {
 		this.endGame = endGame;
-	}
-
-	public GameStatusDisplay getDisplay() {
-		return display;
 	}
 
 	public void setDisplay(GameStatusDisplay display) {
 		Game.display = display;
 	}
 
-	public Map getMap() {
-		return map;
-	}
-
 	public void setMap(Map map) {
 		this.map = map;
 	}
 	
-	
-	//GAME MANAGEMENT FUNCTION
+	/*******************GAME MANAGEMENT FUNCTION*******************/
 	public void updateGame(char command) {
 		
 		map.updateMap(command);
