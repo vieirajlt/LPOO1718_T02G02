@@ -11,7 +11,7 @@ public class Hero extends Character{
 	private boolean fatality;
 	private boolean steppedGuard;
 	
-	private heroStatusDisplay display;
+	static private heroStatusDisplay display = new heroStatusDisplay();
 	
 	
 	//CONSTRUCTORS
@@ -35,7 +35,6 @@ public class Hero extends Character{
 			super.setSymbol('A');
 			super.getWeapon().setVisible(false);
 		}
-		display = new heroStatusDisplay();
 	}
 
 	//GET FUNCTIONS
@@ -154,5 +153,5 @@ public class Hero extends Character{
 			this.getWeapon().setPosition(super.getX(), super.getY());
 		}
 	}
-	
+
 }

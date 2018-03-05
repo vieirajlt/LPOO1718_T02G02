@@ -8,7 +8,7 @@ public class Weapon {
 	private int prevY;
 	private char symbol;
 	private boolean move;
-	
+
 	private boolean visible;
 
 	//CONSTRUCTORS
@@ -54,6 +54,10 @@ public class Weapon {
 
 
 	//GET FUNCTIONS
+	
+	public boolean isMove() {
+		return move;
+	}
 
 	public int getX() {
 		return X;

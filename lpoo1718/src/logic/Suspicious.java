@@ -6,14 +6,6 @@ public class Suspicious extends Guard {
 	
 	private boolean isReverse;
 	
-	public boolean isReverse() {
-		return isReverse;
-	}
-
-	public void setReverse(boolean isReverse) {
-		this.isReverse = isReverse;
-	}
-
 	public Suspicious(int x, int y, boolean move)
 	{
 		super(x, y, move);
@@ -23,6 +15,14 @@ public class Suspicious extends Guard {
 	public Suspicious(int x, int y)
 	{
 		this(x, y, true);
+	}
+	
+	public boolean isReverse() {
+		return isReverse;
+	}
+
+	public void setReverse(boolean isReverse) {
+		this.isReverse = isReverse;
 	}
 	
 	public char updateGuard()

@@ -69,5 +69,13 @@ public class Guard extends Character{
 	{
 		return this.route;
 	}
+
+	public int getRouteStep() {
+		return routeStep;
+	}
+
+	public void setRouteStep(int routeStep) {
+		this.routeStep = routeStep;
+	}
 	
 }

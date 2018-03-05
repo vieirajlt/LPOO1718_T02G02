@@ -71,5 +71,29 @@ public class Drunken extends Guard{
 		}
 	}
 
+	public boolean isSleeping() {
+		return isSleeping;
+	}
+
+	public void setSleeping(boolean isSleeping) {
+		this.isSleeping = isSleeping;
+	}
+
+	public int getSleepCount() {
+		return sleepCount;
+	}
+
+	public void setSleepCount(int sleepCount) {
+		this.sleepCount = sleepCount;
+	}
+
+	public int getSleepMax() {
+		return sleepMax;
+	}
+
+	public void setSleepMax(int sleepMax) {
+		this.sleepMax = sleepMax;
+	}
+
 
 }

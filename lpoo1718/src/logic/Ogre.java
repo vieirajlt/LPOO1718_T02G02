@@ -9,7 +9,7 @@ public class Ogre extends Character {
 	private boolean stunned;
 	private int stunCount;
 	
-	private ogreStatusDisplay display;
+	static private ogreStatusDisplay display = new ogreStatusDisplay();
 
 	//CONSTRUCTOR
 	
@@ -20,7 +20,6 @@ public class Ogre extends Character {
 		this.setWeapon(club);
 		stunned = false;
 		stunCount = 0;
-		display = new ogreStatusDisplay();
 	}
 	
 	public Ogre(int newX, int newY) {

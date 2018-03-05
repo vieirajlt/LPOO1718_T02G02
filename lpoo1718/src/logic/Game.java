@@ -5,15 +5,15 @@ import cli.GameStatusDisplay;
 public class Game {
 	private boolean endGame;
 	private boolean showCli;
-	private static GameStatusDisplay display;
 	private Map map;
+	
+	private static GameStatusDisplay display = new GameStatusDisplay();
 
 	public Game()
 	{
 		int mapSize = 10;
 		map = new Map(mapSize);
 		endGame = false;
-		display = new GameStatusDisplay();
 		setShowCli(true);
 	}
 	
@@ -26,7 +26,6 @@ public class Game {
 	{
 		map = new Map(newMapConfig,isLever);
 		endGame = false;
-		display = new GameStatusDisplay();
 	}
 	
 	public boolean isShowCli()

@@ -1,5 +1,7 @@
 package logic;
 
+import cli.CharacterStatusDisplay;
+
 
 public class Character {
 	private int X;
@@ -12,6 +14,8 @@ public class Character {
 	private Weapon weapon;
 	private boolean showCli;
 	private boolean move;
+	
+	static private CharacterStatusDisplay display = new CharacterStatusDisplay();
 
 	//CONSTRUCTORS
 
@@ -134,7 +138,7 @@ public class Character {
 		case 'E':
 			break;
 		default:
-			System.out.println("Wrong input\n");
+			display.wrongCommandInput(showCli);
 			return;
 		}
 	}

@@ -109,7 +109,7 @@ public class Map {
 			break;
 		}
 	}
-	
+
 	public Character getGuard() {
 		return characters.get(1);
 	}
@@ -194,6 +194,8 @@ public class Map {
 			break;
 		case 2:
 			initializeLvlTwo();
+			break;
+		default:
 			break;
 		}
 	}
@@ -570,6 +572,14 @@ public class Map {
 			System.out.println(map[i]);
 		}
 
+	}
+
+	public char[][] getMapScheme() {
+		return map;
+	}
+
+	public void setMapScheme(char[][] map) {
+		this.map = map;
 	}
 
 }
