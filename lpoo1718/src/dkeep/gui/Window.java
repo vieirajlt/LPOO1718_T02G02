@@ -74,12 +74,14 @@ public class Window {
 		
 		JLabel lblNumberOfOgres = new JLabel("Number of Ogres");
 		GridBagConstraints gbc_lblNumberOfOgres = new GridBagConstraints();
+		gbc_lblNumberOfOgres.anchor = GridBagConstraints.WEST;
 		gbc_lblNumberOfOgres.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNumberOfOgres.gridx = 0;
 		gbc_lblNumberOfOgres.gridy = 0;
 		frame.getContentPane().add(lblNumberOfOgres, gbc_lblNumberOfOgres);
 		
 		textField = new JTextField();
+		textField.setBackground(Color.WHITE);
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.fill = GridBagConstraints.BOTH;
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
@@ -90,6 +92,7 @@ public class Window {
 		
 		JLabel lblGuardPersonality = new JLabel("Guard Personality");
 		GridBagConstraints gbc_lblGuardPersonality = new GridBagConstraints();
+		gbc_lblGuardPersonality.anchor = GridBagConstraints.WEST;
 		gbc_lblGuardPersonality.insets = new Insets(0, 0, 5, 5);
 		gbc_lblGuardPersonality.gridx = 0;
 		gbc_lblGuardPersonality.gridy = 1;
