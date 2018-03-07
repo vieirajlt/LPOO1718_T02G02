@@ -30,6 +30,14 @@ public class Game {
 		endGame = false;
 	}
 	
+	public Game(int ogreNumber, char guardPersonality)
+	{
+		int mapSize = 10;
+		map = new Map(mapSize,ogreNumber, guardPersonality);
+		endGame = false;
+		setShowCli(true);
+	}
+	
 	/*******************GET FUNTIONS*******************/
 	
 	public boolean isShowCli()
@@ -66,6 +74,18 @@ public class Game {
 
 	public void setMap(Map map) {
 		this.map = map;
+	}
+	
+	/*******************TO STRING*******************/
+	
+	public String toString()
+	{
+		String res = "";
+		for (int i = 0 ; i < map.getMapScheme().length; i++)
+		{
+			res += String.valueOf(map.getMapScheme()[i]) + "\n";
+		}
+		return res;
 	}
 	
 	/*******************GAME MANAGEMENT FUNCTION*******************/

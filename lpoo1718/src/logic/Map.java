@@ -49,6 +49,19 @@ public class Map {
 	public Map(int size) {
 		this(size,1);
 	}
+	
+	public Map(int size, int ogreNumber, char guardPersonality)
+	{
+		map = new char[size][size];
+		level = 1;
+		maxLevel = 2;
+		characters = new ArrayList<Character>(); //hero & guard
+		ogres = new LinkedList<Ogre>();
+		doors = new ArrayList<Door>();
+		unlockers = new ArrayList<Unlocker>();
+		showCli = true;
+		initializeMap(ogreNumber, guardPersonality);
+	}
 
 	public Map(char[][] newMap,boolean isLever) {
 		int size = newMap.length;
@@ -81,6 +94,21 @@ public class Map {
 			break;
 		}
 	}
+	
+	public void initializeMap(int ogreNumber, char guardPersonality)
+	{
+		switch(level) {
+		case 1:
+			initializeLvlOne(guardPersonality);
+			break;
+		case 2:
+			initializeLvlTwo(ogreNumber);
+			break;
+		default:
+			break;
+		}
+	}
+	
 
 	public void initializeMap(char [][] newMap, boolean isLever) {
 		this.map = newMap;
@@ -133,11 +161,26 @@ public class Map {
 		//ogres.getLast().getWeapon().setPosition(wX, wY);
 	}
 
-	public void initializeLvlOne() {
+	public void initializeLvlOne(char guardPersonality) {
 
 		characters.add(new Hero(1,1));
-		characters.add(new Drunken(8,1));
-
+		//characters.add(new Drunken(8,1));
+		switch(guardPersonality)
+		{
+		case 's' : case  'S':
+			characters.add(new Suspicious(8,1));
+			break;
+		case 'd' : case  'D':
+			characters.add(new Drunken(8,1));
+			break;
+		case 'r' : case  'R':
+			characters.add(new Rookie(8,1));
+			break;
+		default:
+			characters.add(new Rookie(8,1));
+			break;
+		}
+		
 		doors.add(new Door(0,5));
 		doors.add(new Door(0,6));
 
@@ -198,14 +241,19 @@ public class Map {
 		//define lever position LEVER
 		map[8][7] = LEVER;
 	}
+	
+	
+	public void initializeLvlOne() {
+		initializeLvlOne('d');
+	}
 
-	public void initializeLvlTwo() {
+	public void initializeLvlTwo(int ogreNumber) {
 
 		characters.clear();
 		characters.add(new Hero(1,8,true));
 
 		//all the ogres start at the same position
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < ogreNumber; i++)
 			ogres.add(new Ogre(4,1));
 
 		doors.clear();
@@ -241,6 +289,11 @@ public class Map {
 
 		//define lever position LEVER
 		map[1][8] = LEVER;
+	}
+	
+	public void initializeLvlTwo()
+	{
+		initializeLvlTwo(2);
 	}
 	
 	/*******************GET FUNCTIONS*******************/
