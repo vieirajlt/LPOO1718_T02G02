@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import logic.GuardPersonality;
+import java.awt.Color;
 
 public class Window {
 
@@ -67,8 +68,8 @@ public class Window {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{118, 139, 19, 0, 0, 0, 75, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
 		
 		JLabel lblNumberOfOgres = new JLabel("Number of Ogres");
@@ -106,11 +107,10 @@ public class Window {
 		JTextArea textArea = new JTextArea();
 		textArea.setFont(new Font("Courier New", Font.PLAIN, 13));
 		GridBagConstraints gbc_textArea = new GridBagConstraints();
-		gbc_textArea.anchor = GridBagConstraints.WEST;
 		gbc_textArea.gridheight = 8;
-		gbc_textArea.gridwidth = 4;
+		gbc_textArea.gridwidth = 2;
 		gbc_textArea.insets = new Insets(0, 0, 5, 5);
-		gbc_textArea.fill = GridBagConstraints.VERTICAL;
+		gbc_textArea.fill = GridBagConstraints.BOTH;
 		gbc_textArea.gridx = 0;
 		gbc_textArea.gridy = 2;
 		frame.getContentPane().add(textArea, gbc_textArea);
@@ -178,7 +178,6 @@ public class Window {
 		GridBagConstraints gbc_lblYouVaPlay = new GridBagConstraints();
 		gbc_lblYouVaPlay.anchor = GridBagConstraints.WEST;
 		gbc_lblYouVaPlay.gridwidth = 7;
-		gbc_lblYouVaPlay.insets = new Insets(0, 0, 0, 5);
 		gbc_lblYouVaPlay.gridx = 0;
 		gbc_lblYouVaPlay.gridy = 10;
 		frame.getContentPane().add(lblYouVaPlay, gbc_lblYouVaPlay);
