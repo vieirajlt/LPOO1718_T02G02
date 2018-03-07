@@ -164,7 +164,6 @@ public class Map {
 	public void initializeLvlOne(char guardPersonality) {
 
 		characters.add(new Hero(1,1));
-		//characters.add(new Drunken(8,1));
 		switch(guardPersonality)
 		{
 		case 's' : case  'S':
@@ -251,10 +250,14 @@ public class Map {
 
 		characters.clear();
 		characters.add(new Hero(1,8,true));
+		
+		System.out.println(ogreNumber);
 
 		//all the ogres start at the same position
 		for (int i = 0; i < ogreNumber; i++)
 			ogres.add(new Ogre(4,1));
+		
+		System.out.println(ogres.size());
 
 		doors.clear();
 		doors.add(new Door(0,1));

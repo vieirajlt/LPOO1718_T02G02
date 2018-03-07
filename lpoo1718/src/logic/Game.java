@@ -30,8 +30,25 @@ public class Game {
 		endGame = false;
 	}
 	
-	public Game(int ogreNumber, char guardPersonality)
+	public Game(int ogreNumber, GuardPersonality gp)
 	{
+		char guardPersonality;
+		switch(gp) {
+		case DRUNKEN:
+			guardPersonality = 'd';
+			break;
+		case ROOKIE:
+			guardPersonality = 'r';
+			break;
+		case SUSPICIOUS:
+			guardPersonality = 's';
+			break;
+		default:
+			guardPersonality = 'e';
+			break;
+		
+		}
+		
 		int mapSize = 10;
 		map = new Map(mapSize,ogreNumber, guardPersonality);
 		endGame = false;
