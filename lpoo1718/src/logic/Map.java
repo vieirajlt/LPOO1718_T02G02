@@ -28,6 +28,8 @@ public class Map {
 	private ArrayList<Unlocker> unlockers;
 	private int level;
 	private int maxLevel;
+	private int ogreNumber;
+	private char guardPersonality;
 	
 	private boolean showCli;
 	static private MapStatusDisplay display = new MapStatusDisplay();
@@ -43,6 +45,8 @@ public class Map {
 		doors = new ArrayList<Door>();
 		unlockers = new ArrayList<Unlocker>();
 		showCli = true;
+		ogreNumber = 2; //by default the number of ogres is 2
+		guardPersonality = 'r'; //by default the guard's personality is rookie
 		initializeMap();
 	}
 
@@ -60,7 +64,9 @@ public class Map {
 		doors = new ArrayList<Door>();
 		unlockers = new ArrayList<Unlocker>();
 		showCli = true;
-		initializeMap(ogreNumber, guardPersonality);
+		this.ogreNumber = ogreNumber;
+		this.guardPersonality = guardPersonality;
+		initializeMap();
 	}
 
 	public Map(char[][] newMap,boolean isLever) {
@@ -73,6 +79,8 @@ public class Map {
 		doors = new ArrayList<Door>();
 		unlockers = new ArrayList<Unlocker>();
 		showCli = true;
+		ogreNumber = 2; //by default the number of ogres is 2
+		guardPersonality = 'r'; //by default the guard's personality is rookie
 		initializeMap(newMap,isLever);
 	}
 
@@ -95,21 +103,6 @@ public class Map {
 		}
 	}
 	
-	public void initializeMap(int ogreNumber, char guardPersonality)
-	{
-		switch(level) {
-		case 1:
-			initializeLvlOne(guardPersonality);
-			break;
-		case 2:
-			initializeLvlTwo(ogreNumber);
-			break;
-		default:
-			break;
-		}
-	}
-	
-
 	public void initializeMap(char [][] newMap, boolean isLever) {
 		this.map = newMap;
 		characters.add(new Hero(0,0));
@@ -161,7 +154,7 @@ public class Map {
 		//ogres.getLast().getWeapon().setPosition(wX, wY);
 	}
 
-	public void initializeLvlOne(char guardPersonality) {
+	public void initializeLvlOne() {
 
 		characters.add(new Hero(1,1));
 		switch(guardPersonality)
@@ -242,11 +235,9 @@ public class Map {
 	}
 	
 	
-	public void initializeLvlOne() {
-		initializeLvlOne('d');
-	}
+	
 
-	public void initializeLvlTwo(int ogreNumber) {
+	public void initializeLvlTwo() {
 
 		characters.clear();
 		characters.add(new Hero(1,8,true));
@@ -294,10 +285,7 @@ public class Map {
 		map[1][8] = LEVER;
 	}
 	
-	public void initializeLvlTwo()
-	{
-		initializeLvlTwo(2);
-	}
+
 	
 	/*******************GET FUNCTIONS*******************/
 	
