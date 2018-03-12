@@ -82,6 +82,11 @@ public class mainWindow {
 		frmGuidedProjectGui.getContentPane().add(btnNewGame);
 		
 		JButton btnExit = new JButton("Exit");
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
 		btnExit.setBounds(420, 390, 120, 25);
 		frmGuidedProjectGui.getContentPane().add(btnExit);
 		
