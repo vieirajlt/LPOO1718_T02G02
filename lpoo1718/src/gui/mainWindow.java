@@ -159,44 +159,28 @@ public class mainWindow {
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				game.updateGame('u');
-				mapTextPane.setText(game.toString()); //print game
-				if (game.isEndGame()) {
-					setEnableBtn(movbuttons, false);
-					gameStatusLabel.setText("Game Over."); //update label
-				}
+				updateGuiGameSettings(mapTextPane, gameStatusLabel);
 			}
 		});
 
 		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				game.updateGame('d');
-				mapTextPane.setText(game.toString()); //print game
-				if (game.isEndGame()) {
-					setEnableBtn(movbuttons, false);
-					gameStatusLabel.setText("Game Over."); //update label
-				}
+				updateGuiGameSettings(mapTextPane, gameStatusLabel);
 			}
 		});
 
 		btnRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				game.updateGame('r');
-				mapTextPane.setText(game.toString()); //print game
-				if (game.isEndGame()) {
-					setEnableBtn(movbuttons, false);
-					gameStatusLabel.setText("Game Over."); //update label
-				}
+				updateGuiGameSettings(mapTextPane, gameStatusLabel);
 			}
 		});
 
 		btnLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				game.updateGame('l');
-				mapTextPane.setText(game.toString()); //print game
-				if (game.isEndGame()) {
-					setEnableBtn(movbuttons, false);
-					gameStatusLabel.setText("Game Over."); //update label
-				}
+				updateGuiGameSettings(mapTextPane, gameStatusLabel);
 			}
 		});
 
@@ -206,6 +190,14 @@ public class mainWindow {
 
 	public boolean isOgreCountValid(int oc) {
 		return ((oc > 0) && (oc < 6));
+	}
+	
+	public void updateGuiGameSettings(JTextPane map, JLabel status) {
+		map.setText(game.toString()); //print game
+		if (game.isEndGame()) {
+			setEnableBtn(movbuttons, false);
+			status.setText("Game Over."); //update label
+		}
 	}
 
 }
