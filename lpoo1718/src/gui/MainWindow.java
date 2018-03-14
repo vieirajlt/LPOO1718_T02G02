@@ -21,7 +21,7 @@ import logic.GuardPersonality;
 import javax.swing.JFormattedTextField;
 import java.awt.Font;
 
-public class mainWindow {
+public class MainWindow {
 
 	private JFrame frmGuidedProjectGui;
 	private JFormattedTextField ogresNumberTxtField;
@@ -35,7 +35,7 @@ public class mainWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					mainWindow window = new mainWindow();
+					MainWindow window = new MainWindow();
 					window.frmGuidedProjectGui.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,7 +47,7 @@ public class mainWindow {
 	/**
 	 * Create the application.
 	 */
-	public mainWindow() {
+	public MainWindow() {
 		initialize();
 	}
 
