@@ -19,8 +19,12 @@ import javax.swing.JPanel;
 
 import logic.Game;
 import logic.GuardPersonality;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class MainWindow implements KeyListener {
+
+public class MainWindow implements KeyListener, MouseListener {
 
 	private JFrame frmGuidedProjectGui;
 	private JFormattedTextField ogresNumberTxtField;
@@ -51,7 +55,8 @@ public class MainWindow implements KeyListener {
 	public MainWindow() {
 		initialize();
 		this.gameMapPanel.addKeyListener(this);
-		this.gameMapPanel.requestFocus();
+		this.gameMapPanel.requestFocusInWindow();
+		this.gameMapPanel.addMouseListener(this);
 		
 	}
 
@@ -66,16 +71,25 @@ public class MainWindow implements KeyListener {
 	 */
 	private void initialize() {
 		frmGuidedProjectGui = new JFrame();
+		
+		frmGuidedProjectGui.getContentPane().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				gameMapPanel.requestFocusInWindow();
+			}
+			
+		});
 		frmGuidedProjectGui.getContentPane().setFont(new Font("Dialog", Font.PLAIN, 18));
 		frmGuidedProjectGui.setTitle("Guided Project GUI");
 		frmGuidedProjectGui.setResizable(false);
 		frmGuidedProjectGui.setBounds(100, 100, 600, 480);
 		frmGuidedProjectGui.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmGuidedProjectGui.getContentPane().setLayout(null);
-
 		NumberFormat ogreCountFormat = NumberFormat.getIntegerInstance();
 
 		JPanel mainPanel = new JPanel();
+			
+		
 		mainPanel.setBounds(0, 0, 630, 451);
 		frmGuidedProjectGui.getContentPane().add(mainPanel);
 		mainPanel.setLayout(null);
@@ -153,8 +167,9 @@ public class MainWindow implements KeyListener {
 		btnDone.setBounds(317, 43, 89, 23);
 		configPanel.add(btnDone);
 		gameMapPanel.setVisible(true);
-
-
+		
+	
+		
 		btnDone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mainPanel.setVisible(true);
@@ -227,22 +242,22 @@ public class MainWindow implements KeyListener {
 	}
 
 
-	public int getMoveButton(char c)
+	public int getMoveButton(int c)
 	{
 		String btn = "";
 		switch(c)
 		{
 		case 37: 	//leftarrow
-			btn = "btnLeft";
+			btn = "Left";
 			break;
 		case 38:	//uparrow
-			btn = "btnUp";
+			btn = "Up";
 			break;
 		case 39: 	//rightarrow
-			btn = "btnRight";
+			btn = "Right";
 			break;
 		case 40:	//downarrow
-			btn = "btnDown";
+			btn = "Down";
 			break;
 		default:
 			return -1;
@@ -250,17 +265,18 @@ public class MainWindow implements KeyListener {
 		
 		for (int i = 0; i < this.movbuttons.size(); i++)
 		{
-			if (this.movbuttons.get(i).getName().equals(btn))
+			if (movbuttons.get(i).getText().equals(btn))
 				return i;
 		}
+		
 		return -1;
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
-		char c = e.getKeyChar();
-		System.out.println(c);
+		int c = e.getKeyCode();
+		
 		int index = getMoveButton(c);
 		if (index != -1)
 		{
@@ -286,12 +302,38 @@ public class MainWindow implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
