@@ -20,6 +20,7 @@ import logic.GuardPersonality;
 
 import javax.swing.JFormattedTextField;
 import java.awt.Font;
+import javax.swing.JPanel;
 
 public class MainWindow {
 
@@ -122,15 +123,14 @@ public class MainWindow {
 		frmGuidedProjectGui.getContentPane().add(btnDown);
 		this.movbuttons.add(btnDown);
 
-		JTextPane mapTextPane = new JTextPane();
-		mapTextPane.setFont(new Font("Courier 10 Pitch", Font.PLAIN, 18));
-		mapTextPane.setAlignmentX(Component.LEFT_ALIGNMENT);
-		mapTextPane.setBounds(50, 115, 145, 240);
-		frmGuidedProjectGui.getContentPane().add(mapTextPane);
-
 		JLabel gameStatusLabel = new JLabel("You can start a new game.");
 		gameStatusLabel.setBounds(52, 395, 275, 15);
 		frmGuidedProjectGui.getContentPane().add(gameStatusLabel);
+		
+		GraphicPanel gameMapPanel = new GraphicPanel();
+		gameMapPanel.setBounds(50, 130, 200, 200);
+		gameMapPanel.setVisible(true);
+		frmGuidedProjectGui.getContentPane().add(gameMapPanel);
 
 
 		/**********************Button listener**************************/
@@ -148,7 +148,8 @@ public class MainWindow {
 				int ogreCount = Integer.parseInt(ogresNumberTxtField.getText()); //converts the string to an integer then to an int
 				if(isOgreCountValid(ogreCount)) {
 					game = new Game(ogreCount,(GuardPersonality)guardTypeComboBox.getSelectedItem()); //starts new game
-					mapTextPane.setText(game.toString()); //print game
+					gameMapPanel.setMap(game.toString());
+					gameMapPanel.repaint();
 					gameStatusLabel.setText("You can play now."); //update label
 				} else {
 					gameStatusLabel.setText("Invalid number of ogres."); //update label
@@ -159,28 +160,28 @@ public class MainWindow {
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				game.updateGame('u');
-				updateGuiGameSettings(mapTextPane, gameStatusLabel);
+				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
 			}
 		});
 
 		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				game.updateGame('d');
-				updateGuiGameSettings(mapTextPane, gameStatusLabel);
+				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
 			}
 		});
 
 		btnRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				game.updateGame('r');
-				updateGuiGameSettings(mapTextPane, gameStatusLabel);
+				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
 			}
 		});
 
 		btnLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				game.updateGame('l');
-				updateGuiGameSettings(mapTextPane, gameStatusLabel);
+				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
 			}
 		});
 
@@ -192,12 +193,12 @@ public class MainWindow {
 		return ((oc > 0) && (oc < 6));
 	}
 	
-	public void updateGuiGameSettings(JTextPane map, JLabel status) {
-		map.setText(game.toString()); //print game
+	public void updateGuiGameSettings(GraphicPanel map, JLabel status) {
+		map.setMap(game.toString());
+		map.repaint();  //(game.toString()); //print game
 		if (game.isEndGame()) {
 			setEnableBtn(movbuttons, false);
 			status.setText("Game Over."); //update label
 		}
 	}
-
 }
