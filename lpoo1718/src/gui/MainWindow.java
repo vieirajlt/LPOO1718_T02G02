@@ -1,34 +1,34 @@
 package gui;
 
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
-import java.awt.Component;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.text.NumberFormat;
+import java.util.LinkedList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.text.NumberFormat;
-import java.util.LinkedList;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextPane;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import logic.Game;
 import logic.GuardPersonality;
 
-import javax.swing.JFormattedTextField;
-import java.awt.Font;
-import javax.swing.JPanel;
-
-public class MainWindow {
+public class MainWindow implements KeyListener {
 
 	private JFrame frmGuidedProjectGui;
 	private JFormattedTextField ogresNumberTxtField;
 	private Game game;
 	private LinkedList<JButton> movbuttons = new LinkedList<JButton>(); //has the 4 movement related buttons (up, down, left, right)
 
+	private GraphicPanel gameMapPanel;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -50,6 +50,9 @@ public class MainWindow {
 	 */
 	public MainWindow() {
 		initialize();
+		this.gameMapPanel.addKeyListener(this);
+		this.gameMapPanel.requestFocus();
+		
 	}
 
 	public void setEnableBtn(LinkedList<JButton> jb, boolean value)
@@ -70,70 +73,131 @@ public class MainWindow {
 		frmGuidedProjectGui.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmGuidedProjectGui.getContentPane().setLayout(null);
 
-		JLabel lblOgresCount = new JLabel("Number of Ogres");
-		lblOgresCount.setBounds(50, 40, 130, 15);
-		frmGuidedProjectGui.getContentPane().add(lblOgresCount);
-
-		JLabel lblGuardPersonality = new JLabel("Guard Personality");
-		lblGuardPersonality.setBounds(50, 67, 130, 15);
-		frmGuidedProjectGui.getContentPane().add(lblGuardPersonality);
-
 		NumberFormat ogreCountFormat = NumberFormat.getIntegerInstance();
-		ogresNumberTxtField = new JFormattedTextField(ogreCountFormat);
-		ogresNumberTxtField.setName("");
-		ogresNumberTxtField.setText("1");
-		ogresNumberTxtField.setBounds(190, 38, 70, 19);
-		frmGuidedProjectGui.getContentPane().add(ogresNumberTxtField);
-		ogresNumberTxtField.setColumns(10);
 
-		JComboBox<GuardPersonality> guardTypeComboBox = new JComboBox<GuardPersonality>();
-		guardTypeComboBox.setModel(new DefaultComboBoxModel<GuardPersonality>(GuardPersonality.values()));
-		guardTypeComboBox.setBounds(190, 62, 100, 24);
-		frmGuidedProjectGui.getContentPane().add(guardTypeComboBox);
+		JPanel mainPanel = new JPanel();
+		mainPanel.setBounds(0, 0, 630, 451);
+		frmGuidedProjectGui.getContentPane().add(mainPanel);
+		mainPanel.setLayout(null);
 
 		JButton btnNewGame = new JButton("New Game");
-		btnNewGame.setBounds(420, 115, 120, 25);
-		frmGuidedProjectGui.getContentPane().add(btnNewGame);
+		btnNewGame.setBounds(420, 100, 120, 25);
+		mainPanel.add(btnNewGame);
 
 		JButton btnExit = new JButton("Exit");
-		btnExit.setBounds(420, 390, 120, 25);
-		frmGuidedProjectGui.getContentPane().add(btnExit);
+		btnExit.setBounds(420, 400, 120, 25);
+		mainPanel.add(btnExit);
 
 		JButton btnUp = new JButton("Up");
+		btnUp.setBounds(439, 206, 80, 25);
+		mainPanel.add(btnUp);
 		btnUp.setEnabled(false);
-		btnUp.setBounds(440, 200, 80, 25);
-		frmGuidedProjectGui.getContentPane().add(btnUp);
 		this.movbuttons.add(btnUp);
 
 		JButton btnLeft = new JButton("Left"); 
+		btnLeft.setBounds(388, 252, 80, 25);
+		mainPanel.add(btnLeft);
 		btnLeft.setEnabled(false);
-		btnLeft.setBounds(395, 237, 80, 25);
-		frmGuidedProjectGui.getContentPane().add(btnLeft);
 		this.movbuttons.add(btnLeft);
 
 		JButton btnRight = new JButton("Right");
+		btnRight.setBounds(495, 252, 80, 25);
+		mainPanel.add(btnRight);
 		btnRight.setEnabled(false);
-		btnRight.setBounds(485, 237, 80, 25);
-		frmGuidedProjectGui.getContentPane().add(btnRight);
 		this.movbuttons.add(btnRight);
 
 		JButton btnDown = new JButton("Down");
+		btnDown.setBounds(436, 300, 80, 25);
+		mainPanel.add(btnDown);
 		btnDown.setEnabled(false);
-		btnDown.setBounds(440, 270, 80, 25);
-		frmGuidedProjectGui.getContentPane().add(btnDown);
 		this.movbuttons.add(btnDown);
 
 		JLabel gameStatusLabel = new JLabel("You can start a new game.");
-		gameStatusLabel.setBounds(52, 395, 275, 15);
-		frmGuidedProjectGui.getContentPane().add(gameStatusLabel);
-		
-		GraphicPanel gameMapPanel = new GraphicPanel();
-		gameMapPanel.setBounds(50, 130, 200, 200);
+		gameStatusLabel.setBounds(38, 394, 275, 15);
+		mainPanel.add(gameStatusLabel);
+
+		gameMapPanel = new GraphicPanel();
+		gameMapPanel.setBounds(35, 152, 200, 200);
+		mainPanel.add(gameMapPanel);
+
+		JButton btnConfig = new JButton("Configurations");
+		btnConfig.setBounds(35, 35, 200, 53);
+		mainPanel.add(btnConfig);
+
+		JPanel configPanel = new JPanel();
+		configPanel.setBounds(0, 0, 594, 451);
+		frmGuidedProjectGui.getContentPane().add(configPanel);
+		configPanel.setLayout(null);
+		configPanel.setVisible(false);
+
+		JLabel lblOgresCount = new JLabel("Number of Ogres");
+		lblOgresCount.setBounds(38, 47, 130, 15);
+		configPanel.add(lblOgresCount);
+
+		JLabel lblGuardPersonality = new JLabel("Guard Personality");
+		lblGuardPersonality.setBounds(38, 84, 130, 15);
+		configPanel.add(lblGuardPersonality);
+		ogresNumberTxtField = new JFormattedTextField(ogreCountFormat);
+		ogresNumberTxtField.setBounds(152, 44, 70, 19);
+		configPanel.add(ogresNumberTxtField);
+		ogresNumberTxtField.setName("");
+		ogresNumberTxtField.setText("1");
+		ogresNumberTxtField.setColumns(10);
+
+		JComboBox<GuardPersonality> guardTypeComboBox = new JComboBox<GuardPersonality>();
+		guardTypeComboBox.setBounds(152, 73, 100, 24);
+		configPanel.add(guardTypeComboBox);
+		guardTypeComboBox.setModel(new DefaultComboBoxModel<GuardPersonality>(GuardPersonality.values()));
+
+		JButton btnDone = new JButton("Done");
+		btnDone.setBounds(317, 43, 89, 23);
+		configPanel.add(btnDone);
 		gameMapPanel.setVisible(true);
-		frmGuidedProjectGui.getContentPane().add(gameMapPanel);
 
 
-		/**********************Button listener**************************/
+		btnDone.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				mainPanel.setVisible(true);
+				configPanel.setVisible(false);
+			}
+		});
+
+
+		btnConfig.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				mainPanel.setVisible(false);
+				configPanel.setVisible(true);
+			}
+		});
+
+
+		btnDown.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				game.updateGame('d');
+				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
+			}
+		});
+
+		btnRight.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				game.updateGame('r');
+				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
+			}
+		});
+
+		btnLeft.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				game.updateGame('l');
+				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
+			}
+		});
+
+		btnUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				game.updateGame('u');
+				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
+			}
+		});
 
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -157,42 +221,60 @@ public class MainWindow {
 			}
 		});
 
-		btnUp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				game.updateGame('u');
-				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
-			}
-		});
 
-		btnDown.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				game.updateGame('d');
-				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
-			}
-		});
-
-		btnRight.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				game.updateGame('r');
-				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
-			}
-		});
-
-		btnLeft.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				game.updateGame('l');
-				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
-			}
-		});
+		/**********************Button listener**************************/
 
 	}
+
+
+	public int getMoveButton(char c)
+	{
+		String btn = "";
+		switch(c)
+		{
+		case 37: 	//leftarrow
+			btn = "btnLeft";
+			break;
+		case 38:	//uparrow
+			btn = "btnUp";
+			break;
+		case 39: 	//rightarrow
+			btn = "btnRight";
+			break;
+		case 40:	//downarrow
+			btn = "btnDown";
+			break;
+		default:
+			return -1;
+		}
+		
+		for (int i = 0; i < this.movbuttons.size(); i++)
+		{
+			if (this.movbuttons.get(i).getName().equals(btn))
+				return i;
+		}
+		return -1;
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e)
+	{
+		char c = e.getKeyChar();
+		System.out.println(c);
+		int index = getMoveButton(c);
+		if (index != -1)
+		{
+			this.movbuttons.get(index).doClick();
+		}
+	}
+
 
 	/**********************Aux Functions**************************/
 
 	public boolean isOgreCountValid(int oc) {
 		return ((oc > 0) && (oc < 6));
 	}
-	
+
 	public void updateGuiGameSettings(GraphicPanel map, JLabel status) {
 		map.setMap(game.toString());
 		map.repaint();  //(game.toString()); //print game
@@ -200,5 +282,17 @@ public class MainWindow {
 			setEnableBtn(movbuttons, false);
 			status.setText("Game Over."); //update label
 		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
