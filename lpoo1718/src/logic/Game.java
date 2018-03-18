@@ -19,6 +19,13 @@ public class Game {
 		setShowCli(true);
 	}
 	
+	public Game(int width, int height, boolean isDefaultMap)
+	{
+		map = new Map(width, height, isDefaultMap);
+		endGame = false;
+		setShowCli(true);
+	}
+	
 	public Game(char[][] newMapConfig)
 	{
 		this(newMapConfig,true);

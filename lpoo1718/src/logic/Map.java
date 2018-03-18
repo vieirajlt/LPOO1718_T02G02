@@ -87,6 +87,38 @@ public class Map {
 	public Map(char[][] newMap) {
 		this(newMap,true);
 	}
+	
+	public Map(int width, int height, boolean isDefaultMap)
+	{
+		map = new char[height][width];
+		level = 1; 
+		maxLevel = 1;
+		characters = new ArrayList<Character>(); 
+		ogres = new LinkedList<Ogre>();
+		doors = new ArrayList<Door>();
+		unlockers = new ArrayList<Unlocker>();
+		showCli = true;
+		ogreNumber = 2; //by default the number of ogres is 2
+		guardPersonality = 'r'; //by default the guard's personality is rookie
+		if (isDefaultMap)
+			setDefaultMap();
+		else
+			initializeMap();
+		
+	}
+
+		
+	private void setDefaultMap() {
+		for(int i = 1; i < map.length-1; ++i) {
+			Arrays.fill(map[i], EMPTY);
+		}	
+		for(int i = 1; i < map.length-1; ++i) {
+			map[i][0] = WALL;
+			map[i][map[0].length-1] = WALL;
+		}
+		Arrays.fill(map[0], WALL);
+		Arrays.fill(map[map.length-1], WALL);
+	}
 
 	/*******************MAP INITIALIZATION FUNCTIONS*******************/
 
@@ -105,7 +137,7 @@ public class Map {
 	
 	public void initializeMap(char [][] newMap, boolean isLever) {
 		this.map = newMap;
-		characters.add(new Hero(0,0));
+		characters.add(new Hero(1,1));
 		for(int i = 0; i < map.length; i++)
 		{
 			for (int j= 0;j < map[i].length; j++ )
@@ -126,6 +158,43 @@ public class Map {
 					break;
 				case OGRE:
 					ogres.add(new Ogre(j,i,false,false));
+					placeClub(ogres.getLast(), newMap);
+					break;
+				default:
+					break;
+				}
+			}
+		}
+	}
+	
+	
+	public void initializeMap(char [][] newMap) {
+		this.map = newMap;
+		characters.clear();
+		ogres.clear();
+		doors.clear();
+		unlockers.clear();
+		characters.add(new Hero(1,1));
+		for(int i = 0; i < map.length; i++)
+		{
+			for (int j = 0;j < map[i].length; j++ )
+			{
+				switch(map[i][j])
+				{
+				case HERO :
+					characters.get(0).setPosition(j, i);
+					break;
+				case DOOR:
+					doors.add(new Door(j,i));
+					break;
+				case LEVER:
+					unlockers.add(new Unlocker(j,i,false));
+					break;
+				case GUARD:
+					characters.add(new Guard(j,i, true));
+					break;
+				case OGRE:
+					ogres.add(new Ogre(j,i,true,true));
 					placeClub(ogres.getLast(), newMap);
 					break;
 				default:
@@ -286,6 +355,50 @@ public class Map {
 	}
 	
 
+	public boolean searchCharacter(char c)
+	{
+		for (int i  = 0; i < map.length; i++ )
+		{
+			if (new String(map[i]).indexOf(c) != -1)
+				return true;
+		}
+		return false;
+	}
+	
+	public boolean searchHero()
+	{
+		return searchCharacter(HERO);
+	}
+	
+	public boolean searchOgre()
+	{
+		return searchCharacter(OGRE);
+	}
+	
+	public boolean searchClub()
+	{
+		return searchCharacter(CLUB);
+	}
+	
+	public boolean searchKey()
+	{
+		return searchCharacter(LEVER);
+	}
+	
+	public boolean searchDoor()
+	{
+		return searchCharacter(DOOR);
+	}
+
+	//a level is considered valid if it has 1 hero, at least 1 key and door and at least 1 ogre
+	public boolean validateMapScheme()
+	{
+		boolean hasHero = searchHero();
+		boolean hasKey = searchKey();
+		boolean hasDoor = searchDoor();
+		boolean hasOgre = searchOgre();
+		return (hasDoor & hasKey & hasHero & hasOgre);
+	}
 	
 	/*******************GET FUNCTIONS*******************/
 	
@@ -361,6 +474,24 @@ public class Map {
 	public void setMapPosition(int x, int y, char c) {
 		map[y][x] = c;
 	}
+	
+	public void setAndVerifyMapPosition(int x, int y, char c)
+	{
+		if(getMapPosition(x, y) == WALL && c != DOOR && c != WALL)
+			return;
+		else
+			setMapPosition(x,y,c);
+	}
+	
+	public boolean checkCorners(int x, int y)
+	{
+		if ( x== 0 && y == 0) return true;
+		if (x == 0 && y == map.length-1) return true;
+		if ( x== map[0].length-1 && y == 0) return true;
+		if ( x== map[0].length-1 && y == map.length-1) return true;
+		return false;
+		
+	}
 
 	public void setLevel(int newLvl) {
 		level = newLvl;
@@ -393,6 +524,34 @@ public class Map {
 	
 	public void setDoors(ArrayList<Door> doors) {
 		this.doors = doors;
+	}
+	
+	
+	
+	public void setHeroPosition(int x, int y)
+	{
+		setMapPosition(x,y,HERO);
+	}
+	
+	public void setWallPosition(int x, int y)
+	{
+		setMapPosition(x,y,WALL);
+	}
+	
+	public void setDoorPosition(int x, int y)
+	{
+		setMapPosition(x,y,DOOR);
+		
+	}
+	
+	public void setOgrePosition(int x, int y)
+	{
+		setMapPosition(x,y,OGRE);
+	}
+	
+	public void setKeyPosition(int x, int y)
+	{
+		setMapPosition(x,y,LEVER);
 	}
 	
 	/*******************COLLISIONS RELATED FUNCTIONS*******************/

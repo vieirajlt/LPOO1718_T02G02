@@ -23,6 +23,7 @@ public class GraphicPanel extends JPanel{
 	private BufferedImage hero;
 	private BufferedImage key;
 	private BufferedImage ogre;
+	
 
 	private static final char EMPTY = ' ';
 	private static final char WALL = 'X';
@@ -38,6 +39,8 @@ public class GraphicPanel extends JPanel{
 	private static final char KEYHERO = 'K'; //hero with key
 	private static final char CLUB = '*';
 	private static final char KEYCLUB = '$'; //club that hit key at a certain point
+	
+	private char newChar = EMPTY;
 
 	public GraphicPanel() {
 		super();
@@ -118,4 +121,48 @@ public class GraphicPanel extends JPanel{
 				x+=blockSize;
 		}
 	}
+
+	public char getNewChar() {
+		return newChar;
+	}
+	
+	public void setNewChar(char newChar) {
+		this.newChar = newChar;
+	}
+	
+	public void setNewCharEmpty() {
+		setNewChar(EMPTY);
+	}
+
+	
+	public void setNewCharToWall() {
+		setNewChar(WALL);
+	}
+	
+	public void setNewCharToDoor() {
+		setNewChar(DOOR);
+	}
+	
+	public void setNewCharToKey() {
+		setNewChar(LEVER);
+	}
+	
+	public void setNewCharToHero() {
+		setNewChar(HERO);
+	}
+	
+	public void setNewCharToOgre() {
+		setNewChar(OGRE);
+	}
+	
+	public void setNewCharToClub() {
+		setNewChar(CLUB);
+	}
+
+	public boolean isNewCharHero() {
+		return (newChar == HERO);
+	}
+	
+
+	
 }
