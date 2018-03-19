@@ -10,6 +10,11 @@ import javax.swing.JPanel;
 
 public class GraphicPanel extends JPanel{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6522359064162807356L;
+
 	private String map;
 
 	private static int blockSize = 20;
@@ -25,23 +30,21 @@ public class GraphicPanel extends JPanel{
 	private BufferedImage ogre;
 	
 
-	private static final char EMPTY = ' ';
-	private static final char WALL = 'X';
-	private static final char DOOR = 'I';
-	private static final char HERO = 'H';
-	private static final char ARMEDHERO = 'A';
-	private static final char GUARD = 'G';
-	private static final char SLEEPINGGUARD = 'g';
-	private static final char LEVER = 'k';
-	private static final char STAIRS = 'S';
-	private static final char OGRE = 'O';
-	private static final char STUNNEDOGRE = '8';
-	private static final char KEYHERO = 'K'; //hero with key
-	private static final char CLUB = '*';
-	private static final char KEYCLUB = '$'; //club that hit key at a certain point
+	protected static final char EMPTY = ' ';
+	protected static final char WALL = 'X';
+	protected static final char DOOR = 'I';
+	protected static final char HERO = 'H';
+	protected static final char ARMEDHERO = 'A';
+	protected static final char GUARD = 'G';
+	protected static final char SLEEPINGGUARD = 'g';
+	protected static final char LEVER = 'k';
+	protected static final char STAIRS = 'S';
+	protected static final char OGRE = 'O';
+	protected static final char STUNNEDOGRE = '8';
+	protected static final char KEYHERO = 'K'; //hero with key
+	protected static final char CLUB = '*';
+	protected static final char KEYCLUB = '$'; //club that hit key at a certain point
 	
-	private char newChar = EMPTY;
-
 	public GraphicPanel() {
 		super();
 		try {
@@ -65,8 +68,6 @@ public class GraphicPanel extends JPanel{
 		map = "";
 	}
 
-
-
 	public String getMap() {
 		return map;
 	}
@@ -74,7 +75,6 @@ public class GraphicPanel extends JPanel{
 	public void setMap(String map) {
 		this.map = map;
 	}
-
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -122,47 +122,4 @@ public class GraphicPanel extends JPanel{
 		}
 	}
 
-	public char getNewChar() {
-		return newChar;
-	}
-	
-	public void setNewChar(char newChar) {
-		this.newChar = newChar;
-	}
-	
-	public void setNewCharEmpty() {
-		setNewChar(EMPTY);
-	}
-
-	
-	public void setNewCharToWall() {
-		setNewChar(WALL);
-	}
-	
-	public void setNewCharToDoor() {
-		setNewChar(DOOR);
-	}
-	
-	public void setNewCharToKey() {
-		setNewChar(LEVER);
-	}
-	
-	public void setNewCharToHero() {
-		setNewChar(HERO);
-	}
-	
-	public void setNewCharToOgre() {
-		setNewChar(OGRE);
-	}
-	
-	public void setNewCharToClub() {
-		setNewChar(CLUB);
-	}
-
-	public boolean isNewCharHero() {
-		return (newChar == HERO);
-	}
-	
-
-	
 }

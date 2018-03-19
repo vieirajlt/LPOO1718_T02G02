@@ -792,5 +792,17 @@ public class Map {
 	public void displayMap() {
 		display.printMap(map, showCli);
 	}
+	
+	/*******************TO STRING*******************/
+	
+	public String toString()
+	{
+		String res = "";
+		for (int i = 0 ; i < getMapScheme().length; i++)
+		{
+			res += String.valueOf(getMapScheme()[i]) + "\n";
+		}
+		return res;
+	}
 
 }

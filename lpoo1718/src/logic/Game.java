@@ -104,12 +104,7 @@ public class Game {
 	
 	public String toString()
 	{
-		String res = "";
-		for (int i = 0 ; i < map.getMapScheme().length; i++)
-		{
-			res += String.valueOf(map.getMapScheme()[i]) + "\n";
-		}
-		return res;
+		return this.map.toString();
 	}
 	
 	/*******************GAME MANAGEMENT FUNCTION*******************/
