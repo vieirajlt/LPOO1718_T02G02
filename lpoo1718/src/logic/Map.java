@@ -184,6 +184,10 @@ public class Map {
 				case HERO :
 					characters.get(0).setPosition(j, i);
 					break;
+				case ARMEDHERO:
+					characters.get(0).setPosition(j, i);
+					characters.get(0).setHasWeapon(true);
+					break;
 				case DOOR:
 					doors.add(new Door(j,i));
 					break;
@@ -367,7 +371,7 @@ public class Map {
 	
 	public boolean searchHero()
 	{
-		return searchCharacter(HERO);
+		return (searchCharacter(HERO) || searchCharacter(ARMEDHERO));
 	}
 	
 	public boolean searchOgre()
@@ -397,7 +401,7 @@ public class Map {
 		boolean hasKey = searchKey();
 		boolean hasDoor = searchDoor();
 		boolean hasOgre = searchOgre();
-		return (hasDoor & hasKey & hasHero & hasOgre);
+		return (hasDoor && hasKey && hasHero && hasOgre);
 	}
 	
 	/*******************GET FUNCTIONS*******************/
@@ -527,7 +531,6 @@ public class Map {
 	}
 	
 	
-	
 	public void setHeroPosition(int x, int y)
 	{
 		setMapPosition(x,y,HERO);
@@ -554,6 +557,18 @@ public class Map {
 		setMapPosition(x,y,LEVER);
 	}
 	
+	
+	public void setHerotoArmedHero() {
+		for (int i  = 0; i < map.length; i++ )
+		{
+			for(int j = 0; j < map[i].length;j++)
+			{
+				if(map[i][j] == HERO)
+					map[i][j] = ARMEDHERO;
+			}
+		}
+		
+	}
 	/*******************COLLISIONS RELATED FUNCTIONS*******************/
 
 	public boolean isWallColliding(Character c) {
@@ -804,5 +819,7 @@ public class Map {
 		}
 		return res;
 	}
+
+	
 
 }
