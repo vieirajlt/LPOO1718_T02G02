@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -17,7 +18,7 @@ public class GraphicPanel extends JPanel{
 
 	private String map;
 
-	private static int blockSize = 20;
+	protected static int blockSize = 20;
 
 	private BufferedImage wall;
 	private BufferedImage openDoor;
@@ -74,6 +75,10 @@ public class GraphicPanel extends JPanel{
 
 	public void setMap(String map) {
 		this.map = map;
+	}
+	
+	public void setMap(logic.Map map) {
+		this.map = map.toString();
 	}
 
 	public void paintComponent(Graphics g) {

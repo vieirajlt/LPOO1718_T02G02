@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import logic.GuardPersonality;
+import java.awt.Color;
 
 public class ConfigurationPanel extends JPanel {
 
@@ -23,12 +24,14 @@ public class ConfigurationPanel extends JPanel {
 	
 	//Interpanel Buttons
 	private JButton btnDone;
+	private JButton btnOpenLevelCreationPanel;
 	
 	/**
 	 * Create the panel.
 	 */
 	public ConfigurationPanel() {
 		super();
+		setForeground(Color.WHITE);
 		this.setBounds(0, 0, 594, 451);
 		this.setLayout(null);
 		this.setVisible(false);
@@ -74,9 +77,9 @@ public class ConfigurationPanel extends JPanel {
 		
 		/********BTN*CREATELEVEL****************************************************************************/
 
-		JButton btnCreateLevel = new JButton("Create Level");
-		btnCreateLevel.setBounds(38, 170,  200, 53);
-		this.add(btnCreateLevel);
+		btnOpenLevelCreationPanel = new JButton("Create Level");
+		btnOpenLevelCreationPanel.setBounds(38, 170,  200, 53);
+		this.add(btnOpenLevelCreationPanel);
 		
 		/****************************************************************************************************/
 		/**********************************************LISTENERS*********************************************/
@@ -95,6 +98,10 @@ public class ConfigurationPanel extends JPanel {
 
 	public GuardPersonality getGuardType() {
 		return (GuardPersonality) guardTypeComboBox.getSelectedItem();
+	}
+	
+	public JButton getBtnOpenLevelCreationPanel() {
+		return btnOpenLevelCreationPanel;
 	}
 	
 	//SET

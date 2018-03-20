@@ -6,22 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.text.NumberFormat;
-import java.util.LinkedList;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import exception.InvalidOgreCountException;
-import logic.Game;
 import logic.GameStartSet;
-import logic.GuardPersonality;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -56,7 +43,6 @@ public class MainWindow implements KeyListener, MouseListener {
 	 */
 	public MainWindow() {
 		initialize();
-
 	}
 
 	/**
@@ -96,12 +82,29 @@ public class MainWindow implements KeyListener, MouseListener {
 					gpPanel.setGameStartSet(gss);
 					gpPanel.setVisible(true);
 					configPanel.setVisible(false);
-					
+					gpPanel.cleanGameStausLabel();
 				} catch (InvalidOgreCountException e) {
 					gpPanel.setGameStartSet(null);
 				}
 			}
 		});
+		
+		/********BTN*CREATELEVEL*********************************************************************************/
+		
+		configPanel.getBtnOpenLevelCreationPanel().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				configPanel.setVisible(false);
+				lvlCreationPanel.setVisible(true);
+				
+				if(lvlCreationPanel.setMapDimensions()) {
+					gpPanel.setGame(lvlCreationPanel.getGss().startNewGame());
+					lvlCreationPanel.getMapCreationPanel().setMap(gpPanel.getGame().toString());
+					lvlCreationPanel.getMapCreationPanel().repaint();
+				} else {
+				}
+			}
+		});
+		
 	}
 
 	private void initializeLevelCreationPanel() {
@@ -119,6 +122,7 @@ public class MainWindow implements KeyListener, MouseListener {
 				gpPanel.setVisible(true);
 				configPanel.setVisible(false);
 				lvlCreationPanel.setVisible(false);
+				lvlCreationPanel.changeLevelCreationStatus(true);
 				gpPanel.playMap(lvlCreationPanel.getMap());
 			}
 		});
@@ -127,24 +131,8 @@ public class MainWindow implements KeyListener, MouseListener {
 		
 		lvlCreationPanel.getBtnCreateLevel().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				configPanel.setVisible(false);
-				lvlCreationPanel.setVisible(true);
-				
-				if(lvlCreationPanel.setMapDimensions()) {
-					gpPanel.setGame(lvlCreationPanel.getGss().startNewGame());
-					lvlCreationPanel.getMapCreationPanel().setMap(gpPanel.getGame().toString());
-					lvlCreationPanel.getMapCreationPanel().repaint();
-				} else {
-				}
-				
-			}
-		});
-
-		/********BTN*RESTART*********************************************************************************/
-		
-		lvlCreationPanel.getBtnRestart().addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				lvlCreationPanel.getBtnCreateLevel().doClick();
+				if(lvlCreationPanel.setMapDimensions())
+					lvlCreationPanel.changeLevelCreationStatus(true);
 			}
 		});
 
@@ -159,7 +147,6 @@ public class MainWindow implements KeyListener, MouseListener {
 
 	}
 	
-
 	private void initializeGameplayPanel() {
 		gpPanel = new GameplayPanel();
 		frmGuidedProjectGui.getContentPane().add(gpPanel);
