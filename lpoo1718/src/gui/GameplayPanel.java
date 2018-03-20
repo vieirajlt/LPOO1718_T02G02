@@ -114,6 +114,8 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 
 		});
 		
+		
+		
 		/********BTN*NEWGAME*********************************************************************************/
 
 		btnNewGame.addActionListener(new ActionListener() {
