@@ -30,12 +30,25 @@ public class LevelCreationPanel extends JPanel {
 	private MapCreationPanel mapCreationPanel;
 	
 	private JLabel statusLabel;
+	
+	private boolean isPlayable;
+	private boolean isHeroAdded;
+	private boolean isKeyAdded;
+	private boolean isExitAdded;
 
 	//Interpanel Buttons
 	private JButton btnPlayCreatedLvl;
 	private JButton btnRestart;
 	private JButton btnReturn;
 	private JButton btnCreateLevel;
+	
+	//Creation Buttons
+	private JButton btnAddWall;
+	private JButton btnAddDoor;
+	private JButton btnAddKey;
+	private JButton btnAddHero;
+	private JButton btnAddHeroWeapon;
+	private JButton btnAddOgre;
 
 	/**
 	 * Create the panel.
@@ -45,6 +58,11 @@ public class LevelCreationPanel extends JPanel {
 		this.setBounds(0, 0, 594, 451);
 		this.setLayout(null);
 		this.setVisible(false);
+		
+		isPlayable = false;
+		isHeroAdded = false;
+		isKeyAdded = false;
+		isExitAdded = false;
 
 		initialize();
 	}
@@ -84,48 +102,54 @@ public class LevelCreationPanel extends JPanel {
 
 		/********BTN*CREATION********************************************************************************/
 
-		JButton btnAddWall = new JButton("Add wall");
-		btnAddWall.setBounds(317, 103, 89, 23);
+		btnAddWall = new JButton("Add wall");
+		btnAddWall.setEnabled(false);
+		btnAddWall.setBounds(350, 100, 150, 23);
 		this.add(btnAddWall);
 
-		JButton btnAddDoor = new JButton("Add door");
-		btnAddDoor.setBounds(317, 143, 89, 23);
+		btnAddDoor = new JButton("Add door");
+		btnAddDoor.setEnabled(false);
+		btnAddDoor.setBounds(350, 135, 150, 23);
 		this.add(btnAddDoor);
 
-		JButton btnAddKey = new JButton("Add key");
-		btnAddKey.setBounds(317, 183, 89, 23);
+		btnAddKey = new JButton("Add key");
+		btnAddKey.setEnabled(false);
+		btnAddKey.setBounds(350, 170, 150, 23);
 		this.add(btnAddKey);
 
-		JButton btnAddHero = new JButton("Add Hero");
-		btnAddHero.setBounds(317, 223, 89, 23);
+		btnAddHero = new JButton("Add Hero");
+		btnAddHero.setEnabled(false);
+		btnAddHero.setBounds(350, 205, 150, 23);
 		this.add(btnAddHero);
 
-		JButton btnAddHeroWeapon = new JButton("Add Weapon");
-		btnAddHeroWeapon.setBounds(317, 263, 89, 23);
+		btnAddHeroWeapon = new JButton("Add Weapon");
+		btnAddHeroWeapon.setBounds(350, 240, 150, 23);
 		this.add(btnAddHeroWeapon);
 		btnAddHeroWeapon.setEnabled(false);
 
-		JButton btnAddOgre = new JButton("Add Ogre");
-		btnAddOgre.setBounds(317, 303, 89, 23);
+		btnAddOgre = new JButton("Add Ogre");
+		btnAddOgre.setEnabled(false);
+		btnAddOgre.setBounds(350, 275, 150, 23);
 		this.add(btnAddOgre);
 		
 		/********BTN*PLAY**********************************************************************************/
 
 		btnPlayCreatedLvl = new JButton("Play");
-		btnPlayCreatedLvl.setBounds(317, 43, 89, 23);
+		btnPlayCreatedLvl.setBounds(350, 43, 89, 23);
 		this.add(btnPlayCreatedLvl);
 		btnPlayCreatedLvl.setEnabled(false);
 
 		/********BTN*RESTART*********************************************************************************/
 
 		btnRestart = new JButton("Restart");
+		btnRestart.setEnabled(false);
 		btnRestart.setBounds(38, 100, 89, 23);
 		this.add(btnRestart);
 
 		/********BTN*RETURN*********************************************************************************/
 
 		btnReturn = new JButton("Return");
-		btnReturn.setBounds(317, 343, 89, 23);
+		btnReturn.setBounds(350, 342, 89, 23);
 		this.add(btnReturn);
 		
 		/********BTN*CREATELEVEL*********************************************************************************/
@@ -139,13 +163,13 @@ public class LevelCreationPanel extends JPanel {
 		mapCreationPanel = new MapCreationPanel();
 		mapCreationPanel.setBounds(35, 152, 200, 200);
 		this.add(mapCreationPanel);
+		mapCreationPanel.setVisible(false);
 		
 		/********LABEL*STATUS********************************************************************************/
 		
 		statusLabel = new JLabel("");
-		statusLabel.setBounds(42, 394, 326, 15);
+		statusLabel.setBounds(350, 387, 210, 41);
 		add(statusLabel);
-		mapCreationPanel.setVisible(true);
 
 		/****************************************************************************************************/
 		/**********************************************LISTENERS*********************************************/
@@ -161,30 +185,54 @@ public class LevelCreationPanel extends JPanel {
 		btnAddDoor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mapCreationPanel.setNewCharToDoor();
+				isExitAdded = true; //THIS NEEDS UPDATE TO DIFFERENTIATE COMMUN DOORS FROM EXITS
+				updateIsPlayable();
+				if(isPlayable)
+					btnPlayCreatedLvl.setEnabled(true);
 			}
 		});
 
 		btnAddKey.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mapCreationPanel.setNewCharToKey();
+				isKeyAdded = true;
+				updateIsPlayable();
+				if(isPlayable)
+					btnPlayCreatedLvl.setEnabled(true);
 			}
 		});
 
 		btnAddHero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mapCreationPanel.setNewCharToHero();
+				isHeroAdded = true;
+				updateIsPlayable();
+				if(isPlayable)
+					btnPlayCreatedLvl.setEnabled(true);
 			}
 		});
 
 		btnAddHeroWeapon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mapCreationPanel.setNewCharToHero();
+				isHeroAdded = true;
+				updateIsPlayable();
+				if(isPlayable)
+					btnPlayCreatedLvl.setEnabled(true);
 			}
 		});
 
 		btnAddOgre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mapCreationPanel.setNewCharToOgre();
+			}
+		});
+		
+		/********BTN*RESTART*********************************************************************************/
+		
+		btnRestart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btnCreateLevel.doClick();
 			}
 		});
 
@@ -238,6 +286,14 @@ public class LevelCreationPanel extends JPanel {
 			int width = Integer.parseInt(gameWidthTextField.getText());
 			int height =  Integer.parseInt(gameHeightTextField.getText());;
 			gss = new GameStartSet(width, height);
+			mapCreationPanel.setBounds(35, 152, width*GraphicPanel.blockSize, height*GraphicPanel.blockSize);
+			map = new Map(width, height, true); //create empty map
+			mapCreationPanel.setMap(map);
+			mapCreationPanel.repaint();
+			isPlayable = false;
+			isHeroAdded = false;
+			isKeyAdded = false;
+			isExitAdded = false;
 			statusLabel.setText("");
 		} catch (InvalidBoardSizeException e) {
 			statusLabel.setText("Invalid Size.");
@@ -245,6 +301,22 @@ public class LevelCreationPanel extends JPanel {
 		}
 		
 		return true;
+	}
+	
+	public void updateIsPlayable() {
+		isPlayable = isHeroAdded && isKeyAdded && isExitAdded;
+	}
+	
+	public void changeLevelCreationStatus(boolean status) {
+		mapCreationPanel.setVisible(status);
+		btnRestart.setEnabled(status);
+		btnCreateLevel.setVisible(!status);
+		btnAddWall.setEnabled(status);
+		btnAddDoor.setEnabled(status);
+		btnAddKey.setEnabled(status);
+		btnAddHero.setEnabled(status);
+		btnAddHeroWeapon.setEnabled(status);
+		btnAddOgre.setEnabled(status);
 	}
 
 	//GET

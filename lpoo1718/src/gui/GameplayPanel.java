@@ -38,11 +38,10 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		setBounds(0, 0, 630, 451);
 		setLayout(null);
 		
+		game = null;
 		gss = null;
 		
 		initialize();
-		
-		
 	}
 	
 	private void initialize() {
@@ -94,7 +93,7 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		/********GAME*STATUS*LABEL***************************************************************************/
 
 		gameStatusLabel = new JLabel("You can start a new game.");
-		gameStatusLabel.setBounds(38, 394, 275, 15);
+		gameStatusLabel.setBounds(287, 54, 275, 15);
 		this.add(gameStatusLabel);
 
 		/********GAME*MAP*PANEL******************************************************************************/
@@ -172,6 +171,10 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 
 	}
 	
+	public void cleanGameStausLabel() {
+		gameStatusLabel.setText("");
+	}
+	
 	public void playMap(logic.Map map) {
 		game.getMap().initializeMap(map.getMapScheme());
 		gameMapPanel.setMap(game.toString());
@@ -180,21 +183,21 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		setEnableBtn(movbuttons, true);
 	}
 	
-	public int getMoveButton(int c)
+	public int getMoveButton(int code)
 	{
 		String btn = "";
-		switch(c)
+		switch(code)
 		{
-		case 37: 	//leftarrow
+		case KeyEvent.VK_LEFT: 	//leftarrow
 			btn = "Left";
 			break;
-		case 38:	//uparrow
+		case KeyEvent.VK_UP:	//uparrow
 			btn = "Up";
 			break;
-		case 39: 	//rightarrow
+		case KeyEvent.VK_RIGHT: 	//rightarrow
 			btn = "Right";
 			break;
-		case 40:	//downarrow
+		case KeyEvent.VK_DOWN:	//downarrow
 			btn = "Down";
 			break;
 		default:
@@ -213,9 +216,10 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 	@Override
 	public void keyPressed(KeyEvent e)
 	{
-		int c = e.getKeyCode();
+		int code = e.getKeyCode();
 
-		int index = getMoveButton(c);
+		int index = getMoveButton(code);
+		gameStatusLabel.setText("Key index: " + index);
 		if (index != -1)
 		{
 			this.movbuttons.get(index).doClick();
