@@ -44,6 +44,11 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		initialize();
 	}
 	
+	public GraphicPanel getGameMapPanel()
+	{
+		return gameMapPanel;
+	}
+	
 	private void initialize() {
 		
 		/********BTN*NEWGAME********************************************************************************/

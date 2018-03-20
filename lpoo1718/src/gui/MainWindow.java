@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
+
 import javax.swing.JFrame;
 import exception.InvalidOgreCountException;
 import logic.GameStartSet;
@@ -43,6 +45,11 @@ public class MainWindow implements KeyListener, MouseListener {
 	 */
 	public MainWindow() {
 		initialize();
+		
+		gpPanel.getGameMapPanel().addKeyListener(this);
+		gpPanel.getGameMapPanel().requestFocusInWindow();
+		gpPanel.getGameMapPanel().addMouseListener(this);
+		
 	}
 
 	/**
@@ -51,6 +58,7 @@ public class MainWindow implements KeyListener, MouseListener {
 	private void initialize() {
 
 		frmGuidedProjectGui = new JFrame();
+	
 
 		frmGuidedProjectGui.getContentPane().setFont(new Font("Dialog", Font.PLAIN, 18));
 		frmGuidedProjectGui.setTitle("Guided Project GUI");
@@ -151,6 +159,8 @@ public class MainWindow implements KeyListener, MouseListener {
 		gpPanel = new GameplayPanel();
 		frmGuidedProjectGui.getContentPane().add(gpPanel);
 		
+	
+		
 		/**********************************************LISTENERS*********************************************/
 		
 		/********BTN*CONFIG**********************************************************************************/
@@ -161,6 +171,14 @@ public class MainWindow implements KeyListener, MouseListener {
 				configPanel.setVisible(true);
 			}
 		});
+		
+		frmGuidedProjectGui.getContentPane().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				gpPanel.requestFocusInWindow();
+			}
+		});
+		
 	}
 
 	/**********************Aux Functions**************************/
@@ -204,9 +222,9 @@ public class MainWindow implements KeyListener, MouseListener {
 	}
 
 	@Override
-	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void keyPressed(KeyEvent e)
+	{
+		gpPanel.keyPressed(e);
 	}
 
 
