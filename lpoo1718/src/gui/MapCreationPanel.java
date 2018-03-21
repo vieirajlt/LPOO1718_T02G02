@@ -64,6 +64,10 @@ public class MapCreationPanel extends GraphicPanel{
 	public boolean isNewCharHero() {
 		return (newChar == HERO);
 	}
+	
+	public boolean isNewCharKey() {
+		return (newChar == LEVER);
+	}
 
 	public Map getOriginalMap() {
 		return originalMap;

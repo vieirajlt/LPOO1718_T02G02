@@ -244,11 +244,25 @@ public class LevelCreationPanel extends JPanel {
 				if (map.searchHero())
 				{
 					btnAddHero.setEnabled(false);
+					btnAddHeroWeapon.setEnabled(false);
 					if (mapCreationPanel.isNewCharHero())
-						mapCreationPanel.setNewChar(' ');
+						mapCreationPanel.setNewCharEmpty();
 				}
 				else
+				{
 					btnAddHero.setEnabled(true);
+					btnAddHeroWeapon.setEnabled(true);
+				}
+				
+				//only one hero
+				if (map.searchKey())
+				{
+					btnAddKey.setEnabled(false);
+					if (mapCreationPanel.isNewCharKey())
+						mapCreationPanel.setNewCharEmpty();
+				}
+				else
+					btnAddKey.setEnabled(true);
 
 				//only lets the player play the created level if it is a valid one
 				if(map.validateMapScheme())

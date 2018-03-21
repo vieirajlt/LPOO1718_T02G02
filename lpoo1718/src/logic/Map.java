@@ -394,7 +394,7 @@ public class Map {
 		return searchCharacter(DOOR);
 	}
 
-	//a level is considered valid if it has 1 hero, at least 1 key and door and at least 1 ogre
+	
 	public boolean validateMapScheme()
 	{
 		boolean hasHero = searchHero();
