@@ -12,8 +12,10 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import exception.InvalidOgreCountException;
 import logic.Game;
 import logic.GameStartSet;
+import logic.GuardPersonality;
 
 public class GameplayPanel extends JPanel implements KeyListener, MouseListener {
 
@@ -39,7 +41,11 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		setLayout(null);
 		
 		game = null;
-		gss = null;
+		try {
+			gss = new GameStartSet(1,GuardPersonality.DRUNKEN);
+		} catch (InvalidOgreCountException e) {
+			gss = null;
+		}
 		
 		initialize();
 	}
@@ -184,6 +190,7 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 	
 	public void playMap(logic.Map map) {
 		game.getMap().initializeMap(map.getMapScheme());
+		gameMapPanel.setBounds(35, 152, map.getMapWidth()*GraphicPanel.blockSize, map.getMapHeight()*GraphicPanel.blockSize);
 		gameMapPanel.setMap(game.toString());
 		gameMapPanel.repaint();
 		gameStatusLabel.setText("You can play now."); //update label
@@ -226,7 +233,6 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		int code = e.getKeyCode();
 
 		int index = getMoveButton(code);
-		gameStatusLabel.setText("Key index: " + index);
 		if (index != -1)
 		{
 			this.movbuttons.get(index).doClick();

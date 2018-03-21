@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -24,12 +23,17 @@ public class GraphicPanel extends JPanel{
 	private BufferedImage openDoor;
 	private BufferedImage closeDoor;
 	private BufferedImage club;
+	private BufferedImage keyClub;
 	private BufferedImage floor;
 	private BufferedImage guard;
+	private BufferedImage sleepingGuard;
 	private BufferedImage hero;
+	private BufferedImage keyHero;
+	private BufferedImage armedHero;
 	private BufferedImage key;
 	private BufferedImage ogre;
-	
+	private BufferedImage stunnedOgre;
+
 
 	protected static final char EMPTY = ' ';
 	protected static final char WALL = 'X';
@@ -54,11 +58,17 @@ public class GraphicPanel extends JPanel{
 			openDoor = ImageIO.read(new File("./images/opendoor.png"));
 			closeDoor = ImageIO.read(new File("./images/closedoor.png"));
 			club = ImageIO.read(new File("./images/club.png"));
+			keyClub  = ImageIO.read(new File("./images/keyclub.png"));
 			floor = ImageIO.read(new File("./images/floor.png"));
 			guard = ImageIO.read(new File("./images/guard.png"));
+			sleepingGuard = ImageIO.read(new File("./images/guardsleeping.png"));
 			hero = ImageIO.read(new File("./images/hero.png"));
+			armedHero = ImageIO.read(new File("./images/armedhero.png"));
+			keyHero = ImageIO.read(new File("./images/keyhero.png"));
 			key = ImageIO.read(new File("./images/key.png"));
 			ogre = ImageIO.read(new File("./images/ogre.png"));
+			stunnedOgre = ImageIO.read(new File("./images/stunnedogre.png"));
+			
 		}
 		catch(IOException e)
 		{
@@ -101,20 +111,35 @@ public class GraphicPanel extends JPanel{
 			case CLUB:
 				g.drawImage(club, x, y, null);
 				break;
+			case KEYCLUB:
+				g.drawImage(keyClub, x, y, null);
+				break;
 			case EMPTY:
 				g.drawImage(floor, x, y, null);
 				break;
 			case GUARD:
 				g.drawImage(guard, x, y, null);
 				break;
+			case SLEEPINGGUARD:
+				g.drawImage(sleepingGuard, x, y, null);
+				break;
 			case HERO:
 				g.drawImage(hero, x, y, null);
+				break;
+			case ARMEDHERO:
+				g.drawImage(armedHero, x, y, null);
+				break;
+			case KEYHERO:
+				g.drawImage(keyHero, x, y, null);
 				break;
 			case LEVER:
 				g.drawImage(key, x, y, null);
 				break;
 			case OGRE:
 				g.drawImage(ogre, x, y, null);
+				break;
+			case STUNNEDOGRE:
+				g.drawImage(stunnedOgre, x, y, null);
 				break;
 			case '\n':
 				y+=blockSize;

@@ -1,5 +1,7 @@
 package gui;
 
+import logic.Map;
+
 public class MapCreationPanel extends GraphicPanel{
 
 	/**
@@ -7,9 +9,15 @@ public class MapCreationPanel extends GraphicPanel{
 	 */
 	private static final long serialVersionUID = -5595519726727665363L;
 	private char newChar = EMPTY;
+	private Map originalMap;
+	
+	public char getOriginalChar(int x, int y) {
+		return originalMap.getMapPosition(x, y);
+	}
 	
 	public MapCreationPanel() {
 		super();
+		this.originalMap = null;
 	}
 	
 	public char getNewChar() {
@@ -20,6 +28,7 @@ public class MapCreationPanel extends GraphicPanel{
 		this.newChar = newChar;
 	}
 	
+
 	public void setNewCharEmpty() {
 		setNewChar(EMPTY);
 	}
@@ -40,6 +49,10 @@ public class MapCreationPanel extends GraphicPanel{
 		setNewChar(HERO);
 	}
 	
+	public void setNewCharToArmedHero() {
+		setNewChar(ARMEDHERO);
+	}
+	
 	public void setNewCharToOgre() {
 		setNewChar(OGRE);
 	}
@@ -50,6 +63,14 @@ public class MapCreationPanel extends GraphicPanel{
 
 	public boolean isNewCharHero() {
 		return (newChar == HERO);
+	}
+
+	public Map getOriginalMap() {
+		return originalMap;
+	}
+
+	public void setOriginalMap(Map originalMap) {
+		this.originalMap = originalMap;
 	}
 	
 }

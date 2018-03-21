@@ -186,7 +186,7 @@ public class Map {
 					break;
 				case ARMEDHERO:
 					characters.get(0).setPosition(j, i);
-					characters.get(0).setHasWeapon(true);
+					((Hero)characters.get(0)).addWeapon();
 					break;
 				case DOOR:
 					doors.add(new Door(j,i));
@@ -450,6 +450,16 @@ public class Map {
 		return doors;
 	}
 	
+	public int getMapWidth() {
+		return map[0].length;
+	}
+	
+	public int getMapHeight() {
+		return map.length;
+	}
+	
+	
+	
 	/*******************SET FUNCTIONS*******************/
 	
 	public void setGuardType(char type) {
@@ -618,7 +628,7 @@ public class Map {
 	}
 
 	/*******************MAP MANAGEMENTS FUNCTIONS*******************/
-
+	
 	public void getToNextLevel() {
 		++level;
 		initializeMap();

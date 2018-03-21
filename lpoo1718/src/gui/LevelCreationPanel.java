@@ -31,10 +31,6 @@ public class LevelCreationPanel extends JPanel {
 	
 	private JLabel statusLabel;
 	
-	private boolean isPlayable;
-	private boolean isHeroAdded;
-	private boolean isKeyAdded;
-	private boolean isExitAdded;
 
 	//Interpanel Buttons
 	private JButton btnPlayCreatedLvl;
@@ -59,10 +55,7 @@ public class LevelCreationPanel extends JPanel {
 		this.setLayout(null);
 		this.setVisible(false);
 		
-		isPlayable = false;
-		isHeroAdded = false;
-		isKeyAdded = false;
-		isExitAdded = false;
+		
 
 		initialize();
 	}
@@ -185,40 +178,26 @@ public class LevelCreationPanel extends JPanel {
 		btnAddDoor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mapCreationPanel.setNewCharToDoor();
-				isExitAdded = true; //THIS NEEDS UPDATE TO DIFFERENTIATE COMMUN DOORS FROM EXITS
-				updateIsPlayable();
-				if(isPlayable)
-					btnPlayCreatedLvl.setEnabled(true);
 			}
 		});
 
 		btnAddKey.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mapCreationPanel.setNewCharToKey();
-				isKeyAdded = true;
-				updateIsPlayable();
-				if(isPlayable)
-					btnPlayCreatedLvl.setEnabled(true);
 			}
 		});
 
 		btnAddHero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mapCreationPanel.setNewCharToHero();
-				isHeroAdded = true;
-				updateIsPlayable();
-				if(isPlayable)
-					btnPlayCreatedLvl.setEnabled(true);
 			}
 		});
 
+		//TODO 
 		btnAddHeroWeapon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				mapCreationPanel.setNewCharToHero();
-				isHeroAdded = true;
-				updateIsPlayable();
-				if(isPlayable)
-					btnPlayCreatedLvl.setEnabled(true);
+				mapCreationPanel.setNewCharToArmedHero();
+				btnAddHero.setEnabled(false);
 			}
 		});
 
@@ -244,17 +223,17 @@ public class LevelCreationPanel extends JPanel {
 				int x = e.getX()/20;
 				int y = e.getY()/20;
 				// 1- esquerdo, 3- direito
-				if (e.getButton() == 1) //used to draw an image
+				if (e.getButton() == MouseEvent.BUTTON1) //used to draw an image
 				{
 					if (!map.checkCorners(x,y))
 						map.setAndVerifyMapPosition(x,y, mapCreationPanel.getNewChar());
 				}
 				else
 				{
-					if( e.getButton() == 3) //used to erase an image
+					if( e.getButton() == MouseEvent.BUTTON3) //used to erase an image
 					{
 						mapCreationPanel.setNewChar(map.getMapPosition(x, y));
-						map.setMapPosition(x, y, ' ');
+						map.setMapPosition(x, y, mapCreationPanel.getOriginalChar(x, y));
 					}
 
 				}
@@ -289,11 +268,8 @@ public class LevelCreationPanel extends JPanel {
 			mapCreationPanel.setBounds(35, 152, width*GraphicPanel.blockSize, height*GraphicPanel.blockSize);
 			map = new Map(width, height, true); //create empty map
 			mapCreationPanel.setMap(map);
+			mapCreationPanel.setOriginalMap(new Map(width, height, true));
 			mapCreationPanel.repaint();
-			isPlayable = false;
-			isHeroAdded = false;
-			isKeyAdded = false;
-			isExitAdded = false;
 			statusLabel.setText("");
 		} catch (InvalidBoardSizeException e) {
 			statusLabel.setText("Invalid Size.");
@@ -303,9 +279,8 @@ public class LevelCreationPanel extends JPanel {
 		return true;
 	}
 	
-	public void updateIsPlayable() {
-		isPlayable = isHeroAdded && isKeyAdded && isExitAdded;
-	}
+
+	
 	
 	public void changeLevelCreationStatus(boolean status) {
 		mapCreationPanel.setVisible(status);

@@ -30,7 +30,7 @@ public class Hero extends Character{
 		fatality = false;
 		steppedGuard = false;
 		if(this.hasWeapon()) {
-			Club club = new Club(valX+1, valY);
+			Club club = new Club(valX, valY);
 			super.setWeapon(club);
 			super.setSymbol('A');
 			super.getWeapon().setVisible(false);
@@ -151,6 +151,18 @@ public class Hero extends Character{
 		
 		if(this.hasWeapon()) {
 			this.getWeapon().setPosition(super.getX(), super.getY());
+		}
+	}
+	
+	
+	public void addWeapon()
+	{
+		if(!this.hasWeapon()) {
+			Club club = new Club(this.getX(), this.getY());
+			super.setWeapon(club);
+			super.setSymbol('A');
+			super.getWeapon().setVisible(false);
+			this.setHasWeapon(true);
 		}
 	}
 
