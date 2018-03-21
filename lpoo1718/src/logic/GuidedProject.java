@@ -1,4 +1,5 @@
 package logic;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class GuidedProject {
@@ -11,7 +12,9 @@ public class GuidedProject {
 		Scanner scanCommand = new Scanner(System.in);
 		char command = 0;
 		
-		game.getMap().displayMap();
+		System.out.println(Arrays.deepToString(game.getMap().getMapScheme()));
+		
+		/*game.getMap().displayMap();
 		
 		//game cycle
 		while(!(game.isEndGame())){
@@ -36,7 +39,7 @@ public class GuidedProject {
 			game.getMap().displayMap();
 		}
 		
-		System.out.println("Closing...");
+		System.out.println("Closing...");*/
 		
 		scanCommand.close();
 	}
