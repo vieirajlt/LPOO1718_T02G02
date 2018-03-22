@@ -3,8 +3,6 @@ package logic;
 import exception.InvalidBoardSizeException;
 import exception.InvalidOgreCountException;
 
-import logic.Game;
-
 public class GameStartSet {
 
 	private static final int maxOgresCount = 6;

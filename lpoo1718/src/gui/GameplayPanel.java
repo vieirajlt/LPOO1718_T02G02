@@ -31,6 +31,7 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 	
 	//Interpanel Buttons
 	private JButton btnConfig;
+	private JButton btnNewGame;
 	
 	/**
 	 * Create the panel.
@@ -40,12 +41,13 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		setBounds(0, 0, 630, 451);
 		setLayout(null);
 		
-		game = null;
 		try {
-			gss = new GameStartSet(1,GuardPersonality.DRUNKEN);
+			gss = new GameStartSet(2 ,GuardPersonality.DRUNKEN);
 		} catch (InvalidOgreCountException e) {
 			gss = null;
 		}
+		
+		game = gss.startNewGame();
 		
 		initialize();
 	}
@@ -59,7 +61,7 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		
 		/********BTN*NEWGAME********************************************************************************/
 
-		JButton btnNewGame = new JButton("New Game");
+		btnNewGame = new JButton("New Game");
 		btnNewGame.setBounds(420, 100, 120, 25);
 		this.add(btnNewGame);
 
@@ -114,8 +116,20 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		this.add(gameMapPanel);
 		gameMapPanel.setVisible(true);
 		
-		/****************************************************************************************************/
-		/**********************************************LISTENERS*********************************************/
+		initializeListeners(btnNewGame, btnExit, btnUp, btnDown, btnLeft, btnRight);
+
+	}
+
+	/**
+	 * @param btnNewGame
+	 * @param btnExit
+	 * @param btnUp
+	 * @param btnDown
+	 * @param btnLeft
+	 * @param btnRight
+	 */
+	private void initializeListeners(JButton btnNewGame, JButton btnExit, JButton btnUp, JButton btnDown,
+			JButton btnLeft, JButton btnRight) {
 		
 		addMouseListener(new MouseAdapter() {
 			@Override
@@ -124,25 +138,6 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 			}
 
 		});
-		
-		
-		
-		/********BTN*NEWGAME*********************************************************************************/
-
-		btnNewGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(gss == null) {
-					gameStatusLabel.setText("Invalid number of ogres."); //update label
-				} else {
-					game = gss.startNewGame(); //starts new game
-					gameMapPanel.setMap(game.toString());
-					gameMapPanel.repaint();
-					gameStatusLabel.setText("You can play now."); //update label
-					setEnableBtn(movbuttons, true);
-				}
-			}
-		});
-
 
 		/********BTN*EXIT***********************************************************************************/
 
@@ -181,7 +176,6 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
 			}
 		});
-
 	}
 	
 	public void cleanGameStausLabel() {
@@ -189,12 +183,12 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 	}
 	
 	public void playMap(logic.Map map) {
-		game.getMap().initializeMap(map.getMapScheme());
+		game.getCurrentMap().initializeMap(map.getMapScheme());
 		gameMapPanel.setBounds(35, 152, map.getMapWidth()*GraphicPanel.blockSize, map.getMapHeight()*GraphicPanel.blockSize);
 		gameMapPanel.setMap(game.toString());
 		gameMapPanel.repaint();
 		gameStatusLabel.setText("You can play now."); //update label
-		setEnableBtn(movbuttons, true);
+		setEnableBtn(true);
 	}
 	
 	public int getMoveButton(int code)
@@ -253,6 +247,14 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		return gss;
 	}
 	
+	public JButton getBtnNewGame() {
+		return btnNewGame;
+	}
+
+	public JLabel getGameStatusLabel() {
+		return gameStatusLabel;
+	}
+	
 	//SET
 	
 	public void setGameStartSet(GameStartSet gss) {
@@ -261,10 +263,10 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 	
 	//AUX
 	
-	public void setEnableBtn(LinkedList<JButton> jb, boolean value)
+	public void setEnableBtn(boolean value)
 	{
-		for (int i = 0; i < jb.size(); i++)
-			jb.get(i).setEnabled(value);
+		for (int i = 0; i < movbuttons.size(); i++)
+			movbuttons.get(i).setEnabled(value);
 	}
 	
 	public void setGame(Game game) {
@@ -275,7 +277,7 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		map.setMap(game.toString());
 		map.repaint(); 
 		if (game.isEndGame()) {
-			setEnableBtn(movbuttons, false);
+			setEnableBtn(false);
 			status.setText("Game Over."); //update label
 		}
 	}

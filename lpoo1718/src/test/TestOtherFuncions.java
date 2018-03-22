@@ -33,7 +33,7 @@ public class TestOtherFuncions {
 	@Test
 	public void TestMapInitialization()
 	{
-		Map m = new Map(10);
+		Map m = new Map(1);
 		assertEquals(m.getCharacters().size(),2);
 		m.setLevel(2);
 		assertEquals(m.getCharacters().size(),1);

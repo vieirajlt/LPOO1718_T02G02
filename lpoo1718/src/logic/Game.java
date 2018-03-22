@@ -1,11 +1,15 @@
 package logic;
 
+import java.util.ArrayList;
+
 import cli.GameStatusDisplay;
+import exception.InvalidSelectedLevelException;
 
 public class Game {
 	private boolean endGame;
 	private boolean showCli;
-	private Map map;
+	private int level;
+	private ArrayList<Map> levels;
 	
 	private static GameStatusDisplay display = new GameStatusDisplay();
 
@@ -13,15 +17,16 @@ public class Game {
 	
 	public Game()
 	{
-		int mapSize = 10;
-		map = new Map(mapSize);
+		level = 0;
+		initializeLevels();
 		endGame = false;
 		setShowCli(true);
 	}
 	
 	public Game(int width, int height, boolean isDefaultMap)
 	{
-		map = new Map(width, height, isDefaultMap);
+		level = 0;
+		initializeLevels();
 		endGame = false;
 		setShowCli(true);
 	}
@@ -33,33 +38,38 @@ public class Game {
 	
 	public Game(char[][] newMapConfig,boolean isLever)
 	{
-		map = new Map(newMapConfig,isLever);
+		level = 0;
+		levels = new ArrayList<Map>();
+		levels.add(new Map(newMapConfig,isLever));
 		endGame = false;
 	}
 	
 	public Game(int ogreNumber, GuardPersonality gp)
 	{
-		char guardPersonality;
-		switch(gp) {
-		case DRUNKEN:
-			guardPersonality = 'd';
-			break;
-		case ROOKIE:
-			guardPersonality = 'r';
-			break;
-		case SUSPICIOUS:
-			guardPersonality = 's';
-			break;
-		default:
-			guardPersonality = 'e';
-			break;
-		
-		}
-		
-		int mapSize = 10;
-		map = new Map(mapSize,ogreNumber, guardPersonality);
+		level = 0;
+		initializeLevelsModified(ogreNumber, gp);
 		endGame = false;
 		setShowCli(true);
+	}
+	
+	private void initializeLevels() {
+		levels = new ArrayList<Map>();
+		levels.add(new Map(1));
+		levels.add(new Map(2));
+	}
+	
+	private void initializeLevelsModified(int ogreNumber, GuardPersonality gp) {
+		levels = new ArrayList<Map>();
+		levels.add(new Map(gp, 1));
+		levels.add(new Map(ogreNumber, 2));
+	}
+	
+	public void addLevel(Map map) {
+		levels.add(map);
+	}
+	
+	public void addLevels(ArrayList<Map> lvls) {
+		levels.addAll(lvls);
 	}
 	
 	/*******************GET FUNTIONS*******************/
@@ -77,15 +87,35 @@ public class Game {
 		return display;
 	}
 	
-	public Map getMap() {
-		return map;
+	public Map getCurrentMap() {
+		return levels.get(level);
 	}
 	
+	public int getLevel() {
+		return level;
+	}
+
+	public int getNumberLevels() {
+		return levels.size();
+	}
+	
+	public void setToLastLevel() {
+		this.level = levels.size()-1;
+	}
+
+	public void setLevel(int level) throws InvalidSelectedLevelException{
+		if(level >= levels.size())
+			throw new InvalidSelectedLevelException();
+		this.level = level;
+	}
+
 	/*******************SET FUNCTIONS*******************/
 	
 	public void setShowCli(boolean showCli) {
 		this.showCli = showCli;
-		map.setShowCli(showCli);
+		for(int i = 0; i < levels.size(); ++i) {
+			levels.get(i).setShowCli(showCli);
+		}
 	}
 
 	public  void setEndGame(boolean endGame) {
@@ -96,36 +126,42 @@ public class Game {
 		Game.display = display;
 	}
 
-	public void setMap(Map map) {
-		this.map = map;
+	public int setCurrentMap(Map map) {
+		levels.set(level, map);
+		return level;
 	}
 	
 	/*******************TO STRING*******************/
 	
+	public String toString(int level)
+	{
+		return levels.get(level).toString();
+	}
+	
 	public String toString()
 	{
-		return this.map.toString();
+		return levels.get(level).toString();
 	}
 	
 	/*******************GAME MANAGEMENT FUNCTION*******************/
 	public void updateGame(char command) {
 		
-		map.updateMap(command);
-		map.updateMapDisplay();
-		if(((Hero) map.getCharacters().get(0)).hasSteppedGuard()) {
+		levels.get(level).updateMap(command);
+		levels.get(level).updateMapDisplay();
+		if(((Hero) levels.get(level).getCharacters().get(0)).hasSteppedGuard()) {
 			endGame = true;
 			display.guardAwoken(showCli);
-		} else if(((Hero) map.getCharacters().get(0)).getCaptured()) {
+		} else if(((Hero) levels.get(level).getCharacters().get(0)).getCaptured()) {
 			display.captured(showCli);
 			endGame = true;
-		} else if(((Hero) map.getCharacters().get(0)).getFatality()) { 
+		} else if(((Hero) levels.get(level).getCharacters().get(0)).getFatality()) { 
 			display.fatality(showCli);
 			endGame = true;
-		} else if(((Hero) map.getCharacters().get(0)).getEscaped()) {
-			if(map.getLevel() != map.getMaxLevel()) {
+		} else if(((Hero) levels.get(level).getCharacters().get(0)).getEscaped()) {
+			if(++level < levels.size()) {
 				display.nextLevel(showCli);
-				map.getToNextLevel();
 			} else {
+				--level;
 				display.gameWon(showCli);
 				endGame = true;
 			}

@@ -1,5 +1,4 @@
 package logic;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class GuidedProject {
@@ -7,14 +6,13 @@ public class GuidedProject {
 	public static void main(String[] args) {
 		//initialize game
 		Game game = new Game();
-		
 
 		Scanner scanCommand = new Scanner(System.in);
 		char command = 0;
 		
-		System.out.println(Arrays.deepToString(game.getMap().getMapScheme()));
+		//System.out.println(Arrays.deepToString(game.getCurrentMap().getMapScheme()));
 		
-		/*game.getMap().displayMap();
+		game.getCurrentMap().displayMap();
 		
 		//game cycle
 		while(!(game.isEndGame())){
@@ -36,10 +34,10 @@ public class GuidedProject {
 			}
 			
 			game.updateGame(command);
-			game.getMap().displayMap();
+			game.getCurrentMap().displayMap();
 		}
 		
-		System.out.println("Closing...");*/
+		System.out.println("Closing...");
 		
 		scanCommand.close();
 	}

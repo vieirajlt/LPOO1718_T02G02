@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -22,8 +23,10 @@ public class LevelCreationPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 4167531419340067575L;
 	private Map map;
-	private GameStartSet gss;	
+	private GameStartSet gss;
 	
+	private ArrayList<Map> savedLevels;
+
 	private JFormattedTextField gameWidthTextField;
 	private JFormattedTextField gameHeightTextField;
 	
@@ -34,6 +37,7 @@ public class LevelCreationPanel extends JPanel {
 
 	//Interpanel Buttons
 	private JButton btnPlayCreatedLvl;
+	private JButton btnSaveLevel;
 	private JButton btnRestart;
 	private JButton btnReturn;
 	private JButton btnCreateLevel;
@@ -55,7 +59,7 @@ public class LevelCreationPanel extends JPanel {
 		this.setLayout(null);
 		this.setVisible(false);
 		
-		
+		this.savedLevels = new ArrayList<Map>();
 
 		initialize();
 	}
@@ -131,6 +135,13 @@ public class LevelCreationPanel extends JPanel {
 		btnPlayCreatedLvl.setBounds(350, 43, 89, 23);
 		this.add(btnPlayCreatedLvl);
 		btnPlayCreatedLvl.setEnabled(false);
+		
+		/********BTN*SAVE**********************************************************************************/
+		
+		btnSaveLevel = new JButton("Save");
+		btnSaveLevel.setEnabled(false);
+		btnSaveLevel.setBounds(451, 42, 89, 23);
+		add(btnSaveLevel);
 
 		/********BTN*RESTART*********************************************************************************/
 
@@ -193,7 +204,6 @@ public class LevelCreationPanel extends JPanel {
 			}
 		});
 
-		//TODO 
 		btnAddHeroWeapon.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mapCreationPanel.setNewCharToArmedHero();
@@ -212,6 +222,15 @@ public class LevelCreationPanel extends JPanel {
 		btnRestart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				btnCreateLevel.doClick();
+			}
+		});
+		
+		/********BTN*SAVE***********************************************************************************/
+		
+		btnSaveLevel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				saveMap(map);
+				statusLabel.setText("Saved.");
 			}
 		});
 
@@ -265,10 +284,14 @@ public class LevelCreationPanel extends JPanel {
 					btnAddKey.setEnabled(true);
 
 				//only lets the player play the created level if it is a valid one
-				if(map.validateMapScheme())
+				if(map.validateMapScheme()) {
 					btnPlayCreatedLvl.setEnabled(true);
-				else
+					btnSaveLevel.setEnabled(true);
+				}
+				else {
 					btnPlayCreatedLvl.setEnabled(false);
+					btnSaveLevel.setEnabled(false);
+				}
 			}
 		});
 
@@ -300,12 +323,19 @@ public class LevelCreationPanel extends JPanel {
 		mapCreationPanel.setVisible(status);
 		btnRestart.setEnabled(status);
 		btnCreateLevel.setVisible(!status);
+		btnSaveLevel.setEnabled(!status);
 		btnAddWall.setEnabled(status);
 		btnAddDoor.setEnabled(status);
 		btnAddKey.setEnabled(status);
 		btnAddHero.setEnabled(status);
 		btnAddHeroWeapon.setEnabled(status);
 		btnAddOgre.setEnabled(status);
+	}
+	
+	public void saveMap(logic.Map map) {
+		logic.Map newMap = new logic.Map(0);
+		newMap.initializeMap(map.getMapScheme());
+		savedLevels.add(newMap);
 	}
 
 	//GET
@@ -326,6 +356,10 @@ public class LevelCreationPanel extends JPanel {
 		return btnCreateLevel;
 	}
 	
+	public JButton getBtnSaveLevel() {
+		return btnSaveLevel;
+	}
+
 	public Map getMap() {
 		return map;
 	}
@@ -340,6 +374,10 @@ public class LevelCreationPanel extends JPanel {
 	
 	public JLabel getStatusLabel() {
 		return statusLabel;
+	}
+	
+	public ArrayList<Map> getSavedLevels() {
+		return savedLevels;
 	}
 
 	//SET

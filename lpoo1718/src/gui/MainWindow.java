@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 
 import javax.swing.JFrame;
 import exception.InvalidOgreCountException;
+import exception.InvalidSelectedLevelException;
 import logic.GameStartSet;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -45,7 +46,7 @@ public class MainWindow implements KeyListener, MouseListener {
 	 */
 	public MainWindow() {
 		initialize();
-		
+		 
 		gpPanel.getGameMapPanel().addKeyListener(this);
 		gpPanel.getGameMapPanel().requestFocusInWindow();
 		gpPanel.getGameMapPanel().addMouseListener(this);
@@ -79,7 +80,11 @@ public class MainWindow implements KeyListener, MouseListener {
 		frmGuidedProjectGui.getContentPane().add(configPanel);
 		configPanel.setVisible(false);
 
-		/**********************************************LISTENERS*********************************************/
+		initializeConfigPanelListeners();
+		
+	}
+
+	private void initializeConfigPanelListeners() {
 		
 		/********BTN*DONE************************************************************************************/
 		
@@ -112,7 +117,6 @@ public class MainWindow implements KeyListener, MouseListener {
 				}
 			}
 		});
-		
 	}
 
 	private void initializeLevelCreationPanel() {
@@ -121,7 +125,12 @@ public class MainWindow implements KeyListener, MouseListener {
 		frmGuidedProjectGui.getContentPane().add(lvlCreationPanel);
 		lvlCreationPanel.setVisible(false);
 		
-		/**********************************************LISTENERS*********************************************/
+		initializeLevelCreationPanelListeners();
+
+	}
+
+
+	private void initializeLevelCreationPanelListeners() {
 		
 		/********BTN*PLAY**********************************************************************************/
 		
@@ -152,16 +161,17 @@ public class MainWindow implements KeyListener, MouseListener {
 				configPanel.setVisible(true);	
 			}
 		});
-
+		
 	}
 	
 	private void initializeGameplayPanel() {
 		gpPanel = new GameplayPanel();
 		frmGuidedProjectGui.getContentPane().add(gpPanel);
 		
-	
-		
-		/**********************************************LISTENERS*********************************************/
+		initializeGameplayPanelListeners();
+	}
+
+	private void initializeGameplayPanelListeners() {
 		
 		/********BTN*CONFIG**********************************************************************************/
 		
@@ -179,6 +189,29 @@ public class MainWindow implements KeyListener, MouseListener {
 			}
 		});
 		
+		/********BTN*NEWGAME*********************************************************************************/
+
+		gpPanel.getBtnNewGame().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(gpPanel.getGameStartSet() == null) {
+					gpPanel.getGameStatusLabel().setText("Invalid number of ogres."); //update label
+				} else {
+					gpPanel.setGame(gpPanel.getGameStartSet().startNewGame()); //starts new game
+					gpPanel.getGame().addLevels(lvlCreationPanel.getSavedLevels());
+					try {
+						gpPanel.getGame().setLevel(configPanel.getLvlSelected()-1);
+						gpPanel.getGameMapPanel().setMap(gpPanel.getGame().toString());
+						gpPanel.getGameMapPanel().repaint();
+						gpPanel.getGameStatusLabel().setText("You can play now."); //update label
+						gpPanel.setEnableBtn(true);
+					} catch (InvalidSelectedLevelException e) {
+						gpPanel.getGameStatusLabel().setText("Invalid selected level."); //update label
+					}
+					
+				}
+			}
+		});
+
 	}
 
 	/**********************Aux Functions**************************/

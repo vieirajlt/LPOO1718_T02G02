@@ -70,8 +70,8 @@ public class TestClassConstructors {
 		Game t = new Game();
 		assertEquals(t.isEndGame(),false);
 		assertEquals(t.isShowCli(),true);
-		assertEquals(t.getMap().getMapScheme().length, 10);
-		assertEquals(t.getMap().getMapScheme()[0].length, 10);
+		assertEquals(t.getCurrentMap().getMapScheme().length, 10);
+		assertEquals(t.getCurrentMap().getMapScheme()[0].length, 10);
 	}
 	
 	@Test
@@ -111,11 +111,9 @@ public class TestClassConstructors {
 	@Test
 	//8
 	public void testMapConstructor() {
-		Map t = new Map(25, 4);
+		Map t = new Map(25, 25, true);
 		assertEquals(t.getMapScheme().length, 25);
 		assertEquals(t.getMapScheme()[0].length, 25);
-		assertEquals(t.getLevel(),4);
-		assertEquals(t.getMaxLevel(),2);
 		assertEquals(t.getCharacters().size(), 0);
 		assertEquals(t.getOgres().size(), 0);
 		assertEquals(t.getDoors().size(), 0);

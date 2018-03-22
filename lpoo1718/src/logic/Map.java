@@ -20,67 +20,78 @@ public class Map {
 	private static final char KEYHERO = 'K'; //hero with key
 	private static final char CLUB = '*';
 	private static final char KEYCLUB = '$'; //club that hit key at a certain point
+	
+	private static final int LVL1 = 1;
+	private static final int LVL2 = 2;
+	private static final int NEWLVL = 0;
+	
+	private static final int LVLSIZE = 10;
 
 	private char map[][]; //[Y][X]
+	private int level;
 	private ArrayList<Door> doors;	
 	private ArrayList<Character> characters;
 	private LinkedList<Ogre> ogres;
 	private ArrayList<Unlocker> unlockers;
-	private int level;
-	private int maxLevel;
 	private int ogreNumber;
-	private char guardPersonality;
+	private GuardPersonality guardPersonality;
 	
 	private boolean showCli;
 	static private MapStatusDisplay display = new MapStatusDisplay();
 
 	/*******************CONSTRUCTORS*******************/
 
-	public Map(int size, int lvl) {
-		map = new char[size][size];
-		level = lvl;
-		maxLevel = 2;
+	public Map(int lvl) {
+		map = new char[LVLSIZE][LVLSIZE];
 		characters = new ArrayList<Character>(); //hero & guard
 		ogres = new LinkedList<Ogre>();
 		doors = new ArrayList<Door>();
 		unlockers = new ArrayList<Unlocker>();
 		showCli = true;
 		ogreNumber = 2; //by default the number of ogres is 2
-		guardPersonality = 'r'; //by default the guard's personality is rookie
-		initializeMap();
-	}
-
-	public Map(int size) {
-		this(size,1);
+		guardPersonality = GuardPersonality.ROOKIE; //by default the guard's personality is rookie
+		initializeMap(lvl);
 	}
 	
-	public Map(int size, int ogreNumber, char guardPersonality)
+	public Map(GuardPersonality guardPersonality, int level)
 	{
-		map = new char[size][size];
-		level = 1;
-		maxLevel = 2;
+		if(level != LVL1)
+			return;
+		map = new char[LVLSIZE][LVLSIZE];
+		characters = new ArrayList<Character>(); //hero & guard
+		doors = new ArrayList<Door>();
+		unlockers = new ArrayList<Unlocker>();
+		showCli = true;
+		this.guardPersonality = guardPersonality;
+		this.ogreNumber = 0;
+		ogres = new LinkedList<Ogre>();
+		initializeMap(LVL1);
+	}
+	
+	public Map(int ogreNumber, int level)
+	{
+		if(level != LVL2)
+			return;
+		map = new char[LVLSIZE][LVLSIZE];
 		characters = new ArrayList<Character>(); //hero & guard
 		ogres = new LinkedList<Ogre>();
 		doors = new ArrayList<Door>();
 		unlockers = new ArrayList<Unlocker>();
 		showCli = true;
 		this.ogreNumber = ogreNumber;
-		this.guardPersonality = guardPersonality;
-		initializeMap();
+		initializeMap(LVL2);
 	}
 
 	public Map(char[][] newMap,boolean isLever) {
 		int size = newMap.length;
 		map = new char[size][size];
-		level = 1; 
-		maxLevel = 1;
 		characters = new ArrayList<Character>(); 
 		ogres = new LinkedList<Ogre>();
 		doors = new ArrayList<Door>();
 		unlockers = new ArrayList<Unlocker>();
 		showCli = true;
 		ogreNumber = 2; //by default the number of ogres is 2
-		guardPersonality = 'r'; //by default the guard's personality is rookie
+		guardPersonality = GuardPersonality.ROOKIE; //by default the guard's personality is rookie
 		initializeMap(newMap,isLever);
 	}
 
@@ -91,19 +102,17 @@ public class Map {
 	public Map(int width, int height, boolean isDefaultMap)
 	{
 		map = new char[height][width];
-		level = 1; 
-		maxLevel = 1;
 		characters = new ArrayList<Character>(); 
 		ogres = new LinkedList<Ogre>();
 		doors = new ArrayList<Door>();
 		unlockers = new ArrayList<Unlocker>();
 		showCli = true;
 		ogreNumber = 2; //by default the number of ogres is 2
-		guardPersonality = 'r'; //by default the guard's personality is rookie
+		guardPersonality = GuardPersonality.ROOKIE; //by default the guard's personality is rookie
 		if (isDefaultMap)
 			setDefaultMap();
 		else
-			initializeMap();
+			initializeMap(LVL1);
 		
 	}
 
@@ -122,13 +131,15 @@ public class Map {
 
 	/*******************MAP INITIALIZATION FUNCTIONS*******************/
 
-	public void initializeMap() {
+	public void initializeMap(int level) {
 		switch(level) {
-		case 1:
+		case LVL1:
 			initializeLvlOne();
+			this.level = LVL1;
 			break;
-		case 2:
+		case LVL2:
 			initializeLvlTwo();
+			this.level = LVL2;
 			break;
 		default:
 			break;
@@ -138,6 +149,7 @@ public class Map {
 	public void initializeMap(char [][] newMap, boolean isLever) {
 		this.map = newMap;
 		characters.add(new Hero(1,1));
+		this.level = NEWLVL;
 		for(int i = 0; i < map.length; i++)
 		{
 			for (int j= 0;j < map[i].length; j++ )
@@ -230,20 +242,13 @@ public class Map {
 	public void initializeLvlOne() {
 
 		characters.add(new Hero(1,1));
-		switch(guardPersonality)
-		{
-		case 's' : case  'S':
+		
+		if(guardPersonality == GuardPersonality.SUSPICIOUS) {
 			characters.add(new Suspicious(8,1));
-			break;
-		case 'd' : case  'D':
+		} else if(guardPersonality == GuardPersonality.DRUNKEN) {
 			characters.add(new Drunken(8,1));
-			break;
-		case 'r' : case  'R':
+		} else if(guardPersonality == GuardPersonality.ROOKIE) {
 			characters.add(new Rookie(8,1));
-			break;
-		default:
-			characters.add(new Rookie(8,1));
-			break;
 		}
 		
 		doors.add(new Door(0,5));
@@ -314,14 +319,11 @@ public class Map {
 
 		characters.clear();
 		characters.add(new Hero(1,8,true));
-		
-		System.out.println(ogreNumber);
 
+		ogres.clear();
 		//all the ogres start at the same position
 		for (int i = 0; i < ogreNumber; i++)
 			ogres.add(new Ogre(4,1));
-		
-		System.out.println(ogres.size());
 
 		doors.clear();
 		doors.add(new Door(0,1));
@@ -418,10 +420,6 @@ public class Map {
 		return level;
 	}
 
-	public int getMaxLevel() {
-		return maxLevel;
-	}
-
 	public ArrayList<Unlocker> getUnlockers() {
 		return unlockers;
 	}
@@ -460,29 +458,38 @@ public class Map {
 	
 	
 	
+	public GuardPersonality getGuardPersonality() {
+		return guardPersonality;
+	}
+
 	/*******************SET FUNCTIONS*******************/
 	
-	public void setGuardType(char type) {
-		if(this.level != 1)
-			return;
-		int x = characters.get(1).getX();
-		int y = characters.get(1).getY();
-		characters.remove(1);
-
-		switch(type) {
-		case 'd': case 'D':
-			characters.add(new Drunken(x, y, false));
-			break;
-		case 'r': case 'R':
-			characters.add(new Rookie(x, y, false));
-			break;
-		case 's': case 'S':
-			characters.add(new Suspicious(x, y, false));
-			break;
-		default:
-			characters.add(new Guard(x, y));
-			break;
+	public void setGuardType(GuardPersonality gp, boolean move) {
+		int x = -1;
+		int y = -1;
+		int index = -1;
+		
+		for(int i = 0; i < characters.size(); ++i) {
+			if(characters.get(i).getSymbol() == GUARD) {
+				x = characters.get(i).getX();
+				y = characters.get(i).getY();
+				index = i;
+				break;
+			}
 		}
+		
+		if(index == -1)
+			return;
+		
+		if(gp == GuardPersonality.SUSPICIOUS) {
+			characters.set(index, new Suspicious(x,y, move));
+		} else if(gp == GuardPersonality.DRUNKEN) {
+			characters.set(index, new Drunken(x,y, move));
+		} else if(gp == GuardPersonality.ROOKIE) {
+			characters.set(index, new Rookie(x,y, move));
+		} 
+		
+		guardPersonality = gp;
 	}
 
 	public void setMapPosition(int x, int y, char c) {
@@ -508,12 +515,7 @@ public class Map {
 	}
 
 	public void setLevel(int newLvl) {
-		level = newLvl;
-		initializeMap();
-	}
-
-	public void setMaxLevel(int newMax) {
-		maxLevel = newMax;
+		initializeMap(newLvl);
 	}
 
 	public void setShowCli(boolean showCli) {
@@ -628,11 +630,6 @@ public class Map {
 	}
 
 	/*******************MAP MANAGEMENTS FUNCTIONS*******************/
-	
-	public void getToNextLevel() {
-		++level;
-		initializeMap();
-	}
 
 	public void updateHeroMapObjects(Character c) {
 		//Check if exit has been reached
@@ -749,13 +746,7 @@ public class Map {
 
 		//update other characters positions in the map
 		for(int i = characters.size(); i > 0; --i) {
-			int x = characters.get(i-1).getX();
-			int y = characters.get(i-1).getY();
-			char s = characters.get(i-1).getSymbol();
-			//Prioritizing Club to Ogre Symbol
-			if(getMapPosition(x, y) == CLUB)
-				s = CLUB;
-			placeCharacter(characters.get(i-1), s);
+			placeCharacter(characters.get(i-1));
 		}
 	}
 

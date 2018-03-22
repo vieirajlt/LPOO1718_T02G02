@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import logic.GuardPersonality;
 import java.awt.Color;
+import java.text.Format;
 
 public class ConfigurationPanel extends JPanel {
 
@@ -19,6 +20,7 @@ public class ConfigurationPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 6441099548808000881L;
 	private JFormattedTextField ogresNumberTxtField;
+	private JFormattedTextField lvlSelectionTextField;
 	private JComboBox<GuardPersonality> guardTypeComboBox;
 
 	
@@ -66,7 +68,7 @@ public class ConfigurationPanel extends JPanel {
 		ogresNumberTxtField.setBounds(180, 45, 70, 19);
 		this.add(ogresNumberTxtField);
 		ogresNumberTxtField.setName("");
-		ogresNumberTxtField.setText("1");
+		ogresNumberTxtField.setText("2");
 		ogresNumberTxtField.setColumns(10);
 
 		/********BTN*DONE***********************************************************************************/
@@ -81,8 +83,20 @@ public class ConfigurationPanel extends JPanel {
 		btnOpenLevelCreationPanel.setBounds(38, 170,  200, 53);
 		this.add(btnOpenLevelCreationPanel);
 		
-		/****************************************************************************************************/
-		/**********************************************LISTENERS*********************************************/
+		/********LABEL*LVLSELECTION*************************************************************************/
+		
+		JLabel lblLevelSelection = new JLabel("Level Selection");
+		lblLevelSelection.setBounds(38, 125, 130, 15);
+		add(lblLevelSelection);
+		
+		/********FTEXTFIELD*LVLSELECTION********************************************************************/
+		
+		lvlSelectionTextField = new JFormattedTextField((Format) null);
+		lvlSelectionTextField.setText("1");
+		lvlSelectionTextField.setName("");
+		lvlSelectionTextField.setColumns(10);
+		lvlSelectionTextField.setBounds(180, 123, 70, 19);
+		add(lvlSelectionTextField);
 		
 	}
 
@@ -104,10 +118,9 @@ public class ConfigurationPanel extends JPanel {
 		return btnOpenLevelCreationPanel;
 	}
 	
-	//SET
-
-	public void setBtnDone(JButton btnDone) {
-		this.btnDone = btnDone;
+	public int getLvlSelected() {
+		return Integer.parseInt(lvlSelectionTextField.getText());
 	}
-
+	
+	//SET
 }

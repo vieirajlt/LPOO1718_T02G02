@@ -2,10 +2,6 @@ package test;
 
 import static org.junit.Assert.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
-
 import org.junit.Test;
 
 import logic.Game;
@@ -23,11 +19,11 @@ public class TestDungeonGameLogic {
 //		game.setShowCli(true);
 //		assertEquals(game.isShowCli(),true);
 		game.setShowCli(false);
-		assertEquals(game.getMap().getMapPosition(1, 1), game.getMap().getCharacters().get(0).getSymbol());
+		assertEquals(game.getCurrentMap().getMapPosition(1, 1), game.getCurrentMap().getCharacters().get(0).getSymbol());
 		game.updateGame('d');
-		assertEquals(game.getMap().getMapPosition(1, 2), game.getMap().getCharacters().get(0).getSymbol());	
+		assertEquals(game.getCurrentMap().getMapPosition(1, 2), game.getCurrentMap().getCharacters().get(0).getSymbol());	
 		game.updateGame('e');
-		assertEquals(game.getMap().getMapPosition(1, 2), game.getMap().getCharacters().get(0).getSymbol());	
+		assertEquals(game.getCurrentMap().getMapPosition(1, 2), game.getCurrentMap().getCharacters().get(0).getSymbol());	
 	}
 
 	@Test
@@ -35,9 +31,9 @@ public class TestDungeonGameLogic {
 	public void testMoveHeroIntoWall() {
 		Game game = new Game(map.getMap());
 		game.setShowCli(false);
-		assertEquals(game.getMap().getMapPosition(1, 1), game.getMap().getCharacters().get(0).getSymbol());
+		assertEquals(game.getCurrentMap().getMapPosition(1, 1), game.getCurrentMap().getCharacters().get(0).getSymbol());
 		game.updateGame('u');
-		assertEquals(game.getMap().getMapPosition(1, 1), game.getMap().getCharacters().get(0).getSymbol());	
+		assertEquals(game.getCurrentMap().getMapPosition(1, 1), game.getCurrentMap().getCharacters().get(0).getSymbol());	
 	}
 
 
@@ -46,11 +42,11 @@ public class TestDungeonGameLogic {
 	public void testHeroIsCapturedByGuard() {
 		Game game = new Game(map.getMap());
 		game.setShowCli(false);
-		assertEquals(game.getMap().getMapPosition(1, 1), game.getMap().getCharacters().get(0).getSymbol());
-		assertEquals(((Guard)game.getMap().getCharacters().get(1)).updateGuard(), 'E'); //test if guard is in fact not moving
+		assertEquals(game.getCurrentMap().getMapPosition(1, 1), game.getCurrentMap().getCharacters().get(0).getSymbol());
+		assertEquals(((Guard)game.getCurrentMap().getCharacters().get(1)).updateGuard(), 'E'); //test if guard is in fact not moving
 		game.updateGame('r');
-		assertEquals(game.getMap().getMapPosition(2, 1), game.getMap().getCharacters().get(0).getSymbol());	
-		assertEquals(true, ((Hero) game.getMap().getCharacters().get(0)).getCaptured());
+		assertEquals(game.getCurrentMap().getMapPosition(2, 1), game.getCurrentMap().getCharacters().get(0).getSymbol());	
+		assertEquals(true, ((Hero) game.getCurrentMap().getCharacters().get(0)).getCaptured());
 	}
 
 	@Test
@@ -58,10 +54,10 @@ public class TestDungeonGameLogic {
 	public void testMoveHeroIntoClosedDoor() {
 		Game game = new Game(map.getMap());
 		game.setShowCli(false);
-		assertEquals(game.getMap().getMapPosition(1, 1), game.getMap().getCharacters().get(0).getSymbol());
+		assertEquals(game.getCurrentMap().getMapPosition(1, 1), game.getCurrentMap().getCharacters().get(0).getSymbol());
 		game.updateGame('d');
 		game.updateGame('l');
-		assertEquals(game.getMap().getMapPosition(1, 2), game.getMap().getCharacters().get(0).getSymbol());	
+		assertEquals(game.getCurrentMap().getMapPosition(1, 2), game.getCurrentMap().getCharacters().get(0).getSymbol());	
 	}
 
 	@Test
@@ -69,17 +65,17 @@ public class TestDungeonGameLogic {
 	public void testMoveHeroIntoLever() {
 		Game game = new Game(map.getMap());
 		game.setShowCli(false);
-		assertEquals(game.getMap().getMapPosition(1, 1), game.getMap().getCharacters().get(0).getSymbol());
+		assertEquals(game.getCurrentMap().getMapPosition(1, 1), game.getCurrentMap().getCharacters().get(0).getSymbol());
 		//test lever position and symbol
-		assertEquals(game.getMap().getUnlockers().get(0).getX(),1);
-		assertEquals(game.getMap().getUnlockers().get(0).getY(),3);
-		assertEquals(game.getMap().getUnlockers().get(0).getSymbol(),'k');
+		assertEquals(game.getCurrentMap().getUnlockers().get(0).getX(),1);
+		assertEquals(game.getCurrentMap().getUnlockers().get(0).getY(),3);
+		assertEquals(game.getCurrentMap().getUnlockers().get(0).getSymbol(),'k');
 		game.updateGame('d');
 		game.updateGame('d');
-		assertEquals(game.getMap().getMapPosition(1, 2), game.getMap().getCharacters().get(0).getSymbol());
-		int X = game.getMap().getDoors().get(0).getX();
-		int Y = game.getMap().getDoors().get(0).getY();
-		assertEquals('S', game.getMap().getMapPosition(X, Y));
+		assertEquals(game.getCurrentMap().getMapPosition(1, 2), game.getCurrentMap().getCharacters().get(0).getSymbol());
+		int X = game.getCurrentMap().getDoors().get(0).getX();
+		int Y = game.getCurrentMap().getDoors().get(0).getY();
+		assertEquals('S', game.getCurrentMap().getMapPosition(X, Y));
 	}
 
 	@Test
@@ -87,13 +83,13 @@ public class TestDungeonGameLogic {
 	public void testMoveHeroIntoOpenDoor() {
 		Game game = new Game(map.getMap());
 		game.setShowCli(false);
-		assertEquals(game.getMap().getMapPosition(1, 1), game.getMap().getCharacters().get(0).getSymbol());
+		assertEquals(game.getCurrentMap().getMapPosition(1, 1), game.getCurrentMap().getCharacters().get(0).getSymbol());
 		game.updateGame('d');
 		game.updateGame('d');
 		game.updateGame('l');
-		int X = game.getMap().getDoors().get(0).getX();
-		int Y = game.getMap().getDoors().get(0).getY();
-		assertEquals(game.getMap().getMapPosition(X, Y), game.getMap().getCharacters().get(0).getSymbol());
+		int X = game.getCurrentMap().getDoors().get(0).getX();
+		int Y = game.getCurrentMap().getDoors().get(0).getY();
+		assertEquals(game.getCurrentMap().getMapPosition(X, Y), game.getCurrentMap().getCharacters().get(0).getSymbol());
 		assertEquals(game.isEndGame(),true);
 	}
 

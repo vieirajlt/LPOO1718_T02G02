@@ -6,7 +6,6 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 
 import logic.Game;
-import logic.Hero;
 import logic.Ogre;
 import logic.Weapon;
 
@@ -20,13 +19,13 @@ public class TestOgreRandomMovement {
 		boolean down = false, up = false, rigth = false, left = false;
 		Game game = new Game(map.getMap2());
 		game.setShowCli(false);
-		game.getMap().getOgres().getLast().setRandomMovement(true);
+		game.getCurrentMap().getOgres().getLast().setRandomMovement(true);
 		
 		int oX, oY, oPx, oPy;
 		
 		while(!down || !up || !rigth || !left) {
 			game.updateGame('d');
-			Ogre o = game.getMap().getOgres().get(0);
+			Ogre o = game.getCurrentMap().getOgres().get(0);
 			oX = o.getX();
 			oY = o.getY();
 			oPx = o.getPrevX();
@@ -54,13 +53,13 @@ public class TestOgreRandomMovement {
 		boolean down = false, up = false, rigth = false, left = false;
 		Game game = new Game(map.getMap2());
 		game.setShowCli(false);
-		game.getMap().getOgres().getLast().setRandomMovement(true);
+		game.getCurrentMap().getOgres().getLast().setRandomMovement(true);
 		int wX, wY, oX, oY;
 		
 		while(!down || !up || !rigth || !left) {
 			game.updateGame('d');
-			Weapon w = game.getMap().getOgres().get(0).getWeapon();
-			Ogre o = game.getMap().getOgres().get(0);
+			Weapon w = game.getCurrentMap().getOgres().get(0).getWeapon();
+			Ogre o = game.getCurrentMap().getOgres().get(0);
 			wX = w.getX();
 			wY = w.getY();
 			oX = o.getX();
