@@ -175,9 +175,14 @@ public class LevelCreationPanel extends JPanel {
 		statusLabel.setBounds(350, 387, 210, 41);
 		add(statusLabel);
 
-		/****************************************************************************************************/
-		/**********************************************LISTENERS*********************************************/
+		initializeListeners();
 
+	}
+
+	/**
+	 * 
+	 */
+	private void initializeListeners() {
 		/********BTN*CREATION********************************************************************************/
 
 		btnAddWall.addActionListener(new ActionListener() {
@@ -294,7 +299,6 @@ public class LevelCreationPanel extends JPanel {
 				}
 			}
 		});
-
 	}
 	
 	public boolean setMapDimensions() {

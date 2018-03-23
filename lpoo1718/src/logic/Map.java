@@ -47,7 +47,7 @@ public class Map implements Serializable {
 
 	/*******************CONSTRUCTORS*******************/
 
-	public Map(int lvl) {
+	public Map() {
 		map = new char[LVLSIZE][LVLSIZE];
 		characters = new ArrayList<Character>(); //hero & guard
 		ogres = new LinkedList<Ogre>();
@@ -56,18 +56,18 @@ public class Map implements Serializable {
 		showCli = true;
 		ogreNumber = 2; //by default the number of ogres is 2
 		guardPersonality = GuardPersonality.ROOKIE; //by default the guard's personality is rookie
+	}
+	
+	public Map(int lvl) {
+		this();
 		initializeMap(lvl);
 	}
 	
 	public Map(GuardPersonality guardPersonality, int level)
 	{
+		this();
 		if(level != LVL1)
 			return;
-		map = new char[LVLSIZE][LVLSIZE];
-		characters = new ArrayList<Character>(); //hero & guard
-		doors = new ArrayList<Door>();
-		unlockers = new ArrayList<Unlocker>();
-		showCli = true;
 		this.guardPersonality = guardPersonality;
 		this.ogreNumber = 0;
 		ogres = new LinkedList<Ogre>();
@@ -76,26 +76,17 @@ public class Map implements Serializable {
 	
 	public Map(int ogreNumber, int level)
 	{
+		this();
 		if(level != LVL2)
 			return;
-		map = new char[LVLSIZE][LVLSIZE];
-		characters = new ArrayList<Character>(); //hero & guard
-		ogres = new LinkedList<Ogre>();
-		doors = new ArrayList<Door>();
-		unlockers = new ArrayList<Unlocker>();
-		showCli = true;
 		this.ogreNumber = ogreNumber;
 		initializeMap(LVL2);
 	}
 
 	public Map(char[][] newMap,boolean isLever) {
+		this();
 		int size = newMap.length;
 		map = new char[size][size];
-		characters = new ArrayList<Character>(); 
-		ogres = new LinkedList<Ogre>();
-		doors = new ArrayList<Door>();
-		unlockers = new ArrayList<Unlocker>();
-		showCli = true;
 		ogreNumber = 2; //by default the number of ogres is 2
 		guardPersonality = GuardPersonality.ROOKIE; //by default the guard's personality is rookie
 		initializeMap(newMap,isLever);
@@ -107,12 +98,8 @@ public class Map implements Serializable {
 	
 	public Map(int width, int height, boolean isDefaultMap)
 	{
+		this();
 		map = new char[height][width];
-		characters = new ArrayList<Character>(); 
-		ogres = new LinkedList<Ogre>();
-		doors = new ArrayList<Door>();
-		unlockers = new ArrayList<Unlocker>();
-		showCli = true;
 		ogreNumber = 2; //by default the number of ogres is 2
 		guardPersonality = GuardPersonality.ROOKIE; //by default the guard's personality is rookie
 		if (isDefaultMap)
@@ -188,6 +175,7 @@ public class Map implements Serializable {
 	
 	public void initializeMap(char [][] newMap) {
 		this.map = newMap;
+		this.level = NEWLVL;
 		characters.clear();
 		ogres.clear();
 		doors.clear();
@@ -666,6 +654,9 @@ public class Map implements Serializable {
 	}
 
 	public void updateOgrePosition(Character c) {
+		if(!isMovePossible(c.getX(), c.getY())) 
+			return;
+		
 		int X = c.getWeapon().getX();
 		int Y = c.getWeapon().getY();
 
@@ -787,7 +778,9 @@ public class Map implements Serializable {
 		if(X != - 1 && Y != -1)
 			setMapPosition(X, Y, EMPTY);
 
-		if(c.hasWeapon() && c.getWeapon().isVisible()) {
+		X = c.getWeapon().getPrevX();
+		Y = c.getWeapon().getPrevY();
+		if(c.hasWeapon() && c.getWeapon().isVisible() && getMapPosition(X, Y) != WALL) {
 			//Clear previous Weapon position
 			X = c.getWeapon().getPrevX();
 			Y = c.getWeapon().getPrevY();
@@ -825,6 +818,20 @@ public class Map implements Serializable {
 			res += String.valueOf(getMapScheme()[i]) + "\n";
 		}
 		return res;
+	}
+	
+	boolean isMovePossible(int x, int y) {
+		if(getMapPosition(x+1, y) != WALL) {
+			return true;
+		} else if(getMapPosition(x-1, y) != WALL) {
+			return true;
+		} else if(getMapPosition(x, y+1) != WALL) {
+			return true;
+		}  else if(getMapPosition(x, y-1) != WALL) {
+			return true;
+		}
+		
+		return false;	
 	}
 
 }

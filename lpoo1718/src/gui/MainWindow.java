@@ -159,6 +159,7 @@ public class MainWindow implements KeyListener, MouseListener {
 
 		lvlCreationPanel.getBtnReturn().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				lvlCreationPanel.changeLevelCreationStatus(false);
 				lvlCreationPanel.setVisible(false);
 				configPanel.setVisible(true);	
 			}
@@ -205,7 +206,7 @@ public class MainWindow implements KeyListener, MouseListener {
 						gpPanel.getGameMapPanel().setMap(gpPanel.getGame().toString());
 						gpPanel.getGameMapPanel().repaint();
 						gpPanel.getGameStatusLabel().setText("You can play now."); //update label
-						gpPanel.setEnableBtn(true);
+						gpPanel.setEnableMovementBtn(true);
 						gpPanel.getBtnSaveGame().setEnabled(true);
 					} catch (InvalidSelectedLevelException e) {
 						gpPanel.getGameStatusLabel().setText("Invalid selected level."); //update label

@@ -22,6 +22,7 @@ import exception.InvalidOgreCountException;
 import logic.Game;
 import logic.GameStartSet;
 import logic.GuardPersonality;
+import logic.Map;
 
 public class GameplayPanel extends JPanel implements KeyListener, MouseListener {
 
@@ -270,12 +271,16 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 	}
 
 	public void playMap(logic.Map map) {
-		game.getCurrentMap().initializeMap(map.getMapScheme());
+		Map newLevel = new Map(1);
+		newLevel.initializeMap(map.getMapScheme());
+		game.addLevel(newLevel);
+		game.setToLastLevel();
+		//game.getCurrentMap().initializeMap(map.getMapScheme());
 		gameMapPanel.setBounds(35, 152, map.getMapWidth()*GraphicPanel.blockSize, map.getMapHeight()*GraphicPanel.blockSize);
 		gameMapPanel.setMap(game.toString());
 		gameMapPanel.repaint();
 		gameStatusLabel.setText("You can play now."); //update label
-		setEnableBtn(true);
+		setEnableMovementBtn(true);
 	}
 
 	public int getMoveButton(int code)
@@ -358,7 +363,7 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		return btnLoadGame;
 	}
 
-	public void setEnableBtn(boolean value)
+	public void setEnableMovementBtn(boolean value)
 	{
 		for (int i = 0; i < movbuttons.size(); i++)
 			movbuttons.get(i).setEnabled(value);
@@ -372,10 +377,10 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		map.setMap(game.toString());
 		map.repaint(); 
 		if (game.isEndGame()) {
-			setEnableBtn(false);
+			setEnableMovementBtn(false);
 			status.setText("Game Over."); //update label
 		} else
-			setEnableBtn(true);
+			setEnableMovementBtn(true);
 	}
 
 	@Override
