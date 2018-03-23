@@ -1,11 +1,17 @@
 package logic;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 
 import cli.MapStatusDisplay;
 
-public class Map {
+public class Map implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3751192253702198623L;
 	private static final char EMPTY = ' ';
 	private static final char WALL = 'X';
 	private static final char DOOR = 'I';
@@ -820,25 +826,5 @@ public class Map {
 		}
 		return res;
 	}
-	
-	public char[][] stringToArray(int w, int h, String m) {
-		char[][] newMap = new char[h][w];
-		int index = 0;
-		for(int y = 0; y < h; ++y) {
-			for(int x = 0; x < w; ++x) {
-				while(isIgnorable(m.charAt(index))) {
-					++index;
-				}
-				newMap[y][x] = m.charAt(index);
-			}
-		}
-		return newMap;
-	}
-	
-	public boolean isIgnorable(char c) {
-		return (c == '[' || c == ']' || c == ',');
-	}
-
-	
 
 }

@@ -7,6 +7,12 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import java.util.LinkedList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -28,11 +34,13 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 	private LinkedList<JButton> movbuttons = new LinkedList<JButton>(); //has the 4 movement related buttons (up, down, left, right)
 	private GraphicPanel gameMapPanel;
 	private JLabel gameStatusLabel;
-	
+
 	//Interpanel Buttons
 	private JButton btnConfig;
 	private JButton btnNewGame;
-	
+	private JButton btnSaveGame;
+	private JButton btnLoadGame;
+
 	/**
 	 * Create the panel.
 	 */
@@ -40,25 +48,25 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		super();
 		setBounds(0, 0, 630, 451);
 		setLayout(null);
-		
+
 		try {
 			gss = new GameStartSet(2 ,GuardPersonality.DRUNKEN);
 		} catch (InvalidOgreCountException e) {
 			gss = null;
 		}
-		
+
 		game = gss.startNewGame();
-		
+
 		initialize();
 	}
-	
+
 	public GraphicPanel getGameMapPanel()
 	{
 		return gameMapPanel;
 	}
-	
+
 	private void initialize() {
-		
+
 		/********BTN*NEWGAME********************************************************************************/
 
 		btnNewGame = new JButton("New Game");
@@ -115,7 +123,23 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		gameMapPanel.setBounds(35, 152, 200, 200);
 		this.add(gameMapPanel);
 		gameMapPanel.setVisible(true);
-		
+
+		/********BTN*SAVEGAME********************************************************************************/
+
+		btnSaveGame = new JButton("Save");
+		btnSaveGame.setBounds(388, 137, 80, 25);
+		add(btnSaveGame);
+		btnSaveGame.setVisible(true);
+		btnSaveGame.setEnabled(false);
+
+		/********BTN*LOADGAME********************************************************************************/
+
+		btnLoadGame = new JButton("Load");
+		btnLoadGame.setBounds(495, 137, 80, 25);
+		add(btnLoadGame);
+		btnLoadGame.setVisible(true);
+		btnLoadGame.setEnabled(true);
+
 		initializeListeners(btnNewGame, btnExit, btnUp, btnDown, btnLeft, btnRight);
 
 	}
@@ -130,7 +154,7 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 	 */
 	private void initializeListeners(JButton btnNewGame, JButton btnExit, JButton btnUp, JButton btnDown,
 			JButton btnLeft, JButton btnRight) {
-		
+
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -153,6 +177,7 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 			public void actionPerformed(ActionEvent arg0) {
 				game.updateGame('u');
 				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
+				btnSaveGame.setEnabled(true);
 			}
 		});
 
@@ -160,6 +185,7 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 			public void actionPerformed(ActionEvent arg0) {
 				game.updateGame('d');
 				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
+				btnSaveGame.setEnabled(true);
 			}
 		});
 
@@ -167,6 +193,7 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 			public void actionPerformed(ActionEvent arg0) {
 				game.updateGame('l');
 				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
+				btnSaveGame.setEnabled(true);
 			}
 		});
 
@@ -174,14 +201,74 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 			public void actionPerformed(ActionEvent arg0) {
 				game.updateGame('r');
 				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
+				btnSaveGame.setEnabled(true);
+			}
+		});
+
+		/********BTN*SAVEGAME********************************************************************************/
+
+		btnSaveGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(saveGame())
+					gameStatusLabel.setText("Game Successfully Saved.");
+				else
+					gameStatusLabel.setText("Sorry, it is impossible to save your game.");
+			}
+		});
+
+		/********BTN*LOADGAME********************************************************************************/
+
+		btnLoadGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(loadGame())
+					gameStatusLabel.setText("Game Successfully Loaded.");
+				else
+					gameStatusLabel.setText("Sorry, it is impossible to load your game.");
 			}
 		});
 	}
-	
+
+	public boolean saveGame() {
+		boolean completed = true;
+
+		try {
+			FileOutputStream fOut;
+			fOut = new FileOutputStream("./saves/gameSave.ser");
+			ObjectOutputStream oOut = new ObjectOutputStream(fOut);
+			oOut.writeObject(game);
+			oOut.close();
+			fOut.close();
+		} catch (Exception e) {
+			completed = false;
+			e.printStackTrace();
+		}
+
+		return completed;
+	}
+
+	public boolean loadGame() {
+		boolean completed = true;
+
+		try {
+			FileInputStream fIn = new FileInputStream("./saves/gameSave.ser");
+			ObjectInputStream oIn = new ObjectInputStream(fIn);
+			game = (Game) oIn.readObject();
+			oIn.close();
+			fIn.close();
+			updateGuiGameSettings(gameMapPanel, gameStatusLabel);
+			gameMapPanel.repaint();
+		}catch (Exception e){
+			completed = false;
+			e.printStackTrace();
+		}
+
+		return completed;
+	}
+
 	public void cleanGameStausLabel() {
 		gameStatusLabel.setText("");
 	}
-	
+
 	public void playMap(logic.Map map) {
 		game.getCurrentMap().initializeMap(map.getMapScheme());
 		gameMapPanel.setBounds(35, 152, map.getMapWidth()*GraphicPanel.blockSize, map.getMapHeight()*GraphicPanel.blockSize);
@@ -190,7 +277,7 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		gameStatusLabel.setText("You can play now."); //update label
 		setEnableBtn(true);
 	}
-	
+
 	public int getMoveButton(int code)
 	{
 		String btn = "";
@@ -232,9 +319,9 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 			this.movbuttons.get(index).doClick();
 		}
 	}
-	
+
 	//GET
-	
+
 	public Game getGame() {
 		return game;
 	}
@@ -242,11 +329,11 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 	public JButton getBtnConfig() {
 		return btnConfig;
 	}
-	
+
 	public GameStartSet getGameStartSet() {
 		return gss;
 	}
-	
+
 	public JButton getBtnNewGame() {
 		return btnNewGame;
 	}
@@ -254,21 +341,29 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 	public JLabel getGameStatusLabel() {
 		return gameStatusLabel;
 	}
-	
+
 	//SET
-	
+
 	public void setGameStartSet(GameStartSet gss) {
 		this.gss = gss;
 	}
-	
+
 	//AUX
-	
+
+	public JButton getBtnSaveGame() {
+		return btnSaveGame;
+	}
+
+	public JButton getBtnLoadGame() {
+		return btnLoadGame;
+	}
+
 	public void setEnableBtn(boolean value)
 	{
 		for (int i = 0; i < movbuttons.size(); i++)
 			movbuttons.get(i).setEnabled(value);
 	}
-	
+
 	public void setGame(Game game) {
 		this.game = game;
 	}
@@ -279,49 +374,49 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		if (game.isEndGame()) {
 			setEnableBtn(false);
 			status.setText("Game Over."); //update label
-		}
+		} else
+			setEnableBtn(true);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
-	}
 
+	}
 }

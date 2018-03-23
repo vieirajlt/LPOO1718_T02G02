@@ -1,6 +1,12 @@
 package logic;
 
-public class Door {
+import java.io.Serializable;
+
+public class Door implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6317099912561121522L;
 	private int x;
 	private int y;
 	

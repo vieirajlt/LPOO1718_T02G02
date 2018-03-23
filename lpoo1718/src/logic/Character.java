@@ -1,9 +1,15 @@
 package logic;
 
+import java.io.Serializable;
+
 import cli.CharacterStatusDisplay;
 
 
-public class Character {
+public class Character implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8571121080640766560L;
 	private int X;
 	private int Y;
 	private int prevX;

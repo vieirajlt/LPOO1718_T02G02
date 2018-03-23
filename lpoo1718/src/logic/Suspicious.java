@@ -4,6 +4,10 @@ import java.util.Random;
 
 public class Suspicious extends Guard {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7323895084101865303L;
 	private boolean isReverse;
 	
 	/*******************CONSTRUCTORS*******************/

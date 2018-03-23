@@ -1,6 +1,10 @@
 package logic;
 
 public class Guard extends Character{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6482594357189490814L;
 	private char route[];
 	private int routeStep;
 

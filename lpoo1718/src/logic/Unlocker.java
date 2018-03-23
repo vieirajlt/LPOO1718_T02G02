@@ -1,7 +1,13 @@
 package logic;
 
-public class Unlocker {
+import java.io.Serializable;
 
+public class Unlocker implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -932204565800543432L;
 	private int x;
 	private int y;
 	private char symbol;

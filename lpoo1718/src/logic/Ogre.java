@@ -6,6 +6,10 @@ import cli.ogreStatusDisplay;
 
 public class Ogre extends Character {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 678238776851162692L;
 	private boolean stunned;
 	private int stunCount;
 	

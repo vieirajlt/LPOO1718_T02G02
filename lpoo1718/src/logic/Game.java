@@ -1,11 +1,16 @@
 package logic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import cli.GameStatusDisplay;
 import exception.InvalidSelectedLevelException;
 
-public class Game {
+public class Game implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 476316704894951892L;
 	private boolean endGame;
 	private boolean showCli;
 	private int level;
@@ -167,5 +172,5 @@ public class Game {
 			}
 		}
 	}
-
+	
 }

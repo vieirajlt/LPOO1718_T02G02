@@ -1,7 +1,11 @@
 package logic;
 import cli.heroStatusDisplay;
 
-public class Hero extends Character{
+public class Hero extends Character {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -332143168894865218L;
 	private boolean escaped;
 	private boolean wallColliding; //for collisions with closed doors and common walls
 	private boolean objectColliding; //for collisions with levers/keys
