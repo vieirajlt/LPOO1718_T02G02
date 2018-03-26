@@ -776,14 +776,16 @@ public class Map implements Serializable {
 		int X = c.getPrevX();
 		int Y = c.getPrevY();
 		if(X != - 1 && Y != -1)
+		{
 			setMapPosition(X, Y, EMPTY);
-
-		if(c.hasWeapon() && c.getWeapon().isVisible() && getMapPosition(X, Y) != WALL) {
-			//Clear previous Weapon position
-			X = c.getWeapon().getPrevX();
-			Y = c.getWeapon().getPrevY();
-			setMapPosition(X, Y, EMPTY);
+			if(c.hasWeapon() && c.getWeapon().isVisible() && getMapPosition(X, Y) != WALL) {
+				//Clear previous Weapon position
+				X = c.getWeapon().getPrevX();
+				Y = c.getWeapon().getPrevY();
+				setMapPosition(X, Y, EMPTY);
+			}
 		}
+
 	}
 
 	public void openExit() {
