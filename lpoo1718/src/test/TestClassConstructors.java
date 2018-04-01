@@ -4,8 +4,12 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import exception.InvalidBoardSizeException;
+import exception.InvalidOgreCountException;
 import logic.Game;
+import logic.GameStartSet;
 import logic.Guard;
+import logic.GuardPersonality;
 import logic.Hero;
 import logic.Map;
 import logic.Ogre;
@@ -29,6 +33,11 @@ public class TestClassConstructors {
 		assertEquals(t.getSymbol(),'T');
 		assertEquals(t.hasWeapon(),true);
 		assertEquals(t.isMove(),false);
+		assertEquals(t.isShowCli(),true);
+		t.setPosition(2, 3);
+		assertEquals(t.getX(),2);
+		assertEquals(t.getY(),3);
+		
 	}
 
 	@Test
@@ -85,6 +94,8 @@ public class TestClassConstructors {
 		assertEquals(t.hasWeapon(),false);
 		assertEquals(t.getRoute().length,24);
 		assertEquals(t.getRouteStep(),0);
+		Guard g = new Guard(1,2,false);
+		assertEquals(g.updateGuard(false), 'E');
 	}
 	
 	@Test
@@ -95,7 +106,8 @@ public class TestClassConstructors {
 		assertEquals(t.getY(),2);
 		assertEquals(t.getSymbol(), 'A');
 		assertEquals(t.isMove(),true);
-		assertEquals(t.hasWeapon(),true);
+		assertEquals(t.hasWeapon(),true); 
+		assertEquals(t.getWeapon().isVisible(),false); 
 		assertEquals(t.getEscaped(),false);
 		assertEquals(t.getObjectColliding(),false);
 		assertEquals(t.getWallColliding(),false);
@@ -105,6 +117,8 @@ public class TestClassConstructors {
 		assertEquals(t.hasSteppedGuard(),false);
 		t = new Hero(1, 2, false);
 		assertEquals(t.getSymbol(), 'H');
+		t.addWeapon();
+		assertEquals(t.hasWeapon(),true);
 	}
 	
 	
@@ -118,6 +132,25 @@ public class TestClassConstructors {
 		assertEquals(t.getOgres().size(), 0);
 		assertEquals(t.getDoors().size(), 0);
 		assertEquals(t.getUnlockers().size(), 0);
+		t = new Map(GuardPersonality.DRUNKEN,1);
+		assertEquals(t.getGuardPersonality(),GuardPersonality.DRUNKEN);
+		assertEquals(t.getLevel(),1);
+		assertEquals(t.getMapHeight(),10);
+		assertEquals(t.getMapWidth(),10);
+		t = new Map(5,2);
+		assertEquals(t.getLevel(),2);
+		assertEquals(t.getMapHeight(),10);
+		assertEquals(t.getMapWidth(),10);
+		t = new Map(1);
+		assertEquals(t.getCharacters().size(),2);
+		t.setLevel(2);
+		assertEquals(t.getCharacters().size(),1);
+		t= new Map(9,9,true);
+		TestMap map = new TestMap();
+		String res = "";
+		for (int i = 0 ; i < map.getMap3().length; i++)
+			res += String.valueOf(map.getMap3()[i]) + "\n";
+		assertEquals(t.toString(), res);
 	}
 	
 	@Test
@@ -133,6 +166,10 @@ public class TestClassConstructors {
 		assertEquals(t.getWeapon().getY(),2);
 		assertEquals(t.getStunCount(),0);
 		assertEquals(t.isStunned(),false);
+		t.setMove(false);
+		assertEquals(t.getNextMove(), 'E');
+		t.setStunned(true);
+		assertEquals(t.isStunned(),true);
 	}
 	
 	
@@ -165,6 +202,7 @@ public class TestClassConstructors {
 		assertEquals(t.getY(),2);
 		assertEquals(t.getSymbol(), '+');
 		assertEquals(t.isLever(),true);
+		assertEquals(t.hasReackedUnlocker(1, 2),true);
 	}
 	
 	@Test
@@ -176,6 +214,23 @@ public class TestClassConstructors {
 		assertEquals(t.getSymbol(), '+');
 		assertEquals(t.isMove(),false);
 		assertEquals(t.isVisible(),true);
+	}
+	
+	@Test
+	//13
+	public void testGameStartSetConstructor() throws InvalidBoardSizeException, InvalidOgreCountException {
+		GameStartSet gss = new GameStartSet(10,10);
+		assertEquals(gss.getHeigth(),10);
+		assertEquals(gss.getWidth(),10);
+		assertEquals(gss.isLvlCreation(),true);
+		assertEquals(gss.isSizeValid(10, 10),true);	
+		gss.setOgresCount(5);
+		assertEquals(gss.isOgreCountValid(gss.getOgresCount()),true);
+		gss.setGuardPersonality(GuardPersonality.ROOKIE);
+		assertEquals(gss.getGuardPersonality(),GuardPersonality.ROOKIE);
+		gss = new GameStartSet(5,GuardPersonality.DRUNKEN);
+		assertEquals(gss.getOgresCount(),5);
+		
 	}
 	
 }

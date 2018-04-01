@@ -2,7 +2,6 @@ package test;
 
 import static org.junit.Assert.*;
 
-
 import org.junit.Test;
 import logic.Character;
 import logic.Guard;
@@ -30,17 +29,9 @@ public class TestOtherFuncions {
 		assertEquals(w.reverseCommand('e'), 'E');
 	}
 	
-	@Test
-	public void TestMapInitialization()
-	{
-		Map m = new Map(1);
-		assertEquals(m.getCharacters().size(),2);
-		m.setLevel(2);
-		assertEquals(m.getCharacters().size(),1);
-	}
 	
 	@Test 
-	public void TestGuardInitializeRoute()
+	public void TestGuardRoute()
 	{
 		Guard g = new Guard(8,1);
 		char[] route;
@@ -57,25 +48,10 @@ public class TestOtherFuncions {
 			route[i] = 'u';
 		for (int i = 0; i < route.length; i++)
 			assertEquals(g.getRoute()[i],route[i]);
+		
+		assertEquals(g.updateGuard(),'l');
+		assertEquals(g.updateGuard(true),'r');
+		assertEquals(g.updateGuard(false),'l');
 	}
-	
-	
-//	public void WhateverImTesting() throws Exception {
-//
-//		//Prepare to redirect output
-//		OutputStream os = new ByteArrayOutputStream();
-//		PrintStream ps = new PrintStream(os);
-//		System.setOut(ps);
-//
-//		System.out.print("Hello World");
-//		assertEquals("Hello World", os.toString());
-//
-//		System.out.println("Hello World");
-//	
-//		PrintStream originalOut = System.out;
-//		System.setOut(originalOut);
-//
-//		}
-
-	
+		
 }
