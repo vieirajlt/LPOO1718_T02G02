@@ -727,14 +727,41 @@ public class Map implements Serializable {
 
 	/*******************MAP MANAGEMENT FUNCTIONS*******************/
 
+//	public void updateHeroMapObjects(Character c) {
+//		//Check if exit has been reached
+//		if(isExitColliding(c)) {
+//			((Hero) c).setExitColliding(true);
+//			//if hero is carrying a key, open exit
+//			if(c.getSymbol() == KEYHERO) {
+//				openExit();
+//			}
+//		} 
+//		//Check general objects collisions
+//		else if(isWallColliding(c))
+//			((Hero) c).setWallColliding(true);
+//		//check if lever/key is reached
+//		int position = hasReachedLever(c);
+//		if(position != -1) {
+//			((Hero) c).setObjectColliding(true);
+//			//if it is not a lever - is a key
+//			if(!(unlockers.get(position).isLever())) {
+//				//make hero symbol a KEYHERO symbol
+//				c.setSymbol(KEYHERO);
+//			} 
+//			//if it is a lever
+//			else {
+//				openExit();
+//			}
+//		}
+//	}
+	
+	
+	
+	
 	public void updateHeroMapObjects(Character c) {
 		//Check if exit has been reached
 		if(isExitColliding(c)) {
-			((Hero) c).setExitColliding(true);
-			//if hero is carrying a key, open exit
-			if(c.getSymbol() == KEYHERO) {
-				openExit();
-			}
+			updateHeroMapObjectsExitColliding(c);
 		} 
 		//Check general objects collisions
 		else if(isWallColliding(c))
@@ -742,32 +769,89 @@ public class Map implements Serializable {
 		//check if lever/key is reached
 		int position = hasReachedLever(c);
 		if(position != -1) {
-			((Hero) c).setObjectColliding(true);
-			//if it is not a lever - is a key
-			if(!(unlockers.get(position).isLever())) {
-				//make hero symbol a KEYHERO symbol
-				c.setSymbol(KEYHERO);
-			} 
-			//if it is a lever
-			else {
-				openExit();
-			}
+			updateHeroMapObjectsLeverReached(c, position);
 		}
 	}
 
+	
+	private void updateHeroMapObjectsExitColliding(Character c) {
+		((Hero) c).setExitColliding(true);
+		//if hero is carrying a key, open exit
+		if(c.getSymbol() == KEYHERO) {
+			openExit();
+		}
+	}
+	
+	private void updateHeroMapObjectsLeverReached(Character c, int position) {
+		((Hero) c).setObjectColliding(true);
+		//if it is not a lever - is a key
+		if(!(unlockers.get(position).isLever())) {
+			//make hero symbol a KEYHERO symbol
+			c.setSymbol(KEYHERO);
+		} 
+		//if it is a lever
+		else {
+			openExit();
+		}
+	}
+
+
+//	public void updateOgrePosition(Character c) {
+//		if(!isMovePossible(c.getX(), c.getY())) 
+//			return;
+//		
+//		int X = c.getWeapon().getX();
+//		int Y = c.getWeapon().getY();
+//
+//		//reput lever on position
+//		if(c.getWeapon().getSymbol() == KEYCLUB)
+//			map[Y][X] = LEVER;
+//		else
+//			map[Y][X] = EMPTY; 
+//
+//		char ogreCommand;
+//		char clubCommand;
+//		boolean collision;
+//		do {
+//			collision = false;
+//			ogreCommand = ((Ogre) c).getNextMove();
+//			clubCommand = ((Ogre) c).getNextMove();
+//			((Ogre) c).updatePosition(ogreCommand, clubCommand);
+//			if(isWallColliding(c) || isClubColliding(c)) {
+//				c.setToPreviousPosition();
+//				c.getWeapon().setToPreviousPosition();
+//				collision = true;
+//			}
+//		} while(collision);
+//
+//		if(((Club) c.getWeapon()).isAboveKey()) {
+//			c.getWeapon().setSymbol(KEYCLUB);
+//		} else
+//			c.getWeapon().setSymbol(CLUB);
+//
+//		X = c.getPrevX();
+//		Y = c.getPrevY();
+//
+//	}
+	
 	public void updateOgrePosition(Character c) {
 		if(!isMovePossible(c.getX(), c.getY())) 
 			return;
-		
-		int X = c.getWeapon().getX();
-		int Y = c.getWeapon().getY();
-
 		//reput lever on position
-		if(c.getWeapon().getSymbol() == KEYCLUB)
-			map[Y][X] = LEVER;
-		else
-			map[Y][X] = EMPTY; 
+		reputLeverOnPosition(c); 
+		updateOgretoValidPosition(c);
+		updateClubSymbol(c);
+	}
 
+	
+	private void updateClubSymbol(Character c) {
+		if(((Club) c.getWeapon()).isAboveKey()) {
+			c.getWeapon().setSymbol(KEYCLUB);
+		} else
+			c.getWeapon().setSymbol(CLUB);
+	}
+
+	private void updateOgretoValidPosition(Character c) {
 		char ogreCommand;
 		char clubCommand;
 		boolean collision;
@@ -782,15 +866,15 @@ public class Map implements Serializable {
 				collision = true;
 			}
 		} while(collision);
+	}
 
-		if(((Club) c.getWeapon()).isAboveKey()) {
-			c.getWeapon().setSymbol(KEYCLUB);
-		} else
-			c.getWeapon().setSymbol(CLUB);
-
-		X = c.getPrevX();
-		Y = c.getPrevY();
-
+	private void reputLeverOnPosition(Character c) {
+		int X = c.getWeapon().getX();
+		int Y = c.getWeapon().getY();
+		if(c.getWeapon().getSymbol() == KEYCLUB)
+			map[Y][X] = LEVER;
+		else
+			map[Y][X] = EMPTY;
 	}
 
 //	public void updateMap(char heroCommand) {
@@ -881,22 +965,21 @@ public class Map implements Serializable {
 		((Hero) characters.get(i)).updateHero();
 	}
 	
+	
 	private void updateMapOgres() {
 		for(int i = 0; i < ogres.size(); i++)
 		{
 			updateOgrePosition(ogres.get(i));
 
 			//if hero gets on club range, game ends || if hero is captured
-			if(ogres.get(i).getWeapon().isHit(characters.get(0)) || ogres.get(i).isCaptured(characters.get(0)))
+			if(checkHeroFatality(i))
 				((Hero) characters.get(0)).setFatality(true);
 			//if hero as weapon, ogre can get stunned
-			else if(characters.get(0).hasWeapon() && ((Hero) characters.get(0)).getWeapon().isHit(ogres.get(i))) {
-				((Ogre)ogres.get(i)).setStunned(true);
-				ogres.get(i).setSymbol(STUNNEDOGRE);
-				characters.get(0).setToPreviousPosition();
+			else if(checkOgreStunned(i)) {
+				updateStunnedOgre(i);
 			} 
 			//else hero gets cought
-			else if(ogres.get(i).isCaptured((Hero) characters.get(0)))
+			else if(checkHeroCaptured(i))
 				((Hero) characters.get(0)).setCaptured(true);
 
 			removeCharacter(ogres.get(i));
@@ -904,6 +987,24 @@ public class Map implements Serializable {
 	}
 
 	
+	private void updateStunnedOgre(int i) {
+		((Ogre)ogres.get(i)).setStunned(true);
+		ogres.get(i).setSymbol(STUNNEDOGRE);
+		characters.get(0).setToPreviousPosition();
+	}
+
+	private boolean checkHeroCaptured(int i) {
+		return ogres.get(i).isCaptured((Hero) characters.get(0));
+	}
+
+	private boolean checkOgreStunned(int i) {
+		return characters.get(0).hasWeapon() && ((Hero) characters.get(0)).getWeapon().isHit(ogres.get(i));
+	}
+
+	private boolean checkHeroFatality(int i) {
+		return ogres.get(i).getWeapon().isHit(characters.get(0)) || ogres.get(i).isCaptured(characters.get(0));
+	}
+
 	
 	
 
