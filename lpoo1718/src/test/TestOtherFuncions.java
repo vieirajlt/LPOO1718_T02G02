@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import logic.Character;
 import logic.Guard;
-import logic.Map;
 import logic.Weapon;
 
 
@@ -19,8 +18,6 @@ public class TestOtherFuncions {
 		assertEquals(c.reverseCommand('u'), 'd');
 		assertEquals(c.reverseCommand('d'), 'u');
 		assertEquals(c.reverseCommand('e'), 'E');
-
-		
 		Weapon w = new Weapon(1,1,'w',true);
 		assertEquals(w.reverseCommand('r'), 'l');
 		assertEquals(w.reverseCommand('l'), 'r');

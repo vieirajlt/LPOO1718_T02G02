@@ -109,46 +109,102 @@ public class Hero extends Character {
 		this.steppedGuard = steppedGuard;
 	}
 	
-	/*******************HERO MANAGEMENT FUNCTION*******************/
+	/*******************HERO MANAGEMENT FUNCTIONS*******************/
+	
+//	public void updateHero() {
+//		
+//		if(wallColliding) {
+//			display.wallColliding(isShowCli());
+//			super.setToPreviousPosition();
+//			if(super.hasWeapon())
+//				super.getWeapon().setToPreviousPosition();
+//			wallColliding = false;
+//		} else if(objectColliding) {
+//			if(super.getSymbol() == 'K')
+//				display.keyColliding(isShowCli());
+//			else {
+//				display.doorColliding(isShowCli());
+//				super.setToPreviousPosition();
+//				if(super.hasWeapon())
+//					super.getWeapon().setToPreviousPosition();
+//				exitOpened = true;
+//			}
+//			objectColliding = false;
+//		} else if(exitColliding) {
+//			if(exitOpened) {
+//				escaped = true;
+//			} else if(super.getSymbol() == 'K') {
+//				display.exitOpen(isShowCli());
+//				super.setToPreviousPosition();
+//				if(super.hasWeapon())
+//					super.getWeapon().setToPreviousPosition();
+//				exitOpened = true;
+//			} else {//is like a closed door
+//				display.wallColliding(isShowCli());
+//				super.setToPreviousPosition();
+//				if(super.hasWeapon())
+//					super.getWeapon().setToPreviousPosition();
+//			}
+//			exitColliding = false;
+//		}
+//
+//	}
+	
 	
 	public void updateHero() {
-		
 		if(wallColliding) {
-			display.wallColliding(isShowCli());
-			super.setToPreviousPosition();
-			if(super.hasWeapon())
-				super.getWeapon().setToPreviousPosition();
-			wallColliding = false;
+			updateHeroWallColliding();
 		} else if(objectColliding) {
-			if(super.getSymbol() == 'K')
-				display.keyColliding(isShowCli());
-			else {
-				display.doorColliding(isShowCli());
-				super.setToPreviousPosition();
-				if(super.hasWeapon())
-					super.getWeapon().setToPreviousPosition();
-				exitOpened = true;
-			}
-			objectColliding = false;
+			updateHeroObjectColliding();
 		} else if(exitColliding) {
-			if(exitOpened) {
-				escaped = true;
-			} else if(super.getSymbol() == 'K') {
-				display.exitOpen(isShowCli());
-				super.setToPreviousPosition();
-				if(super.hasWeapon())
-					super.getWeapon().setToPreviousPosition();
-				exitOpened = true;
-			} else {//is like a closed door
-				display.wallColliding(isShowCli());
-				super.setToPreviousPosition();
-				if(super.hasWeapon())
-					super.getWeapon().setToPreviousPosition();
-			}
-			exitColliding = false;
+			updateHeroExitColliding();
 		}
-
 	}
+
+	
+	private void updateHeroExitColliding() {
+		if(exitOpened) {
+			escaped = true;
+		} else if(super.getSymbol() == 'K') {
+			display.exitOpen(isShowCli());
+			setHeroToPreviousPosition();
+			exitOpened = true;
+		} else {//is like a closed door
+			display.wallColliding(isShowCli());
+			setHeroToPreviousPosition();
+		}
+		exitColliding = false;
+	}
+
+	
+	private void updateHeroObjectColliding() {
+		if(super.getSymbol() == 'K')
+			display.keyColliding(isShowCli());
+		else {
+			display.doorColliding(isShowCli());
+			setHeroToPreviousPosition();
+			exitOpened = true;
+		}
+		objectColliding = false;
+	}
+
+	private void updateHeroWallColliding() {
+		display.wallColliding(isShowCli());
+		setHeroToPreviousPosition();
+		wallColliding = false;
+	}
+	
+	private void setHeroToPreviousPosition() {
+		super.setToPreviousPosition();
+		setWeaponToPreviousPosition();
+	}
+
+	private void setWeaponToPreviousPosition() {
+		if(super.hasWeapon())
+			super.getWeapon().setToPreviousPosition();
+	}
+
+	
 
 	public void updatePosition(char command) {
 		super.updatePosition(command);

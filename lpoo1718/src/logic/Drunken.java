@@ -63,13 +63,16 @@ public class Drunken extends Guard{
 		char ret = 'E';
 		
 		if(isSleeping)
-		{
-			if (sleepCount < sleepMax)
-				sleepCount++;
-			else
-				isSleeping = false;
-		}
-		else if (num == 0)
+			updateSleepingGuard();
+		else
+			ret = updateAwakenGuard(rand, num, ret);
+		updateDrunkenStatus();
+		return ret;
+
+	}
+
+	private char updateAwakenGuard(Random rand, int num, char ret) {
+		if (num == 0)
 		{
 			isSleeping = true;
 			sleepMax = rand.nextInt(10)+1;
@@ -79,9 +82,14 @@ public class Drunken extends Guard{
 			isSleeping = false;
 			ret = super.updateGuard();
 		}
-		updateDrunkenStatus();
 		return ret;
+	}
 
+	private void updateSleepingGuard() {
+		if (sleepCount < sleepMax)
+			sleepCount++;
+		else
+			isSleeping = false;
 	}
 
 	private void updateDrunkenStatus() {
