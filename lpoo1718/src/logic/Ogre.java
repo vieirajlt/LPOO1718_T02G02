@@ -17,8 +17,8 @@ public class Ogre extends Character {
 
 	/*******************CONSTRUCTOR*******************/
 	
-	public Ogre(int newX, int newY, boolean newMove, boolean MoveClub) {
-		super(newX, newY, 'O', true, newMove);
+	public Ogre(int newX, int newY, boolean MoveClub) {
+		super(newX, newY, 'O', true);
 		//club starts at right side of Ogre
 		Club club = new Club(newX-1, newY,MoveClub);
 		this.setWeapon(club);
@@ -27,7 +27,7 @@ public class Ogre extends Character {
 	}
 	
 	public Ogre(int newX, int newY) {
-		this(newX,newY,true,true);
+		this(newX,newY,true);
 	}
 	
 	/*******************GET FUNCTIONS*******************/
@@ -41,11 +41,6 @@ public class Ogre extends Character {
 	}
 
 	/*******************SET FUNCTIONS*******************/
-	
-	public void setRandomMovement(boolean op) {
-		this.setMove(op);
-		this.getWeapon().setMove(op);
-	}
 	
 	public void setStunned(boolean stunned) {
 		if(this.stunned != stunned) {
@@ -102,6 +97,11 @@ public class Ogre extends Character {
 		int Y = super.getY();
 		super.getWeapon().setPosition(X, Y);
 		super.getWeapon().updatePosition(cClub);
+	}
+
+	@Override
+	public boolean isMove() {
+		return true;
 	}
 
 }

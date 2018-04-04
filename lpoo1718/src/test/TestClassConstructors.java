@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import exception.InvalidBoardSizeException;
 import exception.InvalidOgreCountException;
+import logic.Club;
+import logic.Door;
+import logic.Drunken;
 import logic.Game;
 import logic.GameStartSet;
 import logic.Guard;
@@ -17,28 +20,25 @@ import logic.Rookie;
 import logic.Suspicious;
 import logic.Unlocker;
 import logic.Weapon;
-import logic.Character;
-import logic.Club;
-import logic.Door;
-import logic.Drunken;
+import logic.testRookie;
+import logic.testOgre;
 
 public class TestClassConstructors {
 
-	@Test
+	/*@Test
 	//1
 	public void testCharacterConstructor() {
-		Character t = new Character(1, 2, 'T', true, false);
+		Character t = new Character(1, 2, 'T', true);
 		assertEquals(t.getX(),1);
 		assertEquals(t.getY(),2);
 		assertEquals(t.getSymbol(),'T');
 		assertEquals(t.hasWeapon(),true);
-		assertEquals(t.isMove(),false);
 		assertEquals(t.isShowCli(),true);
 		t.setPosition(2, 3);
 		assertEquals(t.getX(),2);
 		assertEquals(t.getY(),3);
 		
-	}
+	}*/
 
 	@Test
 	//2
@@ -61,7 +61,7 @@ public class TestClassConstructors {
 	@Test
 	//4
 	public void testDrunkenConstructor() {
-		Drunken t = new Drunken(1, 2, true);
+		Drunken t = new Drunken(1, 2);
 		assertEquals(t.getX(),1);
 		assertEquals(t.getY(),2);
 		assertEquals(t.getSymbol(), 'G');
@@ -86,7 +86,7 @@ public class TestClassConstructors {
 	@Test
 	//6
 	public void testGuardConstructor() {
-		Guard t = new Guard(1, 2, true);
+		Guard t = new Guard(1, 2);
 		assertEquals(t.getX(),1);
 		assertEquals(t.getY(),2);
 		assertEquals(t.getSymbol(), 'G');
@@ -94,7 +94,7 @@ public class TestClassConstructors {
 		assertEquals(t.hasWeapon(),false);
 		assertEquals(t.getRoute().length,24);
 		assertEquals(t.getRouteStep(),0);
-		Guard g = new Guard(1,2,false);
+		testRookie g = new testRookie(1,2);
 		assertEquals(g.updateGuard(false), 'E');
 	}
 	
@@ -156,27 +156,25 @@ public class TestClassConstructors {
 	@Test
 	//9
 	public void testOgreConstructor() {
-		Ogre t = new Ogre(1, 2, true, true);
-		assertEquals(t.getX(),1);
-		assertEquals(t.getY(),2);
-		assertEquals(t.getSymbol(), 'O');
-		assertEquals(t.isMove(),true);
-		assertEquals(t.hasWeapon(),true);
-		assertEquals(t.getWeapon().getX(),0);
-		assertEquals(t.getWeapon().getY(),2);
-		assertEquals(t.getStunCount(),0);
-		assertEquals(t.isStunned(),false);
-		t.setMove(false);
-		assertEquals(t.getNextMove(), 'E');
-		t.setStunned(true);
-		assertEquals(t.isStunned(),true);
+		Ogre t1 = new Ogre(1, 2, true);
+		assertEquals(t1.getX(),1);
+		assertEquals(t1.getY(),2);
+		assertEquals(t1.getSymbol(), 'O');
+		assertEquals(t1.isMove(),true);
+		assertEquals(t1.hasWeapon(),true);
+		assertEquals(t1.getWeapon().getX(),0);
+		assertEquals(t1.getWeapon().getY(),2);
+		assertEquals(t1.getStunCount(),0);
+		assertEquals(t1.isStunned(),false);
+		testOgre t2 = new testOgre(1, 2, true);
+		assertEquals(t2.isMove(),false);
 	}
 	
 	
 	@Test
 	//10
 	public void testRookieConstructor() {
-		Rookie t = new Rookie(1, 2, true);
+		Rookie t = new Rookie(1, 2);
 		assertEquals(t.getX(),1);
 		assertEquals(t.getY(),2);
 		assertEquals(t.getSymbol(), 'G');
@@ -186,7 +184,7 @@ public class TestClassConstructors {
 	@Test
 	//11
 	public void testSuspiciousConstructor() {
-		Suspicious t = new Suspicious(1, 2, true);
+		Suspicious t = new Suspicious(1, 2);
 		assertEquals(t.getX(),1);
 		assertEquals(t.getY(),2);
 		assertEquals(t.getSymbol(), 'G');

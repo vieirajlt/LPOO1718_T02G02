@@ -19,7 +19,7 @@ public class TestKeepGameLogic {
 	//1
 	public void  testHeroIsDefeatedByOgre()
 	{
-		Game game = new Game(map.getMap2());
+		Game game = new Game(map.getMap2(), false, false, false);
 		game.setShowCli(false);
 		assertEquals(((Club)game.getCurrentMap().getOgres().get(0).getWeapon()).isAboveKey(),false);
 		assertEquals(game.getCurrentMap().getMapPosition(1, 7), game.getCurrentMap().getCharacters().get(0).getSymbol());
@@ -39,7 +39,7 @@ public class TestKeepGameLogic {
 	@Test
 	//2
 	public void testHeroHasKey() {
-		Game game = new Game(map.getMap2(),false);
+		Game game = new Game(map.getMap2(),false, false, false);
 		game.setShowCli(false);
 		assertEquals(game.getCurrentMap().getMapPosition(1, 7), game.getCurrentMap().getCharacters().get(0).getSymbol());
 		game.updateGame('r');
@@ -61,7 +61,7 @@ public class TestKeepGameLogic {
 	@Test 
 	//3
 	public void testMoveHeroIntoClosedExit() {
-		Game game = new Game(map.getMap2(),false);
+		Game game = new Game(map.getMap2(),false, false, false);
 		game.setShowCli(false);
 		assertEquals(game.getCurrentMap().getMapPosition(1, 7), game.getCurrentMap().getCharacters().get(0).getSymbol());
 		game.updateGame('u');
@@ -80,7 +80,7 @@ public class TestKeepGameLogic {
 	@Test
 	//4
 	public void testMoveHeroIntoExitWithKey() {
-		Game game = new Game(map.getMap2(),false);
+		Game game = new Game(map.getMap2(),false, false, false);
 		game.setShowCli(false);
 		assertEquals(game.getCurrentMap().getMapPosition(1, 7), game.getCurrentMap().getCharacters().get(0).getSymbol());
 		game.updateGame('r');
@@ -114,7 +114,7 @@ public class TestKeepGameLogic {
 	@Test
 	//5
 	public void testMoveHeroIntoOpenExit() {
-		Game game = new Game(map.getMap2(),false);
+		Game game = new Game(map.getMap2(),false, false, false);
 		game.setShowCli(false);
 		assertEquals(game.getCurrentMap().getMapPosition(1, 7), game.getCurrentMap().getCharacters().get(0).getSymbol());
 		game.updateGame('r');
@@ -150,7 +150,7 @@ public class TestKeepGameLogic {
 	
 	@Test(timeout=1000)
 	public void testDrunkenGuard() {
-		Game game = new Game(map.getMap(),false);
+		Game game = new Game(map.getMap(),false, false, false);
 		game.setShowCli(true);
 		game.getCurrentMap().setGuardType(GuardPersonality.DRUNKEN, false);
 		
@@ -172,7 +172,7 @@ public class TestKeepGameLogic {
 	
 	@Test(timeout=1000)
 	public void testSuspiciousGuard() {
-		Game game = new Game(map.getMap(),false);
+		Game game = new Game(map.getMap(),false, false, false);
 		game.setShowCli(false);
 		game.getCurrentMap().setGuardType(GuardPersonality.SUSPICIOUS, false);
 		

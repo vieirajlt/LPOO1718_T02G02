@@ -6,6 +6,7 @@ import org.junit.Test;
 import logic.Character;
 import logic.Guard;
 import logic.Map;
+import logic.Ogre;
 import logic.Weapon;
 
 
@@ -13,7 +14,7 @@ public class TestOtherFuncions {
 
 	@Test 
 	public void testReverseCommandFunctions() {
-		Character c = new Character(1,1,'c',false,false);
+		Ogre c = new Ogre(1,1,true);
 		assertEquals(c.reverseCommand('r'), 'l');
 		assertEquals(c.reverseCommand('l'), 'r');
 		assertEquals(c.reverseCommand('u'), 'd');

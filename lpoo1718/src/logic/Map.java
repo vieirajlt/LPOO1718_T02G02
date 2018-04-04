@@ -86,17 +86,17 @@ public class Map implements Serializable {
 		initializeMap(LVL2);
 	}
 
-	public Map(char[][] newMap,boolean isLever) {
+	public Map(char[][] newMap, boolean movableChar, boolean movableWeapon,boolean isLever) {
 		this();
 		int size = newMap.length;
 		map = new char[size][size];
 		ogreNumber = 2; //by default the number of ogres is 2
 		guardPersonality = GuardPersonality.ROOKIE; //by default the guard's personality is rookie
-		initializeMap(newMap,isLever);
+		initializeMap(newMap, movableChar, movableWeapon,isLever);
 	}
 
 	public Map(char[][] newMap) {
-		this(newMap,true);
+		this(newMap,true, true, true);
 	}
 	
 	public Map(int width, int height, boolean isDefaultMap)
@@ -142,7 +142,7 @@ public class Map implements Serializable {
 		}
 	}
 	
-	public void initializeMap(char [][] newMap, boolean isLever) {
+	public void initializeMap(char [][] newMap, boolean movableChar, boolean movableWeapon, boolean isLever) {
 		this.map = newMap;
 		characters.add(new Hero(1,1));
 		this.level = NEWLVL;
@@ -162,10 +162,16 @@ public class Map implements Serializable {
 					unlockers.add(new Unlocker(j,i,isLever));
 					break;
 				case GUARD:
-					characters.add(new Guard(j,i, false));
+					if(movableChar)
+						characters.add(new Rookie(j,i));
+					else
+						characters.add(new testRookie(j,i));
 					break;
 				case OGRE:
-					ogres.add(new Ogre(j,i,false,false));
+					if(movableChar)
+						ogres.add(new Ogre(j,i,movableWeapon));
+					else
+						ogres.add(new testOgre(j,i,movableWeapon));
 					placeClub(ogres.getLast(), newMap);
 					break;
 				default:
@@ -204,10 +210,10 @@ public class Map implements Serializable {
 					unlockers.add(new Unlocker(j,i,false));
 					break;
 				case GUARD:
-					characters.add(new Guard(j,i, true));
+					characters.add(new Guard(j,i));
 					break;
 				case OGRE:
-					ogres.add(new Ogre(j,i,true,true));
+					ogres.add(new Ogre(j,i,true));
 					placeClub(ogres.getLast(), newMap);
 					break;
 				default:
@@ -458,15 +464,26 @@ public class Map implements Serializable {
 		if(index == -1)
 			return;
 		
-		if(gp == GuardPersonality.SUSPICIOUS) {
-			characters.set(index, new Suspicious(x,y, move));
-		} else if(gp == GuardPersonality.DRUNKEN) {
-			characters.set(index, new Drunken(x,y, move));
-		} else if(gp == GuardPersonality.ROOKIE) {
-			characters.set(index, new Rookie(x,y, move));
-		} 
-		
 		guardPersonality = gp;
+		
+		if(!move) {
+			if(gp == GuardPersonality.SUSPICIOUS) {
+				characters.set(index, new testSuspicious(x,y));
+			} else if(gp == GuardPersonality.DRUNKEN) {
+				characters.set(index, new testDrunken(x,y));
+			} else if(gp == GuardPersonality.ROOKIE) {
+				characters.set(index, new testRookie(x,y));
+			} 
+		} else {
+			if(gp == GuardPersonality.SUSPICIOUS) {
+				characters.set(index, new Suspicious(x,y));
+			} else if(gp == GuardPersonality.DRUNKEN) {
+				characters.set(index, new Drunken(x,y));
+			} else if(gp == GuardPersonality.ROOKIE) {
+				characters.set(index, new Rookie(x,y));
+			} 
+		}
+		
 	}
 
 	public void setMapPosition(int x, int y, char c) {

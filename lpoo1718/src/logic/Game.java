@@ -36,19 +36,6 @@ public class Game implements Serializable{
 		setShowCli(true);
 	}
 	
-	public Game(char[][] newMapConfig)
-	{
-		this(newMapConfig,true);
-	}
-	
-	public Game(char[][] newMapConfig,boolean isLever)
-	{
-		level = 0;
-		levels = new ArrayList<Map>();
-		levels.add(new Map(newMapConfig,isLever));
-		endGame = false;
-	}
-	
 	public Game(int ogreNumber, GuardPersonality gp)
 	{
 		level = 0;
@@ -57,6 +44,13 @@ public class Game implements Serializable{
 		setShowCli(true);
 	}
 	
+	public Game(char[][] newMapConfig, boolean movableChar, boolean movableWeapon, boolean isLever) {
+		level = 0;
+		levels = new ArrayList<Map>();
+		levels.add(new Map(newMapConfig,movableChar, movableWeapon, isLever));
+		endGame = false;
+	}
+
 	private void initializeLevels() {
 		levels = new ArrayList<Map>();
 		levels.add(new Map(1));

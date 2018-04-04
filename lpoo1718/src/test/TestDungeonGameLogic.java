@@ -14,7 +14,7 @@ public class TestDungeonGameLogic {
 	@Test
 	//1
 	public void testMoveHeroIntoFreeCell() {
-		Game game = new Game(map.getMap());
+		Game game = new Game(map.getMap(),false, false, false);
 //		assertEquals(game.isShowCli(),false);
 //		game.setShowCli(true);
 //		assertEquals(game.isShowCli(),true);
@@ -29,7 +29,7 @@ public class TestDungeonGameLogic {
 	@Test
 	//2
 	public void testMoveHeroIntoWall() {
-		Game game = new Game(map.getMap());
+		Game game = new Game(map.getMap(),false, false, false);
 		game.setShowCli(false);
 		assertEquals(game.getCurrentMap().getMapPosition(1, 1), game.getCurrentMap().getCharacters().get(0).getSymbol());
 		game.updateGame('u');
@@ -40,7 +40,7 @@ public class TestDungeonGameLogic {
 	@Test
 	//3
 	public void testHeroIsCapturedByGuard() {
-		Game game = new Game(map.getMap());
+		Game game = new Game(map.getMap(),false, false, false);
 		game.setShowCli(false);
 		assertEquals(game.getCurrentMap().getMapPosition(1, 1), game.getCurrentMap().getCharacters().get(0).getSymbol());
 		assertEquals(((Guard)game.getCurrentMap().getCharacters().get(1)).updateGuard(), 'E'); //test if guard is in fact not moving
@@ -52,7 +52,7 @@ public class TestDungeonGameLogic {
 	@Test
 	//4
 	public void testMoveHeroIntoClosedDoor() {
-		Game game = new Game(map.getMap());
+		Game game = new Game(map.getMap(),false, false, false);
 		game.setShowCli(false);
 		assertEquals(game.getCurrentMap().getMapPosition(1, 1), game.getCurrentMap().getCharacters().get(0).getSymbol());
 		game.updateGame('d');
@@ -63,7 +63,7 @@ public class TestDungeonGameLogic {
 	@Test
 	//5
 	public void testMoveHeroIntoLever() {
-		Game game = new Game(map.getMap());
+		Game game = new Game(map.getMap(),false, false, true);
 		game.setShowCli(false);
 		assertEquals(game.getCurrentMap().getMapPosition(1, 1), game.getCurrentMap().getCharacters().get(0).getSymbol());
 		//test lever position and symbol
@@ -81,7 +81,7 @@ public class TestDungeonGameLogic {
 	@Test
 	//6
 	public void testMoveHeroIntoOpenDoor() {
-		Game game = new Game(map.getMap());
+		Game game = new Game(map.getMap(),false, false, true);
 		game.setShowCli(false);
 		assertEquals(game.getCurrentMap().getMapPosition(1, 1), game.getCurrentMap().getCharacters().get(0).getSymbol());
 		game.updateGame('d');

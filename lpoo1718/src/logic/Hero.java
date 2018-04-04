@@ -25,7 +25,7 @@ public class Hero extends Character {
 	}
 	
 	public Hero(int valX, int valY, boolean hasClub) {
-		super(valX, valY, 'H', hasClub, true);
+		super(valX, valY, 'H', hasClub);
 		escaped = false;
 		objectColliding = false;
 		wallColliding = false;
@@ -224,6 +224,11 @@ public class Hero extends Character {
 			super.getWeapon().setVisible(false);
 			this.setHasWeapon(true);
 		}
+	}
+
+	@Override
+	public boolean isMove() {
+		return true;
 	}
 
 }

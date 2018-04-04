@@ -14,17 +14,12 @@ public class Drunken extends Guard{
 
 	/*******************CONSTRUCTORS*******************/
 	
-	public Drunken(int x, int y, boolean move)
+	public Drunken(int x, int y)
 	{
-		super(x, y, move);
+		super(x, y);
 		isSleeping = false;
 		sleepCount = 0;
 		sleepMax = 0;
-	}
-	
-	public Drunken(int x, int y)
-	{
-		this(x, y, true);
 	}
 	
 	/*******************GET fUNCTIONS*******************/

@@ -9,13 +9,9 @@ public class Guard extends Character{
 	private int routeStep;
 
 	/*******************CONSTRUCTORS*******************/
-
-	public Guard(int newX, int newY) {
-		this(newX, newY, true);
-	}
 	
-	public Guard(int newX, int newY, boolean move) {
-		super(newX, newY, 'G', false, move);
+	public Guard(int newX, int newY) {
+		super(newX, newY, 'G', false);
 		initializeRoute();
 	}
 	
@@ -89,6 +85,11 @@ public class Guard extends Character{
 			routeStep %= route.length;
 		}
 		return command;
+	}
+
+	@Override
+	public boolean isMove() {
+		return true;
 	}
 	
 }

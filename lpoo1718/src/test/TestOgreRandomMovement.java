@@ -17,9 +17,8 @@ public class TestOgreRandomMovement {
 	//Test if random movement setting is moving the ogre
 	public void testOgreDirections() {
 		boolean down = false, up = false, rigth = false, left = false;
-		Game game = new Game(map.getMap2());
+		Game game = new Game(map.getMap2(), true, true, true);
 		game.setShowCli(false);
-		game.getCurrentMap().getOgres().getLast().setRandomMovement(true);
 		
 		int oX, oY, oPx, oPy;
 		
@@ -51,9 +50,8 @@ public class TestOgreRandomMovement {
 	//Test if random movement setting is moving the ogre
 	public void testWeaponDirections() {
 		boolean down = false, up = false, rigth = false, left = false;
-		Game game = new Game(map.getMap2());
+		Game game = new Game(map.getMap2(), true, true, true);
 		game.setShowCli(false);
-		game.getCurrentMap().getOgres().getLast().setRandomMovement(true);
 		int wX, wY, oX, oY;
 		
 		while(!down || !up || !rigth || !left) {

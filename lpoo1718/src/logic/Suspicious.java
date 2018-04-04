@@ -12,15 +12,10 @@ public class Suspicious extends Guard {
 	
 	/*******************CONSTRUCTORS*******************/
 	
-	public Suspicious(int x, int y, boolean move)
-	{
-		super(x, y, move);
-		isReverse = false;
-	}
-	
 	public Suspicious(int x, int y)
 	{
-		this(x, y, true);
+		super(x, y);
+		isReverse = false;
 	}
 	
 	/*******************GET FUNTIONS*******************/
