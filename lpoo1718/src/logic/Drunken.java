@@ -4,8 +4,8 @@ import java.util.Random;
 
 /**
  * This class represents a specific type of {@link Guard} (enemy).
- * This specific type (pseudo)randomly "fall asleep", stopping it
- * movement for a (pseudo)randomly amount of {link Game} updates.
+ * This specific type (pseudo)randomly "fall asleep", stopping its
+ * movement for a (pseudo)randomly amount of {@link Game} updates.
  * 
  * @author João Vieira
  * @author Susana Lima

@@ -7,7 +7,7 @@ import cli.heroStatusDisplay;
  * without being fatally injured or captured by the different levels enemies.
  * 
  * @author João Vieira
- * @author Susana
+ * @author Susana Lima
  *
  */
 public class Hero extends Character {
