@@ -263,7 +263,7 @@ public class Game implements Serializable{
 	/*******************GAME MANAGEMENT FUNCTION*******************/
 	
 	/**
-	 * Updates this Game status bassed on a char that acts as a position
+	 * Updates this Game status based on a char that acts as a position
 	 * modifier for the {@link Hero}.
 	 * 
 	 * @param command the value used to update {@link Hero} position

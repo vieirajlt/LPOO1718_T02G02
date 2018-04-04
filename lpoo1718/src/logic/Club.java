@@ -1,7 +1,7 @@
 package logic;
 
 /**
- * This class is the base of everyweapon in the game
+ * This class is the base of every weapon in the game
  * giving basic movability to it.
  * 
  * @author João Vieira
