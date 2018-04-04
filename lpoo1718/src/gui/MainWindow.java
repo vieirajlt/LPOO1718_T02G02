@@ -41,7 +41,7 @@ public class MainWindow implements KeyListener, MouseListener {
 		});
 	}
 
-	/**
+	/** 
 	 * Create the application.
 	 */
 	public MainWindow() {
@@ -51,7 +51,7 @@ public class MainWindow implements KeyListener, MouseListener {
 		gpPanel.getGameMapPanel().requestFocusInWindow();
 		gpPanel.getGameMapPanel().addMouseListener(this);
 		
-	}
+	} 
 
 	/**
 	 * Initialize the contents of the frame.
@@ -108,13 +108,7 @@ public class MainWindow implements KeyListener, MouseListener {
 			public void actionPerformed(ActionEvent arg0) {
 				configPanel.setVisible(false);
 				lvlCreationPanel.setVisible(true);
-				
-				if(lvlCreationPanel.setMapDimensions()) {
-					gpPanel.setGame(lvlCreationPanel.getGss().startNewGame());
-					lvlCreationPanel.getMapCreationPanel().setMap(gpPanel.getGame().toString());
-					lvlCreationPanel.getMapCreationPanel().repaint();
-				} else {
-				}
+				lvlCreationPanel.changeLevelCreationStatus(false);
 			}
 		});
 	}

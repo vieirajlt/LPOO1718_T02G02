@@ -9,7 +9,11 @@ public class ogreStatusDisplay {
 		
 		System.out.print("Ogre stunned for ");
 		System.out.print(t);
-		System.out.println(" more rounds.");
+		
+		if(t == 1) 
+			System.out.println(" more round.");
+		else
+			System.out.println(" more rounds.");
 
 	}
 

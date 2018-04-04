@@ -304,12 +304,12 @@ public class LevelCreationPanel extends JPanel {
 	public boolean setMapDimensions() {
 		try {
 			int width = Integer.parseInt(gameWidthTextField.getText());
-			int height =  Integer.parseInt(gameHeightTextField.getText());;
+			int height =  Integer.parseInt(gameHeightTextField.getText());
 			gss = new GameStartSet(width, height);
 			mapCreationPanel.setBounds(35, 152, width*GraphicPanel.blockSize, height*GraphicPanel.blockSize);
 			map = new Map(width, height, true); //create empty map
 			mapCreationPanel.setMap(map);
-			mapCreationPanel.setOriginalMap(new Map(width, height, true));
+			mapCreationPanel.setOriginalMap(map);
 			mapCreationPanel.repaint();
 			statusLabel.setText("");
 		} catch (InvalidBoardSizeException e) {
