@@ -140,7 +140,6 @@ public class Guard extends Character{
 		return command;
 	}
 
-	//TODO
 	@Override
 	public boolean isMove() {
 		return true;

@@ -8,7 +8,7 @@ import java.io.Serializable;
  * A weapon can be visible or not.
  * Used by some of the characters.
  * 
- * @author Jo„o Vieira
+ * @author Jo√£o Vieira
  * @author Susana Lima
  *
  * @see Character
