@@ -61,10 +61,10 @@ public abstract class Character implements Serializable{
 	 * Case he has a weapon, set hasWeapon to true.
 	 * showCli is predefined as true.
 	 * 
-	 * @param newX
-	 * @param newY
-	 * @param newSymbol
-	 * @param hasWeapon
+	 * @param newX the new value of x
+	 * @param newY the new value of y
+	 * @param newSymbol the new value of symbol
+	 * @param hasWeapon the new value of hasWeapon
 	 */
 	public Character(int newX, int newY, char newSymbol, boolean hasWeapon) {
 		x = newX;
@@ -163,7 +163,7 @@ public abstract class Character implements Serializable{
 	/**
 	 * Set the value of this Character showCli.
 	 * 
-	 * @param show
+	 * @param show the new value of showCli
 	 */
 	public void setShowCli(boolean show) {
 		this.showCli = show;
@@ -172,7 +172,7 @@ public abstract class Character implements Serializable{
 	/**
 	 * Set the value of this Character symbol.
 	 * 
-	 * @param newSymbol
+	 * @param newSymbol the new value of symbol
 	 */
 	public void setSymbol(char newSymbol) {
 		symbol = newSymbol;
@@ -181,7 +181,7 @@ public abstract class Character implements Serializable{
 	/**
 	 * Set the value of this Character x, updating prevX.
 	 * 
-	 * @param newX
+	 * @param newX the new value of x
 	 */
 	public void setX(int newX) {
 		setPrevX();
@@ -191,7 +191,7 @@ public abstract class Character implements Serializable{
 	/**
 	 *  Set the value of this Character y, updating prevY.
 	 *  
-	 * @param newY
+	 * @param newY the new value of y
 	 */
 	public void setY(int newY) {
 		setPrevY();
@@ -215,8 +215,8 @@ public abstract class Character implements Serializable{
 	/**
 	 * Set this Character position, setting both the values of x and y.
 	 * 
-	 * @param newX
-	 * @param newY
+	 * @param newX the new value of x
+	 * @param newY the new value of y
 	 */
 	public void setPosition(int newX, int newY) {
 		setX(newX);
@@ -226,7 +226,7 @@ public abstract class Character implements Serializable{
 	/**
 	 * Set the value of this Character hasWeapon.
 	 * 
-	 * @param hasWeapon
+	 * @param hasWeapon the new value of hasWeapon
 	 */
 	public void setHasWeapon(boolean hasWeapon) {
 		this.hasWeapon = hasWeapon;
@@ -235,7 +235,7 @@ public abstract class Character implements Serializable{
 	/**
 	 * Set the value of this Character weapon.
 	 * 
-	 * @param weapon
+	 * @param weapon the new value of weapon
 	 */
 	public void setWeapon(Weapon weapon) {
 		this.weapon = weapon;
@@ -290,7 +290,7 @@ public abstract class Character implements Serializable{
 	 * Set this Character x and y values accordingly to the command given.
 	 * Calls upon this Class move*() functions in order to do that update.
 	 * 
-	 * @param command
+	 * @param command the char used to update this Character position
 	 */
 	public void updatePosition(char command) {
 		switch(command) {
@@ -327,7 +327,8 @@ public abstract class Character implements Serializable{
 	 * Given a specific command, it return the calculated command that can
 	 * move this Character in the opposite direction
 	 * 
-	 * @param command
+	 * @param command the char to be used as reference to move this Character 
+	 * in the opposite direction
 	 * @return the calculated opposite command
 	 */
 	public char reverseCommand(char command) {
@@ -350,7 +351,7 @@ public abstract class Character implements Serializable{
 	 * Checks if this Character and character c (in the possibility of having a weapon)
 	 * are in capturing proximity (distance minor or equal to one unit).
 	 * 
-	 * @param c
+	 * @param c the Character with which the proximity is checked
 	 * @return true if in capturing proximity of weapon, else false
 	 */
 	public boolean isCaptured(Character c) {

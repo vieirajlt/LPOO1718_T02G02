@@ -61,8 +61,8 @@ public class Game implements Serializable{
 	 * can be changed and the number of ogres can too. showCli is predefined 
 	 * as true.
 	 * 
-	 * @param ogreNumber
-	 * @param gp
+	 * @param ogreNumber the number of ogres
+	 * @param gp the guard personality/type
 	 */
 	public Game(int ogreNumber, GuardPersonality gp)
 	{
@@ -77,10 +77,10 @@ public class Game implements Serializable{
 	 * The level can also have or not movable enemies, movable weapons and a key
 	 * or a lever (movableChar, movableWeapon and isLever, respectively).
 	 * 
-	 * @param newMapConfig
-	 * @param movableChar
-	 * @param movableWeapon
-	 * @param isLever
+	 * @param newMapConfig the variable use to create the map
+	 * @param movableChar the indicator of enemies movement
+	 * @param movableWeapon the indicator of enemies' weapons movement
+	 * @param isLever the indicator if newly made level will have a key
 	 */
 	public Game(char[][] newMapConfig, boolean movableChar, boolean movableWeapon, boolean isLever) {
 		level = 0;
@@ -102,8 +102,8 @@ public class Game implements Serializable{
 	 * Initializes class used predefined maps with the variant of guard personality
 	 * and number of ogres.
 	 * 
-	 * @param ogreNumber
-	 * @param gp
+	 * @param ogreNumber the number of ogres
+	 * @param gp the guard personality/type
 	 */
 	private void initializeLevelsModified(int ogreNumber, GuardPersonality gp) {
 		levels = new ArrayList<Map>();
@@ -114,7 +114,7 @@ public class Game implements Serializable{
 	/**
 	 * Adds level to this Game.
 	 * 
-	 * @param map
+	 * @param map the level's map to be added
 	 */
 	public void addLevel(Map map) {
 		levels.add(map);
@@ -123,7 +123,7 @@ public class Game implements Serializable{
 	/**
 	 * Adds various levels to this Game.
 	 * 
-	 * @param lvls
+	 * @param lvls the level's array of map to be added
 	 */
 	public void addLevels(ArrayList<Map> lvls) {
 		levels.addAll(lvls);
@@ -198,7 +198,7 @@ public class Game implements Serializable{
 	/**
 	 * Set the value of this Game level.
 	 * 
-	 * @param level
+	 * @param level the selected level
 	 * @throws InvalidSelectedLevelException
 	 */
 	public void setLevel(int level) throws InvalidSelectedLevelException{
@@ -210,7 +210,7 @@ public class Game implements Serializable{
 	/**
 	 * Set the value of this Game showCli and its {@link Map} showCli.
 	 * 
-	 * @param showCli
+	 * @param showCli the new value of showCli
 	 */
 	public void setShowCli(boolean showCli) {
 		this.showCli = showCli;
@@ -222,7 +222,7 @@ public class Game implements Serializable{
 	/**
 	 * Set the value of this Game endGame.
 	 * 
-	 * @param endGame
+	 * @param endGame the new value of endGame
 	 */
 	public  void setEndGame(boolean endGame) {
 		this.endGame = endGame;
@@ -231,7 +231,7 @@ public class Game implements Serializable{
 	/**
 	 * Set the value of this Game current map, indicated by level.
 	 * 
-	 * @param map
+	 * @param map the new value of the current map
 	 * @return this Game level
 	 */
 	public int setCurrentMap(Map map) {
@@ -244,7 +244,7 @@ public class Game implements Serializable{
 	/**
 	 *  Retrieve the value of this Game specified level has a {@link String}
 	 * 
-	 * @param level
+	 * @param level the map to be returned
 	 * @return current level {@link Map}
 	 */
 	public String toString(int level)
@@ -266,7 +266,7 @@ public class Game implements Serializable{
 	 * Updates this Game status bassed on a char that acts as a position
 	 * modifier for the {@link Hero}.
 	 * 
-	 * @param command
+	 * @param command the value used to update {@link Hero} position
 	 */
 	public void updateGame(char command) {
 		

@@ -23,9 +23,9 @@ public class Club extends Weapon {
 	 * Creates a Club in preferred x and y values. Is possible to choose
 	 * if the Club is static relatively to the owner.
 	 * 
-	 * @param newX
-	 * @param newY
-	 * @param newMove
+	 * @param newX the new value of x
+	 * @param newY the new value of y
+	 * @param newMove the value to be passed to Club constructor indicating possibility of movement
 	 */
 	public Club(int newX, int newY, boolean newMove) {
 		super(newX, newY, '*',newMove);
@@ -35,8 +35,8 @@ public class Club extends Weapon {
 	/**
 	 * Creates a movable Club in preferred position.
 	 * 
-	 * @param newX
-	 * @param newY
+	 * @param newX the new value of x
+	 * @param newY the new value of y
 	 */
 	public Club(int newX, int newY) {
 		this(newX,newY,true);
@@ -58,7 +58,7 @@ public class Club extends Weapon {
 	/**
 	 * Set the value of this Club aboveKey.
 	 * 
-	 * @param aboveKey
+	 * @param aboveKey the new value of aboveKey
 	 */
 	public void setAboveKey(boolean aboveKey) {
 		this.aboveKey = aboveKey;

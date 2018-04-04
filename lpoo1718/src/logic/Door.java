@@ -26,8 +26,8 @@ public class Door implements Serializable{
 	/**
 	 * Creates a Door in preferred x and y values.
 	 * 
-	 * @param x
-	 * @param y
+	 * @param x the new value of x
+	 * @param y the new value of y
 	 */
 	public Door(int x, int y)
 	{

@@ -32,8 +32,8 @@ public class Drunken extends Guard{
 	 * Creates a Drunken in preferred x and y values Drunken starts with.
 	 * showCli is predefined as true.
 	 * 
-	 * @param x
-	 * @param y
+	 * @param x the new value of x
+	 * @param y the new value of y
 	 */
 	public Drunken(int x, int y)
 	{
@@ -56,7 +56,7 @@ public class Drunken extends Guard{
 	/**
 	 * Retrieve the value of this Drunken sleepCount.
 	 * 
-	 * @return
+	 * @return this Drunken sleepCount
 	 */
 	public int getSleepCount() {
 		return sleepCount;
@@ -67,7 +67,7 @@ public class Drunken extends Guard{
 	/**
 	 * Set the value of this Drunken isSleeping.
 	 * 
-	 * @param isSleeping
+	 * @param isSleeping the new value of isSleeping
 	 */
 	public void setSleeping(boolean isSleeping) {
 		this.isSleeping = isSleeping;
@@ -76,7 +76,7 @@ public class Drunken extends Guard{
 	/**
 	 * Set the value of this Drunken sleepCount.
 	 * 
-	 * @param sleepCount
+	 * @param sleepCount the new value of sleepCount
 	 */
 	public void setSleepCount(int sleepCount) {
 		this.sleepCount = sleepCount;
@@ -95,7 +95,7 @@ public class Drunken extends Guard{
 		if(isSleeping)
 			updateSleepingGuard();
 		else
-			ret = updateAwakenGuard(rand, num, ret);
+			ret = updateAwakenGuard(num, ret);
 		updateDrunkenStatus();
 		return ret;
 
@@ -107,12 +107,12 @@ public class Drunken extends Guard{
 	 * order to get the number of sleeping rounds. Else, it's position
 	 * will be updated following this Drunken path.
 	 * 
-	 * @param rand
-	 * @param num
-	 * @param ret
-	 * @return
+	 * @param num the value to determine if sleeping or not
+	 * @param ret the char used for updating its position
+	 * @return ret
 	 */
-	private char updateAwakenGuard(Random rand, int num, char ret) {
+	private char updateAwakenGuard(int num, char ret) {
+		Random rand = new Random();
 		if (num == 0)
 		{
 			isSleeping = true;
