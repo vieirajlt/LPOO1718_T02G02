@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 import cli.CharacterStatusDisplay;
 
+/**
+ * @author João Vieira
+ * @author Susana Lima
+ */
 public abstract class Character implements Serializable{
 	/**
 	 * 
@@ -25,9 +29,9 @@ public abstract class Character implements Serializable{
 	/*******************CONSTRUCTORS*******************/
 
 	/**
-	 * Creates a Character in preferred position and given symbol
-	 * Case he has a weapon, set hasWeapon to true
-	 * showCli is predefined as true
+	 * Creates a Character in preferred x and y values and given symbol.
+	 * Case he has a weapon, set hasWeapon to true.
+	 * showCli is predefined as true.
 	 * 
 	 * @param newX
 	 * @param newY
@@ -47,7 +51,7 @@ public abstract class Character implements Serializable{
 	/*******************GET FUNCTIONS*******************/
 	
 	/**
-	 * Retrieve the value of this Character showCli
+	 * Retrieve the value of this Character showCli.
 	 * 
 	 * @return this Character showCli
 	 */
@@ -56,7 +60,7 @@ public abstract class Character implements Serializable{
 	}
 
 	/**
-	 * Retrieve the value of this Character x
+	 * Retrieve the value of this Character x.
 	 * 
 	 * @return this Character x 
 	 */
@@ -65,7 +69,7 @@ public abstract class Character implements Serializable{
 	}
 
 	/**
-	 * Retrieve the value of this Character y
+	 * Retrieve the value of this Character y.
 	 * 
 	 * @return this Character y 
 	 */
@@ -74,7 +78,7 @@ public abstract class Character implements Serializable{
 	}
 
 	/**
-	 * Retrieve the value of this Character prevX
+	 * Retrieve the value of this Character prevX.
 	 * 
 	 * @return this Character prevX 
 	 */
@@ -83,7 +87,7 @@ public abstract class Character implements Serializable{
 	}
 
 	/**
-	 * Retrieve the value of this Character prevY
+	 * Retrieve the value of this Character prevY.
 	 * 
 	 * @return this Character prevY 
 	 */
@@ -92,7 +96,7 @@ public abstract class Character implements Serializable{
 	}
 
 	/**
-	 * Retrieve the value of this Character symbol
+	 * Retrieve the value of this Character symbol.
 	 * 
 	 * @return this Character symbol 
 	 */
@@ -101,7 +105,7 @@ public abstract class Character implements Serializable{
 	}
 
 	/**
-	 * Retrieve the value of this Character hasWeapon
+	 * Retrieve the value of this Character hasWeapon.
 	 * 
 	 * @return this Character hasWeapon 
 	 */
@@ -111,7 +115,7 @@ public abstract class Character implements Serializable{
 
 	
 	/**
-	 * Retrieve the value of this Character weapon
+	 * Retrieve the value of this Character weapon.
 	 * 
 	 * @return this Character weapon 
 	 */
@@ -120,7 +124,7 @@ public abstract class Character implements Serializable{
 	}
 	
 	/**
-	 * Retrieve information about Character ability to move
+	 * Retrieve information about Character ability to move.
 	 * 
 	 * @return if Character is able to move
 	 */
@@ -129,7 +133,7 @@ public abstract class Character implements Serializable{
 	/*******************SET FUNCTIONS*******************/
 	
 	/**
-	 * Set the value of this Character showCli 
+	 * Set the value of this Character showCli.
 	 * 
 	 * @param show
 	 */
@@ -138,7 +142,7 @@ public abstract class Character implements Serializable{
 	}
 
 	/**
-	 * Set the value of this Character symbol
+	 * Set the value of this Character symbol.
 	 * 
 	 * @param newSymbol
 	 */
@@ -147,7 +151,7 @@ public abstract class Character implements Serializable{
 	}
 
 	/**
-	 * Set the value of this Character x, updating prevX
+	 * Set the value of this Character x, updating prevX.
 	 * 
 	 * @param newX
 	 */
@@ -157,7 +161,7 @@ public abstract class Character implements Serializable{
 	}
 
 	/**
-	 *  Set the value of this Character y, updating prevY
+	 *  Set the value of this Character y, updating prevY.
 	 *  
 	 * @param newY
 	 */
@@ -167,21 +171,21 @@ public abstract class Character implements Serializable{
 	}
 	
 	/**
-	 * Set the value of this Character prevX to x
+	 * Set the value of this Character prevX to x.
 	 */
 	public void setPrevX() {
 		this.prevX = x;
 	}
 
 	/**
-	 * Set the value of this Character prevY to y
+	 * Set the value of this Character prevY to y.
 	 */
 	public void setPrevY() {
 		this.prevY = y;
 	}
 
 	/**
-	 * Set this Character position, setting both the values of x and y
+	 * Set this Character position, setting both the values of x and y.
 	 * 
 	 * @param newX
 	 * @param newY
@@ -192,7 +196,7 @@ public abstract class Character implements Serializable{
 	}
 
 	/**
-	 * Set the value of this Character hasWeapon
+	 * Set the value of this Character hasWeapon.
 	 * 
 	 * @param hasWeapon
 	 */
@@ -201,7 +205,7 @@ public abstract class Character implements Serializable{
 	}
 
 	/**
-	 * Set the value of this Character weapon
+	 * Set the value of this Character weapon.
 	 * 
 	 * @param weapon
 	 */
@@ -211,9 +215,9 @@ public abstract class Character implements Serializable{
 	/*******************POSITION COMMANDS*******************/
 
 	/**
-	 * Set this Character position to one unit above the current position
-	 * Updates values of prevX and prevY to the current position values
-	 * Decreases this Character y by a unit (equivalent to moving up)
+	 * Set this Character position to one unit above the current position.
+	 * Updates values of prevX and prevY to the current position values.
+	 * Decreases this Character y by a unit (equivalent to moving up).
 	 */
 	public void moveUp() {
 		prevY = y;
@@ -222,9 +226,9 @@ public abstract class Character implements Serializable{
 	}
 
 	/**
-	 * Set this Character position to one unit under the current position
-	 * Updates values of prevX and prevY to the current position values
-	 * Increases this Character y by a unit (equivalent to moving down)
+	 * Set this Character position to one unit under the current position.
+	 * Updates values of prevX and prevY to the current position values.
+	 * Increases this Character y by a unit (equivalent to moving down).
 	 */
 	public void moveDown() {
 		prevY = y;
@@ -233,9 +237,9 @@ public abstract class Character implements Serializable{
 	}
 
 	/**
-	 * Set this Character position to one unit to the left of the current position
-	 * Updates values of prevX and prevY to the current position values
-	 * Decreases this Character x by a unit (equivalent to moving left)
+	 * Set this Character position to one unit to the left of the current position.
+	 * Updates values of prevX and prevY to the current position values.
+	 * Decreases this Character x by a unit (equivalent to moving left).
 	 */
 	public void moveLeft() {
 		prevY = y;
@@ -244,9 +248,9 @@ public abstract class Character implements Serializable{
 	}
 
 	/**
-	 * Set this Character position to one unit to the right of the current position
-	 * Updates values of prevX and prevY to the current position values
-	 * Increases this Character x by a unit (equivalent to moving right)
+	 * Set this Character position to one unit to the right of the current position.
+	 * Updates values of prevX and prevY to the current position values.
+	 * Increases this Character x by a unit (equivalent to moving right).
 	 */
 	public void moveRight() {
 		prevY = y;
@@ -255,8 +259,8 @@ public abstract class Character implements Serializable{
 	}
 
 	/**
-	 * Set this Character x and y values accordingly to the command given
-	 * Calls upon this Class move*() functions in order to do that update
+	 * Set this Character x and y values accordingly to the command given.
+	 * Calls upon this Class move*() functions in order to do that update.
 	 * 
 	 * @param command
 	 */
@@ -283,8 +287,8 @@ public abstract class Character implements Serializable{
 	}
 
 	/**
-	 * Set this Character x and y values to prevX and prevY respectively
-	 * Places Character in the previous position
+	 * Set this Character x and y values to prevX and prevY respectively.
+	 * Places Character in the previous position.
 	 */
 	public void setToPreviousPosition() {
 		x = prevX;
@@ -316,7 +320,7 @@ public abstract class Character implements Serializable{
 
 	/**
 	 * Checks if this Character and character c (in the possibility of having a weapon)
-	 * are in capturing proximity (distance minor or equal to one unit)
+	 * are in capturing proximity (distance minor or equal to one unit).
 	 * 
 	 * @param c
 	 * @return true if in capturing proximity of weapon, else false

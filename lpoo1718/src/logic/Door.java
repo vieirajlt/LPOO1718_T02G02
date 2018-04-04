@@ -2,6 +2,10 @@ package logic;
 
 import java.io.Serializable;
 
+/**
+ * @author João Vieira
+ * @author Susana Lima
+ */
 public class Door implements Serializable{
 	/**
 	 * 
@@ -12,6 +16,12 @@ public class Door implements Serializable{
 	
 	/*******************CONSTRUCTORS*******************/
 	
+	/**
+	 * Creates a Door in preferred x and y values.
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	public Door(int x, int y)
 	{
 		this.x = x;
@@ -20,10 +30,20 @@ public class Door implements Serializable{
 	
 	/*******************GET FUNCTIONS*******************/
 	
+	/**
+	 * Retrieve the value of this Door x.
+	 * 
+	 * @return this Door x
+	 */
 	public int getX() {
 		return x;
 	}
 	
+	/**
+	 * Retrieve the value of this Door y.
+	 * 
+	 * @return this Door y
+	 */
 	public int getY() {
 		return y;
 	}

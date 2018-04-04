@@ -1,5 +1,9 @@
 package logic;
 
+/**
+ * @author João Vieira
+ * @author Susana Lima
+ */
 public class Club extends Weapon {
 	/**
 	 * 
@@ -10,7 +14,7 @@ public class Club extends Weapon {
 	/*******************CONSTRUCTORS*******************/
 	
 	/**
-	 * Creates a Club in preferred position. Is possible to choose
+	 * Creates a Club in preferred x and y values. Is possible to choose
 	 * if the Club is static relatively to the owner.
 	 * 
 	 * @param newX
@@ -35,7 +39,7 @@ public class Club extends Weapon {
 	/*******************GET FUNCTIONS*******************/
 	
 	/**
-	 * Retrieve the value of this Club aboveKey
+	 * Retrieve the value of this Club aboveKey.
 	 * 
 	 * @return this Club aboveKey
 	 */
@@ -46,7 +50,7 @@ public class Club extends Weapon {
 	/*******************SET FUNCTIONS*******************/
 	
 	/**
-	 * Set the value of this Club aboveKey
+	 * Set the value of this Club aboveKey.
 	 * 
 	 * @param aboveKey
 	 */
