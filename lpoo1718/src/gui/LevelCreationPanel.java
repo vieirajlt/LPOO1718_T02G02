@@ -325,6 +325,8 @@ public class LevelCreationPanel extends JPanel {
 	
 	public void changeLevelCreationStatus(boolean status) {
 		mapCreationPanel.setVisible(status);
+		btnPlayCreatedLvl.setEnabled(false);
+		btnSaveLevel.setEnabled(false);
 		btnRestart.setEnabled(status);
 		btnCreateLevel.setVisible(!status);
 		btnSaveLevel.setEnabled(!status);
