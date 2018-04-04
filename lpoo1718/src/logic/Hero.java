@@ -290,7 +290,7 @@ public class Hero extends Character {
 		if(super.getSymbol() == 'K')
 			display.keyColliding(isShowCli());
 		else {
-			display.doorColliding(isShowCli());
+			display.leverColliding(isShowCli());
 			setHeroToPreviousPosition();
 			exitOpened = true;
 		}

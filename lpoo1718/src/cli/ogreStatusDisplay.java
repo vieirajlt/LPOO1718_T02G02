@@ -1,7 +1,22 @@
 package cli;
 
+/**
+ * This class contains all the information regarding an ogre status 
+ * that will be displayed in a user friendly way.
+ * 
+ * @author João Vieira
+ * @author Susana Lima
+ * 
+ * @see Ogre
+ */
 public class ogreStatusDisplay {
 
+	/**
+	 * Displays the information regarding the number of plays the ogre will be stunted for
+	 * 
+	 * @param t number of plays that the ogre will be stunted for
+	 * @param show parameter that specifies if the information will be displayed or not
+	 */
 	public void stunned(int t, boolean show)
 	{
 		if(!show) 
@@ -17,6 +32,11 @@ public class ogreStatusDisplay {
 
 	}
 
+	/**
+	 * Displays the information regarding a hero stunning the ogre.
+	 * 
+	 * @param show parameter that specifies if the information will be displayed or not
+	 */
 	public void justStunned(boolean show)
 	{
 		if(show)
