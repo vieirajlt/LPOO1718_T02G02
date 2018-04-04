@@ -250,8 +250,9 @@ public class LevelCreationPanel extends JPanel {
 				// 1- esquerdo, 3- direito
 				if (e.getButton() == MouseEvent.BUTTON1) //used to draw an image
 				{
-					if (!map.checkCorners(x,y))
-						map.setAndVerifyMapPosition(x,y, mapCreationPanel.getNewChar());
+					if (!map.checkCorners(x,y) && 
+							map.verifyMapPosition(x,y, mapCreationPanel.getNewChar()))
+						map.setMapPosition(x,y, mapCreationPanel.getNewChar());
 				}
 				else
 				{
@@ -341,7 +342,7 @@ public class LevelCreationPanel extends JPanel {
 	
 	public void saveMap(logic.Map map) {
 		logic.Map newMap = new logic.Map(0);
-		newMap.initializeMap(map.getMapScheme());
+		newMap.initializeMap(map.getMapScheme(), true, true, false);
 		savedLevels.add(newMap);
 	}
 

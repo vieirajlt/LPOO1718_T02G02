@@ -6,7 +6,7 @@ import cli.heroStatusDisplay;
  * This specific type is the game's hero (good guy), its main purpose is to end the game
  * without being fatally injured or captured by the different levels enemies.
  * 
- * @author Jo„o Vieira
+ * @author Jo√£o Vieira
  * @author Susana Lima
  *
  */
@@ -263,9 +263,8 @@ public class Hero extends Character {
 		}
 	}
 
-	//TODO
 	/**
-	 * Update this Hero position and flags if he is colliding with an exit (iexitColliding is true).
+	 * Update this Hero position and flags if he is colliding with an exit (exitColliding is true).
 	 * This Hero position is set to the previous one in the case the exitOpened is false
 	 */
 	private void updateHeroExitColliding() {
@@ -339,7 +338,7 @@ public class Hero extends Character {
 	
 	/**
 	 * Creates and adds to this Hero a new {@link Club}, if this Hero does not already have one.
-	 * The new weapon is positioned int the hero position.
+	 * The new weapon is positioned on heros' position.
 	 */
 	public void addWeapon()
 	{
@@ -352,7 +351,6 @@ public class Hero extends Character {
 		}
 	}
 
-	//TODO
 	@Override
 	public boolean isMove() {
 		return true;

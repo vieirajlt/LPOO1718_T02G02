@@ -12,6 +12,10 @@ public class Map implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -3751192253702198623L;
+	/**
+	 * Predefine char association for representation of different types of objects/characters
+	 * on this Map.
+	 */
 	private static final char EMPTY = ' ';
 	private static final char WALL = 'X';
 	private static final char DOOR = 'I';
@@ -27,28 +31,87 @@ public class Map implements Serializable {
 	private static final char CLUB = '*';
 	private static final char KEYCLUB = '$'; //club that hit key at a certain point
 	
+	/**
+	 * Predefined level indicator designation.
+	 */
 	private static final int LVL1 = 1;
 	private static final int LVL2 = 2;
 	private static final int NEWLVL = 0;
 	
+	/**
+	 * Predefine value for ogreNumber.
+	 */
+	private static final int DEFAULT_OGRECOUNT = 2;
+	
+	/**
+	 * Predefine value for guardPersonality.
+	 */
+	private static final GuardPersonality DEFAULT_GUARDPERSONALITY = GuardPersonality.ROOKIE;
+	
+	/**
+	 * Predefined standard level size (width and height).
+	 */
 	private static final int LVLSIZE = 10;
 
+	/**
+	 * map is a 2D array that stores all objects/characters positioning information
+	 * on the current {@link Game} cycle.
+	 */
 	private char map[][]; //[Y][X]
+	/**
+	 * level is an indicator to the type of level that is loaded.
+	 */
 	private int level;
-	private ArrayList<Door> doors;	
+	/**
+	 * doors is an {@link ArrayList} of {@link Door} that stores all possible exits
+	 * for level completion.
+	 */
+	private ArrayList<Door> doors;
+	/**
+	 * characters is an {@link ArrayList} of {@link Character} that stores
+	 * the {@link Hero} and {@link Guard} loaded on this Map.
+	 */
 	private ArrayList<Character> characters;
+	/**
+	 * ogres is a {@link LinkedList} of {@link logic.Ogre} that stores all
+	 * Ogres loaded on this Map.
+	 */
 	private LinkedList<Ogre> ogres;
+	/**
+	 * unlockers is an {@link ArrayList} of {@link logic.Unlocker} that stores all
+	 * loaded keys/levers on this Map.
+	 */
 	private ArrayList<Unlocker> unlockers;
+	
+	/**
+	 * ogreNumber is a helping variable used to initialize levels with {@link logic.Ogre}
+	 */
 	private int ogreNumber;
+	/**
+	 * guardPersonality is a helping variable used to initialize levels with {@link Guard}
+	 */
 	private GuardPersonality guardPersonality;
 	
+	/**
+	 * showCli is the flag indicating if display should be used.
+	 */
 	private boolean showCli;
+	
+	/**
+	 * display is the user friendly information representing this Map status.
+	 */
 	static private MapStatusDisplay display = new MapStatusDisplay();
 	
+	//TODO
 	private ArrayList<String> log;
 
 	/*******************CONSTRUCTORS*******************/
 
+	/**
+	 * Creates a Map with predefined size, using default Guard and
+	 * default number of ogres.
+	 * 
+	 */
 	public Map() {
 		map = new char[LVLSIZE][LVLSIZE];
 		characters = new ArrayList<Character>(); //hero & guard
@@ -56,16 +119,28 @@ public class Map implements Serializable {
 		doors = new ArrayList<Door>();
 		unlockers = new ArrayList<Unlocker>();
 		showCli = true;
-		ogreNumber = 2; //by default the number of ogres is 2
-		guardPersonality = GuardPersonality.ROOKIE; //by default the guard's personality is rookie
+		ogreNumber = DEFAULT_OGRECOUNT;
+		guardPersonality = DEFAULT_GUARDPERSONALITY;
 		log = null;
 	}
 	
+	/**
+	 * Creates a default Map initialized on a specific level.
+	 * 
+	 * @param lvl the specified level
+	 */
 	public Map(int lvl) {
 		this();
 		initializeMap(lvl);
 	}
 	
+	/**
+	 * Creates a default Map initialized on a specific level with
+	 * given guardPersonality Guard.
+	 * 
+	 * @param guardPersonality the new value of guardPersonality
+	 * @param level the selected level
+	 */
 	public Map(GuardPersonality guardPersonality, int level)
 	{
 		this();
@@ -77,6 +152,13 @@ public class Map implements Serializable {
 		initializeMap(LVL1);
 	}
 	
+	/**
+	 * Creates a default Map initialized on a specific level with
+	 * given ogreNumber number of ogres.
+	 * 
+	 * @param ogreNumber the new value of ogreNumber
+	 * @param level the selected level
+	 */
 	public Map(int ogreNumber, int level)
 	{
 		this();
@@ -86,6 +168,16 @@ public class Map implements Serializable {
 		initializeMap(LVL2);
 	}
 
+	/**
+	 * Creates a custom Map using newMap as reference for initial objects/characters
+	 * positioning. Additional information for enemies movability, and {@link logic.Unlocker}
+	 * is provided by the other parameters.
+	 * 
+	 * @param newMap the reference array for map creation
+	 * @param movableChar the flag for non-Hero {@link Character} ability to move
+	 * @param movableWeapon the flag for non-Hero {@link Character} ability to move their {@link Weapon}
+	 * @param isLever the flag for {@link logic.Unlocker} indication
+	 */
 	public Map(char[][] newMap, boolean movableChar, boolean movableWeapon,boolean isLever) {
 		this();
 		int size = newMap.length;
@@ -94,11 +186,14 @@ public class Map implements Serializable {
 		guardPersonality = GuardPersonality.ROOKIE; //by default the guard's personality is rookie
 		initializeMap(newMap, movableChar, movableWeapon,isLever);
 	}
-
-	public Map(char[][] newMap) {
-		this(newMap,true, true, true);
-	}
 	
+	/**
+	 * Creates a empty custom Map with specified size.
+	 * 
+	 * @param width the width of this Map map
+	 * @param height the height of this Map map
+	 * @param isDefaultMap the flag for option verification
+	 */
 	public Map(int width, int height, boolean isDefaultMap)
 	{
 		this();
@@ -112,7 +207,9 @@ public class Map implements Serializable {
 		
 	}
 
-		
+	/**
+	 * Sets this Map map to an empty map only surrounded by Walls. 	
+	 */
 	private void setDefaultMap() {
 		for(int i = 1; i < map.length-1; ++i) {
 			Arrays.fill(map[i], EMPTY);
@@ -127,6 +224,11 @@ public class Map implements Serializable {
 
 	/*******************MAP INITIALIZATION FUNCTIONS*******************/
 
+	/**
+	 * Selects which level will be loaded to this Map map.
+	 * 
+	 * @param level the level to initialize
+	 */
 	public void initializeMap(int level) {
 		switch(level) {
 		case LVL1:
@@ -142,6 +244,16 @@ public class Map implements Serializable {
 		}
 	}
 	
+	/**
+	 * Extracts info from newMap for objects/characters positioning and the other variables for 
+	 * {@link Character} specifications in order to define this Map map as a new custom
+	 * level.
+	 * 
+	 * @param newMap the reference array for map creation
+	 * @param movableChar the flag for non-Hero {@link Character} ability to move
+	 * @param movableWeapon the flag for non-Hero {@link Character} ability to move their {@link Weapon}
+	 * @param isLever the flag for {@link logic.Unlocker} indication
+	 */
 	public void initializeMap(char [][] newMap, boolean movableChar, boolean movableWeapon, boolean isLever) {
 		this.map = newMap;
 		characters.add(new Hero(1,1));
@@ -180,49 +292,14 @@ public class Map implements Serializable {
 			}
 		}
 	}
-	
-	
-	public void initializeMap(char [][] newMap) {
-		this.map = newMap;
-		this.level = NEWLVL;
-		characters.clear();
-		ogres.clear();
-		doors.clear();
-		unlockers.clear();
-		characters.add(new Hero(1,1));
-		for(int i = 0; i < map.length; i++)
-		{
-			for (int j = 0;j < map[i].length; j++ )
-			{
-				switch(map[i][j])
-				{
-				case HERO :
-					characters.get(0).setPosition(j, i);
-					break;
-				case ARMEDHERO:
-					characters.get(0).setPosition(j, i);
-					((Hero)characters.get(0)).addWeapon();
-					break;
-				case DOOR:
-					doors.add(new Door(j,i));
-					break;
-				case LEVER:
-					unlockers.add(new Unlocker(j,i,false));
-					break;
-				case GUARD:
-					characters.add(new Guard(j,i));
-					break;
-				case OGRE:
-					ogres.add(new Ogre(j,i,true));
-					placeClub(ogres.getLast(), newMap);
-					break;
-				default:
-					break;
-				}
-			}
-		}
-	}
 
+	/**
+	 * Takes map has reference to search for an available positions for
+	 * the {@link logic.Ogre} o's {@link Weapon}.
+	 * 
+	 * @param o the {@link logic.Ogre} in analysis
+	 * @param map the reference for placement check
+	 */
 	public void placeClub(Ogre o, char[][] map) {
 		int x = o.getX();
 		int y = o.getY();
@@ -239,17 +316,20 @@ public class Map implements Serializable {
 			--wX;
 
 		o.getWeapon().setPosition(wX, wY);
-		//ogres.getLast().getWeapon().setPosition(wX, wY);
 	}
 
 	
-	
+	/**
+	 * Calls functions to initialize predefine LVL1.
+	 */
 	public void initializeLvlOne() {
-
 		initializeLvl1OneObjects();
 		initializeLvlOneMapScheme();
 	}
 
+	/**
+	 * Initializes this Map map accordingly with predefined LVL1.
+	 */
 	private void initializeLvlOneMapScheme() {
 		setDefaultMap();
 		map[1][0] = WALL;
@@ -288,6 +368,9 @@ public class Map implements Serializable {
 		map[8][7] = LEVER;
 	}
 
+	/**
+	 * Initializes this Map objects/characters with predefined LVL1 information.
+	 */
 	private void initializeLvl1OneObjects() {
 		characters.add(new Hero(1,1));
 		initializeGuard();
@@ -296,6 +379,9 @@ public class Map implements Serializable {
 		unlockers.add(new Unlocker(7,8, LEVER, true));
 	}
 
+	/**
+	 * Initializes this Map Guard accordingly to guardPersonality information.
+	 */
 	private void initializeGuard() {
 		if(guardPersonality == GuardPersonality.SUSPICIOUS) {
 			characters.add(new Suspicious(8,1));
@@ -306,13 +392,18 @@ public class Map implements Serializable {
 		}
 	}
 	
-		
+	/**
+	 * Calls functions to initialize predefine LVL2.
+	 */	
 	public void initializeLvlTwo() {
 
 		initializeLvlTwoObjects();
 		initializeLvlTwoMapScheme();
 	}
 
+	/**
+	 * Initializes this Map map accordingly with predefined LVL2.
+	 */
 	private void initializeLvlTwoMapScheme() {
 		setDefaultMap();
 
@@ -330,6 +421,9 @@ public class Map implements Serializable {
 		map[1][8] = LEVER;
 	}
 
+	/**
+	 * Initializes this Map objects/characters with predefined LVL2 information.
+	 */
 	private void initializeLvlTwoObjects() {
 		characters.clear();
 		characters.add(new Hero(1,8,true));
@@ -344,6 +438,12 @@ public class Map implements Serializable {
 	}
 	
 
+	/**
+	 * Searches for a {@link Character} symbol on this Map map.
+	 * 
+	 * @param c the Character to look for
+	 * @return true if Character is represented on this Map map, else false
+	 */
 	public boolean searchCharacter(char c)
 	{
 		for (int i  = 0; i < map.length; i++ )
@@ -354,32 +454,61 @@ public class Map implements Serializable {
 		return false;
 	}
 	
+	/**
+	 * Searches for a {@link Hero} symbol on this Map map.
+	 * 
+	 * @return if Hero is represented on this Map map, else false
+	 */
 	public boolean searchHero()
 	{
 		return (searchCharacter(HERO) || searchCharacter(ARMEDHERO));
 	}
 	
+	/**
+	 * Searches for a {@link logic.Ogre} symbol on this Map map.
+	 * 
+	 * @return if Ogre is represented on this Map map, else false
+	 */
 	public boolean searchOgre()
 	{
 		return searchCharacter(OGRE);
 	}
 	
+	/**
+	 * Searches for a {@link Club} symbol on this Map map.
+	 * 
+	 * @return if Club is represented on this Map map, else false
+	 */
 	public boolean searchClub()
 	{
 		return searchCharacter(CLUB);
 	}
 	
+	/**
+	 * Searches for a {@link logic.Unlocker} symbol on this Map map.
+	 * 
+	 * @return if Unlocker is represented on this Map map, else false
+	 */
 	public boolean searchKey()
 	{
 		return searchCharacter(LEVER);
 	}
 	
+	/**
+	 * Searches for a {@link Door} symbol on this Map map.
+	 * 
+	 * @return if Door is represented on this Map map, else false
+	 */
 	public boolean searchDoor()
 	{
 		return searchCharacter(DOOR);
 	}
 
-	
+	/**
+	 * Validates if if this Map map has all necessary parameters represented.
+	 * 
+	 * @return true if parameters represented, else false
+	 */
 	public boolean validateMapScheme()
 	{
 		boolean hasHero = searchHero();
@@ -391,62 +520,133 @@ public class Map implements Serializable {
 	
 	/*******************GET FUNCTIONS*******************/
 	
+	/**
+	 * Retrieve the value of this Map map[y][x].
+	 * 
+	 * @param x the location on this Map map[]
+	 * @param y the location on this Map map
+	 * @return the char stored on this Map map
+	 */
 	public char getMapPosition(int x, int y) {
 		return map[y][x];
 	}
-
+	
+	/**
+	 * Retrieve the value of this Map characters.
+	 * 
+	 * @return this Map characters 
+	 */
 	public ArrayList<Character> getCharacters() {
 		return characters;
 	}
 
+	/**
+	 * Retrieve the value of this Map level.
+	 * 
+	 * @return this Map level 
+	 */
 	public int getLevel() {
 		return level;
 	}
 
+	/**
+	 * Retrieve the value of this Map unlockers.
+	 * 
+	 * @return this Map unlockers 
+	 */
 	public ArrayList<Unlocker> getUnlockers() {
 		return unlockers;
 	}
 
-	public void setUnlockers(ArrayList<Unlocker> unlockers) {
-		this.unlockers = unlockers;
-	}
-	
+	/**
+	 * Retrieve the value of this Map map.
+	 * 
+	 * @return this Map map 
+	 */
 	public char[][] getMapScheme() {
 		return map;
 	}
 	
+	/**
+	 * Retrieve the value of this Map showCli.
+	 * 
+	 * @return this Map showCli 
+	 */
 	public boolean isShowCli() {
 		return showCli;
 	}
 
+	/**
+	 * Retrieve the value of this Map Guard.
+	 * 
+	 * @return this Map Guard 
+	 */
 	public Character getGuard() {
 		return characters.get(1);
 	}
 	
+	/**
+	 * Retrieve the value of this Map ogres.
+	 * 
+	 * @return this Map ogres 
+	 */
 	public LinkedList<Ogre> getOgres() {
 		return ogres;
 	}
 	
+	/**
+	 * Retrieve the value of this Map doors.
+	 * 
+	 * @return this Map doors 
+	 */
 	public ArrayList<Door> getDoors() {
 		return doors;
 	}
 	
+	/**
+	 * Retrieve the value of this Map width.
+	 * 
+	 * @return this Map width 
+	 */
 	public int getMapWidth() {
 		return map[0].length;
 	}
 	
+	/**
+	 * Retrieve the value of this Map height.
+	 * 
+	 * @return this Map height 
+	 */
 	public int getMapHeight() {
 		return map.length;
 	}
 	
-	
-	
+	/**
+	 * Retrieve the value of this Map guardPersonality.
+	 * 
+	 * @return this Map guardPersonality 
+	 */
 	public GuardPersonality getGuardPersonality() {
 		return guardPersonality;
 	}
 
 	/*******************SET FUNCTIONS*******************/
 	
+	/**
+	 * Set the value of this Map unlockers.
+	 * 
+	 * @param unlock the new value of unlockers
+	 */
+	public void setUnlockers(ArrayList<Unlocker> unlock) {
+		this.unlockers = unlock;
+	}
+	
+	/**
+	 * Set the value of this Map Guard.
+	 * 
+	 * @param gp the new value of this map guardPersonality
+	 * @param move the flag allowing(or not) the Guard to move
+	 */
 	public void setGuardType(GuardPersonality gp, boolean move) {
 		int x = -1;
 		int y = -1;
@@ -486,18 +686,39 @@ public class Map implements Serializable {
 		
 	}
 
+	/**
+	 * Set the value of this Map map[y][x].
+	 * 
+	 * @param x the location on this Map map[]
+	 * @param y the location on this Map map
+	 * @param c the new value of map[y][x]
+	 */
 	public void setMapPosition(int x, int y, char c) {
 		map[y][x] = c;
 	}
 	
-	public void setAndVerifyMapPosition(int x, int y, char c)
+	/**
+	 * Verify if this Map map[y][x] is allowed to be change
+	 * 
+	 * @param x the location on this Map map[]
+	 * @param y the location on this Map map
+	 * @param c the new value of map[y][x]
+	 * @return true if is allowed to be change, else false
+	 */
+	public boolean verifyMapPosition(int x, int y, char c)
 	{
 		if(getMapPosition(x, y) == WALL && c != DOOR && c != WALL)
-			return;
-		else
-			setMapPosition(x,y,c);
+			return false;
+		return true;
 	}
 	
+	/**
+	 * Checks if map[y][x] is a corner of the Map map
+	 * 
+	 * @param x the location on this Map map[]
+	 * @param y the location on this Map map
+	 * @return true is it is a corner, else false
+	 */
 	public boolean checkCorners(int x, int y)
 	{
 		if ( x== 0 && y == 0) return true;
@@ -508,10 +729,20 @@ public class Map implements Serializable {
 		
 	}
 
+	/**
+	 * Initializes this Map with predefined selected level.
+	 * 
+	 * @param newLvl the selected level
+	 */
 	public void setLevel(int newLvl) {
 		initializeMap(newLvl);
 	}
 
+	/**
+	 * Set the value of this Map showCli and all its {@link Character} showCli.
+	 * 
+	 * @param showCli the new value of showCli
+	 */
 	public void setShowCli(boolean showCli) {
 		this.showCli = showCli;
 		
@@ -523,47 +754,93 @@ public class Map implements Serializable {
 			o.setShowCli(showCli);
 		}
 	}
-
+	
+	/**
+	 * Set the value of this Map map.
+	 * 
+	 * @param map the new value of map
+	 */
 	public void setMapScheme(char[][] map) {
 		this.map = map;
 	}
 	
+	/**
+	 * Set the value of this Map ogres.
+	 * 
+	 * @param ogres the new value of ogres
+	 */
 	public void setOgres(LinkedList<Ogre> ogres) {
 		this.ogres = ogres;
 	}
 	
+	/**
+	 * Set the value of this Map doors.
+	 * 
+	 * @param doors the new value of doors
+	 */
 	public void setDoors(ArrayList<Door> doors) {
 		this.doors = doors;
 	}
 	
-	
+	/**
+	 * Set the value of this Map map[y][x] to HERO
+	 * 
+	 * @param x the location on this Map map[]
+	 * @param y the location on this Map map
+	 */
 	public void setHeroPosition(int x, int y)
 	{
 		setMapPosition(x,y,HERO);
 	}
 	
+	/**
+	 * Set the value of this Map map[y][x] to WALL
+	 * 
+	 * @param x the location on this Map map[]
+	 * @param y the location on this Map map
+	 */
 	public void setWallPosition(int x, int y)
 	{
 		setMapPosition(x,y,WALL);
 	}
 	
+	/**
+	 * Set the value of this Map map[y][x] to DOOR
+	 * 
+	 * @param x the location on this Map map[]
+	 * @param y the location on this Map map
+	 */
 	public void setDoorPosition(int x, int y)
 	{
 		setMapPosition(x,y,DOOR);
 		
 	}
 	
+	/**
+	 * Set the value of this Map map[y][x] to OGRE
+	 * 
+	 * @param x the location on this Map map[]
+	 * @param y the location on this Map map
+	 */
 	public void setOgrePosition(int x, int y)
 	{
 		setMapPosition(x,y,OGRE);
 	}
 	
+	/**
+	 * Set the value of this Map map[y][x] to LEVER
+	 * 
+	 * @param x the location on this Map map[]
+	 * @param y the location on this Map map
+	 */
 	public void setKeyPosition(int x, int y)
 	{
 		setMapPosition(x,y,LEVER);
 	}
 	
-	
+	/**
+	 * Set the value of this Map map where{@link Hero} is to ARMEDHERO.
+	 */
 	public void setHerotoArmedHero() {
 		for (int i  = 0; i < map.length; i++ )
 		{

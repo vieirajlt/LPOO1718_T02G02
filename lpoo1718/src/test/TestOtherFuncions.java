@@ -62,7 +62,7 @@ public class TestOtherFuncions {
 	@Test
 	public void TestSomeMapFunctionalities(){
 		TestMap testMap = new TestMap();
-		Map map = new Map(testMap.getMap2());
+		Map map = new Map(testMap.getMap2(),true, true, true);
 		assertEquals(map.searchCharacter('H'), true);
 		assertEquals(map.searchCharacter('G'), false);
 		assertEquals(map.searchHero(),true);
@@ -72,7 +72,7 @@ public class TestOtherFuncions {
 		assertEquals(map.searchKey(),true);
 		assertEquals(map.validateMapScheme(),true);
 		map = new Map();
-		map.initializeMap(testMap.getMap2());
+		map.initializeMap(testMap.getMap2(), false, false, false);
 		assertEquals(map.getMapScheme().length, 9);
 		assertEquals(map.getMapScheme()[0].length, 9);
 		assertEquals(map.getCharacters().size(), 1);

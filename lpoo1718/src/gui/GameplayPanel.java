@@ -272,7 +272,7 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 
 	public void playMap(logic.Map map) {
 		Map newLevel = new Map(1);
-		newLevel.initializeMap(map.getMapScheme());
+		newLevel.initializeMap(map.getMapScheme(), true, true, false);
 		game.addLevel(newLevel);
 		game.setToLastLevel();
 		//game.getCurrentMap().initializeMap(map.getMapScheme());

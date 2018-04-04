@@ -42,7 +42,7 @@ public abstract class Character implements Serializable{
 	 */
 	private boolean hasWeapon;
 	/**
-	 *	weapon is the {@link Weapon} that this Characer has.
+	 *	weapon is the {@link Weapon} that this Character has.
 	 */
 	private Weapon weapon;
 	/**
