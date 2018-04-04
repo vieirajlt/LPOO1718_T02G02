@@ -1,6 +1,9 @@
 package logic;
 
 /**
+ * This class is the base of everyweapon in the game
+ * giving basic movability to it.
+ * 
  * @author João Vieira
  * @author Susana Lima
  */
@@ -9,6 +12,9 @@ public class Club extends Weapon {
 	 * 
 	 */
 	private static final long serialVersionUID = -483781192116984874L;
+	/**
+	 * aboveKey is the flag indicating overlaping of this Weapon and a {@link logic.Unlocker} on {@link Map}.
+	 */
 	private boolean aboveKey ;
 	
 	/*******************CONSTRUCTORS*******************/

@@ -42,7 +42,7 @@ public class GameStartSet {
 	
 	public Game startNewGame() {
 		if(isLvlCreation) {
-			return new Game(width, heigth, true);
+			return new Game();
 		} else {
 			return new Game(ogresCount, guardPersonality);
 		}

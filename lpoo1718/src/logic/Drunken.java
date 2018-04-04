@@ -2,56 +2,91 @@ package logic;
 
 import java.util.Random;
 
+/**
+ * This class represents a specific type of {@link Guard} (enemy).
+ * This specific type (pseudo)randomly "fall asleep", stopping it
+ * movement for a (pseudo)randomly amount of {link Game} updates.
+ * 
+ * @author João Vieira
+ * @author Susana Lima
+ */
 public class Drunken extends Guard{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -179875341590099576L;
+	/**
+	 * isSleeping is a flag indicating if this Drunken "sleeping"
+	 */
 	private boolean isSleeping;
+	/**
+	 * sleepCount is the controller of how many rounds will this Character
+	 * remain sleeping.
+	 */
 	private int sleepCount;
-	private int sleepMax;
 
 	/*******************CONSTRUCTORS*******************/
 	
+	/**
+	 * Creates a Drunken in preferred x and y values Drunken starts with.
+	 * showCli is predefined as true.
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	public Drunken(int x, int y)
 	{
 		super(x, y);
 		isSleeping = false;
 		sleepCount = 0;
-		sleepMax = 0;
 	}
 	
 	/*******************GET fUNCTIONS*******************/
 	
+	/**
+	 * Retrieve the value of this Drunken isSleeping.
+	 * 
+	 * @return this Drunken isSleeping
+	 */
 	public boolean isSleeping() {
 		return isSleeping;
 	}
 
+	/**
+	 * Retrieve the value of this Drunken sleepCount.
+	 * 
+	 * @return
+	 */
 	public int getSleepCount() {
 		return sleepCount;
 	}
 
-	public int getSleepMax() {
-		return sleepMax;
-	}
-
 	/*******************SET fUNCTIONS*******************/
 
+	/**
+	 * Set the value of this Drunken isSleeping.
+	 * 
+	 * @param isSleeping
+	 */
 	public void setSleeping(boolean isSleeping) {
 		this.isSleeping = isSleeping;
 	}
 	
+	/**
+	 * Set the value of this Drunken sleepCount.
+	 * 
+	 * @param sleepCount
+	 */
 	public void setSleepCount(int sleepCount) {
 		this.sleepCount = sleepCount;
 	}
 	
-	public void setSleepMax(int sleepMax) {
-		this.sleepMax = sleepMax;
-	}
-	
 	/*******************UPDATES MANAGEMENT*******************/
 	
+	/**
+	 * Updates this Drunken status accordingly to it current state.
+	 */
 	public char updateGuard() {
 		Random rand = new Random();
 		int num = rand.nextInt(20);
@@ -66,12 +101,22 @@ public class Drunken extends Guard{
 
 	}
 
+	/**
+	 * num is a random number that determines if this Drunken will start
+	 * it's sleep or not. Case it starts, another random is calculated in
+	 * order to get the number of sleeping rounds. Else, it's position
+	 * will be updated following this Drunken path.
+	 * 
+	 * @param rand
+	 * @param num
+	 * @param ret
+	 * @return
+	 */
 	private char updateAwakenGuard(Random rand, int num, char ret) {
 		if (num == 0)
 		{
 			isSleeping = true;
-			sleepMax = rand.nextInt(10)+1;
-			sleepCount = 1;
+			sleepCount = rand.nextInt(10)+1;
 		} 
 		else {
 			isSleeping = false;
@@ -80,13 +125,19 @@ public class Drunken extends Guard{
 		return ret;
 	}
 
+	/**
+	 * sleepCount will be decremented and isSleeping will be updated if needed.
+	 */
 	private void updateSleepingGuard() {
-		if (sleepCount < sleepMax)
-			sleepCount++;
+		if (sleepCount > 0)
+			sleepCount--;
 		else
 			isSleeping = false;
 	}
 
+	/**
+	 * Set this Drunken symbol accordingly with isSleeping.
+	 */
 	private void updateDrunkenStatus() {
 		if(isSleeping)
 			super.setSymbol('g');
@@ -95,7 +146,9 @@ public class Drunken extends Guard{
 
 	}
 	
-	
+	/**
+	 * Checks if this Drunken and character c are in capturing proximity.
+	 */
 	public boolean isCaptured(Character c) {
 		if(isSleeping) {
 			//if guard is stepped, he awakes

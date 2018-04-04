@@ -5,25 +5,53 @@ import java.io.Serializable;
 import cli.CharacterStatusDisplay;
 
 /**
+ * This class is an abstract class that will be the base for 
+ * every character in game, giving basic movability to the 
+ * character. It also associates them with a weapon, if that
+ * is the case.
+ * 
  * @author João Vieira
  * @author Susana Lima
+ * @see Weapon
  */
 public abstract class Character implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8571121080640766560L;
+	/**
+	 * x and y are the current coordinates relative to the position on {@link Map}.
+	 */
 	private int x;
 	private int y;
+	/**
+	 * prevX and prevY are the coordinates relative to the position on {@link Map}.
+	 * This represent the position occupied before the current position.
+	 * Useful for collision control.
+	 */
 	private int prevX;
 	private int prevY;
 
+	/**
+	 * symbol is the char representation of the class on {@link Map}.
+	 */
 	private char symbol;
 
+	/**
+	 * hasWeapon is the flag of the existence of a weapon in this Character.
+	 */
 	private boolean hasWeapon;
+	/**
+	 *	weapon is the {@link Weapon} that this Characer has.
+	 */
 	private Weapon weapon;
+	/**
+	 * showCli is the flag indicating if display should be used.
+	 */
 	private boolean showCli;
-	
+	/**
+	 * display is the user friendly information representing this Character status.
+	 */
 	static private CharacterStatusDisplay display = new CharacterStatusDisplay();
 
 	/*******************CONSTRUCTORS*******************/

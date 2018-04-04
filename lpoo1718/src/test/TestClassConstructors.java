@@ -68,7 +68,6 @@ public class TestClassConstructors {
 		assertEquals(t.isMove(),true);
 		assertEquals(t.isSleeping(),false);
 		assertEquals(t.getSleepCount(),0);
-		assertEquals(t.getSleepMax(),0);
 		assertEquals(t.getRoute().length,24);
 		assertEquals(t.getRouteStep(),0);
 	}
