@@ -5,7 +5,7 @@ import java.io.Serializable;
 import cli.CharacterStatusDisplay;
 
 
-public abstract class Character implements Serializable{
+public class Character implements Serializable{
 	/**
 	 * 
 	 */
