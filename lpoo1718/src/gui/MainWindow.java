@@ -142,6 +142,7 @@ public class MainWindow implements KeyListener, MouseListener {
 		
 		lvlCreationPanel.getBtnCreateLevel().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				lvlCreationPanel.getMapCreationPanel().setNewCharEmpty();
 				if(lvlCreationPanel.setMapDimensions()) {
 					lvlCreationPanel.changeLevelCreationStatus(true);
 					lvlCreationPanel.getMapCreationPanel().repaint();

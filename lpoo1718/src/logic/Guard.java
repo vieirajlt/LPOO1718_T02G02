@@ -48,19 +48,20 @@ public class Guard extends Character{
 
 		route[0] = 'l';
 
-		for(int i = 1; i < 5; ++i)
-			route[i] = 'd';
 
 		for(int i = 5; i < 11; ++i)
 			route[i] = 'l';
+		
+		for(int i = 1; i < 5; ++i)
+			route[i] = 'd';
 
 		route[11] = 'd';
 
-		for(int i = 12; i < 19; ++i)
-			route[i] = 'r';
-
 		for(int i = 19; i <= 23; ++i)
 			route[i] = 'u';
+		
+		for(int i = 12; i < 19; ++i)
+			route[i] = 'r';
 	}
 
 	public char updateGuard() {

@@ -44,6 +44,8 @@ public class Map implements Serializable {
 	
 	private boolean showCli;
 	static private MapStatusDisplay display = new MapStatusDisplay();
+	
+	private ArrayList<String> log;
 
 	/*******************CONSTRUCTORS*******************/
 
@@ -56,6 +58,7 @@ public class Map implements Serializable {
 		showCli = true;
 		ogreNumber = 2; //by default the number of ogres is 2
 		guardPersonality = GuardPersonality.ROOKIE; //by default the guard's personality is rookie
+		log = null;
 	}
 	
 	public Map(int lvl) {
@@ -235,80 +238,6 @@ public class Map implements Serializable {
 
 	
 	
-//	public void initializeLvlOne() {
-//
-//		characters.add(new Hero(1,1));
-//		
-//		if(guardPersonality == GuardPersonality.SUSPICIOUS) {
-//			characters.add(new Suspicious(8,1));
-//		} else if(guardPersonality == GuardPersonality.DRUNKEN) {
-//			characters.add(new Drunken(8,1));
-//		} else if(guardPersonality == GuardPersonality.ROOKIE) {
-//			characters.add(new Rookie(8,1));
-//		}
-//		
-//		doors.add(new Door(0,5));
-//		doors.add(new Door(0,6));
-//
-//		unlockers.add(new Unlocker(7,8, LEVER, true));
-//
-//		for(int i = 1; i < map.length-1; ++i) {
-//			Arrays.fill(map[i], EMPTY);
-//		}
-//
-//		int size = map.length;
-//
-//		//define wall position WALL
-//		Arrays.fill(map[0], WALL);
-//		Arrays.fill(map[size-1], WALL);
-//
-//		for(int i = 1; i < size-1; ++i) {
-//			map[i][0] = WALL;
-//			map[i][size-1] = WALL;
-//		}
-//
-//		map[1][0] = WALL;
-//		map[1][6] = WALL;
-//		map[2][1] = WALL;
-//		map[2][2] = WALL;
-//		map[2][4] = WALL;
-//		map[2][5] = WALL;
-//		map[2][6] = WALL;
-//		map[3][6] = WALL;
-//		map[4][1] = WALL;
-//		map[4][2] = WALL;
-//		map[4][4] = WALL;
-//		map[4][5] = WALL;
-//		map[4][6] = WALL;
-//		map[7][1] = WALL;
-//		map[7][2] = WALL;
-//		map[7][4] = WALL;
-//		map[7][5] = WALL;
-//		map[7][6] = WALL;
-//		map[7][7] = WALL;
-//		map[8][6] = WALL;
-//
-//
-//		//define door position DOOR
-//		map[1][4] = DOOR;
-//		map[3][2] = DOOR;
-//		map[3][4] = DOOR;
-//		map[5][0] = DOOR;
-//		map[6][0] = DOOR;
-//		map[8][2] = DOOR;
-//		map[8][4] = DOOR;
-//
-//		//define hero position HERO
-//		map[1][1] = HERO;
-//
-//		//define guard position GUARD
-//		map[1][8] = GUARD;
-//
-//		//define lever position LEVER
-//		map[8][7] = LEVER;
-//	}
-	
-	
 	public void initializeLvlOne() {
 
 		initializeLvl1OneObjects();
@@ -371,55 +300,7 @@ public class Map implements Serializable {
 		}
 	}
 	
-	
-	
-
-//	public void initializeLvlTwo() {
-//
-//		characters.clear();
-//		characters.add(new Hero(1,8,true));
-//
-//		ogres.clear();
-//		//all the ogres start at the same position
-//		for (int i = 0; i < ogreNumber; i++)
-//			ogres.add(new Ogre(4,1));
-//
-//		doors.clear();
-//		doors.add(new Door(0,1));
-//
-//		unlockers.clear();
-//		unlockers.add(new Unlocker(8,1, LEVER, false));
-//
-//		for(int i = 1; i < map.length-1; ++i) {
-//			Arrays.fill(map[i], EMPTY);
-//		}
-//
-//		int size = map.length;
-//
-//		//define wall position WALL
-//		Arrays.fill(map[0], WALL);
-//		Arrays.fill(map[size-1], WALL);
-//
-//		for(int i = 1; i < size-1; ++i) {
-//			map[i][0] = WALL;
-//			map[i][size-1] = WALL;
-//		}
-//
-//		//define door position DOOR
-//		map[1][0] = DOOR;
-//
-//		//define hero position HERO with CLUB
-//		map[8][1] = ARMEDHERO;
-//
-//		//define ogre position OGRE
-//		map[1][4] = OGRE;
-//		map[1][3] = CLUB;
-//
-//		//define lever position LEVER
-//		map[1][8] = LEVER;
-//	}
-	
-	
+		
 	public void initializeLvlTwo() {
 
 		initializeLvlTwoObjects();
@@ -727,36 +608,7 @@ public class Map implements Serializable {
 
 	/*******************MAP MANAGEMENT FUNCTIONS*******************/
 
-//	public void updateHeroMapObjects(Character c) {
-//		//Check if exit has been reached
-//		if(isExitColliding(c)) {
-//			((Hero) c).setExitColliding(true);
-//			//if hero is carrying a key, open exit
-//			if(c.getSymbol() == KEYHERO) {
-//				openExit();
-//			}
-//		} 
-//		//Check general objects collisions
-//		else if(isWallColliding(c))
-//			((Hero) c).setWallColliding(true);
-//		//check if lever/key is reached
-//		int position = hasReachedLever(c);
-//		if(position != -1) {
-//			((Hero) c).setObjectColliding(true);
-//			//if it is not a lever - is a key
-//			if(!(unlockers.get(position).isLever())) {
-//				//make hero symbol a KEYHERO symbol
-//				c.setSymbol(KEYHERO);
-//			} 
-//			//if it is a lever
-//			else {
-//				openExit();
-//			}
-//		}
-//	}
-	
-	
-	
+
 	
 	public void updateHeroMapObjects(Character c) {
 		//Check if exit has been reached
@@ -794,45 +646,7 @@ public class Map implements Serializable {
 			openExit();
 		}
 	}
-
-
-//	public void updateOgrePosition(Character c) {
-//		if(!isMovePossible(c.getX(), c.getY())) 
-//			return;
-//		
-//		int X = c.getWeapon().getX();
-//		int Y = c.getWeapon().getY();
-//
-//		//reput lever on position
-//		if(c.getWeapon().getSymbol() == KEYCLUB)
-//			map[Y][X] = LEVER;
-//		else
-//			map[Y][X] = EMPTY; 
-//
-//		char ogreCommand;
-//		char clubCommand;
-//		boolean collision;
-//		do {
-//			collision = false;
-//			ogreCommand = ((Ogre) c).getNextMove();
-//			clubCommand = ((Ogre) c).getNextMove();
-//			((Ogre) c).updatePosition(ogreCommand, clubCommand);
-//			if(isWallColliding(c) || isClubColliding(c)) {
-//				c.setToPreviousPosition();
-//				c.getWeapon().setToPreviousPosition();
-//				collision = true;
-//			}
-//		} while(collision);
-//
-//		if(((Club) c.getWeapon()).isAboveKey()) {
-//			c.getWeapon().setSymbol(KEYCLUB);
-//		} else
-//			c.getWeapon().setSymbol(CLUB);
-//
-//		X = c.getPrevX();
-//		Y = c.getPrevY();
-//
-//	}
+	
 	
 	public void updateOgrePosition(Character c) {
 		if(!isMovePossible(c.getX(), c.getY())) 
@@ -877,51 +691,6 @@ public class Map implements Serializable {
 			map[Y][X] = EMPTY;
 	}
 
-//	public void updateMap(char heroCommand) {
-//		for(int i = 0; i < characters.size(); ++i) {
-//			char symbol = characters.get(i).getSymbol();
-//
-//			switch(symbol) {
-//			case HERO: case KEYHERO: case ARMEDHERO:
-//				characters.get(i).updatePosition(heroCommand);
-//				updateHeroMapObjects(characters.get(i));
-//				((Hero) characters.get(i)).updateHero();
-//				break;
-//			case GUARD: case SLEEPINGGUARD:
-//				char guardCommand = ((Guard) characters.get(i)).updateGuard();
-//				characters.get(i).updatePosition(guardCommand);
-//				if(((Guard) characters.get(i)).isCaptured((Hero) characters.get(0)))
-//					((Hero) characters.get(0)).setCaptured(true);
-//				break;			
-//			default:
-//				break;
-//			}
-//
-//			removeCharacter(characters.get(i));
-//		}
-//
-//		//updates the ogres position
-//		for(int i = 0; i < ogres.size(); i++)
-//		{
-//			updateOgrePosition(ogres.get(i));
-//
-//			//if hero gets on club range, game ends || if hero is captured
-//			if(ogres.get(i).getWeapon().isHit(characters.get(0)) || ogres.get(i).isCaptured(characters.get(0)))
-//				((Hero) characters.get(0)).setFatality(true);
-//			//if hero as weapon, ogre can get stunned
-//			else if(characters.get(0).hasWeapon() && ((Hero) characters.get(0)).getWeapon().isHit(ogres.get(i))) {
-//				((Ogre)ogres.get(i)).setStunned(true);
-//				ogres.get(i).setSymbol(STUNNEDOGRE);
-//				characters.get(0).setToPreviousPosition();
-//			} 
-//			//else hero gets cought
-//			else if(ogres.get(i).isCaptured((Hero) characters.get(0)))
-//				((Hero) characters.get(0)).setCaptured(true);
-//
-//			removeCharacter(ogres.get(i));
-//		}
-//	}
-	
 	
 	public void updateMap(char heroCommand) {
 		//updates the hero and the guard positions

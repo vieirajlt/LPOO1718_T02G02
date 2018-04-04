@@ -169,6 +169,7 @@ public class LevelCreationPanel extends JPanel {
 		this.add(mapCreationPanel);
 		mapCreationPanel.setVisible(false);
 		
+		
 		/********LABEL*STATUS********************************************************************************/
 		
 		statusLabel = new JLabel("");
@@ -278,7 +279,7 @@ public class LevelCreationPanel extends JPanel {
 					btnAddHeroWeapon.setEnabled(true);
 				}
 				
-				//only one hero
+				//only one key
 				if (map.searchKey())
 				{
 					btnAddKey.setEnabled(false);

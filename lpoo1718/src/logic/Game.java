@@ -151,6 +151,7 @@ public class Game implements Serializable{
 	/*******************GAME MANAGEMENT FUNCTION*******************/
 	public void updateGame(char command) {
 		
+		ArrayList<String> log = new ArrayList<String>();
 		levels.get(level).updateMap(command);
 		levels.get(level).updateMapDisplay();
 		if(((Hero) levels.get(level).getCharacters().get(0)).hasSteppedGuard()) {
