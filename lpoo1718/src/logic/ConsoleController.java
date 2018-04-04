@@ -1,16 +1,29 @@
 package logic;
 import java.util.Scanner;
 
-public class GuidedProject {
+/**
+ * This class contains the game cycle of the console based
+ * game. It is responsible for printing the current {@link Game}
+ * map and managing player input for game status update, from
+ * the console.
+ * 
+ * @author João Vieira
+ * @author Susana Lima
+ * @see Weapon
+ */
+public class ConsoleController {
 
+	/**
+	 * This function initializes a predefined Game with two levels
+	 * that are playable.
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
-		//initialize game
 		Game game = new Game();
 
 		Scanner scanCommand = new Scanner(System.in);
 		char command = 0;
-		
-		//System.out.println(Arrays.deepToString(game.getCurrentMap().getMapScheme()));
 		
 		game.getCurrentMap().displayMap();
 		
