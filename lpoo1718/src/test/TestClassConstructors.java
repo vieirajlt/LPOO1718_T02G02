@@ -20,8 +20,8 @@ import logic.Rookie;
 import logic.Suspicious;
 import logic.Unlocker;
 import logic.Weapon;
-import logic.testRookie;
-import logic.testOgre;
+import logic.TestRookie;
+import logic.TestOgre;
 
 public class TestClassConstructors {
 
@@ -93,7 +93,7 @@ public class TestClassConstructors {
 		assertEquals(t.hasWeapon(),false);
 		assertEquals(t.getRoute().length,24);
 		assertEquals(t.getRouteStep(),0);
-		testRookie g = new testRookie(1,2);
+		TestRookie g = new TestRookie(1,2);
 		assertEquals(g.updateGuard(false), 'E');
 	}
 	
@@ -165,7 +165,7 @@ public class TestClassConstructors {
 		assertEquals(t1.getWeapon().getY(),2);
 		assertEquals(t1.getStunCount(),0);
 		assertEquals(t1.isStunned(),false);
-		testOgre t2 = new testOgre(1, 2, true);
+		TestOgre t2 = new TestOgre(1, 2, true);
 		assertEquals(t2.isMove(),false);
 	}
 	

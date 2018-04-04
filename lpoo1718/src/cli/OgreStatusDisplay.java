@@ -4,12 +4,12 @@ package cli;
  * This class contains all the information regarding an ogre status 
  * that will be displayed in a user friendly way.
  * 
- * @author João Vieira
+ * @author Joï¿½o Vieira
  * @author Susana Lima
  * 
  * @see Ogre
  */
-public class ogreStatusDisplay {
+public class OgreStatusDisplay {
 
 	/**
 	 * Displays the information regarding the number of plays the ogre will be stunted for

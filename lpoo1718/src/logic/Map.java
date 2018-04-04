@@ -277,13 +277,13 @@ public class Map implements Serializable {
 					if(movableChar)
 						characters.add(new Rookie(j,i));
 					else
-						characters.add(new testRookie(j,i));
+						characters.add(new TestRookie(j,i));
 					break;
 				case OGRE:
 					if(movableChar)
 						ogres.add(new Ogre(j,i,movableWeapon));
 					else
-						ogres.add(new testOgre(j,i,movableWeapon));
+						ogres.add(new TestOgre(j,i,movableWeapon));
 					placeClub(ogres.getLast(), newMap);
 					break;
 				default:
@@ -668,11 +668,11 @@ public class Map implements Serializable {
 		
 		if(!move) {
 			if(gp == GuardPersonality.SUSPICIOUS) {
-				characters.set(index, new testSuspicious(x,y));
+				characters.set(index, new TestSuspicious(x,y));
 			} else if(gp == GuardPersonality.DRUNKEN) {
-				characters.set(index, new testDrunken(x,y));
+				characters.set(index, new TestDrunken(x,y));
 			} else if(gp == GuardPersonality.ROOKIE) {
-				characters.set(index, new testRookie(x,y));
+				characters.set(index, new TestRookie(x,y));
 			} 
 		} else {
 			if(gp == GuardPersonality.SUSPICIOUS) {
@@ -854,6 +854,13 @@ public class Map implements Serializable {
 	}
 	/*******************COLLISIONS RELATED FUNCTIONS*******************/
 
+	/**
+	 * Checks if {@link Character} c current position is the same as an 
+	 * impassable object.
+	 * 
+	 * @param c the Character to check position
+	 * @return true if overlapping, else false
+	 */
 	public boolean isWallColliding(Character c) {
 		int X = c.getX();
 		int Y = c.getY();
@@ -865,7 +872,14 @@ public class Map implements Serializable {
 		return false;
 	}
 
-	public boolean isClubColliding(Character c) {
+	/**
+	 * Checks if {@link Weapon} current position of {@link Character} c 
+	 * is the same as an impassable object or a {@link logic.Unlocker}.
+	 * 
+	 * @param c the Character whose Weapon is checked
+	 * @return true if overlapping, else false
+	 */
+	public boolean isWeaponColliding(Character c) {
 		int X = c.getWeapon().getX();
 		int Y = c.getWeapon().getY();
 
@@ -879,6 +893,13 @@ public class Map implements Serializable {
 		return false;
 	}
 
+	/**
+	 * Checks if {@link Character} c current position is the same as a
+	 * {@link Door}.
+	 * 
+	 * @param c the Character to check position
+	 * @return true if overlapping, else false
+	 */
 	public boolean isExitColliding(Character c) {
 		int X = c.getX();
 		int Y = c.getY();
@@ -888,6 +909,13 @@ public class Map implements Serializable {
 		return false;
 	}
 
+	/**
+	 * Checks if {@link Character} c current position is the same as a
+	 * {@link logic.Unlocker}.
+	 * 
+	 * @param c the Character to check position
+	 * @return Unlocker position on this Map doors, else -1
+	 */
 	public int hasReachedLever(Character c) {
 		int X = c.getX();
 		int Y = c.getY();
@@ -903,37 +931,54 @@ public class Map implements Serializable {
 	/*******************MAP MANAGEMENT FUNCTIONS*******************/
 
 
-	
-	public void updateHeroMapObjects(Character c) {
+	/**
+	 * Checks {@link Hero} c possible collisions and updates
+	 * its status accordingly.
+	 * 
+	 * @param h the Hero to update
+	 */
+	public void updateHeroMapObjects(Hero h) {
 		//Check if exit has been reached
-		if(isExitColliding(c)) {
-			updateHeroMapObjectsExitColliding(c);
+		if(isExitColliding(h)) {
+			updateHeroMapObjectsExitColliding(h);
 		} 
 		//Check general objects collisions
-		else if(isWallColliding(c))
-			((Hero) c).setWallColliding(true);
+		else if(isWallColliding(h))
+			((Hero) h).setWallColliding(true);
 		//check if lever/key is reached
-		int position = hasReachedLever(c);
+		int position = hasReachedLever(h);
 		if(position != -1) {
-			updateHeroMapObjectsLeverReached(c, position);
+			updateHeroMapObjectsLeverReached(h, position);
 		}
 	}
 
-	
-	private void updateHeroMapObjectsExitColliding(Character c) {
-		((Hero) c).setExitColliding(true);
+	/**
+	 * Notifies {@link Hero} c that is colliding with a {@link Door}
+	 * and updates this Map if needed.
+	 * 
+	 * @param h the Hero to update
+	 */
+	private void updateHeroMapObjectsExitColliding(Hero h) {
+		h.setExitColliding(true);
 		//if hero is carrying a key, open exit
-		if(c.getSymbol() == KEYHERO) {
+		if(h.getSymbol() == KEYHERO) {
 			openExit();
 		}
 	}
 	
-	private void updateHeroMapObjectsLeverReached(Character c, int position) {
-		((Hero) c).setObjectColliding(true);
+	/**
+	 * Notifies {@link Hero} c that is colliding with a {@link logic.Unlocker}
+	 * and updates this Map if needed.
+	 * 
+	 * @param h the Hero to update
+	 * @param position
+	 */
+	private void updateHeroMapObjectsLeverReached(Hero h, int position) {
+		h.setObjectColliding(true);
 		//if it is not a lever - is a key
 		if(!(unlockers.get(position).isLever())) {
 			//make hero symbol a KEYHERO symbol
-			c.setSymbol(KEYHERO);
+			h.setSymbol(KEYHERO);
 		} 
 		//if it is a lever
 		else {
@@ -941,41 +986,62 @@ public class Map implements Serializable {
 		}
 	}
 	
-	
-	public void updateOgrePosition(Character c) {
-		if(!isMovePossible(c.getX(), c.getY())) 
+	/**
+	 * Checks {@link Ogre} o possible collisions and updates
+	 * its status accordingly.
+	 * 
+	 * @param o the Ogre to update
+	 */
+	public void updateOgrePosition(Ogre o) {
+		if(!isMovePossible(o.getX(), o.getY())) 
 			return;
-		//reput lever on position
-		reputLeverOnPosition(c); 
-		updateOgretoValidPosition(c);
-		updateClubSymbol(c);
+		reputLeverOnPosition(o); 
+		updateOgretoValidPosition(o);
+		updateClubSymbol(o);
 	}
 
-	
-	private void updateClubSymbol(Character c) {
-		if(((Club) c.getWeapon()).isAboveKey()) {
-			c.getWeapon().setSymbol(KEYCLUB);
+	/**
+	 * Checks if {@link Ogre} o is superimposing an {@link logic.Unlocker}
+	 * updating its symbol accordingly.
+	 * 
+	 * @param o the Ogre to update
+	 */
+	private void updateClubSymbol(Ogre o) {
+		if(((Club) o.getWeapon()).isAboveKey()) {
+			o.getWeapon().setSymbol(KEYCLUB);
 		} else
-			c.getWeapon().setSymbol(CLUB);
+			o.getWeapon().setSymbol(CLUB);
 	}
 
-	private void updateOgretoValidPosition(Character c) {
+	/**
+	 * Updates {@link Ogre} o to a new random valid position, checking for
+	 * collisions and updating this Map accordingly.
+	 * 
+	 * @param o
+	 */
+	private void updateOgretoValidPosition(Ogre o) {
 		char ogreCommand;
 		char clubCommand;
 		boolean collision;
 		do {
 			collision = false;
-			ogreCommand = ((Ogre) c).getNextMove();
-			clubCommand = ((Ogre) c).getNextMove();
-			((Ogre) c).updatePosition(ogreCommand, clubCommand);
-			if(isWallColliding(c) || isClubColliding(c)) {
-				c.setToPreviousPosition();
-				c.getWeapon().setToPreviousPosition();
+			ogreCommand = o.getNextMove();
+			clubCommand = o.getNextMove();
+			o.updatePosition(ogreCommand, clubCommand);
+			if(isWallColliding(o) || isWeaponColliding(o)) {
+				o.setToPreviousPosition();
+				o.getWeapon().setToPreviousPosition();
 				collision = true;
 			}
 		} while(collision);
 	}
 
+	/**
+	 * Updates Map map resetting {@link Unlocker} symbol when {@link Character} c
+	 * is moving its {@link Weapon} from {@link logic.Unlocker} position.
+	 * 
+	 * @param c the Character moving Weapon
+	 */
 	private void reputLeverOnPosition(Character c) {
 		int X = c.getWeapon().getX();
 		int Y = c.getWeapon().getY();
@@ -985,7 +1051,12 @@ public class Map implements Serializable {
 			map[Y][X] = EMPTY;
 	}
 
-	
+	/**
+	 * Updates all {@link Character} on Map accordingly to the heroCommand
+	 * given by the player.
+	 * 
+	 * @param heroCommand the char moving the Hero
+	 */
 	public void updateMap(char heroCommand) {
 		//updates the hero and the guard positions
 		updateMapHeroAndGuard(heroCommand);
@@ -994,7 +1065,12 @@ public class Map implements Serializable {
 	}
 
 	
-
+	/**
+	 * Updates {@link Hero} and {@link Guard} positions accordingly  to 
+	 * the heroCommand given by the player.
+	 * 
+	 * @param heroCommand the char moving the Hero
+	 */
 	private void updateMapHeroAndGuard(char heroCommand) {
 		for(int i = 0; i < characters.size(); ++i) {
 			char symbol = characters.get(i).getSymbol();
@@ -1014,7 +1090,11 @@ public class Map implements Serializable {
 		}
 	}
 	
-	
+	/**
+	 * Updates the {@link Guard} on index i on this Map characters.
+	 * 
+	 * @param i the index of Guard
+	 */
 	private void updateMapGuard(int i) {
 		char guardCommand = ((Guard) characters.get(i)).updateGuard();
 		characters.get(i).updatePosition(guardCommand);
@@ -1022,13 +1102,22 @@ public class Map implements Serializable {
 			((Hero) characters.get(0)).setCaptured(true);
 	}
 
+	/**
+	 * Updates {@link Hero} position accordingly  to the heroCommand given 
+	 * by the player.
+	 * 
+	 * @param heroCommand the char moving the Hero
+	 * @param i the index of Hero
+	 */
 	private void updateMapHero(char heroCommand, int i) {
 		characters.get(i).updatePosition(heroCommand);
-		updateHeroMapObjects(characters.get(i));
+		updateHeroMapObjects((Hero)characters.get(i));
 		((Hero) characters.get(i)).updateHero();
 	}
 	
-	
+	/**
+	 * Updates all {@link Ogre} on Map ogres.
+	 */
 	private void updateMapOgres() {
 		for(int i = 0; i < ogres.size(); i++)
 		{
@@ -1049,28 +1138,50 @@ public class Map implements Serializable {
 		}
 	}
 
-	
+	/**
+	 * Updates {@link Ogre} on index i on this Map ogres, when stunned.
+	 * 
+	 * @param i the index of the Ogre
+	 */
 	private void updateStunnedOgre(int i) {
 		((Ogre)ogres.get(i)).setStunned(true);
 		ogres.get(i).setSymbol(STUNNEDOGRE);
 		characters.get(0).setToPreviousPosition();
 	}
 
+	/**
+	 * Checks if {@link Hero} status indicates that was captured by an enemy.
+	 * 
+	 * @param i the index of the Hero on this Map characters
+	 * @return true if captured, else false
+	 */
 	private boolean checkHeroCaptured(int i) {
 		return ogres.get(i).isCaptured((Hero) characters.get(0));
 	}
 
+	/**
+	 * Checks if {@link Ogre} was stunned by an {@link Hero}.
+	 * 
+	 * @param i the index of the Ogre on this Map ogres
+	 * @return true if stunned, else false
+	 */
 	private boolean checkOgreStunned(int i) {
 		return characters.get(0).hasWeapon() && ((Hero) characters.get(0)).getWeapon().isHit(ogres.get(i));
 	}
 
+	/**
+	 * Checks if {@link Hero} was killed by an enemy.
+	 * 
+	 * @param i the index of the Hero on this Map characters
+	 * @return true if killed, else false
+	 */
 	private boolean checkHeroFatality(int i) {
 		return ogres.get(i).getWeapon().isHit(characters.get(0)) || ogres.get(i).isCaptured(characters.get(0));
 	}
 
-	
-	
-
+	/**
+	 * Updates all Characters on this Map map.
+	 */
 	public void updateMapDisplay() {
 		//updates in the ogres positions in the map
 		for (int i = 0; i < ogres.size(); i++)
@@ -1082,10 +1193,21 @@ public class Map implements Serializable {
 		}
 	}
 
+	/**
+	 * Places character on this Map map.
+	 * 
+	 * @param c the Character to be placed
+	 */
 	public void placeCharacter(Character c) {
 		placeCharacter(c, c.getSymbol());
 	}
 
+	/**
+	 * Places character on this Map map with symbol s
+	 * 
+	 * @param c the Character to be placed
+	 * @param s the symbol to be set
+	 */
 	public void placeCharacter(Character c, char s) {
 		int X;
 		int Y;
@@ -1106,6 +1228,11 @@ public class Map implements Serializable {
 		setMapPosition(X, Y, symbol);
 	}
 
+	/**
+	 * Removes character on this Map map.
+	 * 
+	 * @param c the Character to be removed
+	 */
 	public void removeCharacter(Character c) {
 		//Clear previous Character position
 		int X = c.getPrevX();
@@ -1123,12 +1250,22 @@ public class Map implements Serializable {
 
 	}
 
+	/**
+	 * Places STAIRS symbol on every {@link Door} location on this Map map.
+	 */
 	public void openExit() {
 		for(int j = 0; j < doors.size(); j++) {
 			setMapPosition(doors.get(j).getX(), doors.get(j).getY(), STAIRS);
 		}
 	}
 
+	/**
+	 * Checks if this Map map[y][x] is the location of a {@link Door}.
+	 * 
+	 * @param x position on this Map map[]
+	 * @param y position on this Map map
+	 * @return true if position of Door, else false
+	 */
 	public boolean isExit(int x, int y) {
 		for(int j = 0; j < doors.size(); j++) {
 			if((x == doors.get(j).getX()) && (y == doors.get(j).getY()))
@@ -1139,22 +1276,35 @@ public class Map implements Serializable {
 	
 	/*******************DISPLAY*******************/
 	
+	/**
+	 * Prints this Map map to console.
+	 */
 	public void displayMap() {
 		display.printMap(map, showCli);
 	}
 	
 	/*******************TO STRING*******************/
 	
+	/**
+	 * Converts this Map map into a {@link String}
+	 */
 	public String toString()
 	{
 		String res = "";
-		for (int i = 0 ; i < getMapScheme().length; i++)
+		for (int i = 0 ; i < map.length; i++)
 		{
-			res += String.valueOf(getMapScheme()[i]) + "\n";
+			res += String.valueOf(map[i]) + "\n";
 		}
 		return res;
 	}
 	
+	/**
+	 * Checks if a {@link Character} placed on this Map map[y][x] can move in any direction.
+	 * 
+	  * @param x position on this Map map[]
+	 * @param y position on this Map map
+	 * @return true if movement is possible, else false
+	 */
 	boolean isMovePossible(int x, int y) {
 		if(getMapPosition(x+1, y) != WALL) {
 			return true;

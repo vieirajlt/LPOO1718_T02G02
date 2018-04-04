@@ -1,5 +1,5 @@
 package logic;
-import cli.heroStatusDisplay;
+import cli.HeroStatusDisplay;
 
 /**
  * This class represents a specific type of {@link Character}.
@@ -59,7 +59,7 @@ public class Hero extends Character {
 	/**
 	 * display is the user friendly information representing this Hero status.
 	 */
-	static private heroStatusDisplay display = new heroStatusDisplay();
+	static private HeroStatusDisplay display = new HeroStatusDisplay();
 	
 	
 	/*******************CONSTRUCTORS*******************/

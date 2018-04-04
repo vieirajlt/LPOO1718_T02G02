@@ -1,13 +1,13 @@
 package logic;
 
-public class testRookie extends Rookie{
+public class TestRookie extends Rookie{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1751977696406617461L;
 
-	public testRookie(int newX, int newY) {
+	public TestRookie(int newX, int newY) {
 		super(newX, newY);
 	}
 	

@@ -2,18 +2,29 @@ package logic;
 
 import java.util.Random;
 
-import cli.ogreStatusDisplay;
+import cli.OgreStatusDisplay;
 
+/**
+ * This class represents a specific type of {@link Character}.
+ * This specific type is one of the Hero's enemies (currently present in the 
+ * second level and player created levels).
+ * The Ogre has (pseudo)random movement patern.
+ * 
+ * @author João Vieira
+ * @author Susana Lima
+ *
+ */
 public class Ogre extends Character {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 678238776851162692L;
+	
 	private boolean stunned;
 	private int stunCount;
 	
-	static private ogreStatusDisplay display = new ogreStatusDisplay();
+	static private OgreStatusDisplay display = new OgreStatusDisplay();
 
 	/*******************CONSTRUCTOR*******************/
 	

@@ -5,12 +5,12 @@ package cli;
  * This class contains all the information regarding an hero status 
  * that will be displayed in a user friendly way.
  * 
- * @author João Vieira
+ * @author Joï¿½o Vieira
  * @author Susana Lima
  * 
  * @see Hero
  */
-public class heroStatusDisplay {
+public class HeroStatusDisplay {
 
 	/**
 	 * Displays the information when a hero collides with a wall.
