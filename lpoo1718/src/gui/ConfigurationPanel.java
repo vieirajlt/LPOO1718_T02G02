@@ -43,6 +43,67 @@ public class ConfigurationPanel extends JPanel {
 	
 	private void initialize() {
 
+		initializeLabels();
+		
+		initializeGuardTypeComboBox();
+
+		initializeBtns();
+		
+		initializeTextFields();
+		
+	}
+
+	/**
+	 * 
+	 */
+	private void initializeBtns() {
+		/********BTN*DONE***********************************************************************************/
+		
+		btnDone = new JButton("Done");
+		btnDone.setBounds(317, 43, 89, 23);
+		this.add(btnDone);
+		
+		/********BTN*CREATELEVEL****************************************************************************/
+
+		btnOpenLevelCreationPanel = new JButton("Create Level");
+		btnOpenLevelCreationPanel.setBounds(38, 170,  200, 53);
+		this.add(btnOpenLevelCreationPanel);
+	}
+
+	/**
+	 * 
+	 */
+	private void initializeTextFields() {
+		NumberFormat ogreCountFormat = NumberFormat.getIntegerInstance();
+		ogresNumberTxtField = new JFormattedTextField(ogreCountFormat);
+		ogresNumberTxtField.setBounds(180, 45, 70, 19);
+		this.add(ogresNumberTxtField);
+		ogresNumberTxtField.setName("");
+		ogresNumberTxtField.setText("2");
+		ogresNumberTxtField.setColumns(10);
+		
+		lvlSelectionTextField = new JFormattedTextField((Format) null);
+		lvlSelectionTextField.setText("1");
+		lvlSelectionTextField.setName("");
+		lvlSelectionTextField.setColumns(10);
+		lvlSelectionTextField.setBounds(180, 123, 70, 19);
+		add(lvlSelectionTextField);
+	}
+
+	/**
+	 * 
+	 */
+	private void initializeGuardTypeComboBox() {
+		guardTypeComboBox = new JComboBox<GuardPersonality>();
+		guardTypeComboBox.setBounds(180, 79, 100, 24);
+		this.add(guardTypeComboBox);
+		guardTypeComboBox.setModel(new DefaultComboBoxModel<GuardPersonality>(GuardPersonality.values()));
+	}
+
+	/**
+	 * 
+	 */
+	private void initializeLabels() {
 		/********LABEL*OGRECOUNT****************************************************************************/
 		
 		JLabel lblOgresCount = new JLabel("Number of Ogres");
@@ -55,49 +116,11 @@ public class ConfigurationPanel extends JPanel {
 		lblGuardPersonality.setBounds(38, 84, 130, 15);
 		this.add(lblGuardPersonality);
 		
-		/********COMBOBOX*GUARDTYPE*************************************************************************/
-		
-		guardTypeComboBox = new JComboBox<GuardPersonality>();
-		guardTypeComboBox.setBounds(180, 79, 100, 24);
-		this.add(guardTypeComboBox);
-		guardTypeComboBox.setModel(new DefaultComboBoxModel<GuardPersonality>(GuardPersonality.values()));
-		
-		/********FTEXTFIELD*OGRENUMBER**********************************************************************/
-		NumberFormat ogreCountFormat = NumberFormat.getIntegerInstance();
-		ogresNumberTxtField = new JFormattedTextField(ogreCountFormat);
-		ogresNumberTxtField.setBounds(180, 45, 70, 19);
-		this.add(ogresNumberTxtField);
-		ogresNumberTxtField.setName("");
-		ogresNumberTxtField.setText("2");
-		ogresNumberTxtField.setColumns(10);
-
-		/********BTN*DONE***********************************************************************************/
-		
-		btnDone = new JButton("Done");
-		btnDone.setBounds(317, 43, 89, 23);
-		this.add(btnDone);
-		
-		/********BTN*CREATELEVEL****************************************************************************/
-
-		btnOpenLevelCreationPanel = new JButton("Create Level");
-		btnOpenLevelCreationPanel.setBounds(38, 170,  200, 53);
-		this.add(btnOpenLevelCreationPanel);
-		
 		/********LABEL*LVLSELECTION*************************************************************************/
 		
 		JLabel lblLevelSelection = new JLabel("Level Selection");
 		lblLevelSelection.setBounds(38, 125, 130, 15);
 		add(lblLevelSelection);
-		
-		/********FTEXTFIELD*LVLSELECTION********************************************************************/
-		
-		lvlSelectionTextField = new JFormattedTextField((Format) null);
-		lvlSelectionTextField.setText("1");
-		lvlSelectionTextField.setName("");
-		lvlSelectionTextField.setColumns(10);
-		lvlSelectionTextField.setBounds(180, 123, 70, 19);
-		add(lvlSelectionTextField);
-		
 	}
 
 	//GET

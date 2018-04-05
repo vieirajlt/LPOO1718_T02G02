@@ -171,19 +171,27 @@ public class MainWindow implements KeyListener, MouseListener {
 
 	private void initializeGameplayPanelListeners() {
 		
+		frmGuidedProjectGui.getContentPane().addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				gpPanel.requestFocusInWindow();
+			}
+		});
+		
+		initializeGameplayPanelBtnsListeners();
+
+	}
+
+	/**
+	 * 
+	 */
+	private void initializeGameplayPanelBtnsListeners() {
 		/********BTN*CONFIG**********************************************************************************/
 		
 		gpPanel.getBtnConfig().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				gpPanel.setVisible(false);
 				configPanel.setVisible(true);
-			}
-		});
-		
-		frmGuidedProjectGui.getContentPane().addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent arg0) {
-				gpPanel.requestFocusInWindow();
 			}
 		});
 		
@@ -210,7 +218,6 @@ public class MainWindow implements KeyListener, MouseListener {
 				}
 			}
 		});
-
 	}
 
 	/**********************Aux Functions**************************/

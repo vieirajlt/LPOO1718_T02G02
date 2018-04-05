@@ -41,6 +41,12 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 	private JButton btnNewGame;
 	private JButton btnSaveGame;
 	private JButton btnLoadGame;
+	
+	private JButton btnUp;
+	private JButton btnDown;
+	private JButton btnLeft;
+	private JButton btnRight;
+	private JButton btnExit;
 
 	/**
 	 * Create the panel.
@@ -61,88 +67,150 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		initialize();
 	}
 
+	/**
+	 * 
+	 */
+	private void initialize() {
+		initializeComponets();
+		initializeListeners();
+	}
+
 	public GraphicPanel getGameMapPanel()
 	{
 		return gameMapPanel;
 	}
 
-	private void initialize() {
+	private void initializeComponets() {
 
 		/********BTN*NEWGAME********************************************************************************/
 
-		btnNewGame = new JButton("New Game");
-		btnNewGame.setBounds(420, 100, 120, 25);
-		this.add(btnNewGame);
+		initializeNewGameBtn();
 
 		/********BTN*EXIT***********************************************************************************/
 
-		JButton btnExit = new JButton("Exit");
-		btnExit.setBounds(420, 400, 120, 25);
-		this.add(btnExit);
+		initializeExitGameBtn();
 
 		/********MOVEMENT*BUTTONS***************************************************************************/
 
-		JButton btnUp = new JButton("Up");
-		btnUp.setBounds(439, 206, 80, 25);
-		this.add(btnUp);
-		btnUp.setEnabled(false);
-		this.movbuttons.add(btnUp);
-
-		JButton btnDown = new JButton("Down");
-		btnDown.setBounds(436, 300, 80, 25);
-		this.add(btnDown);
-		btnDown.setEnabled(false);
-		this.movbuttons.add(btnDown);
-
-		JButton btnLeft = new JButton("Left"); 
-		btnLeft.setBounds(388, 252, 80, 25);
-		this.add(btnLeft);
-		btnLeft.setEnabled(false);
-		this.movbuttons.add(btnLeft);
-
-		JButton btnRight = new JButton("Right");
-		btnRight.setBounds(495, 252, 80, 25);
-		this.add(btnRight);
-		btnRight.setEnabled(false);
-		this.movbuttons.add(btnRight);
+		initializeMovementBtns();
 
 		/********BTN*CONFIG**********************************************************************************/
 
-		btnConfig = new JButton("Configurations");
-		btnConfig.setBounds(35, 35, 200, 53);
-		this.add(btnConfig);
+		initializeConfigBtn();
 
 		/********GAME*STATUS*LABEL***************************************************************************/
 
-		gameStatusLabel = new JLabel("You can start a new game.");
-		gameStatusLabel.setBounds(287, 54, 275, 15);
-		this.add(gameStatusLabel);
+		initializeGameStatusLabel();
 
 		/********GAME*MAP*PANEL******************************************************************************/
 
-		gameMapPanel = new GraphicPanel();
-		gameMapPanel.setBounds(35, 152, 200, 200);
-		this.add(gameMapPanel);
-		gameMapPanel.setVisible(true);
+		initializeGameMapPanel();
 
 		/********BTN*SAVEGAME********************************************************************************/
 
-		btnSaveGame = new JButton("Save");
-		btnSaveGame.setBounds(388, 137, 80, 25);
-		add(btnSaveGame);
-		btnSaveGame.setVisible(true);
-		btnSaveGame.setEnabled(false);
+		initializeSaveGameBtn();
 
 		/********BTN*LOADGAME********************************************************************************/
 
+		initializeLoadGameBtn();
+
+	}
+
+	/**
+	 * 
+	 */
+	private void initializeLoadGameBtn() {
 		btnLoadGame = new JButton("Load");
 		btnLoadGame.setBounds(495, 137, 80, 25);
 		add(btnLoadGame);
 		btnLoadGame.setVisible(true);
 		btnLoadGame.setEnabled(true);
+	}
 
-		initializeListeners(btnNewGame, btnExit, btnUp, btnDown, btnLeft, btnRight);
+	/**
+	 * 
+	 */
+	private void initializeSaveGameBtn() {
+		btnSaveGame = new JButton("Save");
+		btnSaveGame.setBounds(388, 137, 80, 25);
+		add(btnSaveGame);
+		btnSaveGame.setVisible(true);
+		btnSaveGame.setEnabled(false);
+	}
 
+	/**
+	 * 
+	 */
+	private void initializeGameMapPanel() {
+		gameMapPanel = new GraphicPanel();
+		gameMapPanel.setBounds(35, 152, 200, 200);
+		this.add(gameMapPanel);
+		gameMapPanel.setVisible(true);
+	}
+
+	/**
+	 * 
+	 */
+	private void initializeGameStatusLabel() {
+		gameStatusLabel = new JLabel("You can start a new game.");
+		gameStatusLabel.setBounds(287, 54, 275, 15);
+		this.add(gameStatusLabel);
+	}
+
+	/**
+	 * 
+	 */
+	private void initializeConfigBtn() {
+		btnConfig = new JButton("Configurations");
+		btnConfig.setBounds(35, 35, 200, 53);
+		this.add(btnConfig);
+	}
+
+	/**
+	 * 
+	 */
+	private void initializeMovementBtns() {
+		btnUp = new JButton("Up");
+		btnUp.setBounds(439, 206, 80, 25);
+		this.add(btnUp);
+		btnUp.setEnabled(false);
+		this.movbuttons.add(btnUp);
+
+		btnDown = new JButton("Down");
+		btnDown.setBounds(436, 300, 80, 25);
+		this.add(btnDown);
+		btnDown.setEnabled(false);
+		this.movbuttons.add(btnDown);
+
+		btnLeft = new JButton("Left"); 
+		btnLeft.setBounds(388, 252, 80, 25);
+		this.add(btnLeft);
+		btnLeft.setEnabled(false);
+		this.movbuttons.add(btnLeft);
+
+		btnRight = new JButton("Right");
+		btnRight.setBounds(495, 252, 80, 25);
+		this.add(btnRight);
+		btnRight.setEnabled(false);
+		this.movbuttons.add(btnRight);
+	}
+
+	/**
+	 * @return
+	 */
+	private void initializeExitGameBtn() {
+		btnExit = new JButton("Exit");
+		btnExit.setBounds(420, 400, 120, 25);
+		this.add(btnExit);
+	}
+
+	/**
+	 * 
+	 */
+	private void initializeNewGameBtn() {
+		btnNewGame = new JButton("New Game");
+		btnNewGame.setBounds(420, 100, 120, 25);
+		this.add(btnNewGame);
 	}
 
 	/**
@@ -153,27 +221,73 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 	 * @param btnLeft
 	 * @param btnRight
 	 */
-	private void initializeListeners(JButton btnNewGame, JButton btnExit, JButton btnUp, JButton btnDown,
-			JButton btnLeft, JButton btnRight) {
+	private void initializeListeners() {
 
-		addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				gameMapPanel.requestFocusInWindow();
-			}
-
-		});
+		initializeMouseListener();
 
 		/********BTN*EXIT***********************************************************************************/
 
+		initializeExitBtnListener();
+
+		/********MOVEMENT*BUTTONS***************************************************************************/
+
+		initializeMovementBtnsListeners();
+
+		/********BTN*SAVEGAME********************************************************************************/
+
+		initializeSaveGameBtnListener();
+
+		/********BTN*LOADGAME********************************************************************************/
+
+		initializeLoadGameBtnListener();
+	}
+
+	/**
+	 * 
+	 */
+	private void initializeLoadGameBtnListener() {
+		btnLoadGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(loadGame())
+					gameStatusLabel.setText("Game Successfully Loaded.");
+				else
+					gameStatusLabel.setText("Sorry, it is impossible to load your game.");
+			}
+		});
+	}
+
+	/**
+	 * 
+	 */
+	private void initializeSaveGameBtnListener() {
+		btnSaveGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(saveGame())
+					gameStatusLabel.setText("Game Successfully Saved.");
+				else
+					gameStatusLabel.setText("Sorry, it is impossible to save your game.");
+			}
+		});
+	}
+
+	/**
+	 * @param btnExit
+	 */
+	private void initializeExitBtnListener() {
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
+	}
 
-		/********MOVEMENT*BUTTONS***************************************************************************/
-
+	/**
+	 * @param btnUp
+	 * @param btnDown
+	 * @param btnLeft
+	 * @param btnRight
+	 */
+	private void initializeMovementBtnsListeners() {
 		btnUp.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				game.updateGame('u');
@@ -205,27 +319,18 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 				btnSaveGame.setEnabled(true);
 			}
 		});
+	}
 
-		/********BTN*SAVEGAME********************************************************************************/
-
-		btnSaveGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(saveGame())
-					gameStatusLabel.setText("Game Successfully Saved.");
-				else
-					gameStatusLabel.setText("Sorry, it is impossible to save your game.");
+	/**
+	 * 
+	 */
+	private void initializeMouseListener() {
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				gameMapPanel.requestFocusInWindow();
 			}
-		});
 
-		/********BTN*LOADGAME********************************************************************************/
-
-		btnLoadGame.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(loadGame())
-					gameStatusLabel.setText("Game Successfully Loaded.");
-				else
-					gameStatusLabel.setText("Sorry, it is impossible to load your game.");
-			}
 		});
 	}
 

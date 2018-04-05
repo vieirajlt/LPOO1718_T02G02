@@ -49,7 +49,7 @@ public class GraphicPanel extends JPanel{
 	protected static final char KEYHERO = 'K'; //hero with key
 	protected static final char CLUB = '*';
 	protected static final char KEYCLUB = '$'; //club that hit key at a certain point
-	
+
 	public GraphicPanel() {
 		super();
 		try {
@@ -68,7 +68,7 @@ public class GraphicPanel extends JPanel{
 			key = ImageIO.read(new File("./images/key.png"));
 			ogre = ImageIO.read(new File("./images/ogre.png"));
 			stunnedOgre = ImageIO.read(new File("./images/stunnedogre.png"));
-			
+
 		}
 		catch(IOException e)
 		{
@@ -86,7 +86,7 @@ public class GraphicPanel extends JPanel{
 	public void setMap(String map) {
 		this.map = map;
 	}
-	
+
 	public void setMap(logic.Map map) {
 		this.map = map.toString();
 	}
@@ -97,54 +97,16 @@ public class GraphicPanel extends JPanel{
 		for (int i = 0; i < map.length();i++)
 		{
 			boolean isNewLine = false;
+
 			switch(map.charAt(i))
 			{
-			case WALL:
-				g.drawImage(wall, x, y, null);
-				break;
-			case STAIRS:
-				g.drawImage(openDoor, x, y, null);
-				break;
-			case DOOR:
-				g.drawImage(closeDoor, x, y, null);
-				break;
-			case CLUB:
-				g.drawImage(club, x, y, null);
-				break;
-			case KEYCLUB:
-				g.drawImage(keyClub, x, y, null);
-				break;
-			case EMPTY:
-				g.drawImage(floor, x, y, null);
-				break;
-			case GUARD:
-				g.drawImage(guard, x, y, null);
-				break;
-			case SLEEPINGGUARD:
-				g.drawImage(sleepingGuard, x, y, null);
-				break;
-			case HERO:
-				g.drawImage(hero, x, y, null);
-				break;
-			case ARMEDHERO:
-				g.drawImage(armedHero, x, y, null);
-				break;
-			case KEYHERO:
-				g.drawImage(keyHero, x, y, null);
-				break;
-			case LEVER:
-				g.drawImage(key, x, y, null);
-				break;
-			case OGRE:
-				g.drawImage(ogre, x, y, null);
-				break;
-			case STUNNEDOGRE:
-				g.drawImage(stunnedOgre, x, y, null);
-				break;
 			case '\n':
 				y+=blockSize;
 				isNewLine = true;
 				x = 0;
+				break;
+			default:
+				paintChar(g, x, y, map.charAt(i));
 				break;
 			}
 			if(!isNewLine)
@@ -152,4 +114,52 @@ public class GraphicPanel extends JPanel{
 		}
 	}
 
+	private void paintChar(Graphics g, int x, int y, char symbol) {
+		switch(symbol)
+		{
+		case WALL:
+			g.drawImage(wall, x, y, null);
+			break;
+		case STAIRS:
+			g.drawImage(openDoor, x, y, null);
+			break;
+		case DOOR:
+			g.drawImage(closeDoor, x, y, null);
+			break;
+		case CLUB:
+			g.drawImage(club, x, y, null);
+			break;
+		case KEYCLUB:
+			g.drawImage(keyClub, x, y, null);
+			break;
+		case EMPTY:
+			g.drawImage(floor, x, y, null);
+			break;
+		case GUARD:
+			g.drawImage(guard, x, y, null);
+			break;
+		case SLEEPINGGUARD:
+			g.drawImage(sleepingGuard, x, y, null);
+			break;
+		case HERO:
+			g.drawImage(hero, x, y, null);
+			break;
+		case ARMEDHERO:
+			g.drawImage(armedHero, x, y, null);
+			break;
+		case KEYHERO:
+			g.drawImage(keyHero, x, y, null);
+			break;
+		case LEVER:
+			g.drawImage(key, x, y, null);
+			break;
+		case OGRE:
+			g.drawImage(ogre, x, y, null);
+			break;
+		case STUNNEDOGRE:
+			g.drawImage(stunnedOgre, x, y, null);
+			break;
+		}
+
+	}
 }
