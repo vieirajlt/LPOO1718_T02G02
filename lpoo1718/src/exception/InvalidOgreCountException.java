@@ -6,7 +6,7 @@ import logic.GuardPersonality;
  * Exception thrown when an invalid number of ogres is passed 
  * to a {@link logic.GameStartSet#GameStartSet(int oc, GuardPersonality gp) GameStartSet} constructor.
  * 
- * @author Jo„o Vieira
+ * @author Jo√£o Vieira
  * @author Susana Lima
  *
  */

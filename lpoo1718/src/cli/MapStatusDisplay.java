@@ -5,7 +5,7 @@ package cli;
  * This class displays in a user friendly way an array of chars representing 
  * the game and its objects current positions.
  * 
- * @author Jo„o Vieira
+ * @author Jo√£o Vieira
  * @author Susana Lima
  * 
  * @see Map

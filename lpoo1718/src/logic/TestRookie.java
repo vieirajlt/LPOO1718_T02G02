@@ -18,8 +18,8 @@ public class TestRookie extends Rookie{
 	/**
 	 * Creates a TestRookie in preferred x and y values TestRookie starts with.
 	 * 
-	 * @param x the location coordinate
-	 * @param y the location coordinate
+	 * @param newX the location coordinate
+	 * @param newY the location coordinate
 	 */
 	public TestRookie(int newX, int newY) {
 		super(newX, newY);

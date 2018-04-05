@@ -140,7 +140,7 @@ public class Weapon implements Serializable{
 	/**
 	 * Retrieve the value of this Weapon symbol.
 	 * 
-	 * @return this Weapon symbol 
+	 * @param newSymbol this Weapon symbol 
 	 */
 	public void setSymbol(char newSymbol) {
 		symbol = newSymbol;

@@ -4,7 +4,7 @@ package exception;
  * Exception thrown when an invalid level number is passed to to
  *  the {@link logic.Game#setLevel(int level) setLevel} method.
  * 
- * @author Jo„o Vieira
+ * @author Jo√£o Vieira
  * @author Susana Lima
  *
  */

@@ -41,14 +41,14 @@ public class Ogre extends Character {
 	 * This Ogre can be allowed(or not) to move its {@link Weapon}.
 	 * stunned initial value is false and its counter is 0.
 	 * 
-	 * @param x the location coordinate
-	 * @param y the location coordinate
+	 * @param newX the location coordinate
+	 * @param newY the location coordinate
 	 * @param moveClub the flag indicating Weapon movement
 	 */
-	public Ogre(int newX, int newY, boolean MoveClub) {
+	public Ogre(int newX, int newY, boolean moveClub) {
 		super(newX, newY, 'O', true);
 		//club starts at right side of Ogre
-		Club club = new Club(newX-1, newY,MoveClub);
+		Club club = new Club(newX-1, newY,moveClub);
 		this.setWeapon(club);
 		stunned = false;
 		stunCount = 0;
@@ -79,7 +79,7 @@ public class Ogre extends Character {
 	/**
 	 * Set the value of this Ogre stunned.
 	 * 
-	 * @param show the new value of stunned
+	 * @param stunned the new value of stunned
 	 */
 	public void setStunned(boolean stunned) {
 		if(this.stunned != stunned) {
@@ -92,7 +92,7 @@ public class Ogre extends Character {
 	/**
 	 * Set the value of this Ogre stunCount.
 	 * 
-	 * @param show the new value of stunCount
+	 * @param stunCount the new value of stunCount
 	 */
 	public void setStunCount(int stunCount) {
 		this.stunCount = stunCount;

@@ -4,7 +4,7 @@ package cli;
  * This class contains all the information regarding a {@link Game} status
  * that will be displayed in a user friendly way.
  * 
- * @author Jo„o Vieira
+ * @author Jo√£o Vieira
  * @author Susana Lima
  * 
  * @see Game

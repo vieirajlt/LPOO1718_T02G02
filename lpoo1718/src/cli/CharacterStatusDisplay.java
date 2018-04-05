@@ -5,7 +5,7 @@ package cli;
  * This class contains  the information regarding a {@link Character} input status 
  * that will be displayed in a user friendly way.
  * 
- * @author Jo„o Vieira
+ * @author Jo√£o Vieira
  * @author Susana Lima
  * 
  * @see Character

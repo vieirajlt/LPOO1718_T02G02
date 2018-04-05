@@ -19,8 +19,8 @@ public class TestOgre extends Ogre{
 	 * Creates a TestOgre in preferred x and y values TestOgre starts with.
 	 * This TestOgre can be allowed(or not) to move its {@link Weapon}.
 	 * 
-	 * @param x the location coordinate
-	 * @param y the location coordinate
+	 * @param newX the location coordinate
+	 * @param newY the location coordinate
 	 * @param moveClub the flag indicating Weapon movement
 	 */
 	public TestOgre(int newX, int newY, boolean moveClub) {
