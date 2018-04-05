@@ -106,7 +106,8 @@ public class GraphicPanel extends JPanel{
 				x = 0;
 				break;
 			default:
-				paintChar(g, x, y, map.charAt(i));
+				if(!paintObjectChar(g, x, y, map.charAt(i)))
+					paintCharacterChar(g, x, y, map.charAt(i));
 				break;
 			}
 			if(!isNewLine)
@@ -114,7 +115,7 @@ public class GraphicPanel extends JPanel{
 		}
 	}
 
-	private void paintChar(Graphics g, int x, int y, char symbol) {
+	private boolean paintObjectChar(Graphics g, int x, int y, char symbol) {
 		switch(symbol)
 		{
 		case WALL:
@@ -132,9 +133,21 @@ public class GraphicPanel extends JPanel{
 		case KEYCLUB:
 			g.drawImage(keyClub, x, y, null);
 			break;
+		case LEVER:
+			g.drawImage(key, x, y, null);
+			break;
 		case EMPTY:
 			g.drawImage(floor, x, y, null);
 			break;
+		default:
+			return false;
+		}
+		return true;
+	}
+
+	private boolean paintCharacterChar(Graphics g, int x, int y, char symbol) {
+		switch(symbol)
+		{
 		case GUARD:
 			g.drawImage(guard, x, y, null);
 			break;
@@ -150,16 +163,16 @@ public class GraphicPanel extends JPanel{
 		case KEYHERO:
 			g.drawImage(keyHero, x, y, null);
 			break;
-		case LEVER:
-			g.drawImage(key, x, y, null);
-			break;
 		case OGRE:
 			g.drawImage(ogre, x, y, null);
 			break;
 		case STUNNEDOGRE:
 			g.drawImage(stunnedOgre, x, y, null);
 			break;
+		default:
+			return false;
 		}
-
+		return true;
 	}
+
 }

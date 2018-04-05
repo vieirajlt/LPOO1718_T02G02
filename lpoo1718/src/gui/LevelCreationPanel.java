@@ -168,23 +168,16 @@ public class LevelCreationPanel extends JPanel {
 	 * 
 	 */
 	private void initializeCreationBtns() {
-		/********BTN*CREATION********************************************************************************/
 
-		btnAddWall = new JButton("Add wall");
-		btnAddWall.setEnabled(false);
-		btnAddWall.setBounds(350, 100, 150, 23);
-		this.add(btnAddWall);
+		initializeObjectsCreationBtns();
 
-		btnAddDoor = new JButton("Add door");
-		btnAddDoor.setEnabled(false);
-		btnAddDoor.setBounds(350, 135, 150, 23);
-		this.add(btnAddDoor);
+		initializeCharactersCreationBtns();
+	}
 
-		btnAddKey = new JButton("Add key");
-		btnAddKey.setEnabled(false);
-		btnAddKey.setBounds(350, 170, 150, 23);
-		this.add(btnAddKey);
-
+	/**
+	 * 
+	 */
+	private void initializeCharactersCreationBtns() {
 		btnAddHero = new JButton("Add Hero");
 		btnAddHero.setEnabled(false);
 		btnAddHero.setBounds(350, 205, 150, 23);
@@ -199,6 +192,26 @@ public class LevelCreationPanel extends JPanel {
 		btnAddOgre.setEnabled(false);
 		btnAddOgre.setBounds(350, 275, 150, 23);
 		this.add(btnAddOgre);
+	}
+
+	/**
+	 * 
+	 */
+	private void initializeObjectsCreationBtns() {
+		btnAddWall = new JButton("Add wall");
+		btnAddWall.setEnabled(false);
+		btnAddWall.setBounds(350, 100, 150, 23);
+		this.add(btnAddWall);
+
+		btnAddDoor = new JButton("Add door");
+		btnAddDoor.setEnabled(false);
+		btnAddDoor.setBounds(350, 135, 150, 23);
+		this.add(btnAddDoor);
+
+		btnAddKey = new JButton("Add key");
+		btnAddKey.setEnabled(false);
+		btnAddKey.setBounds(350, 170, 150, 23);
+		this.add(btnAddKey);
 	}
 
 	/**
@@ -280,26 +293,47 @@ public class LevelCreationPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				int x = e.getX()/20;
 				int y = e.getY()/20;
-				// 1- esquerdo, 3- direito
+				
 				if (e.getButton() == MouseEvent.BUTTON1) //used to draw an image
 				{
 					if (!map.checkCorners(x,y) && 
 							map.verifyMapPosition(x,y, mapCreationPanel.getNewChar()))
 						map.setMapPosition(x,y, mapCreationPanel.getNewChar());
 				}
-				else
+				else if( e.getButton() == MouseEvent.BUTTON3) //used to erase an image
 				{
-					if( e.getButton() == MouseEvent.BUTTON3) //used to erase an image
-					{
-						mapCreationPanel.setNewChar(map.getMapPosition(x, y));
-						map.setMapPosition(x, y, mapCreationPanel.getOriginalChar(x, y));
-					}
-
+					mapCreationPanel.setNewChar(map.getMapPosition(x, y));
+					map.setMapPosition(x, y, mapCreationPanel.getOriginalChar(x, y));
 				}
+				
 				mapCreationPanel.setMap(map.toString());
 				mapCreationPanel.repaint();
 
-				//only one hero
+				checkHeroExistance();
+
+				checkKeyExistance();
+				
+				checkValidCreatedMap();
+			}
+
+			/**
+			 * 
+			 */
+			private void checkValidCreatedMap() {
+				if(map.validateMapScheme()) {
+					btnPlayCreatedLvl.setEnabled(true);
+					btnSaveLevel.setEnabled(true);
+				}
+				else {
+					btnPlayCreatedLvl.setEnabled(false);
+					btnSaveLevel.setEnabled(false);
+				}
+			}
+
+			/**
+			 * 
+			 */
+			private void checkHeroExistance() {
 				if (map.searchHero())
 				{
 					btnAddHero.setEnabled(false);
@@ -312,8 +346,12 @@ public class LevelCreationPanel extends JPanel {
 					btnAddHero.setEnabled(true);
 					btnAddHeroWeapon.setEnabled(true);
 				}
+			}
 
-				//only one key
+			/**
+			 * 
+			 */
+			private void checkKeyExistance() {
 				if (map.searchKey())
 				{
 					btnAddKey.setEnabled(false);
@@ -322,16 +360,6 @@ public class LevelCreationPanel extends JPanel {
 				}
 				else
 					btnAddKey.setEnabled(true);
-
-				//only lets the player play the created level if it is a valid one
-				if(map.validateMapScheme()) {
-					btnPlayCreatedLvl.setEnabled(true);
-					btnSaveLevel.setEnabled(true);
-				}
-				else {
-					btnPlayCreatedLvl.setEnabled(false);
-					btnSaveLevel.setEnabled(false);
-				}
 			}
 		});
 	}

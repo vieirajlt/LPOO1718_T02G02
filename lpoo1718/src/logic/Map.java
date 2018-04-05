@@ -262,34 +262,50 @@ public class Map implements Serializable {
 		{
 			for (int j= 0;j < map[i].length; j++ )
 			{
-				switch(map[i][j])
-				{
-				case HERO :
-					characters.get(0).setPosition(j, i);
-					break;
-				case DOOR:
-					doors.add(new Door(j,i));
-					break;
-				case LEVER:
-					unlockers.add(new Unlocker(j,i,isLever));
-					break;
-				case GUARD:
-					if(movableChar)
-						characters.add(new Rookie(j,i));
-					else
-						characters.add(new TestRookie(j,i));
-					break;
-				case OGRE:
-					if(movableChar)
-						ogres.add(new Ogre(j,i,movableWeapon));
-					else
-						ogres.add(new TestOgre(j,i,movableWeapon));
-					placeClub(ogres.getLast(), newMap);
-					break;
-				default:
-					break;
-				}
+				initializeMapComponents(newMap, movableChar, movableWeapon, isLever, i, j);
 			}
+		}
+	}
+
+	/**
+	 * Initializes the objects/characters specified on newMap[y][x] accordingly to the other 
+	 * parameters, setting this Map to accordingly.
+	 * 
+	 * @param newMap the reference array for map creation
+	 * @param movableChar the flag for non-Hero {@link Character} ability to move
+	 * @param movableWeapon the flag for non-Hero {@link Character} ability to move their {@link Weapon}
+	 * @param isLever the flag for {@link logic.Unlocker} indication
+	 * @param x position on this Map map[]
+	 * @param y position on this Map map
+	 */
+	private void initializeMapComponents(char[][] newMap, boolean movableChar, boolean movableWeapon, boolean isLever,
+			int y, int x) {
+		switch(map[y][x])
+		{
+		case HERO :
+			characters.get(0).setPosition(x, y);
+			break;
+		case DOOR:
+			doors.add(new Door(x,y));
+			break;
+		case LEVER:
+			unlockers.add(new Unlocker(x,y,isLever));
+			break;
+		case GUARD:
+			if(movableChar)
+				characters.add(new Rookie(x,y));
+			else
+				characters.add(new TestRookie(x,y));
+			break;
+		case OGRE:
+			if(movableChar)
+				ogres.add(new Ogre(x,y,movableWeapon));
+			else
+				ogres.add(new TestOgre(x,y,movableWeapon));
+			placeClub(ogres.getLast(), newMap);
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -332,6 +348,34 @@ public class Map implements Serializable {
 	 */
 	private void initializeLvlOneMapScheme() {
 		setDefaultMap();
+		initializeLvlOneMapWalls();
+		//define door position DOOR
+		initializeLvlOneMapDoors();
+		//define hero position HERO
+		map[1][1] = HERO;
+		//define guard position GUARD
+		map[1][8] = GUARD;
+		//define lever position LEVER
+		map[8][7] = LEVER;
+	}
+
+	/**
+	 * Initializes this Map map doors accordingly with predefined LVL1.
+	 */
+	private void initializeLvlOneMapDoors() {
+		map[1][4] = DOOR;
+		map[3][2] = DOOR;
+		map[3][4] = DOOR;
+		map[5][0] = DOOR;
+		map[6][0] = DOOR;
+		map[8][2] = DOOR;
+		map[8][4] = DOOR;
+	}
+
+	/**
+	 * Initializes this Map map walls accordingly with predefined LVL1.
+	 */
+	private void initializeLvlOneMapWalls() {
 		map[1][0] = WALL;
 		map[1][6] = WALL;
 		map[2][1] = WALL;
@@ -352,20 +396,6 @@ public class Map implements Serializable {
 		map[7][6] = WALL;
 		map[7][7] = WALL;
 		map[8][6] = WALL;
-		//define door position DOOR
-		map[1][4] = DOOR;
-		map[3][2] = DOOR;
-		map[3][4] = DOOR;
-		map[5][0] = DOOR;
-		map[6][0] = DOOR;
-		map[8][2] = DOOR;
-		map[8][4] = DOOR;
-		//define hero position HERO
-		map[1][1] = HERO;
-		//define guard position GUARD
-		map[1][8] = GUARD;
-		//define lever position LEVER
-		map[8][7] = LEVER;
 	}
 
 	/**
@@ -667,23 +697,43 @@ public class Map implements Serializable {
 		guardPersonality = gp;
 		
 		if(!move) {
-			if(gp == GuardPersonality.SUSPICIOUS) {
-				characters.set(index, new TestSuspicious(x,y));
-			} else if(gp == GuardPersonality.DRUNKEN) {
-				characters.set(index, new TestDrunken(x,y));
-			} else if(gp == GuardPersonality.ROOKIE) {
-				characters.set(index, new TestRookie(x,y));
-			} 
+			setImmovableGuardType(gp, x, y, index); 
 		} else {
-			if(gp == GuardPersonality.SUSPICIOUS) {
-				characters.set(index, new Suspicious(x,y));
-			} else if(gp == GuardPersonality.DRUNKEN) {
-				characters.set(index, new Drunken(x,y));
-			} else if(gp == GuardPersonality.ROOKIE) {
-				characters.set(index, new Rookie(x,y));
-			} 
+			setMovableGuardType(gp, x, y, index); 
 		}
 		
+	}
+
+	/**
+	 * @param gp
+	 * @param x
+	 * @param y
+	 * @param index
+	 */
+	private void setMovableGuardType(GuardPersonality gp, int x, int y, int index) {
+		if(gp == GuardPersonality.SUSPICIOUS) {
+			characters.set(index, new Suspicious(x,y));
+		} else if(gp == GuardPersonality.DRUNKEN) {
+			characters.set(index, new Drunken(x,y));
+		} else if(gp == GuardPersonality.ROOKIE) {
+			characters.set(index, new Rookie(x,y));
+		}
+	}
+
+	/**
+	 * @param gp
+	 * @param x
+	 * @param y
+	 * @param index
+	 */
+	private void setImmovableGuardType(GuardPersonality gp, int x, int y, int index) {
+		if(gp == GuardPersonality.SUSPICIOUS) {
+			characters.set(index, new TestSuspicious(x,y));
+		} else if(gp == GuardPersonality.DRUNKEN) {
+			characters.set(index, new TestDrunken(x,y));
+		} else if(gp == GuardPersonality.ROOKIE) {
+			characters.set(index, new TestRookie(x,y));
+		}
 	}
 
 	/**
