@@ -108,7 +108,7 @@ public class MainWindow implements KeyListener, MouseListener {
 			public void actionPerformed(ActionEvent arg0) {
 				configPanel.setVisible(false);
 				lvlCreationPanel.setVisible(true);
-				lvlCreationPanel.changeLevelCreationStatus(false);
+
 			}
 		});
 	}

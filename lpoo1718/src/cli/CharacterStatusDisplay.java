@@ -2,7 +2,7 @@ package cli;
 
 
 /**
- * This class contains  the information regarding a Character input status 
+ * This class contains  the information regarding a {@link Character} input status 
  * that will be displayed in a user friendly way.
  * 
  * @author João Vieira

@@ -1,7 +1,7 @@
 package cli;
 
 /**
- * This class contains all the information regarding the game status
+ * This class contains all the information regarding a {@link Game} status
  * that will be displayed in a user friendly way.
  * 
  * @author João Vieira
@@ -12,7 +12,7 @@ package cli;
 public class GameStatusDisplay {
 
 	/**
-	 * Displays the information regarding a guard being stepped on by a hero.
+	 * Displays the information regarding a {@link Guard} being stepped on by an {@link Hero}.
 	 * 
 	 * @param show parameter that specifies if the information will be displayed or not
 	 */
@@ -23,7 +23,7 @@ public class GameStatusDisplay {
 	}
 
 	/**
-	 * Displays the informations regarding a hero being captured.
+	 * Displays the informations regarding an {@link Hero} being captured.
 	 * 
 	 * @param show parameter that specifies if the information will be displayed or not
 	 */
@@ -34,7 +34,7 @@ public class GameStatusDisplay {
 	}
 
 	/**
-	 * Displays the information regarding a hero being fatally injured.
+	 * Displays the information regarding an {@link Hero} being fatally injured.
 	 * 
 	 * @param show parameter that specifies if the information will be displayed or not
 	 */
@@ -45,7 +45,7 @@ public class GameStatusDisplay {
 	}
 
 	/**
-	 * Displays the information when the hero transitioning from the game's first to second level.
+	 * Displays the information when the {@link Hero} transitioning from the game's first to second level.
 	 * 
 	 * @param show parameter that specifies if the information will be displayed or not
 	 */
@@ -56,7 +56,7 @@ public class GameStatusDisplay {
 	}
 
 	/**
-	 * Displays the information when the hero wins the game.
+	 * Displays the information when the {@link Hero} wins the game.
 	 * 
 	 * @param show parameter that specifies if the information will be displayed or not
 	 */

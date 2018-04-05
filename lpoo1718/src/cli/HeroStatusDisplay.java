@@ -2,7 +2,7 @@ package cli;
 
 
 /**
- * This class contains all the information regarding an hero status 
+ * This class contains all the information regarding an {@link Hero} status 
  * that will be displayed in a user friendly way.
  * 
  * @author Jo�o Vieira
@@ -13,7 +13,7 @@ package cli;
 public class HeroStatusDisplay {
 
 	/**
-	 * Displays the information when a hero collides with a wall.
+	 * Displays the information when an {@link Hero} collides with a wall.
 	 * 
 	 * @param show parameter that specifies if the information will be displayed or not
 	 */
@@ -24,7 +24,7 @@ public class HeroStatusDisplay {
 	}
 
 	/**
-	 * Displays the information when a hero acquires an unlocker.
+	 * Displays the information when an {@link Hero} acquires an unlocker.
 	 * 
 	 * @param show parameter that specifies if the information will be displayed or not
 	 */
@@ -38,7 +38,7 @@ public class HeroStatusDisplay {
 	//TODO
 	
 	/**
-	 * Displays the information when a hero reaches a lever.
+	 * Displays the information when an {@link Hero} reaches a lever.
 	 * 
 	 * @param show parameter that specifies if the information will be displayed or not
 	 */
@@ -49,7 +49,7 @@ public class HeroStatusDisplay {
 	}
 
 	/**
-	 * Displays the information when a hero opens a door.
+	 * Displays the information when an {@link Hero} opens a door.
 	 * 
 	 * @param show parameter that specifies if the information will be displayed or not
 	 */

@@ -4,7 +4,7 @@ import logic.GuardPersonality;
 
 /**
  * Exception thrown when an width or height is passed 
- * to a {@link logic.GameStartSet#GameStartSet(int oc, GuardPersonality gp) GameStartSet} constructor.
+ * to a {@link logic.GameStartSet#GameStartSet(int w, int h) GameStartSet} constructor.
  * 
  * @author João Vieira
  * @author Susana Lima

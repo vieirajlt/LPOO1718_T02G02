@@ -13,23 +13,51 @@ import logic.GuardPersonality;
 import java.awt.Color;
 import java.text.Format;
 
+/**
+ * This class represents a specific type of {@link JPanel}.
+ * This specific type is used for the configuration of some elements of the program.
+ * 
+ * @author João Vieira
+ * @author Susana Lima
+ *
+ */
 public class ConfigurationPanel extends JPanel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 6441099548808000881L;
+	/**
+	 * ogresNumberTxtField is a JFormattedTextField that stores the number of {@link Ogre} inserted by the user.
+	 * Set to 2 by default.
+	 */
 	private JFormattedTextField ogresNumberTxtField;
+	/**
+	 * lvlSelectionTextFiels is a JFormattedTextField that stores the level number inserted by the user.
+	 * Set to 1 by default.
+	 */
 	private JFormattedTextField lvlSelectionTextField;
+	/**
+	 * guardTypeComboBox is a JComboBox that stores the information regarding a {@link GuardPersonality} selected by the user.
+	 * Set to {@link GuardPersonality#DRUNKEN} by default.
+	 */
 	private JComboBox<GuardPersonality> guardTypeComboBox;
 
 	
-	//Interpanel Buttons
+	/********************Interpanel Buttons***********************/
+	/**
+	 * btnDone is a JButton used between two panels that allows the user to return to the previous panel.
+	 */
 	private JButton btnDone;
+	
+	/**
+	 * btnOpenLevelCreationPanel is a JButton used between two panels that allows the user to go to the next panel.
+	 */
 	private JButton btnOpenLevelCreationPanel;
 	
 	/**
-	 * Create the panel.
+	 * Create and initialize this ConfiguartionPanel.
+	 * This ConfiguarationPanel is set visible.
 	 */
 	public ConfigurationPanel() {
 		super();
@@ -41,6 +69,9 @@ public class ConfigurationPanel extends JPanel {
 		initialize();
 	}
 	
+	/**
+	 * Initializes this ConfigurationPanel components.
+	 */
 	private void initialize() {
 
 		initializeLabels();
@@ -54,7 +85,7 @@ public class ConfigurationPanel extends JPanel {
 	}
 
 	/**
-	 * 
+	 * Initialize this ConfigurationPanel btnDone and btnOpenLevelCreationPanel.
 	 */
 	private void initializeBtns() {
 		/********BTN*DONE***********************************************************************************/
@@ -71,7 +102,7 @@ public class ConfigurationPanel extends JPanel {
 	}
 
 	/**
-	 * 
+	 * Initialize this ConfigurationPanel ogresNumberTxtField and lvlSelectionTextField.
 	 */
 	private void initializeTextFields() {
 		NumberFormat ogreCountFormat = NumberFormat.getIntegerInstance();
@@ -91,7 +122,7 @@ public class ConfigurationPanel extends JPanel {
 	}
 
 	/**
-	 * 
+	 * Initialize this ConfiguartionPanel guardTypeComboBox.
 	 */
 	private void initializeGuardTypeComboBox() {
 		guardTypeComboBox = new JComboBox<GuardPersonality>();
@@ -101,7 +132,7 @@ public class ConfigurationPanel extends JPanel {
 	}
 
 	/**
-	 * 
+	 *Create and initialize lblOgresCount, lblGuardPersonality and lblLevelSelection labels.
 	 */
 	private void initializeLabels() {
 		/********LABEL*OGRECOUNT****************************************************************************/
@@ -123,27 +154,52 @@ public class ConfigurationPanel extends JPanel {
 		add(lblLevelSelection);
 	}
 
-	//GET
+	/*******************GET FUNCTIONS*******************/
 	
+	/**
+	 * Retrieve this ConfigurationPanel btnDone value.
+	 * 
+	 * @return the value of this ConfigurationPanel btnDone
+	 */
 	public JButton getBtnDone() {
 		return btnDone;
 	}
 	
+	/**
+	 * Retrieve the number of ogres inserted in this ConfigurationPanel ogresNumberTxtField.
+	 * 
+	 * @return the number of ogres inserted in this ConfigurationPanel ogresNumberTxtField
+	 */
 	public int getOgresNumber() {
 		return Integer.parseInt(ogresNumberTxtField.getText());
 	}
 
+	/**
+	 * Retrieve the type of guard selected in this ConfigurationPanel guardTypeComboBox.
+	 * 
+	 * @return the type of guard selected in this ConfigurationPanel guardTypeComboBox
+	 */
 	public GuardPersonality getGuardType() {
 		return (GuardPersonality) guardTypeComboBox.getSelectedItem();
 	}
 	
+	/**
+	 * Retrieve this ConfigurationPanel btnOpenLevelCreationPanel value.
+	 * 
+	 * @return the value of this ConfigurationPanel btnOpenLevelCreationPanel
+	 */
 	public JButton getBtnOpenLevelCreationPanel() {
 		return btnOpenLevelCreationPanel;
 	}
 	
+	
+	/**
+	 * Retrieve the level's number inserted in this ConfigurationPanel lvlSelectionTextField.
+	 * 
+	 * @return the level's number inserted in this ConfigurationPanel lvlSelectionTextField
+	 */
 	public int getLvlSelected() {
 		return Integer.parseInt(lvlSelectionTextField.getText());
 	}
 	
-	//SET
 }
