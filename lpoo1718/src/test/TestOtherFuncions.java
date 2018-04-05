@@ -1,9 +1,9 @@
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import logic.Character;
+
 import logic.Guard;
 import logic.Map;
 import logic.Ogre;

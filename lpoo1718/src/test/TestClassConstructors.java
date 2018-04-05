@@ -25,21 +25,6 @@ import logic.TestOgre;
 
 public class TestClassConstructors {
 
-	/*@Test
-	//1
-	public void testCharacterConstructor() {
-		Character t = new Character(1, 2, 'T', true);
-		assertEquals(t.getX(),1);
-		assertEquals(t.getY(),2);
-		assertEquals(t.getSymbol(),'T');
-		assertEquals(t.hasWeapon(),true);
-		assertEquals(t.isShowCli(),true);
-		t.setPosition(2, 3);
-		assertEquals(t.getX(),2);
-		assertEquals(t.getY(),3);
-		
-	}*/
-
 	@Test
 	//2
 	public void testClubConstructor() {

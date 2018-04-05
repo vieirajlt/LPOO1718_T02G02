@@ -80,7 +80,6 @@ public class GraphicPanel extends JPanel{
 	public GraphicPanel() {
 		super();
 		try {
-			//URL resource = getClass().getResource(name)
 			wall = ImageIO.read(new File("./images/wall.png"));
 			openDoor = ImageIO.read(new File("./images/opendoor.png"));
 			closeDoor = ImageIO.read(new File("./images/closedoor.png"));
@@ -101,8 +100,6 @@ public class GraphicPanel extends JPanel{
 		{
 			e.printStackTrace();
 		}
-		/*File directory = new File("./");
-		System.out.println(directory.getAbsolutePath());*/
 		map = "";
 	}
 	

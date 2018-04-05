@@ -408,7 +408,6 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 		newLevel.initializeMap(map.getMapScheme(), true, true, false);
 		game.addLevel(newLevel);
 		game.setToLastLevel();
-		//game.getCurrentMap().initializeMap(map.getMapScheme());
 		gameMapPanel.setBounds(35, 152, map.getMapWidth()*GraphicPanel.blockSize, map.getMapHeight()*GraphicPanel.blockSize);
 		gameMapPanel.setMap(game.toString());
 		gameMapPanel.repaint();

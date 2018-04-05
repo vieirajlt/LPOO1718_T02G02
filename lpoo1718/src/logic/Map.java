@@ -6,6 +6,16 @@ import java.util.LinkedList;
 
 import cli.MapStatusDisplay;
 
+/**
+ * This class is the text based storage for the in game characters/objects
+ * locations on the current Game being played. It is here that collisions
+ * are detected and movement is allowed or not.
+ * 
+ * @author João Vieira
+ * @author Susana Lima
+ * @see Game
+ * 
+ */
 public class Map implements Serializable {
 
 	/**
@@ -101,9 +111,6 @@ public class Map implements Serializable {
 	 * display is the user friendly information representing this Map status.
 	 */
 	static private MapStatusDisplay display = new MapStatusDisplay();
-	
-	//TODO
-	private ArrayList<String> log;
 
 	/*******************CONSTRUCTORS*******************/
 
@@ -121,7 +128,6 @@ public class Map implements Serializable {
 		showCli = true;
 		ogreNumber = DEFAULT_OGRECOUNT;
 		guardPersonality = DEFAULT_GUARDPERSONALITY;
-		log = null;
 	}
 	
 	/**
@@ -460,7 +466,7 @@ public class Map implements Serializable {
 		ogres.clear();
 		//all the ogres start at the same position
 		for (int i = 0; i < ogreNumber; i++)
-			ogres.add(new Ogre(4,1));
+			ogres.add(new Ogre(4,1,true));
 		doors.clear();
 		doors.add(new Door(0,1));
 		unlockers.clear();
@@ -672,7 +678,8 @@ public class Map implements Serializable {
 	}
 	
 	/**
-	 * Set the value of this Map Guard.
+	  * Set the value of this Map Guard as a Guard specified on gp,
+	 * with initial positioning on this Map map[y][x].
 	 * 
 	 * @param gp the new value of this map guardPersonality
 	 * @param move the flag allowing(or not) the Guard to move
@@ -704,12 +711,6 @@ public class Map implements Serializable {
 		
 	}
 
-	/**
-	 * @param gp
-	 * @param x
-	 * @param y
-	 * @param index
-	 */
 	private void setMovableGuardType(GuardPersonality gp, int x, int y, int index) {
 		if(gp == GuardPersonality.SUSPICIOUS) {
 			characters.set(index, new Suspicious(x,y));
@@ -720,12 +721,6 @@ public class Map implements Serializable {
 		}
 	}
 
-	/**
-	 * @param gp
-	 * @param x
-	 * @param y
-	 * @param index
-	 */
 	private void setImmovableGuardType(GuardPersonality gp, int x, int y, int index) {
 		if(gp == GuardPersonality.SUSPICIOUS) {
 			characters.set(index, new TestSuspicious(x,y));
