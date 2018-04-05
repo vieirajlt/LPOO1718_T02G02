@@ -288,22 +288,32 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 	 * @param btnRight
 	 */
 	private void initializeMovementBtnsListeners() {
-		btnUp.addActionListener(new ActionListener() {
+		initializeUpBtnListener();
+
+		initializeDownBtnListener();
+
+		initializeLeftBtnListener();
+
+		initializeRightBtnListener();
+	}
+
+	/**
+	 * 
+	 */
+	private void initializeRightBtnListener() {
+		btnRight.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				game.updateGame('u');
+				game.updateGame('r');
 				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
 				btnSaveGame.setEnabled(true);
 			}
 		});
+	}
 
-		btnDown.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				game.updateGame('d');
-				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
-				btnSaveGame.setEnabled(true);
-			}
-		});
-
+	/**
+	 * 
+	 */
+	private void initializeLeftBtnListener() {
 		btnLeft.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				game.updateGame('l');
@@ -311,10 +321,28 @@ public class GameplayPanel extends JPanel implements KeyListener, MouseListener 
 				btnSaveGame.setEnabled(true);
 			}
 		});
+	}
 
-		btnRight.addActionListener(new ActionListener() {
+	/**
+	 * 
+	 */
+	private void initializeDownBtnListener() {
+		btnDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				game.updateGame('r');
+				game.updateGame('d');
+				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
+				btnSaveGame.setEnabled(true);
+			}
+		});
+	}
+
+	/**
+	 * 
+	 */
+	private void initializeUpBtnListener() {
+		btnUp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				game.updateGame('u');
 				updateGuiGameSettings(gameMapPanel, gameStatusLabel);
 				btnSaveGame.setEnabled(true);
 			}

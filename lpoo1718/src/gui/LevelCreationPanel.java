@@ -18,6 +18,81 @@ import logic.Map;
 
 public class LevelCreationPanel extends JPanel {
 
+	public class MouseCreationPanelMouseAdapter extends MouseAdapter {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			int x = e.getX()/20;
+			int y = e.getY()/20;
+			
+			if (e.getButton() == MouseEvent.BUTTON1) //used to draw an image
+			{
+				if (!map.checkCorners(x,y) && 
+						map.verifyMapPosition(x,y, mapCreationPanel.getNewChar()))
+					map.setMapPosition(x,y, mapCreationPanel.getNewChar());
+			}
+			else if( e.getButton() == MouseEvent.BUTTON3) //used to erase an image
+			{
+				mapCreationPanel.setNewChar(map.getMapPosition(x, y));
+				map.setMapPosition(x, y, mapCreationPanel.getOriginalChar(x, y));
+			}
+			
+			mapCreationPanel.setMap(map.toString());
+			mapCreationPanel.repaint();
+
+			checkHeroExistance();
+
+			checkKeyExistance();
+			
+			checkValidCreatedMap();
+		}
+
+		/**
+		 * 
+		 */
+		private void checkValidCreatedMap() {
+			if(map.validateMapScheme()) {
+				btnPlayCreatedLvl.setEnabled(true);
+				btnSaveLevel.setEnabled(true);
+			}
+			else {
+				btnPlayCreatedLvl.setEnabled(false);
+				btnSaveLevel.setEnabled(false);
+			}
+		}
+
+		/**
+		 * 
+		 */
+		private void checkHeroExistance() {
+			if (map.searchHero())
+			{
+				btnAddHero.setEnabled(false);
+				btnAddHeroWeapon.setEnabled(false);
+				if (mapCreationPanel.isNewCharHero())
+					mapCreationPanel.setNewCharEmpty();
+			}
+			else
+			{
+				btnAddHero.setEnabled(true);
+				btnAddHeroWeapon.setEnabled(true);
+			}
+		}
+
+		/**
+		 * 
+		 */
+		private void checkKeyExistance() {
+			if (map.searchKey())
+			{
+				btnAddKey.setEnabled(false);
+				if (mapCreationPanel.isNewCharKey())
+					mapCreationPanel.setNewCharEmpty();
+			}
+			else
+				btnAddKey.setEnabled(true);
+		}
+	}
+
 	/**
 	 * 
 	 */
@@ -288,80 +363,7 @@ public class LevelCreationPanel extends JPanel {
 	 * 
 	 */
 	private void initializeMapCreationPanelListener() {
-		mapCreationPanel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int x = e.getX()/20;
-				int y = e.getY()/20;
-				
-				if (e.getButton() == MouseEvent.BUTTON1) //used to draw an image
-				{
-					if (!map.checkCorners(x,y) && 
-							map.verifyMapPosition(x,y, mapCreationPanel.getNewChar()))
-						map.setMapPosition(x,y, mapCreationPanel.getNewChar());
-				}
-				else if( e.getButton() == MouseEvent.BUTTON3) //used to erase an image
-				{
-					mapCreationPanel.setNewChar(map.getMapPosition(x, y));
-					map.setMapPosition(x, y, mapCreationPanel.getOriginalChar(x, y));
-				}
-				
-				mapCreationPanel.setMap(map.toString());
-				mapCreationPanel.repaint();
-
-				checkHeroExistance();
-
-				checkKeyExistance();
-				
-				checkValidCreatedMap();
-			}
-
-			/**
-			 * 
-			 */
-			private void checkValidCreatedMap() {
-				if(map.validateMapScheme()) {
-					btnPlayCreatedLvl.setEnabled(true);
-					btnSaveLevel.setEnabled(true);
-				}
-				else {
-					btnPlayCreatedLvl.setEnabled(false);
-					btnSaveLevel.setEnabled(false);
-				}
-			}
-
-			/**
-			 * 
-			 */
-			private void checkHeroExistance() {
-				if (map.searchHero())
-				{
-					btnAddHero.setEnabled(false);
-					btnAddHeroWeapon.setEnabled(false);
-					if (mapCreationPanel.isNewCharHero())
-						mapCreationPanel.setNewCharEmpty();
-				}
-				else
-				{
-					btnAddHero.setEnabled(true);
-					btnAddHeroWeapon.setEnabled(true);
-				}
-			}
-
-			/**
-			 * 
-			 */
-			private void checkKeyExistance() {
-				if (map.searchKey())
-				{
-					btnAddKey.setEnabled(false);
-					if (mapCreationPanel.isNewCharKey())
-						mapCreationPanel.setNewCharEmpty();
-				}
-				else
-					btnAddKey.setEnabled(true);
-			}
-		});
+		mapCreationPanel.addMouseListener(new MouseCreationPanelMouseAdapter());
 	}
 
 	/**
@@ -391,24 +393,15 @@ public class LevelCreationPanel extends JPanel {
 	 * 
 	 */
 	private void initializeCreationBtnListeners() {
-		btnAddWall.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				mapCreationPanel.setNewCharToWall();
-			}
-		});
+		initializeCreationObjectsBtnListeners();
 
-		btnAddDoor.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				mapCreationPanel.setNewCharToDoor();
-			}
-		});
+		initializeCreationCharactersBtnListeners();
+	}
 
-		btnAddKey.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				mapCreationPanel.setNewCharToKey();
-			}
-		});
-
+	/**
+	 * 
+	 */
+	private void initializeCreationCharactersBtnListeners() {
 		btnAddHero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mapCreationPanel.setNewCharToHero();
@@ -425,6 +418,29 @@ public class LevelCreationPanel extends JPanel {
 		btnAddOgre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				mapCreationPanel.setNewCharToOgre();
+			}
+		});
+	}
+
+	/**
+	 * 
+	 */
+	private void initializeCreationObjectsBtnListeners() {
+		btnAddWall.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				mapCreationPanel.setNewCharToWall();
+			}
+		});
+
+		btnAddDoor.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				mapCreationPanel.setNewCharToDoor();
+			}
+		});
+
+		btnAddKey.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				mapCreationPanel.setNewCharToKey();
 			}
 		});
 	}
