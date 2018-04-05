@@ -16,6 +16,14 @@ import exception.InvalidBoardSizeException;
 import logic.GameStartSet;
 import logic.Map;
 
+//TODO
+/**
+ * This class represents a specific type of {@link JPanel}.
+ *
+ * @author João Vieira
+ * @author Susana Lima
+ *
+ */
 public class LevelCreationPanel extends JPanel {
 
 	public class MouseCreationPanelMouseAdapter extends MouseAdapter {
@@ -47,7 +55,8 @@ public class LevelCreationPanel extends JPanel {
 		}
 
 		/**
-		 * 
+		 * Check if the current map scheme is valid or not.
+		 *The btnPlayCreatedLvl and btnSaveLevel buttons are enabled in case the map scheme is valid, disabled otherwise.
 		 */
 		private void checkValidCreatedMap() {
 			if(map.validateMapScheme()) {
@@ -61,7 +70,8 @@ public class LevelCreationPanel extends JPanel {
 		}
 
 		/**
-		 * 
+		 * Check if there exists an {@link Hero} in the current map scheme.
+		 * If so, the btnAddHero and btnAddHeroWeapon buttons are disabled, if not this buttons are enabled.
 		 */
 		private void checkHeroExistance() {
 			if (map.searchHero())
@@ -79,7 +89,8 @@ public class LevelCreationPanel extends JPanel {
 		}
 
 		/**
-		 * 
+		 * Check if there exists an {@link Unlocker} in the current map scheme.
+		 * If so, the btnAddKey button is disabled, if not this button is enabled.
 		 */
 		private void checkKeyExistance() {
 			if (map.searchKey())
@@ -182,7 +193,7 @@ public class LevelCreationPanel extends JPanel {
 	}
 
 	/**
-	 * 
+	 * Initialize this LevelCreationPanel btnCreateLevel.
 	 */
 	private void initializeCreateLevelBtn() {
 		/********BTN*CREATELEVEL*********************************************************************************/
@@ -193,7 +204,7 @@ public class LevelCreationPanel extends JPanel {
 	}
 
 	/**
-	 * 
+	 * Initialize this LevelCreationPanel btnReturn.
 	 */
 	private void initializeReturnBtn() {
 		/********BTN*RETURN*********************************************************************************/
@@ -204,7 +215,8 @@ public class LevelCreationPanel extends JPanel {
 	}
 
 	/**
-	 * 
+	 * Initialize this LevelCreationPanel btnRestart.
+	 * The button starts disabled.
 	 */
 	private void initializeRestartBtn() {
 		/********BTN*RESTART*********************************************************************************/
@@ -216,7 +228,8 @@ public class LevelCreationPanel extends JPanel {
 	}
 
 	/**
-	 * 
+	 * Initialize this LevelCreationPanel btnSaveLevel.
+	 * The button starts disabled.
 	 */
 	private void initializeSaveBtn() {
 		/********BTN*SAVE**********************************************************************************/
@@ -228,7 +241,8 @@ public class LevelCreationPanel extends JPanel {
 	}
 
 	/**
-	 * 
+	 * Initialize this LevelCreationPanel btnPlayCreatedLvl.
+	 * The button starts disabled.
 	 */
 	private void initializePlayBtn() {
 		/********BTN*PLAY**********************************************************************************/
@@ -250,7 +264,8 @@ public class LevelCreationPanel extends JPanel {
 	}
 
 	/**
-	 * 
+	 * Initialize this LevelCreationPanel btnAddHero, btnAddHeroWeapon and btnAddOgre.
+	 * The buttons start disabled.
 	 */
 	private void initializeCharactersCreationBtns() {
 		btnAddHero = new JButton("Add Hero");
@@ -270,7 +285,8 @@ public class LevelCreationPanel extends JPanel {
 	}
 
 	/**
-	 * 
+	 * Initialize this LevelCreationPanel btnAddWall, btnAddDoor and btnAddKey.
+	 * The buttons start disabled.
 	 */
 	private void initializeObjectsCreationBtns() {
 		btnAddWall = new JButton("Add wall");
@@ -315,8 +331,9 @@ public class LevelCreationPanel extends JPanel {
 		gameHeightTextField.setColumns(10);
 	}
 
+
 	/**
-	 * 
+	 *Create and initialize lblWidth, lblHeight and statusLabel labels.
 	 */
 	private void initializeLabels() {
 		/********LABEL*WIDTH********************************************************************************/
@@ -339,7 +356,7 @@ public class LevelCreationPanel extends JPanel {
 	}
 
 	/**
-	 * 
+	 * Initialize all this LevelCreation buttons listeners.
 	 */
 	private void initializeListeners() {
 		/********BTN*CREATION********************************************************************************/
@@ -367,7 +384,7 @@ public class LevelCreationPanel extends JPanel {
 	}
 
 	/**
-	 * 
+	 * Initialize this LevelCreationPanel btnSaveLevel listener.
 	 */
 	private void initializeSaveBtnListener() {
 		btnSaveLevel.addActionListener(new ActionListener() {
@@ -379,7 +396,7 @@ public class LevelCreationPanel extends JPanel {
 	}
 
 	/**
-	 * 
+	 * Initialize this LevelCreationPanel btnRestart listener.
 	 */
 	private void initializeRestarBtnListener() {
 		btnRestart.addActionListener(new ActionListener() {
@@ -390,7 +407,7 @@ public class LevelCreationPanel extends JPanel {
 	}
 
 	/**
-	 * 
+	 * Initializes all this LevelCreationPanel buttons listeners regarding a level creation.
 	 */
 	private void initializeCreationBtnListeners() {
 		initializeCreationObjectsBtnListeners();
@@ -399,7 +416,8 @@ public class LevelCreationPanel extends JPanel {
 	}
 
 	/**
-	 * 
+	 * Initialize this LevelCreationPanel btnAddHero, btnAddHeroWeapon and btnAddOgre listeners.
+	 * This LevelCreationMapPanel mapCreationPanel newChar is set to the char corresponding to the button.
 	 */
 	private void initializeCreationCharactersBtnListeners() {
 		btnAddHero.addActionListener(new ActionListener() {
@@ -423,7 +441,8 @@ public class LevelCreationPanel extends JPanel {
 	}
 
 	/**
-	 * 
+	 * Initialize this LevelCreationPanel btnAddWall, btnAddDoor and btnAddKey listeners.
+	 * This LevelCreationMapPanel mapCreationPanel newChar is set to the char corresponding to the button.
 	 */
 	private void initializeCreationObjectsBtnListeners() {
 		btnAddWall.addActionListener(new ActionListener() {
@@ -445,6 +464,10 @@ public class LevelCreationPanel extends JPanel {
 		});
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean setMapDimensions() {
 		try {
 			int width = Integer.parseInt(gameWidthTextField.getText());
@@ -466,7 +489,10 @@ public class LevelCreationPanel extends JPanel {
 
 
 
-
+	/**
+	 * 
+	 * @param status
+	 */
 	public void changeLevelCreationStatus(boolean status) {
 		mapCreationPanel.setVisible(status);
 		btnPlayCreatedLvl.setEnabled(false);
@@ -482,64 +508,133 @@ public class LevelCreationPanel extends JPanel {
 		btnAddOgre.setEnabled(status);
 	}
 
+	/**
+	 * 
+	 * @param map
+	 */
 	public void saveMap(logic.Map map) {
 		logic.Map newMap = new logic.Map(0);
 		newMap.initializeMap(map.getMapScheme(), true, true, false);
 		savedLevels.add(newMap);
 	}
 
-	//GET
+	/*******************GET FUNCTIONS*******************/
 
+	/**
+	 * Retrieve this LevelCreationPanel btnPlayCreatedLvl value.
+	 * 
+	 * @return the value of this LevelCreationPanel btnPlayCreatedLvl.
+	 */
 	public JButton getBtnPlayCreatedLvl() {
 		return btnPlayCreatedLvl;
 	}
 
+	/**
+	 * Retrieve this LevelCreationPanel btnRestart value.
+	 * 
+	 * @return the value of this LevelCreationPanel btnRestart.
+	 */
 	public JButton getBtnRestart() {
 		return btnRestart;
 	}
 
+	/**
+	 * Retrieve this LevelCreationPanel btnReturn value.
+	 * 
+	 * @return the value of this LevelCreationPanel btnReturn.
+	 */
 	public JButton getBtnReturn() {
 		return btnReturn;
 	}
 
+	/**
+	 * Retrieve this LevelCreationPanel btnCreateLevel value.
+	 * 
+	 * @return the value of this LevelCreationPanel btnCreateLevel.
+	 */
 	public JButton getBtnCreateLevel() {
 		return btnCreateLevel;
 	}
 
+	/**
+	 * Retrieve this LevelCreationPanel btnSaveLevel value.
+	 * 
+	 * @return the value of this LevelCreationPanel btnSaveLevel.
+	 */
 	public JButton getBtnSaveLevel() {
 		return btnSaveLevel;
 	}
 
+	/**
+	 * Retrieve this LevelCreationPanel map value.
+	 * 
+	 * @return the value of this LevelCreationPanel map.
+	 */
 	public Map getMap() {
 		return map;
 	}
 
+	/**
+	 * Retrieve this LevelCreationPanel gss value.
+	 * 
+	 * @return the value of this LevelCreationPanel gss.
+	 */
 	public GameStartSet getGss() {
 		return gss;
 	}
 
+	/**
+	 * Retrieve this LevelCreationPanel mapCreationPanel value.
+	 * 
+	 * @return the value of this LevelCreationPanel mapCreationPanel.
+	 */
 	public MapCreationPanel getMapCreationPanel() {
 		return mapCreationPanel;
 	}
 
+	/**
+	 * Retrieve this LevelCreationPanel statusLabel value.
+	 * 
+	 * @return the value of this LevelCreationPanel statusLabel.
+	 */
 	public JLabel getStatusLabel() {
 		return statusLabel;
 	}
 
+	/**
+	 * Retrieve this LevelCreationPanel savedLevels value.
+	 * 
+	 * @return the value of this LevelCreationPanel savedLevels.
+	 */
 	public ArrayList<Map> getSavedLevels() {
 		return savedLevels;
 	}
 
-	//SET
+	/*******************SET FUNCTIONS*******************/
 
+	/**
+	 * Set the value of this LevelCreationPanel gss.
+	 * 
+	 * @param gss this LevelCreationPanel new gss value
+	 */
 	public void setGss(GameStartSet gss) {
 		this.gss = gss;
 	}
 
+	/**
+	 * Set the value of this LevelCreationPanel mapCreationPanel.
+	 * 
+	 * @param mapCreationPanel this LevelCreationPanel new mapCreationPanel value
+	 */
 	public void setMapCreationPanel(MapCreationPanel mapCreationPanel) {
 		this.mapCreationPanel = mapCreationPanel;
 	}
 
+	/**
+	 * Set the value of this LevelCreationPanel statusLabel.
+	 * 
+	 * @param statusLabel this LevelCreationPanel new statusLabel value
+	 */
 	public void setStatusLabel(JLabel statusLabel) {
 		this.statusLabel = statusLabel;
 	}
