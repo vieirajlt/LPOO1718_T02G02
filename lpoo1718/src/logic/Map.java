@@ -291,6 +291,10 @@ public class Map implements Serializable {
 		case HERO :
 			characters.get(0).setPosition(x, y);
 			break;
+		case ARMEDHERO:
+			characters.get(0).setPosition(x, y);
+			characters.get(0).setSymbol(ARMEDHERO);
+			break;
 		case DOOR:
 			doors.add(new Door(x,y));
 			break;

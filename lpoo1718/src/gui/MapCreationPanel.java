@@ -7,7 +7,7 @@ import logic.Map;
  * This specific type is used to store the information regarding the program's
  * level creation option. 
  * 
- * @author João Vieira
+ * @author Joï¿½o Vieira
  * @author Susana Lima
  * 
  */
@@ -76,7 +76,7 @@ public class MapCreationPanel extends GraphicPanel{
 	 * @return true if this MapCreationPanel newChar value is HERO, false otherwise
 	 */
 	public boolean isNewCharHero() {
-		return (newChar == HERO);
+			return (newChar == HERO || newChar == ARMEDHERO);
 	}
 	
 	/**
