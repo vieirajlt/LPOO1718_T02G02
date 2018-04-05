@@ -41,6 +41,12 @@ public abstract class Character implements Serializable{
 	 * hasWeapon is the flag of the existence of a weapon in this Character.
 	 */
 	private boolean hasWeapon;
+	
+	/**
+	 * isClub is the flag that indicates if weapons is a Club
+	 */
+	private boolean isClub;
+	
 	/**
 	 *	weapon is the {@link Weapon} that this Character has.
 	 */
@@ -73,6 +79,7 @@ public abstract class Character implements Serializable{
 		prevX = -1;
 		prevY = -1;
 		this.hasWeapon = hasWeapon;
+		this.isClub = false;
 		setShowCli(true);
 	}
 
@@ -158,6 +165,51 @@ public abstract class Character implements Serializable{
 	 */
 	public abstract boolean isMove();
 	
+	/**
+	 * Retrieve the value of this Character weapon x.
+	 * 
+	 * @return Characters weapon x
+	 */
+	public int getWeaponX() {
+		return weapon.getX();
+	}
+	
+	/**
+	 * Retrieve the value of this Character weapon y.
+	 * 
+	 * @return Characters weapon y
+	 */
+	public int getWeaponY() {
+		return weapon.getY();
+	}
+	
+	/**
+	 * Retrieve the value of this Character weapon prevX.
+	 * 
+	 * @return Characters weapon prevX
+	 */
+	public int getWeaponPrevX() {
+		return weapon.getPrevX();
+	}
+	
+	/**
+	 * Retrieve the value of this Character weapon prevY.
+	 * 
+	 * @return Characters weapon prevY
+	 */
+	public int getWeaponPrevY() {
+		return weapon.getPrevY();
+	}
+	
+	/**
+	 * Retrieve the value of this Character weapon symbol.
+	 * 
+	 * @return Characters weapon symbol
+	 */
+	public char getWeaponSymbol() {
+		return weapon.getSymbol();
+	}
+	
 	/*******************SET FUNCTIONS*******************/
 	
 	/**
@@ -238,8 +290,26 @@ public abstract class Character implements Serializable{
 	 * @param weapon the new value of weapon
 	 */
 	public void setWeapon(Weapon weapon) {
+		if(weapon instanceof Club)
+			this.isClub = true;
+		else
+			this.isClub = false;
 		this.weapon = weapon;
 	}
+	
+	/**
+	 * If there is a {@link Weapon} that is a {@link Club}, set Club aboveKey value to
+	 * val.
+	 * 
+	 * @param val the new value of Club aboveKey
+	 */
+	public void setClubAboveKey(boolean val) {
+		if(!isClub || !hasWeapon)
+			return;
+		
+		((Club) this.weapon).setAboveKey(val);
+	}
+	
 	/*******************POSITION COMMANDS*******************/
 
 	/**

@@ -930,16 +930,16 @@ public class Map implements Serializable {
 	 * @return true if overlapping, else false
 	 */
 	public boolean isWeaponColliding(Character c) {
-		int X = c.getWeapon().getX();
-		int Y = c.getWeapon().getY();
+		int X = c.getWeaponX();
+		int Y = c.getWeaponY();
 
 		if((getMapPosition(X, Y) == WALL) || (getMapPosition(X, Y) == DOOR))
 			return true;
 		else if(getMapPosition(X, Y) == LEVER) {
-			((Club) c.getWeapon()).setAboveKey(true);
+			c.setClubAboveKey(true);
 			return false;
 		} else
-			((Club) c.getWeapon()).setAboveKey(false);
+			c.setClubAboveKey(false);
 		return false;
 	}
 
@@ -1093,9 +1093,9 @@ public class Map implements Serializable {
 	 * @param c the Character moving Weapon
 	 */
 	private void reputLeverOnPosition(Character c) {
-		int X = c.getWeapon().getX();
-		int Y = c.getWeapon().getY();
-		if(c.getWeapon().getSymbol() == KEYCLUB)
+		int X = c.getWeaponX();
+		int Y = c.getWeaponY();
+		if(c.getWeaponSymbol() == KEYCLUB)
 			map[Y][X] = LEVER;
 		else
 			map[Y][X] = EMPTY;
@@ -1265,9 +1265,9 @@ public class Map implements Serializable {
 
 		if(c.hasWeapon() && c.getWeapon().isVisible()) {
 			//Set new position
-			X = c.getWeapon().getX();
-			Y = c.getWeapon().getY();
-			symbol = c.getWeapon().getSymbol();
+			X = c.getWeaponX();
+			Y = c.getWeaponY();
+			symbol = c.getWeaponSymbol();
 			setMapPosition(X, Y, symbol);
 		}
 
@@ -1292,8 +1292,8 @@ public class Map implements Serializable {
 			setMapPosition(X, Y, EMPTY);
 			if(c.hasWeapon() && c.getWeapon().isVisible() && getMapPosition(X, Y) != WALL) {
 				//Clear previous Weapon position
-				X = c.getWeapon().getPrevX();
-				Y = c.getWeapon().getPrevY();
+				X = c.getWeaponPrevX();
+				Y = c.getWeaponPrevY();
 				setMapPosition(X, Y, EMPTY);
 			}
 		}
