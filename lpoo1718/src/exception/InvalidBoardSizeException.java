@@ -1,12 +1,10 @@
 package exception;
 
-import logic.GuardPersonality;
-
 /**
  * Exception thrown when an width or height is passed 
  * to a {@link logic.GameStartSet#GameStartSet(int w, int h) GameStartSet} constructor.
  * 
- * @author João Vieira
+ * @author Joï¿½o Vieira
  * @author Susana Lima
  *
  */
