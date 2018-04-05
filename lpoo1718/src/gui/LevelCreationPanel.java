@@ -476,7 +476,8 @@ public class LevelCreationPanel extends JPanel {
 			mapCreationPanel.setBounds(35, 152, width*GraphicPanel.blockSize, height*GraphicPanel.blockSize);
 			map = new Map(width, height, true); //create empty map
 			mapCreationPanel.setMap(map);
-			mapCreationPanel.setOriginalMap(map);
+			Map original = new Map(width, height, true); 
+			mapCreationPanel.setOriginalMap(original);
 			mapCreationPanel.repaint();
 			statusLabel.setText("");
 		} catch (InvalidBoardSizeException e) {

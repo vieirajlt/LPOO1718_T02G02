@@ -35,7 +35,6 @@ public class HeroStatusDisplay {
 	}
 
 	
-	//TODO
 	
 	/**
 	 * Displays the information when an {@link Hero} reaches a lever.
