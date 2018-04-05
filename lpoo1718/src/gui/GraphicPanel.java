@@ -8,17 +8,38 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import logic.Game;
+
+/**
+ * This class represents a specific type of {@link JPanel}.
+ * This specific type is used to paint all the current {@link Game} cycle elements
+ * in a user friendly way using various images.
+ * 
+ * @author João Vieira
+ * @author Susana Lima
+ *
+ */
 public class GraphicPanel extends JPanel{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6522359064162807356L;
-
+	/**
+	 * map is the string that stores all objects/characters positioning information
+	 * on the current {@link Game} cycle.
+	 */
 	private String map;
 
+	/**
+	 * blockSize is the value that represents the width and height of an image.
+	 */
 	protected static int blockSize = 20;
 
+	/**
+	 * All images used in this GraphicPanel.
+	 * All images used in the program.
+	 */
 	private BufferedImage wall;
 	private BufferedImage openDoor;
 	private BufferedImage closeDoor;
@@ -34,7 +55,9 @@ public class GraphicPanel extends JPanel{
 	private BufferedImage ogre;
 	private BufferedImage stunnedOgre;
 
-
+	/**
+	 * Predefine char association for representation of different types of objects/characters.
+	 */
 	protected static final char EMPTY = ' ';
 	protected static final char WALL = 'X';
 	protected static final char DOOR = 'I';
@@ -50,6 +73,10 @@ public class GraphicPanel extends JPanel{
 	protected static final char CLUB = '*';
 	protected static final char KEYCLUB = '$'; //club that hit key at a certain point
 
+	/**
+	 * Create this GraphicPanel.
+	 * All this GraphicPanel images are loaded.
+	 */
 	public GraphicPanel() {
 		super();
 		try {
@@ -78,19 +105,39 @@ public class GraphicPanel extends JPanel{
 		System.out.println(directory.getAbsolutePath());*/
 		map = "";
 	}
-
+	
+	/**
+	 * Retrieve this GraphicPanel map value.
+	 * 
+	 * @return the value of this GraphicPanel map.
+	 */
 	public String getMap() {
 		return map;
 	}
 
+	/**
+	 * Set this GraphicPanel map value.
+	 * 
+	 * @param map the new value of map
+	 */
 	public void setMap(String map) {
 		this.map = map;
 	}
 
+	/**
+	 * Set this GraphicPanel map value.
+	 * 
+	 * @param map the new value of map
+	 */
 	public void setMap(logic.Map map) {
 		this.map = map.toString();
 	}
 
+	/**
+	 * Paint all the elements from this GraphicPanel map int the respective positions.
+	 * 
+	 * @param g the original Graphics object
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		int x = 0, y = 0;
@@ -115,6 +162,17 @@ public class GraphicPanel extends JPanel{
 		}
 	}
 
+	/**
+	 * Paint a specified image in the given x, y position.
+	 * The image is specified by the given symbol.
+	 * This function is used to paint regular static objects from the game.
+	 * 
+	 * @param g the original Graphics object
+	 * @param x the x position where to paint the image
+	 * @param y the y position where to paint the image
+	 * @param symbol char that identifies the image to be painted
+	 * @return true if the image based on the given symbol was successfully painted, false otherwise
+	 */
 	private boolean paintObjectChar(Graphics g, int x, int y, char symbol) {
 		switch(symbol)
 		{
@@ -145,6 +203,17 @@ public class GraphicPanel extends JPanel{
 		return true;
 	}
 
+	/**
+	 * Paint a specified image in the given x, y position.
+	 * The image is specified by the given symbol.
+	 * This function is used to paint the game's {@link Character}s.
+	 * 
+	 * @param g the original Graphics object
+	 * @param x the x position where to paint the image
+	 * @param y the y position where to paint the image
+	 * @param symbol char that identifies the image to be painted
+	 * @return true if the image based on the given symbol was successfully painted, false otherwise
+	 */
 	private boolean paintCharacterChar(Graphics g, int x, int y, char symbol) {
 		switch(symbol)
 		{
