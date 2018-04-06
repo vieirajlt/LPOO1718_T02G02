@@ -3,6 +3,8 @@
 João Lourenço Teixeira Vieira   |   201603190   |   up201603190@fe.up.pt <br />
 Susana Maria de Sousa Lima      |   201603634   |   up201603634@fe.up.pt <br />
 
+Javadoc: https://vieirajlt.github.io/LPOO1718_T02G02_javadoc/ <br />
+
 ![Alt text](testsImages/test1.png "EclEmma")
 
 ![Alt text](testsImages/test2.png "PIT tool")
