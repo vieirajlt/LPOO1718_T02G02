@@ -1,7 +1,7 @@
 # LPOO1718_T02G02
 
-![Alt text](LPOO1718_T02G02/testsImages/test1.png?raw=true "Title")
+![Alt text](testsImages/test1.png "EclEmma")
 
-![Alt text](LPOO1718_T02G02/testsImages/test2.png?raw=true "Title")
+![Alt text](testsImages/test2.png "PIT tool")
 
-![Alt text](LPOO1718_T02G02/testsImages/test3.png?raw=true "Title")
+![Alt text](testsImages/test3.png "Bettercodehub")
