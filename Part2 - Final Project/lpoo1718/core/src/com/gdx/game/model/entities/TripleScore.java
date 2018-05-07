@@ -1,6 +1,6 @@
 package com.gdx.game.model.entities;
 
-public abstract class TripleScore extends BallDecoratorModel{
+public class TripleScore extends BallDecoratorModel{
 
     private int scoreBonus = 3;
 
