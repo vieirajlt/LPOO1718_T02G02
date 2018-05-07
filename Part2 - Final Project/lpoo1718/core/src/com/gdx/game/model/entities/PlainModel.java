@@ -10,10 +10,11 @@ public class PlainModel extends EntityModel {
 
     private float height;  // acho que nao vale a pena (metemos sempre igual nao?)
 
-    private LinkedList<CoinModel> coins;  //se fizermos obstaculos no meio da pista podemos mete los aqui e os bonus tambem
+    private LinkedList<CoinModel> coins;  //se fizermos obstaculos no meio da plataforma podemos mete los aqui e os bonus tambem
     //talvez outra estrutura de dados tipo map para nao haverem 2 no mesmo sitio sendo a key um par de coordenadas (x,z)
+    //mas claro que em java nao ha pares (pelo menos eu nao encontrei), criamos uma class coordinates talvez?
 
-    PlainModel(float x, float y, float z, float width, float length)
+    public PlainModel(float x, float y, float z, float width, float length)
     {
         super(x,y,z);
         this.width = width;

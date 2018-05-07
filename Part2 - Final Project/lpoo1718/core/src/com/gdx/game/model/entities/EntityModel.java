@@ -12,7 +12,7 @@ public abstract class EntityModel {
 
     public enum MType {BALL, PLAIN, COIN, BOOST};
 
-    EntityModel(float x, float y, float z)
+    public EntityModel(float x, float y, float z)
     {
        this.x = x;
        this.y = y;

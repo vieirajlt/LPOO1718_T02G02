@@ -15,11 +15,17 @@ public class BallModel extends EntityModel{
     private boolean fatality = false;
 
 
-    BallModel(float x, float y, float z, PlainModel currentPlain)
+    public BallModel(float x, float y, float z, PlainModel currentPlain)
     {
        super(x,y,z);
        this.currentPlain = currentPlain;
     }
+
+    public BallModel(float x, float y, float z)
+    {
+        this(x,y,z,null);  //nao sei se funciona
+    }
+
 
     public PlainModel getCurrentPlain() {
         return currentPlain;
