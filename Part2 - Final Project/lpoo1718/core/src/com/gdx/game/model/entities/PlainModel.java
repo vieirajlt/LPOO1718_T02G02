@@ -51,6 +51,12 @@ public class PlainModel extends EntityModel {
         this.coins.add(coin);
     }
 
+    public void moveFront()
+    {
+        float newZ = this.getZ() + 1;
+        this.setZ(newZ);
+    }
+
     public MType getType()
     {
         return MType.PLAIN;
