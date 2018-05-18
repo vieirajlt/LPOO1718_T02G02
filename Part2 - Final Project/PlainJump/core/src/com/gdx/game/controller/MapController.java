@@ -1,6 +1,19 @@
 package com.gdx.game.controller;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.bullet.Bullet;
+import com.badlogic.gdx.physics.bullet.collision.btBroadphaseInterface;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionConfiguration;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionDispatcher;
+import com.badlogic.gdx.physics.bullet.collision.btDbvtBroadphase;
+import com.badlogic.gdx.physics.bullet.collision.btDefaultCollisionConfiguration;
+import com.badlogic.gdx.physics.bullet.collision.btDispatcher;
+import com.badlogic.gdx.physics.bullet.dynamics.btConstraintSolver;
+import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
+import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
+import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.badlogic.gdx.utils.Array;
 import com.gdx.game.controller.entities.BallController;
 import com.gdx.game.controller.entities.PlainController;
@@ -23,9 +36,18 @@ public class MapController {
     private Array<PlainController> plains;
     private BallController ball;
 
+
+    private btCollisionConfiguration collisionConfig;
+    private btDispatcher dispatcher;
+    private btBroadphaseInterface broadphase;
+    private btDynamicsWorld world;
+    private btConstraintSolver constraintSolver;
+
     private MapController() {
         model = MapModel.getInstance();
         view = MapView.getInstance();
+
+        buildWorld();
 
         buildPlains();
 
@@ -86,6 +108,12 @@ public class MapController {
         plains.add(p22);
         plains.add(p23);
         plains.add(p24);
+
+
+      /*  world.addRigidBody(p1.getView().getModelInstance().getRigidBody());
+
+        p1.getView().getModelInstance().getRigidBody().setContactCallbackFlag(1 << 8);
+        p1.getView().getModelInstance().getRigidBody().setContactCallbackFilter(0);*/
     }
 
     private void placePlains() {
@@ -110,6 +138,18 @@ public class MapController {
         }
     }
 
+    private void buildWorld()
+    {
+        collisionConfig = new btDefaultCollisionConfiguration();
+        dispatcher = new btCollisionDispatcher(collisionConfig);
+        broadphase = new btDbvtBroadphase();
+        constraintSolver = new btSequentialImpulseConstraintSolver();
+        world = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
+
+        world.setGravity(new Vector3(0, -10f, 0));
+
+    }
+
     private void buildPlains() {
         plains = new Array<PlainController>();
 
@@ -123,6 +163,9 @@ public class MapController {
         ball = BallController.getInstance();
 
         view.addInstance((BallView) (ball.getView()));
+
+        world.addRigidBody(ball.getView().getModelInstance().getRigidBody());
+
     }
 
     public void create() {
@@ -130,7 +173,17 @@ public class MapController {
     }
 
     public void render(PerspectiveCamera camera) {
+
+
+        final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
+
+        world.stepSimulation(delta, 5, 1f / 60f);
+
+        ball.getView().getModelInstance().getRigidBody().getWorldTransform(ball.getView().getModelInstance().transform);
+
+
         view.render(camera);
+
     }
 
     public void dispose() {
@@ -139,6 +192,12 @@ public class MapController {
         for(PlainController pc : plains) {
             pc.dispose();
         }
+
+        world.dispose();
+        constraintSolver.dispose();
+        broadphase.dispose();
+        dispatcher.dispose();
+        collisionConfig.dispose();
     }
 
     public static MapController getInstance() {
