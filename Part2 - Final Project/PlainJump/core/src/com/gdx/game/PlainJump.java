@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.physics.bullet.Bullet;
 import com.gdx.game.controller.MapController;
 
 public class PlainJump extends ApplicationAdapter {
@@ -16,6 +17,8 @@ public class PlainJump extends ApplicationAdapter {
 
 	@Override
 	public void create () {
+
+		Bullet.init();
 		controller = MapController.getInstance();
 
 		controller.create();

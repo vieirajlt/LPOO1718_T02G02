@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.utils.Array;
+import com.gdx.game.BodyInstance;
 import com.gdx.game.view.entities.BallView;
 import com.gdx.game.view.entities.PlainView;
 
@@ -19,7 +20,9 @@ public class MapView {
     private ColorAttribute ambientLigth;
     private Array<DirectionalLight> directLigths;
 
-    private Array<ModelInstance> instances;
+   // private Array<ModelInstance> instances;
+
+    private Array<BodyInstance> instances;
     private Environment environment;
     private ModelBatch modelBatch;
 
@@ -35,7 +38,7 @@ public class MapView {
 
         addLigthToEnvironment();
 
-        instances = new Array<ModelInstance>();
+        instances = new Array<BodyInstance>();
     }
 
     private void addLigthToEnvironment() {
@@ -46,7 +49,7 @@ public class MapView {
         }
     }
 
-    public void addInstance(PlainView pv) {
+   public void addInstance(PlainView pv) {
         instances.add(pv.getModelInstance());
     }
 
@@ -83,7 +86,7 @@ public class MapView {
         return directLigths;
     }
 
-    public Array<ModelInstance> getInstances() {
+    public Array<BodyInstance> getInstances() {
         return instances;
     }
 
