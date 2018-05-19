@@ -22,7 +22,7 @@ public class PlainController extends EntityController{
         //setView(new PlainView(this.id, getModel().getModel()));
 
 
-        setView(new PlainView(this.id, getModel().getModel(), new btBoxShape(new Vector3(4f, 1f, 12f)),1f));
+        setView(new PlainView(this.id, getModel().getModel(), new btBoxShape(new Vector3(4f, 1f, 12f)),0f));
         updatePosition();
     }
 
@@ -33,7 +33,7 @@ public class PlainController extends EntityController{
 
         setModel(new PlainModel(this.id, x, y, z, w, h, d));
         //setView(new PlainView(this.id, getModel().getModel()));
-        setView(new PlainView(this.id, getModel().getModel(), new btBoxShape(new Vector3(w, h, d)),1f));
+        setView(new PlainView(this.id, getModel().getModel(), new btBoxShape(new Vector3(w, h, d)),0f));
 
         updatePosition();
     }
@@ -45,7 +45,7 @@ public class PlainController extends EntityController{
             ((PlainModel) getModel()).setDepth(id, d);
            // setView(new PlainView(this.id, getModel().getModel()));
             //nao sei se é isto
-            setView(new PlainView(this.id, getModel().getModel(), new btBoxShape(new Vector3(w, h, d)),1f));
+            setView(new PlainView(this.id, getModel().getModel(), new btBoxShape(new Vector3(w, h, d)),0f));
         }
     }
 

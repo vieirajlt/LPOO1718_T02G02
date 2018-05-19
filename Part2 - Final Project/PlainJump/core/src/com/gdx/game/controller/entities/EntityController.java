@@ -43,6 +43,11 @@ public class EntityController {
         view.moveModelInstance(mX, mY, mZ);
     }
 
+    public void getWorldTransform()
+    {
+        this.getView().getModelInstance().getRigidBody().getWorldTransform(this.getView().getModelInstance().transform);
+    }
+
     public void dispose() {
         model.dispose();
     }

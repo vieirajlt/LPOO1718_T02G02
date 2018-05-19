@@ -18,6 +18,7 @@ public class BodyInstance extends ModelInstance implements Disposable {
 	private btRigidBody.btRigidBodyConstructionInfo info;
 	private static Vector3 inertia = new Vector3();
 	public final btCollisionShape shape;
+	public boolean moving ;
 
 	public BodyInstance(Model model, String node, btCollisionShape shape, float mass) {
 		super(model,node);

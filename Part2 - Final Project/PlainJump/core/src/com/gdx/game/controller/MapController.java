@@ -1,12 +1,18 @@
 package com.gdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.Bullet;
+import com.badlogic.gdx.physics.bullet.collision.Collision;
+import com.badlogic.gdx.physics.bullet.collision.ContactListener;
 import com.badlogic.gdx.physics.bullet.collision.btBroadphaseInterface;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionConfiguration;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionDispatcher;
+import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.badlogic.gdx.physics.bullet.collision.btDbvtBroadphase;
 import com.badlogic.gdx.physics.bullet.collision.btDefaultCollisionConfiguration;
 import com.badlogic.gdx.physics.bullet.collision.btDispatcher;
@@ -14,6 +20,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btConstraintSolver;
 import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
+import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 import com.badlogic.gdx.utils.Array;
 import com.gdx.game.controller.entities.BallController;
 import com.gdx.game.controller.entities.PlainController;
@@ -43,15 +50,41 @@ public class MapController {
     private btDynamicsWorld world;
     private btConstraintSolver constraintSolver;
 
+    MyContactListener contactListener;
+
+    final static short GROUND_FLAG = 1<<8;
+    final static short OBJECT_FLAG = 1<<9;
+    final static short ALL_FLAG = -1;
+
+    class MyContactListener extends ContactListener {
+        @Override
+        public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
+            if (userValue1 == 0)
+                view.getInstances().get(userValue0).moving = false;
+            else if (userValue0 == 0)
+                view.getInstances().get(userValue1).moving = false;
+            return true;
+        }
+    }
+
+
+
+
+
     private MapController() {
+
+        Bullet.init();
+
         model = MapModel.getInstance();
         view = MapView.getInstance();
+        contactListener = new MyContactListener();
 
         buildWorld();
 
+        buildBall();
+
         buildPlains();
 
-        buildBall();
     }
 
     private void addPlains() {
@@ -110,10 +143,6 @@ public class MapController {
         plains.add(p24);
 
 
-      /*  world.addRigidBody(p1.getView().getModelInstance().getRigidBody());
-
-        p1.getView().getModelInstance().getRigidBody().setContactCallbackFlag(1 << 8);
-        p1.getView().getModelInstance().getRigidBody().setContactCallbackFilter(0);*/
     }
 
     private void placePlains() {
@@ -123,8 +152,6 @@ public class MapController {
         int position[] = {-16, -12, -8, -4, 0, 4, 8, 12, 16};
         int loc = 0;
         for(PlainController pc : plains) {
-            view.addInstance((PlainView) (pc.getView()));
-
             int r = rand.nextInt(position.length);
 
             if(spanwPlain)
@@ -135,7 +162,21 @@ public class MapController {
             if(loc%8 == 0) {
                 loc = 0;
             }
+
+            pc.getView().getModelInstance().getRigidBody().proceedToTransform(pc.getView().getModelInstance().transform);
+            pc.getView().getModelInstance().getRigidBody().setUserValue(view.getInstances().size);
+
+            System.out.println(view.getInstances().size);
+            pc.getView().getModelInstance().getRigidBody().setCollisionFlags( pc.getView().getModelInstance().getRigidBody().getCollisionFlags() | btCollisionObject.CollisionFlags.CF_KINEMATIC_OBJECT);
+            view.addInstance((PlainView) (pc.getView()));
+            world.addRigidBody(pc.getView().getModelInstance().getRigidBody());
+           // pc.getView().getModelInstance().getRigidBody().setContactCallbackFlag(GROUND_FLAG);
+          //  pc.getView().getModelInstance().getRigidBody().setContactCallbackFilter(-1);
+            pc.getView().getModelInstance().getRigidBody().setActivationState(Collision.DISABLE_DEACTIVATION);
+
         }
+
+
     }
 
     private void buildWorld()
@@ -147,6 +188,8 @@ public class MapController {
         world = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 
         world.setGravity(new Vector3(0, -10f, 0));
+
+
 
     }
 
@@ -162,7 +205,15 @@ public class MapController {
 
         ball = BallController.getInstance();
 
+        ball.getView().getModelInstance().moving = true;
+
+        ball.getView().getModelInstance().getRigidBody().proceedToTransform(ball.getView().getModelInstance().transform);
+
         view.addInstance((BallView) (ball.getView()));
+
+        ball.getView().getModelInstance().getRigidBody().setUserValue(0);
+
+        ball.getView().getModelInstance().getRigidBody().setCollisionFlags(ball.getView().getModelInstance().getRigidBody().getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
 
         world.addRigidBody(ball.getView().getModelInstance().getRigidBody());
 
@@ -179,8 +230,14 @@ public class MapController {
 
         world.stepSimulation(delta, 5, 1f / 60f);
 
-        ball.getView().getModelInstance().getRigidBody().getWorldTransform(ball.getView().getModelInstance().transform);
+       // ball.getView().getModelInstance().getRigidBody().getWorldTransform(ball.getView().getModelInstance().transform);
 
+        
+        for(int i = 0; i < plains.size; i++)
+                plains.get(i).getWorldTransform();
+
+        if (ball.getView().getModelInstance().moving)
+                 ball.getWorldTransform();
 
         view.render(camera);
 
@@ -198,7 +255,11 @@ public class MapController {
         broadphase.dispose();
         dispatcher.dispose();
         collisionConfig.dispose();
+
+        //contactListener.dispose();
     }
+
+
 
     public static MapController getInstance() {
         if(instance == null)
