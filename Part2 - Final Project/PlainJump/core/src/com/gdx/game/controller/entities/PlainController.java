@@ -22,7 +22,7 @@ public class PlainController extends EntityController{
         //setView(new PlainView(this.id, getModel().getModel()));
 
 
-        setView(new PlainView(this.id, getModel().getModel(), new btBoxShape(new Vector3(4f, 1f, 12f)),0f));
+        setView(new PlainView(this.id, getModel().getModel(), new btBoxShape(new Vector3(2f, 0.5f, 6f)),0f));
         updatePosition();
     }
 

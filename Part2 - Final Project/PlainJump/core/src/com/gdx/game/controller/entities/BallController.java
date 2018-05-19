@@ -13,7 +13,7 @@ public class BallController extends EntityController{
         super();
 
         setModel(new BallModel());
-        setView(new BallView(getModel().getModel(),new btSphereShape(0.5f),1f));
+        setView(new BallView(getModel().getModel(),new btSphereShape(1f),1f));
        // setView(new BallView(getModel().getModel()));
         updatePosition();
     }
