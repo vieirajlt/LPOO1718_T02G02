@@ -1,5 +1,6 @@
 package com.gdx.game.controller.entities;
 
+import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.gdx.game.model.entities.EntityModel;
 import com.gdx.game.view.entities.EntityView;
 
@@ -18,6 +19,11 @@ public class EntityController {
 
     public EntityView getView() {
         return view;
+    }
+
+    public btRigidBody getBody()
+    {
+        return getView().getModelInstance().getRigidBody();
     }
 
     public void setModel(EntityModel model) {

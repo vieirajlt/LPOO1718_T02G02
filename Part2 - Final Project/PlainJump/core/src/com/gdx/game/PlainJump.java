@@ -2,13 +2,17 @@ package com.gdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.Bullet;
 import com.gdx.game.controller.MapController;
+import com.gdx.game.view.MapView;
 
-public class PlainJump extends ApplicationAdapter {
+public class PlainJump extends ApplicationAdapter  {
 
 	private MapController controller;
 
@@ -47,4 +51,5 @@ public class PlainJump extends ApplicationAdapter {
 	public void dispose () {
 		controller.dispose();
 	}
+
 }
