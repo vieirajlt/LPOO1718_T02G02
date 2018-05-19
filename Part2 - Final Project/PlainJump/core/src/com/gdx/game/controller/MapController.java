@@ -226,15 +226,15 @@ public class MapController  {
 
     public void render(PerspectiveCamera camera) {
 
-
-
         final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
 
         world.stepSimulation(delta, 5, 1f / 60f);
 
         for(int i = 0; i < plains.size; i++)
-                plains.get(i).getWorldTransform();
-
+        {
+           // plains.get(i).getBody().translate(new Vector3(0,0,0.1f)); anda as plataformas
+            plains.get(i).getWorldTransform();
+        }
 
         ball.getWorldTransform();
 
@@ -262,10 +262,12 @@ public class MapController  {
         contactListener.dispose();
     }
 
-    /*public void jump()
+    public void jump()
     {
-        ball.getBody().applyCentralForce(new Vector3(0,1000,0));
-    }*/
+        ball.jump();
+    }
+
+
 
 
     public static MapController getInstance() {

@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.bullet.Bullet;
 import com.gdx.game.controller.MapController;
 import com.gdx.game.view.MapView;
 
-public class PlainJump extends ApplicationAdapter  {
+public class PlainJump extends ApplicationAdapter implements InputProcessor {
 
 	private MapController controller;
 
@@ -29,8 +29,10 @@ public class PlainJump extends ApplicationAdapter  {
 
 		setCamera();
 
-		cameraController = new CameraInputController(camera);
-		Gdx.input.setInputProcessor(cameraController);
+		//cameraController = new CameraInputController(camera);
+		//Gdx.input.setInputProcessor(cameraController);
+
+		Gdx.input.setInputProcessor(this);
 	}
 
 	private void setCamera() {
@@ -52,4 +54,49 @@ public class PlainJump extends ApplicationAdapter  {
 		controller.dispose();
 	}
 
+
+	@Override
+	public boolean keyDown(int keycode) {
+
+		if(keycode == Input.Keys.SPACE)
+		{
+			controller.jump();
+		}
+		return true;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		return false;
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		return false;
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		return false;
+	}
 }

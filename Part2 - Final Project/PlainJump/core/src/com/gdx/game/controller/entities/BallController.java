@@ -1,5 +1,6 @@
 package com.gdx.game.controller.entities;
 
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.gdx.game.model.entities.BallModel;
 import com.gdx.game.view.entities.BallView;
@@ -34,6 +35,11 @@ public class BallController extends EntityController{
            // setView(new BallView(getModel().getModel()));
             setView(new BallView(getModel().getModel(),new btSphereShape(d/2),1f));
         }
+    }
+
+    public void jump()
+    {
+        getBody().applyCentralForce(new Vector3(0,800,0));
     }
 
     public static BallController getInstance() {
