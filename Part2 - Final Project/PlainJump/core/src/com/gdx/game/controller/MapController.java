@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.Bullet;
+import com.badlogic.gdx.physics.bullet.DebugDrawer;
 import com.badlogic.gdx.physics.bullet.collision.Collision;
 import com.badlogic.gdx.physics.bullet.collision.ContactListener;
 import com.badlogic.gdx.physics.bullet.collision.btBroadphaseInterface;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btConstraintSolver;
 import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
+import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 import com.badlogic.gdx.utils.Array;
 import com.gdx.game.controller.entities.BallController;
@@ -52,6 +54,8 @@ public class MapController {
 
     MyContactListener contactListener;
 
+    DebugDrawer debugDrawer;
+
     final static short GROUND_FLAG = 1<<8;
     final static short OBJECT_FLAG = 1<<9;
     final static short ALL_FLAG = -1;
@@ -78,6 +82,8 @@ public class MapController {
         model = MapModel.getInstance();
         view = MapView.getInstance();
         contactListener = new MyContactListener();
+
+
 
         buildWorld();
 
@@ -221,9 +227,14 @@ public class MapController {
 
     public void create() {
         view.create();
+
+        debugDrawer = new DebugDrawer();
+        world.setDebugDrawer(debugDrawer);
+        debugDrawer.setDebugMode(btIDebugDraw.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
     }
 
     public void render(PerspectiveCamera camera) {
+
 
 
         final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
@@ -232,7 +243,7 @@ public class MapController {
 
        // ball.getView().getModelInstance().getRigidBody().getWorldTransform(ball.getView().getModelInstance().transform);
 
-        
+
         for(int i = 0; i < plains.size; i++)
                 plains.get(i).getWorldTransform();
 
@@ -240,6 +251,10 @@ public class MapController {
                  ball.getWorldTransform();
 
         view.render(camera);
+
+        debugDrawer.begin(camera);
+        world.debugDrawWorld();
+        debugDrawer.end();
 
     }
 
