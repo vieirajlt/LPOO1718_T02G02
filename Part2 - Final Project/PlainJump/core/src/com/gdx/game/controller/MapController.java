@@ -250,7 +250,7 @@ public class MapController  {
 
         //a camera segue a bola
         camera.position.x = ball.getModel().getPosX();
-        camera.position.y = ball.getModel().getPosY();
+       // camera.position.y = ball.getModel().getPosY();
         camera.position.z = ball.getModel().getPosZ()+10;
         camera.update();
         view.render(camera);
