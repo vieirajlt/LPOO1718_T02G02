@@ -45,4 +45,25 @@ public class BallModel extends EntityModel{
         setModel(buildModel());
     }
 
+
+    public void moveSide(float delta)
+    {
+        float newX = getPosX() + delta ;
+        setPosX(newX);
+    }
+
+    public void moveFront(float delta)
+    {
+        float newZ = getPosZ() + delta;
+        setPosZ(newZ);
+    }
+
+
+    public void jump()
+    {
+        //nao sei como atualizar as coordenadas aqui porque é um impulso
+
+
+    }
+
 }

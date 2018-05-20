@@ -37,10 +37,6 @@ public class BallController extends EntityController{
         }
     }
 
-    public void jump()
-    {
-        getBody().applyCentralForce(new Vector3(0,800,0));
-    }
 
     public static BallController getInstance() {
         if(instance == null)
@@ -48,14 +44,29 @@ public class BallController extends EntityController{
         return instance;
     }
 
+    public void jump() {
+           getBody().applyCentralForce(new Vector3(0, 800, 0));
+           //((BallModel) getModel()).jump();
+    }
+
     public void moveLeft() {
-       getBody().translate(new Vector3(-0.5f,0,0));
-       //getBody().applyCentralImpulse(new Vector3(-1f,0,0));
+        getBody().translate(new Vector3(-0.5f,0,0));
+        ((BallModel)getModel()).moveSide(-0.5f);
     }
 
     public void moveRight() {
-        getBody().translate(new Vector3(0.2f,0,0));
-       // getBody().applyCentralImpulse(new Vector3(1f,0,0));
+        getBody().translate(new Vector3(0.5f,0,0));
+        ((BallModel)getModel()).moveSide(0.5f);
+    }
+
+    public void moveFront(float velocity) {
+        getBody().translate(new Vector3(0,0,-velocity));
+        getWorldTransform();
+        //nao sei esta parte interfere com o x da bola, nao devia mas acho que as vezes faz isso
+        getView().getModelInstance().transform.rotate(new Vector3(1,0,0),2);
+        getBody().setWorldTransform(getView().getModelInstance().transform);
+        //////tenho que testar melhor
+        ((BallModel)getModel()).moveFront(-velocity);
     }
 
 

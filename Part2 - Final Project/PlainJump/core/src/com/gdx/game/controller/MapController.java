@@ -29,6 +29,7 @@ import com.badlogic.gdx.utils.Array;
 import com.gdx.game.controller.entities.BallController;
 import com.gdx.game.controller.entities.PlainController;
 import com.gdx.game.model.MapModel;
+import com.gdx.game.model.entities.BallModel;
 import com.gdx.game.model.entities.PlainModel;
 import com.gdx.game.view.MapView;
 import com.gdx.game.view.entities.BallView;
@@ -244,22 +245,18 @@ public class MapController  {
         }
 
 
-        ball.getBody().translate(new Vector3(0,0,-0.1f));
-       // ball.getBody().setAngularVelocity(new Vector3(-1,0,0));
+        //a bola anda para a frente e roda
+        ball.moveFront(0.1f);
 
-
-        //ball.getBody().setRollingFriction(1);
-      //  ball.getBody().translate(new Vector3(0,0,-0.05f));
-        ball.getModel().setPosZ(ball.getModel().getPosZ()-0.1f);
-        ball.getWorldTransform();
-
+        //a camera segue a bola
         camera.position.x = ball.getModel().getPosX();
         camera.position.y = ball.getModel().getPosY();
         camera.position.z = ball.getModel().getPosZ()+10;
         camera.update();
         view.render(camera);
 
-        debugDrawer.begin(camera);
+        //a cena do debug
+       debugDrawer.begin(camera);
         world.debugDrawWorld();
         debugDrawer.end();
 
@@ -283,6 +280,7 @@ public class MapController  {
 
     public void jump()
     {
+        // e um bocado imprevisivel porque é um impulso
         ball.jump();
     }
 
@@ -295,8 +293,6 @@ public class MapController  {
     {
         ball.moveRight();
     }
-
-
 
 
     public static MapController getInstance() {
