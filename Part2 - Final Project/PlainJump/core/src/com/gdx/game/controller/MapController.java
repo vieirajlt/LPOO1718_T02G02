@@ -256,9 +256,9 @@ public class MapController  {
         view.render(camera);
 
         //a cena do debug
-       debugDrawer.begin(camera);
+     /*debugDrawer.begin(camera);
         world.debugDrawWorld();
-        debugDrawer.end();
+        debugDrawer.end();*/
 
     }
 
@@ -286,11 +286,15 @@ public class MapController  {
 
     public void moveLeft()
     {
+        /*for (PlainController pc : plains)
+            pc.getBody().translate(new Vector3(0.5f,0,0));*/
         ball.moveLeft();
     }
 
     public void moveRigth()
     {
+        /*for (PlainController pc : plains)
+            pc.getBody().translate(new Vector3(-0.5f,0,0));*/
         ball.moveRight();
     }
 

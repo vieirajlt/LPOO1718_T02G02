@@ -50,15 +50,17 @@ public class BallController extends EntityController{
     }
 
     public void moveLeft() {
-       getBody().translate(new Vector3(-0.5f,0,0));
-       // getBody().applyCentralImpulse(new Vector3(-1f,0,0));
+      //getBody().translate(new Vector3(-0.5f,0,0));
+       getBody().applyCentralImpulse(new Vector3(-2f,0,0));
         getModel().setPosX(getBody().getCenterOfMassPosition().x);
+
+        System.out.println(getModel().getPosX());
     }
 
     public void moveRight() {
-       getBody().translate(new Vector3(0.5f,0,0));
+       //getBody().translate(new Vector3(0.5f,0,0));
         //podemos usar isto mas o movimento da camara nao é muito smooth
-       // getBody().applyCentralImpulse(new Vector3(1f,0,0));
+        getBody().applyCentralImpulse(new Vector3(2f,0,0));
         getModel().setPosX(getBody().getCenterOfMassPosition().x);
     }
 
@@ -66,9 +68,11 @@ public class BallController extends EntityController{
         getBody().translate(new Vector3(0,0,-velocity));
         getWorldTransform();
         //nao sei esta parte interfere com o x da bola, nao devia mas acho que as vezes faz isso
-        //getView().getModelInstance().transform.rotate(new Vector3(1,0,0),2);
-        //getBody().setWorldTransform(getView().getModelInstance().transform);
+        getView().getModelInstance().transform.rotate(new Vector3(1,0,0),2);
+        getBody().setWorldTransform(getView().getModelInstance().transform);
         //////tenho que testar melhor
+        getModel().setPosX(getBody().getCenterOfMassPosition().x);
+        getModel().setPosY(getBody().getCenterOfMassPosition().y);
         getModel().setPosZ(getBody().getCenterOfMassPosition().z);
     }
 
