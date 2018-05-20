@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.Bullet;
@@ -67,6 +68,12 @@ public class MapController  {
             if (userValue1 != 0)
                 ((ColorAttribute)view.getInstances().get(userValue1).materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.WHITE);
             return true;
+        }
+
+        @Override
+        public void onContactEnded(int userValue0, int userValue1) {
+            if (userValue1 != 0)
+                ((ColorAttribute)view.getInstances().get(userValue1).materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.VIOLET);
         }
     }
 
@@ -232,12 +239,24 @@ public class MapController  {
 
         for(int i = 0; i < plains.size; i++)
         {
-           // plains.get(i).getBody().translate(new Vector3(0,0,0.1f)); anda as plataformas
+           // plains.get(i).getBody().translate(new Vector3(0,0,0.1f)); //anda as plataformas
             plains.get(i).getWorldTransform();
         }
 
+
+        ball.getBody().translate(new Vector3(0,0,-0.1f));
+       // ball.getBody().setAngularVelocity(new Vector3(-1,0,0));
+
+
+        //ball.getBody().setRollingFriction(1);
+      //  ball.getBody().translate(new Vector3(0,0,-0.05f));
+        ball.getModel().setPosZ(ball.getModel().getPosZ()-0.1f);
         ball.getWorldTransform();
 
+        camera.position.x = ball.getModel().getPosX();
+        camera.position.y = ball.getModel().getPosY();
+        camera.position.z = ball.getModel().getPosZ()+10;
+        camera.update();
         view.render(camera);
 
         debugDrawer.begin(camera);
@@ -265,6 +284,16 @@ public class MapController  {
     public void jump()
     {
         ball.jump();
+    }
+
+    public void moveLeft()
+    {
+        ball.moveLeft();
+    }
+
+    public void moveRigth()
+    {
+        ball.moveRight();
     }
 
 

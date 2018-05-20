@@ -48,4 +48,15 @@ public class BallController extends EntityController{
         return instance;
     }
 
+    public void moveLeft() {
+       getBody().translate(new Vector3(-0.5f,0,0));
+       //getBody().applyCentralImpulse(new Vector3(-1f,0,0));
+    }
+
+    public void moveRight() {
+        getBody().translate(new Vector3(0.2f,0,0));
+       // getBody().applyCentralImpulse(new Vector3(1f,0,0));
+    }
+
+
 }

@@ -58,6 +58,14 @@ public class PlainJump extends ApplicationAdapter implements InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 
+		if(keycode == Input.Keys.RIGHT) {
+			controller.moveRigth();
+		}
+
+		if(keycode == Input.Keys.LEFT) {
+			controller.moveLeft();
+		}
+
 		if(keycode == Input.Keys.SPACE)
 		{
 			controller.jump();
