@@ -45,21 +45,18 @@ public class BallController extends EntityController{
     }
 
     public void jump() {
-        getBody().applyCentralForce(new Vector3(0, 800, 0));
-          getModel().setPosY(getBody().getCenterOfMassPosition().y);
+        if (canJump()) {
+            getBody().applyCentralForce(new Vector3(0, 500, 0)); //com 500 fica melhor
+            getModel().setPosY(getBody().getCenterOfMassPosition().y);
+        }
     }
 
     public void moveLeft() {
-      //getBody().translate(new Vector3(-0.5f,0,0));
        getBody().applyCentralImpulse(new Vector3(-2f,0,0));
-        getModel().setPosX(getBody().getCenterOfMassPosition().x);
-
-        System.out.println(getModel().getPosX());
+       getModel().setPosX(getBody().getCenterOfMassPosition().x);
     }
 
     public void moveRight() {
-       //getBody().translate(new Vector3(0.5f,0,0));
-        //podemos usar isto mas o movimento da camara nao é muito smooth
         getBody().applyCentralImpulse(new Vector3(2f,0,0));
         getModel().setPosX(getBody().getCenterOfMassPosition().x);
     }
@@ -74,6 +71,15 @@ public class BallController extends EntityController{
         getModel().setPosX(getBody().getCenterOfMassPosition().x);
         getModel().setPosY(getBody().getCenterOfMassPosition().y);
         getModel().setPosZ(getBody().getCenterOfMassPosition().z);
+    }
+
+
+    public boolean canJump() {
+        return ((BallModel)getModel()).canJump();
+    }
+
+    public void setJump(boolean jump) {
+        ((BallModel)getModel()).setJump(jump);
     }
 
 

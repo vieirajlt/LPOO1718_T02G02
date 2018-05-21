@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.utils.Array;
 import com.gdx.game.BodyInstance;
 import com.gdx.game.view.entities.BallView;
+import com.gdx.game.view.entities.BonusView;
 import com.gdx.game.view.entities.PlainView;
 
 public class MapView {
@@ -54,6 +55,10 @@ public class MapView {
     }
 
     public void addInstance(BallView bv) {
+        instances.add(bv.getModelInstance());
+    }
+
+    public void addInstance(BonusView bv) {
         instances.add(bv.getModelInstance());
     }
 

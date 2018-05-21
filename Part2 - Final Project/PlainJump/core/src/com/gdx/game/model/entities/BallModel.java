@@ -12,6 +12,13 @@ public class BallModel extends EntityModel{
 
     private float diameter;
 
+    private boolean jump = false;
+
+    //pensar melhor nisto;
+    private int scoreCount = 0;
+    //update score = scorecount += scoremultiplier * value
+    private int scoreMultiplier = 1;
+
     private static final Material material = new Material(ColorAttribute.createDiffuse(Color.ORANGE));
 
     public BallModel() {
@@ -45,4 +52,27 @@ public class BallModel extends EntityModel{
         setModel(buildModel());
     }
 
+    public boolean canJump() {
+        return jump;
+    }
+
+    public void setJump(boolean jump) {
+        this.jump = jump;
+    }
+
+    public int getScoreCount() {
+        return scoreCount;
+    }
+
+    public void setScoreCount(int scoreCount) {
+        this.scoreCount = scoreCount;
+    }
+
+    public int getScoreMultiplier() {
+        return scoreMultiplier;
+    }
+
+    public void setScoreMultiplier(int scoreMultiplier) {
+        this.scoreMultiplier = scoreMultiplier;
+    }
 }

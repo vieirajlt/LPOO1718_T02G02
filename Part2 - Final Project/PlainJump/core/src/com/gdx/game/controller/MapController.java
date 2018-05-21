@@ -27,12 +27,15 @@ import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 import com.badlogic.gdx.utils.Array;
 import com.gdx.game.controller.entities.BallController;
+import com.gdx.game.controller.entities.BonusController;
 import com.gdx.game.controller.entities.PlainController;
 import com.gdx.game.model.MapModel;
 import com.gdx.game.model.entities.BallModel;
+import com.gdx.game.model.entities.BonusModel;
 import com.gdx.game.model.entities.PlainModel;
 import com.gdx.game.view.MapView;
 import com.gdx.game.view.entities.BallView;
+import com.gdx.game.view.entities.BonusView;
 import com.gdx.game.view.entities.PlainView;
 
 import java.util.Random;
@@ -47,6 +50,7 @@ public class MapController  {
 
     private Array<PlainController> plains;
     private BallController ball;
+    private Array<BonusController> bonus;
 
 
     private btCollisionConfiguration collisionConfig;
@@ -64,39 +68,52 @@ public class MapController  {
     class ControllerContactListener extends ContactListener {
         @Override
         public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
-            if (userValue0 != 0)
-                ((ColorAttribute)view.getInstances().get(userValue0).materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.WHITE);
             if (userValue1 != 0)
+            {
+                for (BonusController bc : bonus) {
+                    if (userValue1 == bc.getBody().getUserValue())
+                    {
+                        System.out.println("Colision");
+                        //do more stuff
+                        bc.setVisible(false);
+                        //ball.setScoreMultiplier (bc.getModel.getValue()) deve ser qualquer coisa deste genero
+                        break;
+                    }
+                }
+
                 ((ColorAttribute)view.getInstances().get(userValue1).materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.WHITE);
+                ball.setJump(true);
+
+            }
             return true;
         }
 
         @Override
         public void onContactEnded(int userValue0, int userValue1) {
             if (userValue1 != 0)
+            {
                 ((ColorAttribute)view.getInstances().get(userValue1).materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.VIOLET);
+                ball.setJump(false);  //para que so se possa saltar 1 vez de cada vez
+            }
         }
     }
 
 
-
-
-
     private MapController() {
 
-        Bullet.init();
+       // Bullet.init(); nao e preciso
 
         model = MapModel.getInstance();
         view = MapView.getInstance();
         contactListener = new ControllerContactListener();
-
-
 
         buildWorld();
 
         buildBall();
 
         buildPlains();
+
+        buildBonus();
 
     }
 
@@ -175,16 +192,21 @@ public class MapController  {
             if(loc%8 == 0) {
                 loc = 0;
             }
+        }
 
+    }
+
+    private void addPlainsToWorld()
+    {
+        for (PlainController pc : plains)
+        {
             pc.getBody().proceedToTransform(pc.getView().getModelInstance().transform);
             pc.getBody().setUserValue(view.getInstances().size);
             pc.getBody().setCollisionFlags( pc.getBody().getCollisionFlags() | btCollisionObject.CollisionFlags.CF_KINEMATIC_OBJECT);
             view.addInstance((PlainView) (pc.getView()));
             world.addRigidBody(pc.getBody());
             pc.getBody().setActivationState(Collision.DISABLE_DEACTIVATION);
-
         }
-
     }
 
     private void buildWorld()
@@ -206,6 +228,8 @@ public class MapController  {
         addPlains();
 
         placePlains();
+
+        addPlainsToWorld();
     }
 
     private void buildBall() {
@@ -224,6 +248,47 @@ public class MapController  {
 
     }
 
+    private void buildBonus()
+    {
+        bonus = new Array<BonusController>();
+
+        addBonus();
+
+        placeBonus();
+
+        addBonusToWorld();
+    }
+
+
+    private void addBonus()
+    {
+        BonusController b1 = new BonusController();
+        bonus.add(b1);
+    }
+
+    //ver com a posicao das plataformas
+   private void placeBonus(){
+        for (BonusController bc : bonus)
+        {
+             bc.getView().moveModelInstance(0, 1, -10); //nao funciona quando y= 0 (fica dentro do plano)
+
+        }
+   }
+
+   private void addBonusToWorld()
+   {
+       for (BonusController bc : bonus)
+       {
+           bc.getBody().proceedToTransform(bc.getView().getModelInstance().transform);
+           bc.getBody().setUserValue(view.getInstances().size);
+           bc.getBody().setCollisionFlags( bc.getBody().getCollisionFlags() | btCollisionObject.CollisionFlags.CF_KINEMATIC_OBJECT);
+           view.addInstance((BonusView) (bc.getView()));
+           world.addRigidBody(bc.getBody());
+            bc.getBody().setActivationState(Collision.DISABLE_DEACTIVATION);
+       }
+   }
+
+
     public void create() {
         view.create();
 
@@ -238,15 +303,28 @@ public class MapController  {
 
         world.stepSimulation(delta, 5, 1f / 60f);
 
-        for(int i = 0; i < plains.size; i++)
+        for(PlainController pc : plains)
         {
            // plains.get(i).getBody().translate(new Vector3(0,0,0.1f)); //anda as plataformas
-            plains.get(i).getWorldTransform();
+            pc.getWorldTransform();
+        }
+
+
+        for (BonusController bc : bonus)
+        {
+           // bc.getWorldTransform();
+            if (bc.isVisible() == false)
+            {
+                bc.setVisible(true);
+                bc.getBody().translate(new Vector3(0,0,-20)); //chamar funcao que reposiciona as ceninhas
+            }
+
+            bc.getWorldTransform();
         }
 
 
         //a bola anda para a frente e roda
-        ball.moveFront(0.1f);
+        ball.moveFront(0.1f);   //atualiza a posiçao da bola (getWorldTransform)
 
         //a camera segue a bola
         camera.position.x = ball.getModel().getPosX();
@@ -256,9 +334,9 @@ public class MapController  {
         view.render(camera);
 
         //a cena do debug
-     /*debugDrawer.begin(camera);
+       debugDrawer.begin(camera);
         world.debugDrawWorld();
-        debugDrawer.end();*/
+        debugDrawer.end();
 
     }
 
@@ -286,15 +364,11 @@ public class MapController  {
 
     public void moveLeft()
     {
-        /*for (PlainController pc : plains)
-            pc.getBody().translate(new Vector3(0.5f,0,0));*/
         ball.moveLeft();
     }
 
     public void moveRigth()
     {
-        /*for (PlainController pc : plains)
-            pc.getBody().translate(new Vector3(-0.5f,0,0));*/
         ball.moveRight();
     }
 
