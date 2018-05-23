@@ -17,7 +17,7 @@ public class PlainModel extends EntityModel {
     private static final Material material = new Material(ColorAttribute.createDiffuse(Color.VIOLET));
 
     public PlainModel(int id) {
-        this(id, 0, 0, 0, 4, 1, 15);
+        this(id, 0, 0, 0, 4, 1, 12);
     }
 
     public PlainModel(int id, float x, float y, float z, float w, float h, float d) {

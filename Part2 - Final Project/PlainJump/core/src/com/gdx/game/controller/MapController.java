@@ -112,7 +112,7 @@ public class MapController  {
 
         positions = new int[]{-16, -12, -8, -4, 0, 4, 8, 12, 16};
 
-        gravity = new Vector3(0, -60f, 0);
+        gravity = new Vector3(0, -75f, 0);
 
         cameraBallDistance = 15;
 
@@ -150,7 +150,8 @@ public class MapController  {
             if(spawnPlain)
                 spawnPlain = false;
             else
-                pc.getView().moveModelInstance(positions[r], 0, -loc*(((PlainModel) (pc.getModel())).getDepth()));
+                pc.setPos(positions[r], 0, -loc*(((PlainModel) (pc.getModel())).getDepth()));
+                //pc.getView().moveModelInstance(positions[r], 0, -loc*(((PlainModel) (pc.getModel())).getDepth()));
             ++loc;
             if(loc%plainLevels == 0) {
                 loc = 0;
@@ -175,7 +176,8 @@ public class MapController  {
 
             int r = rand.nextInt(positions.length);
 
-            pc.getView().moveModelInstance(positions[r]-pc.getModel().getPosX(), 0, -plainLevels*(((PlainModel) (pc.getModel())).getDepth()));
+            pc.moveToPos(positions[r], 0, -plainLevels*(((PlainModel) (pc.getModel())).getDepth()));
+            pc.setWorldTransform();
 
         }
         ++positioningLevel;
