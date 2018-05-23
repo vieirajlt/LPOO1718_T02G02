@@ -49,6 +49,7 @@ public class MapController  {
     private int plainLevels;
     private int plainsPerLevel;
     private int positioningLevel;
+    private float lastZUpdated;
     private int[] positions;
 
     private btCollisionConfiguration collisionConfig;
@@ -58,6 +59,8 @@ public class MapController  {
     private btConstraintSolver constraintSolver;
 
     private float cameraBallDistance;
+
+    private float xLimit;
 
     private Vector3 gravity;
 
@@ -110,9 +113,13 @@ public class MapController  {
         view = MapView.getInstance();
         contactListener = new ControllerContactListener();
 
-        positions = new int[]{-16, -12, -8, -4, 0, 4, 8, 12, 16};
+        lastZUpdated = 0;
+
+        positions = new int[]{-12, -8, -4, 0, 4, 8, 12};
 
         gravity = new Vector3(0, -75f, 0);
+
+        xLimit = 5;
 
         cameraBallDistance = 15;
 
@@ -167,17 +174,10 @@ public class MapController  {
         int lvl = positioningLevel%(plains.size/plainsPerLevel);
         for(int it = lvl; it < plains.size; it += plainLevels) {
             PlainController pc = plains.get(it);
-            System.out.print("plain ");
-            System.out.print(it);
-            System.out.print(" to lvl ");
-            System.out.print(positioningLevel);
-            System.out.print(" z ");
-            System.out.println(-plainLevels*(((PlainModel) (pc.getModel())).getDepth()));
 
             int r = rand.nextInt(positions.length);
 
             pc.moveToPos(positions[r], 0, -plainLevels*(((PlainModel) (pc.getModel())).getDepth()));
-            pc.setWorldTransform();
 
         }
         ++positioningLevel;
@@ -325,11 +325,15 @@ public class MapController  {
 
         //a bola anda para a frente e roda
         ball.moveFront();   //atualiza a posiçao da bola (getWorldTransform)
-        updatePlains();
+        updatePlains(camera);
 
         //a camera segue a bola
-        //camera.position.x = ball.getModel().getPosX();
-       // camera.position.y = ball.getModel().getPosY();
+        camera.position.x = ball.getModel().getPosX();
+        if(ball.getModel().getPosY() >= 0) {
+            camera.position.y = ball.getModel().getPosY()+cameraBallDistance/3;
+        } else {
+            camera.position.y = cameraBallDistance/3;
+        }
         camera.position.z = ball.getModel().getPosZ()+cameraBallDistance;
         camera.update();
         view.render(camera);
@@ -341,12 +345,12 @@ public class MapController  {
 
     }
 
-    private void updatePlains() {
+    private void updatePlains(PerspectiveCamera camera) {
 
         float plainDepth = (((PlainModel) (plains.get(0).getModel())).getDepth());
-        if(ball.getModel().getPosZ() <= -plainDepth - cameraBallDistance + ((BallModel) ball.getModel()).getPreviousZ()) {
 
-            ((BallModel) ball.getModel()).setPreviousZ(ball.getModel().getPosZ());
+        if(camera.position.z <= -plainDepth + lastZUpdated) {
+            lastZUpdated = camera.position.z;
             placePlainsLevel();
         }
     }

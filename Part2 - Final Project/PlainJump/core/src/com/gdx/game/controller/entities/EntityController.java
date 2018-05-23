@@ -47,6 +47,7 @@ public class EntityController {
         model.setPosX(posZ);
 
         view.moveModelInstance(mX, mY, mZ);
+        setWorldTransform();
     }
 
     public void moveToPos(float posX, float posY, float posZ) {
@@ -55,6 +56,7 @@ public class EntityController {
         model.setPosX(model.getPosZ()+posZ);
 
         view.moveModelInstance(posX, posY, posZ);
+        setWorldTransform();
     }
 
     public void getWorldTransform()

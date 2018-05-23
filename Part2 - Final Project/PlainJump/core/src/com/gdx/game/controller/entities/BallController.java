@@ -51,23 +51,31 @@ public class BallController extends EntityController{
     }
 
     public void jump() {
+        updatePosition();
         if (canJump()) {
-            getBody().applyCentralForce(new Vector3(0, 2000, -200)); //com 500 fica melhor, acho que -50 fica bem, nao sei
+            getBody().applyCentralForce(new Vector3(0, 2000, -300)); //com 500 fica melhor, acho que -50 fica bem, nao sei
             getModel().setPosY(getBody().getCenterOfMassPosition().y);
+            getModel().setPosZ(getBody().getCenterOfMassPosition().z);
         }
     }
 
     public void moveLeft() {
+        updatePosition();
        getBody().applyCentralImpulse(new Vector3(-lateralSpeed,0,0));
        getModel().setPosX(getBody().getCenterOfMassPosition().x);
     }
 
     public void moveRight() {
+        updatePosition();
         getBody().applyCentralImpulse(new Vector3(lateralSpeed,0,0));
         getModel().setPosX(getBody().getCenterOfMassPosition().x);
     }
 
     public void moveFront() {
+        updatePosition();
+
+        //moveToPos(0, 0, -frontalSpeed);
+        getModel().setPosZ(-frontalSpeed + getModel().getPosZ());
         getBody().translate(new Vector3(0,0,-frontalSpeed));
         getWorldTransform();
         //nao sei esta parte interfere com o x da bola, nao devia mas acho que as vezes faz isso
