@@ -54,6 +54,14 @@ public class EntityController {
         this.getView().getModelInstance().getRigidBody().getWorldTransform(this.getView().getModelInstance().transform);
     }
 
+
+    public void updateModel()
+    {
+        getModel().setPosX(getBody().getCenterOfMassPosition().x);
+        getModel().setPosY(getBody().getCenterOfMassPosition().y);
+        getModel().setPosZ(getBody().getCenterOfMassPosition().z);
+    }
+
     public void dispose() {
         model.dispose();
     }

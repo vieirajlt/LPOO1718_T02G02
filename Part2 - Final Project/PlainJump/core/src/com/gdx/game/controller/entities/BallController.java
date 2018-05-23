@@ -68,9 +68,10 @@ public class BallController extends EntityController{
         getView().getModelInstance().transform.rotate(new Vector3(1,0,0),2);
         getBody().setWorldTransform(getView().getModelInstance().transform);
         //////tenho que testar melhor
-        getModel().setPosX(getBody().getCenterOfMassPosition().x);
+       /* getModel().setPosX(getBody().getCenterOfMassPosition().x);
         getModel().setPosY(getBody().getCenterOfMassPosition().y);
-        getModel().setPosZ(getBody().getCenterOfMassPosition().z);
+        getModel().setPosZ(getBody().getCenterOfMassPosition().z);*/
+       updateModel();
     }
 
 
