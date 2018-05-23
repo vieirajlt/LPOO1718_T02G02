@@ -2,10 +2,8 @@ package com.gdx.game.controller.entities;
 
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
-import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
 import com.gdx.game.model.entities.PlainModel;
 import com.gdx.game.view.entities.PlainView;
-import com.sun.security.cert.internal.x509.X509V1CertImpl;
 
 public class PlainController extends EntityController{
 
@@ -24,7 +22,7 @@ public class PlainController extends EntityController{
         //setView(new PlainView(this.id, getModel().getModel()));
 
 
-        setView(new PlainView(this.id, getModel().getModel(), new btBoxShape(new Vector3(plainModel.getWidth()/2, plainModel.getHeigth()/2, plainModel.getDepth()/2)),0f));
+        setView(new PlainView(this.id, getModel().getModel(), new btBoxShape(new Vector3(plainModel.getWidth()/2, plainModel.getHeight()/2, plainModel.getDepth()/2)),0f));
         updatePosition();
     }
 
@@ -42,7 +40,7 @@ public class PlainController extends EntityController{
     public void setDimensions(float w, float h, float d) {
         if(getModel() instanceof PlainModel) {
             ((PlainModel) getModel()).setWidth(id, w);
-            ((PlainModel) getModel()).setHeigth(id, h);
+            ((PlainModel) getModel()).setHeight(id, h);
             ((PlainModel) getModel()).setDepth(id, d);
            // setView(new PlainView(this.id, getModel().getModel()));
             setView(new PlainView(this.id, getModel().getModel(), new btBoxShape(new Vector3(w/2, h/2, d/2)),0f));

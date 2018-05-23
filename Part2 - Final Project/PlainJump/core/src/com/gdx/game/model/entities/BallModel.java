@@ -14,16 +14,20 @@ public class BallModel extends EntityModel{
 
     private boolean jump = false;
 
+    private float previousZ; //for platform placement help
+
     private static final Material material = new Material(ColorAttribute.createDiffuse(Color.ORANGE));
 
     public BallModel() {
-        this(0f, 10f, 0f, 2f);
+        this(0f, 2f, 3f, 2f);
     }
 
     public BallModel(float x, float y, float z, float d) {
         super(x, y, z);
 
         this.diameter = d;
+
+        previousZ = getPosZ();
 
         setModel(buildModel());
     }
@@ -53,6 +57,14 @@ public class BallModel extends EntityModel{
 
     public void setJump(boolean jump) {
         this.jump = jump;
+    }
+
+    public float getPreviousZ() {
+        return previousZ;
+    }
+
+    public void setPreviousZ(float previousZ) {
+        this.previousZ = previousZ;
     }
 
 }

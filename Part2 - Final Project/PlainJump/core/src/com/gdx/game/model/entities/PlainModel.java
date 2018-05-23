@@ -17,7 +17,7 @@ public class PlainModel extends EntityModel {
     private static final Material material = new Material(ColorAttribute.createDiffuse(Color.VIOLET));
 
     public PlainModel(int id) {
-        this(id, 0, 0, 0, 4, 1, 12);
+        this(id, 0, 0, 0, 4, 1, 15);
     }
 
     public PlainModel(int id, float x, float y, float z, float w, float h, float d) {
@@ -45,7 +45,7 @@ public class PlainModel extends EntityModel {
         return width;
     }
 
-    public float getHeigth() {
+    public float getHeight() {
         return heigth;
     }
 
@@ -58,8 +58,8 @@ public class PlainModel extends EntityModel {
         setModel(buildModel(id));
     }
 
-    public void setHeigth(int id, float heigth) {
-        this.heigth = heigth;
+    public void setHeight(int id, float height) {
+        this.heigth = height;
         setModel(buildModel(id));
     }
 

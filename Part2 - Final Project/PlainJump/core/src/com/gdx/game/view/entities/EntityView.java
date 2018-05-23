@@ -7,6 +7,7 @@ import com.gdx.game.BodyInstance;
 public class EntityView {
 
    // private ModelInstance modelInstance;
+    private float x;
 
     private BodyInstance bodyInstance;
 

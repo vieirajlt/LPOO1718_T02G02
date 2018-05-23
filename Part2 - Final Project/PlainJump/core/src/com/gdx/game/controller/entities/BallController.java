@@ -9,6 +9,9 @@ public class BallController extends EntityController{
 
     private static BallController instance = null;
 
+    private float lateralSpeed;
+    private float frontalSpeed;
+    private float rotationDegree;
 
     private BallController() {
         super();
@@ -17,6 +20,9 @@ public class BallController extends EntityController{
         setModel(ballModel);
         setView(new BallView(getModel().getModel(),new btSphereShape(ballModel.getDiameter()/2),1f));
        // setView(new BallView(getModel().getModel()));
+        lateralSpeed = 10;
+        frontalSpeed = 0.2f;
+        rotationDegree = (frontalSpeed/(ballModel.getDiameter() * (float)Math.PI))*360;
         updatePosition();
     }
 
@@ -46,26 +52,26 @@ public class BallController extends EntityController{
 
     public void jump() {
         if (canJump()) {
-            getBody().applyCentralForce(new Vector3(0, 500, -50)); //com 500 fica melhor, acho que -50 fica bem, nao sei
+            getBody().applyCentralForce(new Vector3(0, 2000, -200)); //com 500 fica melhor, acho que -50 fica bem, nao sei
             getModel().setPosY(getBody().getCenterOfMassPosition().y);
         }
     }
 
     public void moveLeft() {
-       getBody().applyCentralImpulse(new Vector3(-2f,0,0));
+       getBody().applyCentralImpulse(new Vector3(-lateralSpeed,0,0));
        getModel().setPosX(getBody().getCenterOfMassPosition().x);
     }
 
     public void moveRight() {
-        getBody().applyCentralImpulse(new Vector3(2f,0,0));
+        getBody().applyCentralImpulse(new Vector3(lateralSpeed,0,0));
         getModel().setPosX(getBody().getCenterOfMassPosition().x);
     }
 
-    public void moveFront(float velocity) {
-        getBody().translate(new Vector3(0,0,-velocity));
+    public void moveFront() {
+        getBody().translate(new Vector3(0,0,-frontalSpeed));
         getWorldTransform();
         //nao sei esta parte interfere com o x da bola, nao devia mas acho que as vezes faz isso
-        getView().getModelInstance().transform.rotate(new Vector3(1,0,0),2);
+        getView().getModelInstance().transform.rotate(new Vector3(1,0,0),rotationDegree);
         getBody().setWorldTransform(getView().getModelInstance().transform);
         //////tenho que testar melhor
        updateModel();
@@ -80,5 +86,20 @@ public class BallController extends EntityController{
         ((BallModel)getModel()).setJump(jump);
     }
 
+    public float getLateralSpeed() {
+        return lateralSpeed;
+    }
+
+    public void setLateralSpeed(float lateralSpeed) {
+        this.lateralSpeed = lateralSpeed;
+    }
+
+    public float getFrontalSpeed() {
+        return frontalSpeed;
+    }
+
+    public void setFrontalSpeed(float frontalSpeed) {
+        this.frontalSpeed = frontalSpeed;
+    }
 
 }

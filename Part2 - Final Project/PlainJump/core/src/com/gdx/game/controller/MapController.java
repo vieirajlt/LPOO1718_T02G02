@@ -1,14 +1,8 @@
 package com.gdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.bullet.Bullet;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
 import com.badlogic.gdx.physics.bullet.collision.Collision;
 import com.badlogic.gdx.physics.bullet.collision.ContactListener;
@@ -24,7 +18,6 @@ import com.badlogic.gdx.physics.bullet.dynamics.btDiscreteDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btDynamicsWorld;
 import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSolver;
 import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
-import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.gdx.game.controller.entities.BallController;
@@ -54,6 +47,7 @@ public class MapController  {
     private Array<BonusController> bonus;
 
     private int plainLevels;
+    private int plainsPerLevel;
     private int positioningLevel;
     private int[] positions;
 
@@ -62,6 +56,10 @@ public class MapController  {
     private btBroadphaseInterface broadphase;
     private btDynamicsWorld world;
     private btConstraintSolver constraintSolver;
+
+    private float cameraBallDistance;
+
+    private Vector3 gravity;
 
     ControllerContactListener contactListener;
 
@@ -114,6 +112,10 @@ public class MapController  {
 
         positions = new int[]{-16, -12, -8, -4, 0, 4, 8, 12, 16};
 
+        gravity = new Vector3(0, -60f, 0);
+
+        cameraBallDistance = 15;
+
         buildWorld();
 
         buildBall();
@@ -125,75 +127,28 @@ public class MapController  {
     }
 
     private void addPlains() {
-        PlainController p1 = new PlainController();
-        PlainController p2 = new PlainController();
-        PlainController p3 = new PlainController();
-        PlainController p4 = new PlainController();
-        PlainController p5 = new PlainController();
-        PlainController p6 = new PlainController();
-        PlainController p7 = new PlainController();
-        PlainController p8 = new PlainController();
-
-        PlainController p9 = new PlainController();
-        PlainController p10 = new PlainController();
-        PlainController p11 = new PlainController();
-        PlainController p12 = new PlainController();
-        PlainController p13 = new PlainController();
-        PlainController p14 = new PlainController();
-        PlainController p15 = new PlainController();
-        PlainController p16 = new PlainController();
-
-        PlainController p17 = new PlainController();
-        PlainController p18 = new PlainController();
-        PlainController p19 = new PlainController();
-        PlainController p20 = new PlainController();
-        PlainController p21 = new PlainController();
-        PlainController p22 = new PlainController();
-        PlainController p23 = new PlainController();
-        PlainController p24 = new PlainController();
-
-        plains.add(p1);
-        plains.add(p2);
-        plains.add(p3);
-        plains.add(p4);
-        plains.add(p5);
-        plains.add(p6);
-        plains.add(p7);
-        plains.add(p8);
-
-        plains.add(p9);
-        plains.add(p10);
-        plains.add(p11);
-        plains.add(p12);
-        plains.add(p13);
-        plains.add(p14);
-        plains.add(p15);
-        plains.add(p16);
-
-        plains.add(p17);
-        plains.add(p18);
-        plains.add(p19);
-        plains.add(p20);
-        plains.add(p21);
-        plains.add(p22);
-        plains.add(p23);
-        plains.add(p24);
 
         plainLevels = 8;
-        positioningLevel = 8;
+        plainsPerLevel = 3;
+        positioningLevel = plainLevels;
+
+        for (int i = 0; i < plainLevels*plainsPerLevel; ++i) {
+            plains.add(new PlainController());
+        }
 
     }
 
     private void placePlains() {
-        boolean spanwPlain = true;
+        boolean spawnPlain = true;
 
         Random rand = new Random();
         int loc = 0;
         for(PlainController pc : plains) {
+
             int r = rand.nextInt(positions.length);
 
-            if(spanwPlain)
-                spanwPlain = false;
+            if(spawnPlain)
+                spawnPlain = false;
             else
                 pc.getView().moveModelInstance(positions[r], 0, -loc*(((PlainModel) (pc.getModel())).getDepth()));
             ++loc;
@@ -204,18 +159,25 @@ public class MapController  {
 
     }
 
-    private void placePlains(int lvl) {
+    private void placePlainsLevel() {
 
         Random rand = new Random();
-        int loc = positioningLevel;
 
+        int lvl = positioningLevel%(plains.size/plainsPerLevel);
         for(int it = lvl; it < plains.size; it += plainLevels) {
+            PlainController pc = plains.get(it);
+            System.out.print("plain ");
+            System.out.print(it);
+            System.out.print(" to lvl ");
+            System.out.print(positioningLevel);
+            System.out.print(" z ");
+            System.out.println(-plainLevels*(((PlainModel) (pc.getModel())).getDepth()));
+
             int r = rand.nextInt(positions.length);
 
-            PlainController pc = plains.get(it);
-            pc.getView().moveModelInstance(positions[r], 0, -loc*(((PlainModel) (pc.getModel())).getDepth()));
-        }
+            pc.getView().moveModelInstance(positions[r]-pc.getModel().getPosX(), 0, -plainLevels*(((PlainModel) (pc.getModel())).getDepth()));
 
+        }
         ++positioningLevel;
     }
 
@@ -240,7 +202,7 @@ public class MapController  {
         constraintSolver = new btSequentialImpulseConstraintSolver();
         world = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 
-        world.setGravity(new Vector3(0, -10f, 0));
+        world.setGravity(gravity);
 
     }
 
@@ -360,12 +322,13 @@ public class MapController  {
 
 
         //a bola anda para a frente e roda
-        ball.moveFront(0.2f);   //atualiza a posiçao da bola (getWorldTransform)
+        ball.moveFront();   //atualiza a posiçao da bola (getWorldTransform)
+        updatePlains();
 
         //a camera segue a bola
-        camera.position.x = ball.getModel().getPosX();
+        //camera.position.x = ball.getModel().getPosX();
        // camera.position.y = ball.getModel().getPosY();
-        camera.position.z = ball.getModel().getPosZ()+10;
+        camera.position.z = ball.getModel().getPosZ()+cameraBallDistance;
         camera.update();
         view.render(camera);
 
@@ -374,6 +337,16 @@ public class MapController  {
         world.debugDrawWorld();
         debugDrawer.end();
 
+    }
+
+    private void updatePlains() {
+
+        float plainDepth = (((PlainModel) (plains.get(0).getModel())).getDepth());
+        if(ball.getModel().getPosZ() <= -plainDepth - cameraBallDistance + ((BallModel) ball.getModel()).getPreviousZ()) {
+
+            ((BallModel) ball.getModel()).setPreviousZ(ball.getModel().getPosZ());
+            placePlainsLevel();
+        }
     }
 
     public void dispose() {
