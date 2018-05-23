@@ -54,6 +54,11 @@ public class EntityController {
         this.getView().getModelInstance().getRigidBody().getWorldTransform(this.getView().getModelInstance().transform);
     }
 
+    public void setWorldTransform()
+    {
+        this.getView().getModelInstance().getRigidBody().setWorldTransform(this.getView().getModelInstance().transform);
+    }
+
 
     public void updateModel()
     {

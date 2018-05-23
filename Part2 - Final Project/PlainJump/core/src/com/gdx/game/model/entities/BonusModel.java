@@ -43,6 +43,7 @@ public class BonusModel extends EntityModel{
         this(0f, 1f, 0f, 1f, type);
     }
 
+    //falta mudar isto para cilindros? as capsulas se calhar sao mais engracadas xd, eu depois mudo
     private Model buildModel() {
         ModelBuilder modelBuilder = new ModelBuilder();
         modelBuilder.begin();

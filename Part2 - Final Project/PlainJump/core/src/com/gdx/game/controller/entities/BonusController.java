@@ -58,19 +58,19 @@ public class BonusController extends EntityController{
     }
 
 
-    //falta atualizar no model eu acho
     public void placeBonus(float ballCurrentZ)
     {
         Random rand = new Random();
         int max = 16;
         int min = -16;
         int r = rand.nextInt(position.length);
-        int z = rand.nextInt(200);
+        int z = rand.nextInt(500);
         getView().moveModelInstance(r, 1,-z+ballCurrentZ); //nao funciona quando y= 0 (fica dentro do plano
-      // updateModel(); nao faz sentido aqui
+        setWorldTransform();
+        updateModel();
     }
 
-    //falta atualizar no model eu acho
+
     public void replaceBonus(float ballCurrentZ)
     {
         setVisible(true);
@@ -78,7 +78,7 @@ public class BonusController extends EntityController{
         int max = 16;
         int min = -16;
          int r = rand.nextInt(position.length);
-        int z = rand.nextInt(200);
+        int z = rand.nextInt(500);
         getBody().translate(new Vector3(r,0,-z+ballCurrentZ));
         updateModel(); /// aqui faz
     }

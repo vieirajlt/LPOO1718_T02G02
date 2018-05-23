@@ -26,6 +26,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSol
 import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.physics.bullet.linearmath.btMotionState;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.gdx.game.controller.entities.BallController;
 import com.gdx.game.controller.entities.BonusController;
 import com.gdx.game.controller.entities.PlainController;
@@ -63,8 +64,10 @@ public class MapController  {
 
     DebugDrawer debugDrawer;
 
+    long startTime = 0;
 
-    //este codigo é "plagiado" mas é so para ver se esta a fazer a parte das colisoes direitinho
+
+
     class ControllerContactListener extends ContactListener {
         @Override
         public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
@@ -74,9 +77,8 @@ public class MapController  {
                     if (userValue1 == bc.getBody().getUserValue())
                     {
                         System.out.println("Colision");
-                        //do more stuff
                         bc.setVisible(false);
-                        //ball.setScoreMultiplier (bc.getModel.getValue()) deve ser qualquer coisa deste genero
+                        model.setScoreMultiplier(((BonusModel)bc.getModel()).getValue());
                         break;
                     }
                 }
@@ -270,25 +272,11 @@ public class MapController  {
         bonus.add(b3);
     }
 
-    //esta semi aleatorio (nao sei se esta muito bem mas depois vejo isto melhor)
-  /*  private void placeBonus(){
-       Random rand = new Random();
-       int position[] = {-16, -12, -8, -4, 0, 4, 8, 12, 16};
-
-       for (BonusController bc : bonus)
-        {
-            int r = rand.nextInt(position.length);
-            int z = rand.nextInt(100);
-            bc.getView().moveModelInstance(position[r], 1,-z ); //nao funciona quando y= 0 (fica dentro do plano)
-        }
-   }*/
 
     private void placeBonus(){
         for (BonusController bc : bonus)
            bc.placeBonus(ball.getModel().getPosZ());
     }
-
-
 
 
    private void addBonusToWorld()
@@ -308,6 +296,7 @@ public class MapController  {
     public void create() {
         view.create();
 
+        startTime = TimeUtils.nanoTime();
         debugDrawer = new DebugDrawer();
         world.setDebugDrawer(debugDrawer);
         debugDrawer.setDebugMode(btIDebugDraw.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
@@ -333,6 +322,19 @@ public class MapController  {
                 bc.replaceBonus(ball.getModel().getPosZ());
                 //bc.getBody().translate(new Vector3(0,0,-20));
             bc.getWorldTransform();
+        }
+
+        //é mais ou menos isto, faz o update do score, nao sei bem se queres um intervalo de tempo maior ou menor
+        //ja aumenta consoante o bonus e tal, mas falta meter um "alarme" para ir retirando os bonus, e é isso basicamnente
+        //tenho de pensar nisso melhor, porque ele pode apanhar o mesmo bonus duas vezes seguidas e nao sei bem como tirar 1 e nao o outro
+        //talvez uma variavel no bonuscontroller a dizer o numero de ocorrencias  e depois vai se tirando uma por uma?
+        //mas entao onde é que guarda o valor de tempo inicial que vai fazer soar o alarme??7
+        //estou confusa e a sentir me abandonada :(  :(   :(
+        if (TimeUtils.timeSinceNanos(startTime) > 1000)
+        {
+            model.updateScore(1);
+            startTime = TimeUtils.nanoTime();
+            System.out.println(model.getScoreCount());
         }
 
 
