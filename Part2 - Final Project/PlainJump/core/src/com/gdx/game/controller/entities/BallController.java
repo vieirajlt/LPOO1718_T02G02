@@ -46,7 +46,7 @@ public class BallController extends EntityController{
 
     public void jump() {
         if (canJump()) {
-            getBody().applyCentralForce(new Vector3(0, 500, 0)); //com 500 fica melhor
+            getBody().applyCentralForce(new Vector3(0, 500, -100)); //com 500 fica melhor, acho que -100 fica bem, nao sei
             getModel().setPosY(getBody().getCenterOfMassPosition().y);
         }
     }

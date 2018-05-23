@@ -81,7 +81,7 @@ public class MapController  {
                     }
                 }
 
-                ((ColorAttribute)view.getInstances().get(userValue1).materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.WHITE);
+               // ((ColorAttribute)view.getInstances().get(userValue1).materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.WHITE);
                 ball.setJump(true);
 
             }
@@ -92,7 +92,7 @@ public class MapController  {
         public void onContactEnded(int userValue0, int userValue1) {
             if (userValue1 != 0)
             {
-                ((ColorAttribute)view.getInstances().get(userValue1).materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.VIOLET);
+               // ((ColorAttribute)view.getInstances().get(userValue1).materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.VIOLET);
                 ball.setJump(false);  //para que so se possa saltar 1 vez de cada vez
             }
         }
@@ -262,18 +262,34 @@ public class MapController  {
 
     private void addBonus()
     {
-        BonusController b1 = new BonusController();
+        BonusController b1 = new BonusController(BonusModel.BonusType.DOUBLE);
+        BonusController b2 = new BonusController(BonusModel.BonusType.TRIPLE);
+        BonusController b3 = new BonusController(BonusModel.BonusType.QUADRUPLE);
         bonus.add(b1);
+        bonus.add(b2);
+        bonus.add(b3);
     }
 
-    //ver com a posicao das plataformas
-   private void placeBonus(){
-        for (BonusController bc : bonus)
-        {
-             bc.getView().moveModelInstance(0, 1, -10); //nao funciona quando y= 0 (fica dentro do plano)
+    //esta semi aleatorio (nao sei se esta muito bem mas depois vejo isto melhor)
+  /*  private void placeBonus(){
+       Random rand = new Random();
+       int position[] = {-16, -12, -8, -4, 0, 4, 8, 12, 16};
 
+       for (BonusController bc : bonus)
+        {
+            int r = rand.nextInt(position.length);
+            int z = rand.nextInt(100);
+            bc.getView().moveModelInstance(position[r], 1,-z ); //nao funciona quando y= 0 (fica dentro do plano)
         }
-   }
+   }*/
+
+    private void placeBonus(){
+        for (BonusController bc : bonus)
+           bc.placeBonus(ball.getModel().getPosZ());
+    }
+
+
+
 
    private void addBonusToWorld()
    {
@@ -314,17 +330,14 @@ public class MapController  {
         {
            // bc.getWorldTransform();
             if (bc.isVisible() == false)
-            {
-                bc.setVisible(true);
-                bc.getBody().translate(new Vector3(0,0,-20)); //chamar funcao que reposiciona as ceninhas
-            }
-
+                bc.replaceBonus(ball.getModel().getPosZ());
+                //bc.getBody().translate(new Vector3(0,0,-20));
             bc.getWorldTransform();
         }
 
 
         //a bola anda para a frente e roda
-        ball.moveFront(0.1f);   //atualiza a posiçao da bola (getWorldTransform)
+        ball.moveFront(0.2f);   //atualiza a posiçao da bola (getWorldTransform)
 
         //a camera segue a bola
         camera.position.x = ball.getModel().getPosX();

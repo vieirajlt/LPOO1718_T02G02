@@ -23,7 +23,7 @@ public class BonusModel extends EntityModel{
     private String id;
 
     public BonusModel() {
-        this(0f, 1f, 0f, 1f, BonusType.DOUBLE);
+        this(BonusType.DOUBLE);
     }
 
     public BonusModel(float x, float y, float z, float d, BonusType type) {
@@ -36,6 +36,11 @@ public class BonusModel extends EntityModel{
         setValueMaterialAndId();
 
         setModel(buildModel());
+    }
+
+    public BonusModel(BonusType type)
+    {
+        this(0f, 1f, 0f, 1f, type);
     }
 
     private Model buildModel() {
