@@ -37,7 +37,7 @@ public class PlainJump extends ApplicationAdapter implements InputProcessor {
 
 	private void setCamera() {
 		camera = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.position.set(3f, 7f, 10f);
+		camera.position.set(0f, 7f, 10f);
 		camera.lookAt(0, 4f, 0);
 		camera.far = 100f;
 		camera.near = 1f;

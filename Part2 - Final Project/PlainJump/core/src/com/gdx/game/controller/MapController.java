@@ -53,6 +53,9 @@ public class MapController  {
     private BallController ball;
     private Array<BonusController> bonus;
 
+    private int plainLevels;
+    private int positioningLevel;
+    private int[] positions;
 
     private btCollisionConfiguration collisionConfig;
     private btDispatcher dispatcher;
@@ -108,6 +111,8 @@ public class MapController  {
         model = MapModel.getInstance();
         view = MapView.getInstance();
         contactListener = new ControllerContactListener();
+
+        positions = new int[]{-16, -12, -8, -4, 0, 4, 8, 12, 16};
 
         buildWorld();
 
@@ -174,6 +179,8 @@ public class MapController  {
         plains.add(p23);
         plains.add(p24);
 
+        plainLevels = 8;
+        positioningLevel = 8;
 
     }
 
@@ -181,21 +188,35 @@ public class MapController  {
         boolean spanwPlain = true;
 
         Random rand = new Random();
-        int position[] = {-16, -12, -8, -4, 0, 4, 8, 12, 16};
         int loc = 0;
         for(PlainController pc : plains) {
-            int r = rand.nextInt(position.length);
+            int r = rand.nextInt(positions.length);
 
             if(spanwPlain)
                 spanwPlain = false;
             else
-                pc.getView().moveModelInstance(position[r], 0, -loc*(((PlainModel) (pc.getModel())).getDepth()));
+                pc.getView().moveModelInstance(positions[r], 0, -loc*(((PlainModel) (pc.getModel())).getDepth()));
             ++loc;
-            if(loc%8 == 0) {
+            if(loc%plainLevels == 0) {
                 loc = 0;
             }
         }
 
+    }
+
+    private void placePlains(int lvl) {
+
+        Random rand = new Random();
+        int loc = positioningLevel;
+
+        for(int it = lvl; it < plains.size; it += plainLevels) {
+            int r = rand.nextInt(positions.length);
+
+            PlainController pc = plains.get(it);
+            pc.getView().moveModelInstance(positions[r], 0, -loc*(((PlainModel) (pc.getModel())).getDepth()));
+        }
+
+        ++positioningLevel;
     }
 
     private void addPlainsToWorld()
