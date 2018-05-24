@@ -270,10 +270,10 @@ public class MapController  {
        {
            bc.getBody().proceedToTransform(bc.getView().getModelInstance().transform);
            bc.getBody().setUserValue(view.getInstances().size);
-           bc.getBody().setCollisionFlags( bc.getBody().getCollisionFlags() | btCollisionObject.CollisionFlags.CF_KINEMATIC_OBJECT);
+          bc.getBody().setCollisionFlags( bc.getBody().getCollisionFlags() | btCollisionObject.CollisionFlags.CF_NO_CONTACT_RESPONSE);
            view.addInstance((BonusView) (bc.getView()));
            world.addRigidBody(bc.getBody());
-            bc.getBody().setActivationState(Collision.DISABLE_DEACTIVATION);
+           bc.getBody().setActivationState(Collision.DISABLE_DEACTIVATION);
        }
    }
 
@@ -339,7 +339,7 @@ public class MapController  {
         view.render(camera);
 
         //a cena do debug
-       debugDrawer.begin(camera);
+      debugDrawer.begin(camera);
         world.debugDrawWorld();
         debugDrawer.end();
 

@@ -75,7 +75,7 @@ public class BallController extends EntityController{
         updatePosition();
 
         //moveToPos(0, 0, -frontalSpeed);
-        getModel().setPosZ(-frontalSpeed + getModel().getPosZ());
+        //getModel().setPosZ(-frontalSpeed + getModel().getPosZ()); o que é isto?????????????????
         getBody().translate(new Vector3(0,0,-frontalSpeed));
         getWorldTransform();
         //nao sei esta parte interfere com o x da bola, nao devia mas acho que as vezes faz isso
