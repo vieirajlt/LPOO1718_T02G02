@@ -53,7 +53,7 @@ public class BallController extends EntityController{
     public void jump() {
         updatePosition();
         if (canJump()) {
-            getBody().applyCentralForce(new Vector3(0, 2000, -300)); //com 500 fica melhor, acho que -50 fica bem, nao sei
+            getBody().applyCentralForce(new Vector3(0, 3000, 0)); //com 500 fica melhor, acho que -50 fica bem, nao sei
             getModel().setPosY(getBody().getCenterOfMassPosition().y);
             getModel().setPosZ(getBody().getCenterOfMassPosition().z);
         }
@@ -83,6 +83,19 @@ public class BallController extends EntityController{
         getBody().setWorldTransform(getView().getModelInstance().transform);
         //////tenho que testar melhor
        updateModel();
+    }
+
+    public void setLinearVelocity()
+    {
+        Vector3 v = getBody().getLinearVelocity();
+        v.z = -frontalSpeed;
+        getBody().setLinearVelocity(v);
+    }
+
+    public void incLinearVelocity(float inc)
+    {
+        frontalSpeed += inc;
+        setLinearVelocity();
     }
 
 

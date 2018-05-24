@@ -64,7 +64,7 @@ public class BonusController extends EntityController{
         int max = 16;
         int min = -16;
         int r = rand.nextInt(position.length);
-        int z = rand.nextInt(500);
+        int z = rand.nextInt(50);
         getView().moveModelInstance(r, 1,-z+ballCurrentZ); //nao funciona quando y= 0 (fica dentro do plano
         setWorldTransform();
         updateModel();

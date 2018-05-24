@@ -14,8 +14,12 @@ public class MapModel {
     //score multiplier atual
     private int scoreMultiplier = 1;
 
-    //score multiplier anterior
-    private int previousScoreMultiplier = 1;
+
+    private int scoreVelocityLimit = 1000;
+
+    private float counter = 0;
+
+    private float counterLimit = 8;
 
     public MapModel() {
 
@@ -31,8 +35,11 @@ public class MapModel {
 
 
     //update ScoreCount tendo em considerecao o multiplier (parte dos bonus)
-    public void updateScore(int delta) {
+    public boolean updateScore(int delta) {
         scoreCount += scoreMultiplier*delta;
+        if (scoreCount % scoreVelocityLimit == 0)
+            return true;
+        return false;
     }
 
     public int getScoreCount() {
@@ -48,20 +55,25 @@ public class MapModel {
     }
 
     public void setScoreMultiplier(int scoreMultiplier) {
-        this.previousScoreMultiplier = this.scoreMultiplier;
-        this.scoreMultiplier *= scoreMultiplier;
+        this.scoreMultiplier = scoreMultiplier;
+        this.counter = 0;
     }
 
-    public int getPreviousScoreMultiplier() {
-        return previousScoreMultiplier;
-    }
-
-    public void setPreviousScoreMultiplier(int previousScoreMultiplier) {
-        this.previousScoreMultiplier = previousScoreMultiplier;
-    }
-
-    public void setToPreviousScoreMultiplier()
+    public void incCounter(float inc)
     {
-        setScoreMultiplier(this.previousScoreMultiplier);
+        this.counter += inc;
+        //System.out.print("counter: ");
+        //System.out.println(counter);
+        //System.out.println(counterLimit);
+        if (this.counter >= this.counterLimit && scoreMultiplier != 1)
+        {
+            //System.out.println("dwgcgchrkgegccbhejgcjeggcefhgchfhehcfvecvjfecvfvcejfgefchbfhebcj");
+            scoreMultiplier = 1;
+        }
     }
+
+
+
+
+
 }

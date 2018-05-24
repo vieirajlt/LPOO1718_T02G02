@@ -1,7 +1,9 @@
 package com.gdx.game.controller;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
 import com.badlogic.gdx.physics.bullet.collision.Collision;
@@ -20,6 +22,7 @@ import com.badlogic.gdx.physics.bullet.dynamics.btSequentialImpulseConstraintSol
 import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.gdx.game.controller.entities.BallController;
 import com.gdx.game.controller.entities.BonusController;
 import com.gdx.game.controller.entities.PlainController;
@@ -64,11 +67,13 @@ public class MapController  {
 
     private Vector3 gravity;
 
-    ControllerContactListener contactListener;
+    private ControllerContactListener contactListener;
 
-    DebugDrawer debugDrawer;
+    private DebugDrawer debugDrawer;
 
-    long startTime = 0;
+    private long startTime = TimeUtils.nanoTime() ;
+
+    private float speedIncrease = 0.05f;
 
 
 
@@ -135,7 +140,7 @@ public class MapController  {
 
     private void addPlains() {
 
-        plainLevels = 8;
+        plainLevels = 15;
         plainsPerLevel = 3;
         positioningLevel = plainLevels;
 
@@ -303,28 +308,41 @@ public class MapController  {
         for (BonusController bc : bonus)
         {
            // bc.getWorldTransform();
-            if (bc.isVisible() == false)
+            if (bc.isVisible() == false || bc.getBody().getCenterOfMassPosition().z > camera.position.z)
                 bc.replaceBonus(ball.getModel().getPosZ());
                 //bc.getBody().translate(new Vector3(0,0,-20));
             bc.getWorldTransform();
         }
 
+
         //é mais ou menos isto, faz o update do score, nao sei bem se queres um intervalo de tempo maior ou menor
         //ja aumenta consoante o bonus e tal, mas falta meter um "alarme" para ir retirando os bonus, e é isso basicamnente
         //tenho de pensar nisso melhor, porque ele pode apanhar o mesmo bonus duas vezes seguidas e nao sei bem como tirar 1 e nao o outro
         //talvez uma variavel no bonuscontroller a dizer o numero de ocorrencias  e depois vai se tirando uma por uma?
-        //mas entao onde é que guarda o valor de tempo inicial que vai fazer soar o alarme??7
+        //mas entao onde é que guarda o valor de tempo inicial que vai fazer soar o alarme??
         //estou confusa e a sentir me abandonada :(  :(   :(
-        if (TimeUtils.timeSinceNanos(startTime) > 1000)
+        if (TimeUtils.timeSinceNanos(startTime) > 10000)
         {
-            model.updateScore(1);
+
+            if (model.updateScore(1))
+                ball.incLinearVelocity(speedIncrease);
             startTime = TimeUtils.nanoTime();
             System.out.println(model.getScoreCount());
         }
 
+        final float delay = 0.1f;
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                model.incCounter(delay);
+            }
+        }, delay);
 
+       // model.incCounter(TimeUtils.timeSinceNanos(startTime));
+        ball.setLinearVelocity();
         //a bola anda para a frente e roda
         ball.moveFront();   //atualiza a posiçao da bola (getWorldTransform)
+
         updatePlains(camera);
 
         //a camera segue a bola
