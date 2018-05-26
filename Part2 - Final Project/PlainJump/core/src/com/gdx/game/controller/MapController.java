@@ -88,6 +88,7 @@ public class MapController  {
                         System.out.println("Colision");
                         bc.setVisible(false);
                         model.setScoreMultiplier(((BonusModel)bc.getModel()).getValue());
+                        model.setImmune(((BonusModel)bc.getModel()).isImmune());
                         break;
                     }
                 }
@@ -183,7 +184,6 @@ public class MapController  {
             int r = rand.nextInt(positions.length);
 
             pc.moveToPos(positions[r], 0, -plainLevels*(((PlainModel) (pc.getModel())).getDepth()));
-
         }
         ++positioningLevel;
     }
@@ -257,9 +257,11 @@ public class MapController  {
         BonusController b1 = new BonusController(BonusModel.BonusType.DOUBLE);
         BonusController b2 = new BonusController(BonusModel.BonusType.TRIPLE);
         BonusController b3 = new BonusController(BonusModel.BonusType.QUADRUPLE);
+        BonusController b4 = new BonusController(BonusModel.BonusType.IMMUNITY);
         bonus.add(b1);
         bonus.add(b2);
         bonus.add(b3);
+        bonus.add(b4);
     }
 
 
@@ -300,10 +302,9 @@ public class MapController  {
 
         for(PlainController pc : plains)
         {
-           // plains.get(i).getBody().translate(new Vector3(0,0,0.1f)); //anda as plataformas
             pc.getWorldTransform();
+            pc.updateDistanceTo(ball.getModel().getPosX(), ball.getModel().getPosZ());
         }
-
 
         for (BonusController bc : bonus)
         {
@@ -314,20 +315,13 @@ public class MapController  {
             bc.getWorldTransform();
         }
 
-
-        //é mais ou menos isto, faz o update do score, nao sei bem se queres um intervalo de tempo maior ou menor
-        //ja aumenta consoante o bonus e tal, mas falta meter um "alarme" para ir retirando os bonus, e é isso basicamnente
-        //tenho de pensar nisso melhor, porque ele pode apanhar o mesmo bonus duas vezes seguidas e nao sei bem como tirar 1 e nao o outro
-        //talvez uma variavel no bonuscontroller a dizer o numero de ocorrencias  e depois vai se tirando uma por uma?
-        //mas entao onde é que guarda o valor de tempo inicial que vai fazer soar o alarme??
-        //estou confusa e a sentir me abandonada :(  :(   :(
-        if (TimeUtils.timeSinceNanos(startTime) > 10000)
+        //faz update do score, se a bola tiver caido ele para
+        if (TimeUtils.timeSinceNanos(startTime) > 10000 && !ball.isFalling())
         {
-
             if (model.updateScore(1))
                 ball.incLinearVelocity(speedIncrease);
             startTime = TimeUtils.nanoTime();
-            System.out.println(model.getScoreCount());
+            // System.out.println(model.getScoreCount());
         }
 
         final float delay = 0.1f;
@@ -338,10 +332,20 @@ public class MapController  {
             }
         }, delay);
 
-       // model.incCounter(TimeUtils.timeSinceNanos(startTime));
+
         ball.setLinearVelocity();
-        //a bola anda para a frente e roda
+
         ball.moveFront();   //atualiza a posiçao da bola (getWorldTransform)
+
+
+
+      if (model.isImmune() && ball.isFalling())
+      {
+          ball.getBody().applyCentralImpulse(new Vector3(0,90,0));
+          ball.updateModel();
+          ball.setWorldTransform();
+          ball.setIsFalling(false);
+      }
 
         updatePlains(camera);
 
@@ -357,9 +361,9 @@ public class MapController  {
         view.render(camera);
 
         //a cena do debug
-      debugDrawer.begin(camera);
+     /* debugDrawer.begin(camera);
         world.debugDrawWorld();
-        debugDrawer.end();
+        debugDrawer.end();*/
 
     }
 
@@ -400,10 +404,42 @@ public class MapController  {
         ball.moveLeft();
     }
 
-    public void moveRigth()
+    public void moveRight()
     {
         ball.moveRight();
     }
+
+
+    // nao sei se esta a funcionar
+    private int findClosestPlain()
+    {
+        float min = plains.get(0).getDistanceTo();
+        int index = 0;
+        for (int i = 1; i < plains.size; i++)
+        {
+          if (plains.get(i).getDistanceTo() < min)
+          {
+              min = plains.get(i).getDistanceTo();
+              index = i;
+          }
+        }
+
+        return index;
+    }
+
+    //nao funciona nem nada que se pareca
+    private void replaceBall()
+    {
+        int index = findClosestPlain();
+        System.out.println(index);
+        ball.getBody().translate(new Vector3(plains.get(index).getModel().getPosX(),1,plains.get(index).getModel().getPosZ()));
+        ball.getBody().getWorldTransform();
+        ball.updateModel();
+        System.out.println(ball.getModel().getPosX());
+    }
+
+
+
 
 
     public static MapController getInstance() {

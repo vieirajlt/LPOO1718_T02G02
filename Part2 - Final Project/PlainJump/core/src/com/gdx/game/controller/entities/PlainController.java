@@ -11,6 +11,8 @@ public class PlainController extends EntityController{
 
     private int id;
 
+    private float distanceTo = 0;
+
     public PlainController() {
         super();
 
@@ -28,11 +30,8 @@ public class PlainController extends EntityController{
 
     public PlainController(float x, float y, float z, float w, float h, float d) {
         super();
-
         this.id = ++idCounter;
-
         setModel(new PlainModel(this.id, x, y, z, w, h, d));
-        //setView(new PlainView(this.id, getModel().getModel()));
         setView(new PlainView(this.id, getModel().getModel(), new btBoxShape(new Vector3(w/2, h/2, d/2)),0f));
         updatePosition();
     }
@@ -42,7 +41,6 @@ public class PlainController extends EntityController{
             ((PlainModel) getModel()).setWidth(id, w);
             ((PlainModel) getModel()).setHeight(id, h);
             ((PlainModel) getModel()).setDepth(id, d);
-           // setView(new PlainView(this.id, getModel().getModel()));
             setView(new PlainView(this.id, getModel().getModel(), new btBoxShape(new Vector3(w/2, h/2, d/2)),0f));
         }
     }
@@ -51,6 +49,17 @@ public class PlainController extends EntityController{
         return id;
     }
 
+    public float getDistanceTo() {
+        return distanceTo;
+    }
 
+    public void setDistanceTo(float distanceTo) {
+        this.distanceTo = distanceTo;
+    }
+
+    public void updateDistanceTo(float x, float z)
+    {
+        setDistanceTo((float) Math.hypot(getModel().getPosX() - x, getModel().getPosZ() - z));
+    }
 
 }

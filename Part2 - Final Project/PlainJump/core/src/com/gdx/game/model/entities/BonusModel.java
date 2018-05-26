@@ -10,11 +10,13 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 
 public class BonusModel extends EntityModel{
 
-    public enum BonusType {DOUBLE,TRIPLE,QUADRUPLE} //mais???
+    public enum BonusType {DOUBLE,TRIPLE,QUADRUPLE, IMMUNITY}
 
     private BonusType type;
 
-    int value;
+    private int value;
+
+    private boolean immune;
 
     private float diameter;
 
@@ -66,10 +68,6 @@ public class BonusModel extends EntityModel{
         return type;
     }
 
-    private void setType(BonusType type) {
-        this.type = type;
-    }
-
     public int getValue() {
         return value;
     }
@@ -79,19 +77,28 @@ public class BonusModel extends EntityModel{
         {
             case DOUBLE:
                 this.value = 2;
+                this.immune = false;
                 material = new Material(ColorAttribute.createDiffuse(Color.WHITE));
                 id = "DoubleBonus";
                 break;
             case TRIPLE:
                 this.value = 3;
+                this.immune = false;
                 material = new Material(ColorAttribute.createDiffuse(Color.YELLOW));
                 id = "TripleBonus";
                 break;
             case QUADRUPLE:
                 this.value = 4;
+                this.immune = false;
                 material = new Material(ColorAttribute.createDiffuse(Color.RED));
                 id = "QuadrupleBonus";
                 break;
+            case IMMUNITY:
+                this.value = 1;
+                this.immune = true;
+                material = new Material(ColorAttribute.createDiffuse(Color.GREEN));
+                id = "ImmunityBonus";
+
         }
     }
 
@@ -99,7 +106,7 @@ public class BonusModel extends EntityModel{
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public boolean isImmune() {
+        return immune;
     }
 }

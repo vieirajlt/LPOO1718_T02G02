@@ -1,25 +1,21 @@
 package com.gdx.game.model;
 
-//honestly  nao sei para que e que isto serve, nao sei se vai ter a interface ou que vai ser aqui, not sure
-// vou por aqui a cena dos scores, se nao concordares mudo para a bola
-//falei com o senhor professor e ele concordou que fazer o decorator para isto ia ser muito complicado e que mais valia
-//fazer como estou a fazer agora, fun, temos de arranjar mais padroes nesta PORRA
+
 public class MapModel {
 
     private static MapModel instance = null;
 
-    //score atual
     private int scoreCount = 0;
 
-    //score multiplier atual
     private int scoreMultiplier = 1;
-
 
     private int scoreVelocityLimit = 1000;
 
     private float counter = 0;
 
     private float counterLimit = 8;
+
+    private boolean immune = false;
 
     public MapModel() {
 
@@ -62,14 +58,21 @@ public class MapModel {
     public void incCounter(float inc)
     {
         this.counter += inc;
-        //System.out.print("counter: ");
-        //System.out.println(counter);
-        //System.out.println(counterLimit);
-        if (this.counter >= this.counterLimit && scoreMultiplier != 1)
+        if (this.counter >= this.counterLimit && (scoreMultiplier != 1 || immune == true))
         {
-            //System.out.println("dwgcgchrkgegccbhejgcjeggcefhgchfhehcfvecvjfecvfvcejfgefchbfhebcj");
             scoreMultiplier = 1;
+            immune = false;
         }
+
+
+    }
+
+    public boolean isImmune() {
+        return immune;
+    }
+
+    public void setImmune(boolean immune) {
+        this.immune = immune;
     }
 
 

@@ -19,7 +19,6 @@ public class BallController extends EntityController{
         BallModel ballModel = new BallModel();
         setModel(ballModel);
         setView(new BallView(getModel().getModel(),new btSphereShape(ballModel.getDiameter()/2),1f));
-       // setView(new BallView(getModel().getModel()));
         lateralSpeed = 10;
         frontalSpeed = 0.2f;
         rotationDegree = (frontalSpeed/(ballModel.getDiameter() * (float)Math.PI))*360;
@@ -30,7 +29,6 @@ public class BallController extends EntityController{
         super();
 
         setModel(new BallModel(x, y, z, d));
-        //setView(new BallView(getModel().getModel()));
         setView(new BallView(getModel().getModel(),new btSphereShape(d/2),1f));
         updatePosition();
     }
@@ -38,7 +36,6 @@ public class BallController extends EntityController{
     public void setDiameter(float d) {
         if(getModel() instanceof BallModel) {
             ((BallModel) getModel()).setDiameter(d);
-           // setView(new BallView(getModel().getModel()));
             setView(new BallView(getModel().getModel(),new btSphereShape(d/2),1f));
         }
     }
@@ -73,16 +70,30 @@ public class BallController extends EntityController{
 
     public void moveFront() {
         updatePosition();
-
-        //moveToPos(0, 0, -frontalSpeed);
-        //getModel().setPosZ(-frontalSpeed + getModel().getPosZ()); o que é isto?????????????????
         getBody().translate(new Vector3(0,0,-frontalSpeed));
         getWorldTransform();
-        //nao sei esta parte interfere com o x da bola, nao devia mas acho que as vezes faz isso
         getView().getModelInstance().transform.rotate(new Vector3(1,0,0),rotationDegree);
         getBody().setWorldTransform(getView().getModelInstance().transform);
-        //////tenho que testar melhor
-       updateModel();
+        updateModel();
+        updateFalling();
+    }
+
+    private void updateFalling()
+    {
+        if (getModel().getPosY() < 0)
+            ((BallModel) getModel()).setFalling(true);
+        else
+            ((BallModel) getModel()).setFalling(false);
+    }
+
+    public boolean isFalling()
+    {
+        return ((BallModel) getModel()).isFalling();
+    }
+
+    public void setIsFalling(boolean falling)
+    {
+        ((BallModel) getModel()).setFalling(falling);
     }
 
     public void setLinearVelocity()
@@ -122,5 +133,16 @@ public class BallController extends EntityController{
     public void setFrontalSpeed(float frontalSpeed) {
         this.frontalSpeed = frontalSpeed;
     }
+
+
+   /* public boolean isImmune()
+    {
+        return ((BallModel)getModel()).isImmune();
+    }
+
+    public void setImmune(boolean immune)
+    {
+        ((BallModel)getModel()).setImmune(immune);
+    }*/
 
 }

@@ -13,9 +13,6 @@ public class BonusController extends EntityController{
 
     private boolean visible = true; //nao sei se devia ser aqui ou na view ou no model
 
-    private static final int[] position =  {-16, -12, -8, -4, 0, 4, 8, 12, 16}; //nao sei se devia ser aqui ou na view ou no model
-
-
     public BonusController() {
         super();
         BonusModel bonusModel = new BonusModel();
@@ -57,15 +54,15 @@ public class BonusController extends EntityController{
         this.visible = visible;
     }
 
-
+    //tenho que rever isto, nao esta a fazer muito sentido
     public void placeBonus(float ballCurrentZ)
     {
         Random rand = new Random();
         int max = 16;
         int min = -16;
-        int r = rand.nextInt(position.length);
-        int z = rand.nextInt(50);
-        getView().moveModelInstance(r, 1,-z+ballCurrentZ); //nao funciona quando y= 0 (fica dentro do plano
+        int r = min + rand.nextInt(max*2 + 1);
+        int z = rand.nextInt(10);
+        getView().moveModelInstance(r, 1,-z+ballCurrentZ); //nao funciona quando y= 0 (fica dentro do plano)
         setWorldTransform();
         updateModel();
     }
@@ -77,9 +74,9 @@ public class BonusController extends EntityController{
         Random rand = new Random();
         int max = 16;
         int min = -16;
-         int r = rand.nextInt(position.length);
-        int z = rand.nextInt(500);
+        int r = min + rand.nextInt(max*2 + 1);
+        int z = rand.nextInt(10);
         getBody().translate(new Vector3(r,0,-z+ballCurrentZ));
-        updateModel(); /// aqui faz
+        updateModel();
     }
 }

@@ -12,7 +12,16 @@ public class BallModel extends EntityModel{
 
     private float diameter;
 
+
+    /*******nao sei isto devia estar aqui ou no controller apenas******/
+
     private boolean jump = false;
+
+    private boolean falling = false;
+
+   // private boolean immune = false;
+
+    /******************************************************************/
 
     private static final Material material = new Material(ColorAttribute.createDiffuse(Color.ORANGE));
 
@@ -55,4 +64,19 @@ public class BallModel extends EntityModel{
         this.jump = jump;
     }
 
+    public boolean isFalling() {
+        return falling;
+    }
+
+    public void setFalling(boolean falling) {
+        this.falling = falling;
+    }
+
+   /* public boolean isImmune() {
+        return immune;
+    }
+
+    public void setImmune(boolean immune) {
+        this.immune = immune;
+    }*/
 }
