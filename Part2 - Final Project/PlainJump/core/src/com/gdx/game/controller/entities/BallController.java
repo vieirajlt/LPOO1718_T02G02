@@ -1,5 +1,7 @@
 package com.gdx.game.controller.entities;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.gdx.game.model.entities.BallModel;
@@ -53,7 +55,7 @@ public class BallController extends EntityController{
     public void jump() {
         updatePosition();
         if (canJump()) {
-            getBody().applyCentralForce(new Vector3(0, 3000, 0)); //com 500 fica melhor, acho que -50 fica bem, nao sei
+            getBody().applyCentralForce(new Vector3(0, 3000, 0));
             getModel().setPosY(getBody().getCenterOfMassPosition().y);
             getModel().setPosZ(getBody().getCenterOfMassPosition().z);
         }
@@ -88,6 +90,7 @@ public class BallController extends EntityController{
         else
             ((BallModel) getModel()).setFalling(false);
     }
+
 
     public boolean isFalling()
     {
@@ -154,5 +157,13 @@ public class BallController extends EntityController{
 
     public void setCurrentPlainIndex(int currentPlainIndex) {
         this.currentPlainIndex = currentPlainIndex;
+    }
+
+    public void switchColor(Color c1, Color c2)
+    {
+        if (getColor() == c1)
+            setColor(c2);
+        if (getColor() == c2)
+            setColor(c1);
     }
 }

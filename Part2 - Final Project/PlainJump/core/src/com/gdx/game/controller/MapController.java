@@ -97,6 +97,7 @@ public class MapController  {
                         model.setScoreMultiplier(((BonusModel)bc.getModel()).getValue());
                         model.setImmune(((BonusModel)bc.getModel()).isImmune());
                         isBonus = true;
+                        ball.setColor(bc.getColor());
                         break;
                     }
                 }
@@ -114,7 +115,6 @@ public class MapController  {
         public void onContactEnded(int userValue0, int userValue1) {
             if (userValue1 != 0)
             {
-               // ((ColorAttribute)view.getInstances().get(userValue1).materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.VIOLET);
                 ball.setJump(false);  //para que so se possa saltar 1 vez de cada vez
             }
         }
@@ -287,7 +287,7 @@ public class MapController  {
        {
            bc.getBody().proceedToTransform(bc.getView().getModelInstance().transform);
            bc.getBody().setUserValue(view.getInstances().size);
-          bc.getBody().setCollisionFlags( bc.getBody().getCollisionFlags() | btCollisionObject.CollisionFlags.CF_NO_CONTACT_RESPONSE);
+           bc.getBody().setCollisionFlags( bc.getBody().getCollisionFlags() | btCollisionObject.CollisionFlags.CF_NO_CONTACT_RESPONSE);
            view.addInstance((BonusView) (bc.getView()));
            world.addRigidBody(bc.getBody());
            bc.getBody().setActivationState(Collision.DISABLE_DEACTIVATION);
@@ -310,19 +310,12 @@ public class MapController  {
 
         world.stepSimulation(delta, 5, 1f / 60f);
 
-        for(PlainController pc : plains)
+      /* for(PlainController pc : plains)
         {
             pc.getWorldTransform();
-        }
+        }*/
 
-        for (BonusController bc : bonus)
-        {
-           // bc.getWorldTransform();
-            if (bc.isVisible() == false || bc.getBody().getCenterOfMassPosition().z > camera.position.z)
-                bc.replaceBonus(ball.getModel().getPosZ());
-                //bc.getBody().translate(new Vector3(0,0,-20));
-            bc.getWorldTransform();
-        }
+        updateBonus(camera);
 
         //faz update do score, se a bola tiver caido ele para
         if (TimeUtils.timeSinceNanos(startTime) > 10000 && !ball.isFalling())
@@ -330,39 +323,24 @@ public class MapController  {
             if (model.updateScore(1))
                 ball.incLinearVelocity(speedIncrease);
             startTime = TimeUtils.nanoTime();
-            // System.out.println(model.getScoreCount());
+             System.out.println(model.getScoreCount());
         }
 
         final float delay = 0.1f;
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                model.incCounter(delay);
+                if (model.incCounter(delay))
+                    ball.setColor(Color.ORANGE);
             }
         }, delay);
 
-        ball.setLinearVelocity();
-        ball.moveFront();   //atualiza a posiçao da bola (getWorldTransform)
-
-
+        updateBall();
 
         updatePlains(camera);
 
-        if (model.isImmune() && ball.isFalling())
-          {
-             //ball.getBody().applyCentralImpulse(new Vector3(0,90,0));
-              replaceBall();
-              //findClosestPlain();
-              ball.updateModel();
-              ball.setWorldTransform();
-              ball.setIsFalling(false);
-          }
 
 
-
-
-
-        //a camera segue a bola
         camera.position.x = ball.getModel().getPosX();
         if(ball.getModel().getPosY() >= 0) {
             camera.position.y = ball.getModel().getPosY()+cameraBallDistance/3;
@@ -390,6 +368,33 @@ public class MapController  {
         }
     }
 
+    private void updateBonus(PerspectiveCamera camera)
+    {
+        for (BonusController bc : bonus)
+        {
+            // bc.getWorldTransform();
+            if (bc.isVisible() == false || bc.getBody().getCenterOfMassPosition().z > camera.position.z)
+                bc.replaceBonus(ball.getModel().getPosZ());
+            //bc.getBody().translate(new Vector3(0,0,-20));
+            bc.getWorldTransform();
+        }
+    }
+
+    private void updateBall()
+    {
+        ball.setLinearVelocity();
+        ball.moveFront();
+
+        if (model.isImmune() && ball.isFalling())
+        {
+            //ball.getBody().applyCentralImpulse(new Vector3(0,90,0));
+            replaceBall();
+            ball.updateModel();
+            ball.setWorldTransform();
+            ball.setIsFalling(false);
+        }
+    }
+
     public void dispose() {
         view.dispose();
 
@@ -408,7 +413,6 @@ public class MapController  {
 
     public void jump()
     {
-        // e um bocado imprevisivel porque é um impulso
         ball.jump();
     }
 
@@ -421,19 +425,11 @@ public class MapController  {
     {
         ball.moveRight();
     }
-    
 
     private void replaceBall()
     {
-
-      // float x = plains.get(0).getBody().getCenterOfMassPosition().x;
-       //float z = plains.get(0).getBody().getCenterOfMassPosition().z;
-
         float x = plains.get(ball.getCurrentPlainIndex()-1).getBody().getCenterOfMassPosition().x;
         float z = plains.get(ball.getCurrentPlainIndex()-1).getBody().getCenterOfMassPosition().z;
-
-        //System.out.println(x);
-      // ball.getBody().translate(new Vector3(x,1,z));
         ball.getView().getModelInstance().transform.setToTranslation(x,1,z);
         ball.setWorldTransform();
         ball.updateModel();

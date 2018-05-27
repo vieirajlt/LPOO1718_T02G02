@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 
+
+//Nao sei se devia fazer classes derivadas
 public class BonusModel extends EntityModel{
 
     public enum BonusType {DOUBLE,TRIPLE,QUADRUPLE, IMMUNITY}
@@ -54,6 +56,16 @@ public class BonusModel extends EntityModel{
                 .sphere(this.diameter, this.diameter, this.diameter, 30, 30);
         return modelBuilder.end();
     }
+
+   /* private Model buildModel() {
+        ModelBuilder modelBuilder = new ModelBuilder();
+        modelBuilder.begin();
+        modelBuilder.node().id = id;
+        modelBuilder.part("capsule", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal, material)
+                .capsule(this.diameter/2,1f,10);
+        return modelBuilder.end();
+    }*/
+
 
     public float getDiameter() {
         return diameter;

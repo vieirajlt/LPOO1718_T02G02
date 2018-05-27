@@ -21,7 +21,6 @@ public class PlainController extends EntityController{
         setModel(plainModel);
         //setView(new PlainView(this.id, getModel().getModel()));
 
-
         setView(new PlainView(this.id, getModel().getModel(), new btBoxShape(new Vector3(plainModel.getWidth()/2, plainModel.getHeight()/2, plainModel.getDepth()/2)),0f));
         updatePosition();
     }

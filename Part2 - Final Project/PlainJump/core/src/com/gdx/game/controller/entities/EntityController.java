@@ -1,5 +1,7 @@
 package com.gdx.game.controller.entities;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.gdx.game.model.entities.EntityModel;
 import com.gdx.game.view.entities.EntityView;
@@ -80,5 +82,16 @@ public class EntityController {
 
     public void dispose() {
         model.dispose();
+    }
+
+
+    public void setColor(Color color)
+    {
+        ((ColorAttribute)getView().getModelInstance().materials.get(0).get(ColorAttribute.Diffuse)).color.set(color);
+    }
+
+    public Color getColor()
+    {
+        return ((ColorAttribute)getView().getModelInstance().materials.get(0).get(ColorAttribute.Diffuse)).color;
     }
 }

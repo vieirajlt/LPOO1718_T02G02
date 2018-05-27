@@ -13,8 +13,9 @@ public class MapModel {
 
     private float counter = 0;
 
-    private float counterLimit = 8;
+    private float counterLimit = 10;
 
+    //nao sei se isto devia ser aqui ou na bola
     private boolean immune = false;
 
     public MapModel() {
@@ -55,7 +56,7 @@ public class MapModel {
         this.counter = 0;
     }
 
-    public void incCounter(float inc)
+   /* public void incCounter(float inc)
     {
         this.counter += inc;
         if (this.counter >= this.counterLimit && (scoreMultiplier != 1 || immune == true))
@@ -63,8 +64,18 @@ public class MapModel {
             scoreMultiplier = 1;
             immune = false;
         }
+    }*/
 
-
+    public boolean incCounter(float inc)
+    {
+        this.counter += inc;
+        if (this.counter >= this.counterLimit && (scoreMultiplier != 1 || immune == true))
+        {
+            scoreMultiplier = 1;
+            immune = false;
+            return true;
+        }
+        return false;
     }
 
     public boolean isImmune() {
