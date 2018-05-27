@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
 import com.badlogic.gdx.physics.bullet.collision.Collision;
+import com.badlogic.gdx.physics.bullet.collision.CollisionObjectWrapper;
 import com.badlogic.gdx.physics.bullet.collision.ContactListener;
 import com.badlogic.gdx.physics.bullet.collision.btBroadphaseInterface;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionConfiguration;
@@ -35,7 +36,12 @@ import com.gdx.game.view.entities.BallView;
 import com.gdx.game.view.entities.BonusView;
 import com.gdx.game.view.entities.PlainView;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
+
+import static jdk.nashorn.internal.objects.NativeArray.sort;
 
 public class MapController  {
 
@@ -80,6 +86,7 @@ public class MapController  {
     class ControllerContactListener extends ContactListener {
         @Override
         public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
+            boolean isBonus = false;
             if (userValue1 != 0)
             {
                 for (BonusController bc : bonus) {
@@ -89,11 +96,14 @@ public class MapController  {
                         bc.setVisible(false);
                         model.setScoreMultiplier(((BonusModel)bc.getModel()).getValue());
                         model.setImmune(((BonusModel)bc.getModel()).isImmune());
+                        isBonus = true;
                         break;
                     }
                 }
 
-               // ((ColorAttribute)view.getInstances().get(userValue1).materials.get(0).get(ColorAttribute.Diffuse)).color.set(Color.WHITE);
+                if (!isBonus) {
+                    ball.setCurrentPlainIndex(userValue1);
+                }
                 ball.setJump(true);
 
             }
@@ -303,7 +313,6 @@ public class MapController  {
         for(PlainController pc : plains)
         {
             pc.getWorldTransform();
-            pc.updateDistanceTo(ball.getModel().getPosX(), ball.getModel().getPosZ());
         }
 
         for (BonusController bc : bonus)
@@ -332,22 +341,26 @@ public class MapController  {
             }
         }, delay);
 
-
         ball.setLinearVelocity();
-
         ball.moveFront();   //atualiza a posiçao da bola (getWorldTransform)
 
 
 
-      if (model.isImmune() && ball.isFalling())
-      {
-          ball.getBody().applyCentralImpulse(new Vector3(0,90,0));
-          ball.updateModel();
-          ball.setWorldTransform();
-          ball.setIsFalling(false);
-      }
-
         updatePlains(camera);
+
+        if (model.isImmune() && ball.isFalling())
+          {
+             //ball.getBody().applyCentralImpulse(new Vector3(0,90,0));
+              replaceBall();
+              //findClosestPlain();
+              ball.updateModel();
+              ball.setWorldTransform();
+              ball.setIsFalling(false);
+          }
+
+
+
+
 
         //a camera segue a bola
         camera.position.x = ball.getModel().getPosX();
@@ -408,38 +421,23 @@ public class MapController  {
     {
         ball.moveRight();
     }
+    
 
-
-    // nao sei se esta a funcionar
-    private int findClosestPlain()
-    {
-        float min = plains.get(0).getDistanceTo();
-        int index = 0;
-        for (int i = 1; i < plains.size; i++)
-        {
-          if (plains.get(i).getDistanceTo() < min)
-          {
-              min = plains.get(i).getDistanceTo();
-              index = i;
-          }
-        }
-
-        return index;
-    }
-
-    //nao funciona nem nada que se pareca
     private void replaceBall()
     {
-        int index = findClosestPlain();
-        System.out.println(index);
-        ball.getBody().translate(new Vector3(plains.get(index).getModel().getPosX(),1,plains.get(index).getModel().getPosZ()));
-        ball.getBody().getWorldTransform();
+
+      // float x = plains.get(0).getBody().getCenterOfMassPosition().x;
+       //float z = plains.get(0).getBody().getCenterOfMassPosition().z;
+
+        float x = plains.get(ball.getCurrentPlainIndex()-1).getBody().getCenterOfMassPosition().x;
+        float z = plains.get(ball.getCurrentPlainIndex()-1).getBody().getCenterOfMassPosition().z;
+
+        //System.out.println(x);
+      // ball.getBody().translate(new Vector3(x,1,z));
+        ball.getView().getModelInstance().transform.setToTranslation(x,1,z);
+        ball.setWorldTransform();
         ball.updateModel();
-        System.out.println(ball.getModel().getPosX());
     }
-
-
-
 
 
     public static MapController getInstance() {
@@ -448,3 +446,4 @@ public class MapController  {
         return instance;
     }
 }
+

@@ -11,8 +11,6 @@ public class PlainController extends EntityController{
 
     private int id;
 
-    private float distanceTo = 0;
-
     public PlainController() {
         super();
 
@@ -47,19 +45,6 @@ public class PlainController extends EntityController{
 
     public int getId() {
         return id;
-    }
-
-    public float getDistanceTo() {
-        return distanceTo;
-    }
-
-    public void setDistanceTo(float distanceTo) {
-        this.distanceTo = distanceTo;
-    }
-
-    public void updateDistanceTo(float x, float z)
-    {
-        setDistanceTo((float) Math.hypot(getModel().getPosX() - x, getModel().getPosZ() - z));
     }
 
 }

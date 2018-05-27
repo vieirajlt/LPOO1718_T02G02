@@ -13,6 +13,9 @@ public class BallController extends EntityController{
     private float frontalSpeed;
     private float rotationDegree;
 
+
+    private int currentPlainIndex = 0;
+
     private BallController() {
         super();
 
@@ -145,4 +148,11 @@ public class BallController extends EntityController{
         ((BallModel)getModel()).setImmune(immune);
     }*/
 
+    public int getCurrentPlainIndex() {
+        return currentPlainIndex;
+    }
+
+    public void setCurrentPlainIndex(int currentPlainIndex) {
+        this.currentPlainIndex = currentPlainIndex;
+    }
 }
