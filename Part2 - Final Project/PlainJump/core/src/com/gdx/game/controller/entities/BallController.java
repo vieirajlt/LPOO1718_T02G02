@@ -28,8 +28,8 @@ public class BallController extends EntityController{
         BallModel ballModel = new BallModel();
         setModel(ballModel);
         setView(new BallView(getModel().getModel(),new btSphereShape(ballModel.getDiameter()/2),1f));
-        lateralSpeed = 10;
-        frontalSpeed = 0.2f;
+        lateralSpeed = 1.5f;
+        frontalSpeed = 0.4f;
         rotationDegree = (frontalSpeed/(ballModel.getDiameter() * (float)Math.PI))*360;
         updatePosition();
     }
@@ -59,7 +59,7 @@ public class BallController extends EntityController{
     public void jump() {
         updatePosition();
         if (canJump()) {
-            getBody().applyCentralForce(new Vector3(0, 3000, 0));
+            getBody().applyCentralForce(new Vector3(0, 1500, 0));
             getModel().setPosY(getBody().getCenterOfMassPosition().y);
             getModel().setPosZ(getBody().getCenterOfMassPosition().z);
         }
