@@ -54,7 +54,7 @@ public class BonusController extends EntityController{
         this.visible = visible;
     }
 
-    //tenho que rever isto, nao esta a fazer muito sentido
+
     public void placeBonus(float ballCurrentZ)
     {
         Random rand = new Random();

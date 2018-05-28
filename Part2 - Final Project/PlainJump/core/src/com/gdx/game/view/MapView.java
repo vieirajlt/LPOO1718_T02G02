@@ -21,9 +21,6 @@ public class MapView {
 
     private ColorAttribute ambientLigth;
     private Array<DirectionalLight> directLigths;
-
-   // private Array<ModelInstance> instances;
-
     private Array<BodyInstance> instances;
     private Environment environment;
     private ModelBatch modelBatch;

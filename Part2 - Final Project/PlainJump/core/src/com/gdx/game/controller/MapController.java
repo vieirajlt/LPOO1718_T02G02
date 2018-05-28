@@ -372,10 +372,8 @@ public class MapController  {
     {
         for (BonusController bc : bonus)
         {
-            // bc.getWorldTransform();
             if (bc.isVisible() == false || bc.getBody().getCenterOfMassPosition().z > camera.position.z)
                 bc.replaceBonus(ball.getModel().getPosZ());
-            //bc.getBody().translate(new Vector3(0,0,-20));
             bc.getWorldTransform();
         }
     }
@@ -386,13 +384,28 @@ public class MapController  {
         ball.moveFront();
 
         if (model.isImmune() && ball.isFalling())
+
         {
             //ball.getBody().applyCentralImpulse(new Vector3(0,90,0));
             replaceBall();
             ball.updateModel();
             ball.setWorldTransform();
             ball.setIsFalling(false);
+            ball.setSwitchCounter(0);
+
         }
+
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                if (!ball.incCounter())
+                    ball.switchColor(Color.ORANGE, Color.GREEN);
+            }
+        }, 0.1f);
+
+
+
+
     }
 
     public void dispose() {
@@ -426,8 +439,10 @@ public class MapController  {
         ball.moveRight();
     }
 
+    //nao sei se o model dos planos esta a ser atualizado
     private void replaceBall()
     {
+        //mudar isto para chamar o model em vez do body
         float x = plains.get(ball.getCurrentPlainIndex()-1).getBody().getCenterOfMassPosition().x;
         float z = plains.get(ball.getCurrentPlainIndex()-1).getBody().getCenterOfMassPosition().z;
         ball.getView().getModelInstance().transform.setToTranslation(x,1,z);

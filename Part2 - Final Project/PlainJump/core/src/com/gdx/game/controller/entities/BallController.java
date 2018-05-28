@@ -18,6 +18,10 @@ public class BallController extends EntityController{
 
     private int currentPlainIndex = 0;
 
+    private int switchCounterLimit = 10;
+
+    private int switchCounter = switchCounterLimit;
+
     private BallController() {
         super();
 
@@ -161,9 +165,35 @@ public class BallController extends EntityController{
 
     public void switchColor(Color c1, Color c2)
     {
-        if (getColor() == c1)
-            setColor(c2);
-        if (getColor() == c2)
-            setColor(c1);
+        Color c;
+      if (getColor().equals(c1))
+          c = c2;
+      else
+          c = c1;
+      setColor(c);
+    }
+
+    public boolean incCounter()
+    {
+        this.switchCounter += 1;
+        if (this.switchCounter >= this.switchCounterLimit)
+            return true;
+       return false;
+    }
+
+    public int getSwitchCounter() {
+        return switchCounter;
+    }
+
+    public void setSwitchCounter(int switchCounter) {
+        this.switchCounter = switchCounter;
+    }
+
+    public int getSwitchCounterLimit() {
+        return switchCounterLimit;
+    }
+
+    public void setSwitchCounterLimit(int switchCounterLimit) {
+        this.switchCounterLimit = switchCounterLimit;
     }
 }
