@@ -384,7 +384,6 @@ public class MapController  {
         ball.moveFront();
 
         if (model.isImmune() && ball.isFalling())
-
         {
             //ball.getBody().applyCentralImpulse(new Vector3(0,90,0));
             replaceBall();
@@ -402,8 +401,6 @@ public class MapController  {
                     ball.switchColor(Color.ORANGE, Color.GREEN);
             }
         }, 0.1f);
-
-
 
 
     }
