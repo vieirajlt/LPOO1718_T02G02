@@ -1,21 +1,18 @@
 package com.gdx.game.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g3d.Environment;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
@@ -24,10 +21,6 @@ import com.gdx.game.BodyInstance;
 import com.gdx.game.view.entities.BallView;
 import com.gdx.game.view.entities.BonusView;
 import com.gdx.game.view.entities.PlainView;
-
-import java.awt.Font;
-
-import javax.xml.soap.Text;
 
 public class MapView{
 
@@ -53,6 +46,8 @@ public class MapView{
     private TextButton.TextButtonStyle textButtonStyle;
     BitmapFont buttonFont;
 
+    private FreeTypeFontGenerator generator;
+
     private MapView() {
         modelBatch = new ModelBatch();
         spriteBatch = new SpriteBatch();
@@ -70,11 +65,16 @@ public class MapView{
 
         score = 0;
         scoreText = "score: 0";
-        scoreFont = new BitmapFont();
+
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameterScore = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameterScore.size = 45;
+        scoreFont = generator.generateFont(parameterScore);
+        scoreFont.setUseIntegerPositions(false);
 
         /*****/
         stage = new Stage();
-        stage = new Stage(new ExtendViewport(800, 840));
+        stage = new Stage(new ExtendViewport(800, 1200));
 
         Gdx.input.setInputProcessor(stage);
 
@@ -82,11 +82,13 @@ public class MapView{
         textStyle.font = scoreFont;
 
         text = new Label("score: 0",textStyle);
-        text.setBounds(950,.2f,100,1500);
+        text.setBounds(75,365f,100,1500);
         text.setFontScale(2f,2f);
         stage.addActor(text);
 
-        buttonFont = new BitmapFont();
+        FreeTypeFontGenerator.FreeTypeFontParameter parameterButton = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameterButton.size = 45;
+        buttonFont = generator.generateFont(parameterButton);
         textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = buttonFont;
         button = new TextButton("EXIT", textButtonStyle);
@@ -98,7 +100,7 @@ public class MapView{
 
             }
         } );
-        button.setBounds(950,.2f,100,1580/1.5f);
+        button.setBounds(1435,300f,100,1650/1.5f);
         button.setTransform(true);
         button.setScale(1.5f);
         stage.addActor(button);
@@ -153,6 +155,7 @@ public class MapView{
         modelBatch.dispose();
         spriteBatch.dispose();
         stage.dispose();
+        generator.dispose();
     }
 
     private void clearScreen() {
