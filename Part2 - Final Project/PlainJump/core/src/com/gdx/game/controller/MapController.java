@@ -324,6 +324,7 @@ public class MapController  {
                 ball.incLinearVelocity(speedIncrease);
             startTime = TimeUtils.nanoTime();
              System.out.println(model.getScoreCount());
+             view.setScore(model.getScoreCount());
         }
 
         final float delay = 0.1f;
