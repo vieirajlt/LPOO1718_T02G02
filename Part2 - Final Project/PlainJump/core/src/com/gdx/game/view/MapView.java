@@ -11,9 +11,13 @@ import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.gdx.game.BodyInstance;
@@ -38,8 +42,16 @@ public class MapView{
     private SpriteBatch spriteBatch;
 
     private int score;
-    private String yourScoreName;
-    BitmapFont yourBitmapFontName;
+    private String scoreText;
+    BitmapFont scoreFont;
+
+    private  Stage stage;
+    private Label text;
+    private Label.LabelStyle textStyle;
+
+    private TextButton button;
+    private TextButton.TextButtonStyle textButtonStyle;
+    BitmapFont buttonFont;
 
     private MapView() {
         modelBatch = new ModelBatch();
@@ -57,8 +69,42 @@ public class MapView{
         instances = new Array<BodyInstance>();
 
         score = 0;
-        yourScoreName = "score: 0";
-        yourBitmapFontName = new BitmapFont();
+        scoreText = "score: 0";
+        scoreFont = new BitmapFont();
+
+        /*****/
+        stage = new Stage();
+        stage = new Stage(new ExtendViewport(800, 840));
+
+        Gdx.input.setInputProcessor(stage);
+
+        textStyle = new Label.LabelStyle();
+        textStyle.font = scoreFont;
+
+        text = new Label("score: 0",textStyle);
+        text.setBounds(950,.2f,100,1500);
+        text.setFontScale(2f,2f);
+        stage.addActor(text);
+
+        buttonFont = new BitmapFont();
+        textButtonStyle = new TextButton.TextButtonStyle();
+        textButtonStyle.font = buttonFont;
+        button = new TextButton("EXIT", textButtonStyle);
+        button.addListener( new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Game Over");
+                //notificar o mapController nao sei bem como e terminar/ir para outro menu
+
+            }
+        } );
+        button.setBounds(950,.2f,100,1580/1.5f);
+        button.setTransform(true);
+        button.setScale(1.5f);
+        stage.addActor(button);
+
+
+        /****/
 
     }
 
@@ -88,21 +134,25 @@ public class MapView{
 
     public void render(PerspectiveCamera camera) {
         clearScreen();
-        yourScoreName = "score: " + score;
+        scoreText = "score: " + score;
         modelBatch.begin(camera);
 
         modelBatch.render(instances, environment);
         modelBatch.end();
 
         spriteBatch.begin();
-        yourBitmapFontName.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-        yourBitmapFontName.draw(spriteBatch, yourScoreName, 550, 450);
+
+        stage.draw();
+        //scoreFont.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+       // scoreFont.draw(spriteBatch, scoreText, 550, 450);
+        text.setText(scoreText);
         spriteBatch.end();
     }
 
     public void dispose() {
         modelBatch.dispose();
         spriteBatch.dispose();
+        stage.dispose();
     }
 
     private void clearScreen() {
