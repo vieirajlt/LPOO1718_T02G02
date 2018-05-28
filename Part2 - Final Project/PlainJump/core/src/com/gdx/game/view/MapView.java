@@ -100,7 +100,7 @@ public class MapView{
 
             }
         } );
-        button.setBounds(1435,300f,100,1650/1.5f);
+        button.setBounds(50,-735f,100,1650/1.5f);
         button.setTransform(true);
         button.setScale(1.5f);
         stage.addActor(button);
