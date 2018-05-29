@@ -111,8 +111,6 @@ public class MapController  {
 
     private MapController() {
 
-       // Bullet.init(); nao e preciso
-
         model = MapModel.getInstance();
         view = MapView.getInstance();
         contactListener = new ControllerContactListener();
@@ -134,7 +132,6 @@ public class MapController  {
         buildPlains();
 
         buildBonus();
-
     }
 
     private void addPlains() {
@@ -143,6 +140,7 @@ public class MapController  {
         plainsPerLevel = 3;
         positioningLevel = plainLevels;
 
+        plains.clear();
         for (int i = 0; i < plainLevels*plainsPerLevel; ++i) {
             plains.add(new PlainController());
         }
@@ -208,7 +206,6 @@ public class MapController  {
         world = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 
         world.setGravity(gravity);
-
     }
 
 
@@ -235,7 +232,6 @@ public class MapController  {
         ball.getBody().setCollisionFlags(ball.getBody().getCollisionFlags() | btCollisionObject.CollisionFlags.CF_CUSTOM_MATERIAL_CALLBACK);
 
         world.addRigidBody(ball.getBody());
-
     }
 
     private void buildBonus()
@@ -463,7 +459,10 @@ public class MapController  {
     }
 
     public void reset() {
-        instance = null;
+        model.reset();
+        view.reset();
+        ball.reset();
+        instance = new MapController();
     }
 
     public void setMoving(boolean moving) {
@@ -475,5 +474,10 @@ public class MapController  {
             instance = new MapController();
         return instance;
     }
+
+    public Integer getScore() {
+        return view.getScore();
+    }
+
 }
 

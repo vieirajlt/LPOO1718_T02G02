@@ -13,8 +13,7 @@ public class PlainJump extends ApplicationAdapter {
 
 
 	private GameController controller;
-	private PerspectiveCamera camera;
-	private CameraInputController cameraController;
+
 
 	@Override
 	public void create () {
@@ -23,26 +22,14 @@ public class PlainJump extends ApplicationAdapter {
 		controller = GameController.getInstance();
 		controller.create();
 
-
-		setCamera();
-
 		//cameraController = new CameraInputController(camera);
 		//Gdx.input.setInputProcessor(cameraController);
 
 	}
 
-	private void setCamera() {
-		camera = new PerspectiveCamera(80, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		camera.position.set(0f, 7f, 10f);
-		camera.lookAt(0, 4f, 0);
-		camera.far = 100f;
-		camera.near = 1f;
-		camera.update();
-	}
-
 	@Override
 	public void render () {
-		controller.render(camera);
+		controller.render();
 	}
 
 	@Override

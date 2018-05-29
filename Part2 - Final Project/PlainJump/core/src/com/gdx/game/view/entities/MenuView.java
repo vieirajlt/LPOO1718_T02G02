@@ -1,15 +1,19 @@
 package com.gdx.game.view.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.Base64Coder;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonWriter;
 import com.gdx.game.controller.GameController;
 
 public class MenuView {
@@ -21,6 +25,15 @@ public class MenuView {
     private TextButton.TextButtonStyle configsButtonStyle;
 
     BitmapFont buttonFont;
+
+    private Label highscoreLabel;
+    private Label highscore;
+
+    private Integer bestScore = 0;
+
+    private Label.LabelStyle labelStyle;
+
+    BitmapFont labelFont;
 
     private FreeTypeFontGenerator generator;
 
@@ -48,6 +61,20 @@ public class MenuView {
         parameterScore.size = 45;
         buttonFont = generator.generateFont(parameterScore);
         //
+
+        //loadBestScore();
+        FreeTypeFontGenerator.FreeTypeFontParameter parameterLabel = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameterLabel.size = 50;
+        labelFont = generator.generateFont(parameterLabel);
+        labelStyle = new Label.LabelStyle();
+        labelStyle.font = labelFont;
+        highscoreLabel = new Label("highscore",labelStyle);
+        table.add(highscoreLabel);
+        table.row();
+        highscore = new Label(bestScore.toString(),labelStyle);
+        table.add(highscore);
+        table.row();
+        //saveBestScore();
 
         //Play Button
         playButtonStyle = new TextButton.TextButtonStyle();
@@ -79,11 +106,11 @@ public class MenuView {
 
         table.add(configsButton);
         //
-
         table.debug();
     }
 
     public void render() {
+        Gdx.input.setInputProcessor(stage);
         spriteBatch.begin();
         stage.draw();
         spriteBatch.end();
@@ -95,5 +122,12 @@ public class MenuView {
         generator.dispose();
     }
 
+    public Integer getBestScore() {
+        return bestScore;
+    }
 
+    public void setBestScore(Integer bestScore) {
+        this.bestScore = bestScore;
+        highscore.setText(bestScore.toString());
+    }
 }

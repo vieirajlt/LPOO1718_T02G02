@@ -38,10 +38,13 @@ public class BallController extends EntityController{
 
     private BallController(float x, float y, float z, float d) {
         super();
-
         setModel(new BallModel(x, y, z, d));
         setView(new BallView(getModel().getModel(),new btSphereShape(d/2),1f));
         updatePosition();
+    }
+
+    public void reset() {
+        instance = null;
     }
 
     public void setDiameter(float d) {

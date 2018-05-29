@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -99,9 +100,8 @@ public class MapView {
         button.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("MAP Over-");
+                System.out.println("MAP Over");
                 GameController.getInstance().setGameState(GameController.State.MENU);
-
             }
         } );
         table.row();
@@ -132,6 +132,7 @@ public class MapView {
     }
 
     public void render(PerspectiveCamera camera, boolean moving) {
+
         clearScreen();
         scoreText = "score: " + score;
         modelBatch.begin(camera);
@@ -140,8 +141,10 @@ public class MapView {
 
         spriteBatch.begin();
 
-        if(moving)
+        if(moving) {
             stage.draw();
+            Gdx.input.setInputProcessor(stage);
+        }
         //scoreFont.setColor(1.0f, 1.0f, 1.0f, 1.0f);
         // scoreFont.draw(spriteBatch, scoreText, 550, 450);
         text.setText(scoreText);
@@ -158,6 +161,10 @@ public class MapView {
     private void clearScreen() {
         Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+    }
+
+    public void reset() {
+        instance = null;
     }
 
     public ColorAttribute getAmbientLigth() {
