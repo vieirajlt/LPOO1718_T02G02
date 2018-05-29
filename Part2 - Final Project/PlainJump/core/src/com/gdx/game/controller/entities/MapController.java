@@ -1,13 +1,11 @@
-package com.gdx.game.controller;
+package com.gdx.game.controller.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
 import com.badlogic.gdx.physics.bullet.collision.Collision;
-import com.badlogic.gdx.physics.bullet.collision.CollisionObjectWrapper;
 import com.badlogic.gdx.physics.bullet.collision.ContactListener;
 import com.badlogic.gdx.physics.bullet.collision.btBroadphaseInterface;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionConfiguration;
@@ -24,24 +22,15 @@ import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
-import com.gdx.game.controller.entities.BallController;
-import com.gdx.game.controller.entities.BonusController;
-import com.gdx.game.controller.entities.PlainController;
-import com.gdx.game.model.MapModel;
-import com.gdx.game.model.entities.BallModel;
+import com.gdx.game.model.entities.MapModel;
 import com.gdx.game.model.entities.BonusModel;
 import com.gdx.game.model.entities.PlainModel;
-import com.gdx.game.view.MapView;
+import com.gdx.game.view.entities.MapView;
 import com.gdx.game.view.entities.BallView;
 import com.gdx.game.view.entities.BonusView;
 import com.gdx.game.view.entities.PlainView;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Random;
-
-import static jdk.nashorn.internal.objects.NativeArray.sort;
 
 public class MapController  {
 

@@ -1,4 +1,4 @@
-package com.gdx.game.view;
+package com.gdx.game.view.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -18,9 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.gdx.game.BodyInstance;
-import com.gdx.game.view.entities.BallView;
-import com.gdx.game.view.entities.BonusView;
-import com.gdx.game.view.entities.PlainView;
 
 public class MapView{
 
