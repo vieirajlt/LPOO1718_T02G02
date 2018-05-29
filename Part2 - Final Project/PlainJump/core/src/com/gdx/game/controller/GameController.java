@@ -18,7 +18,7 @@ public class GameController {
     private MenuController menu;
     private ConfigsController configs;
 
-    private enum State {
+    public enum State {
         MAP,
         MENU,
         CONFIGS;
@@ -34,33 +34,35 @@ public class GameController {
         model = new GameModel();
         view = new GameView();
 
-        gameState = State.MAP;
+        gameState = State.MENU;
     }
 
     public void create() {
+        map.create();
         switch(gameState) {
-            case MAP:
-                map.create();
-                break;
             case MENU:
                 menu.create();
                 break;
             case CONFIGS:
                 configs.create();
                 break;
+            default:
+                break;
         }
     }
 
     public void render(PerspectiveCamera camera) {
+        map.render(camera);
         switch(gameState) {
-            case MAP:
-                map.render(camera);
-                break;
             case MENU:
-                menu.render(camera);
+                menu.render();
+                map.setMoving(false);
                 break;
             case CONFIGS:
                 configs.render(camera);
+                map.setMoving(false);
+                break;
+            default:
                 break;
         }
     }
@@ -69,6 +71,10 @@ public class GameController {
         map.dispose();
         menu.dispose();
         configs.dispose();
+    }
+
+    public void setGameState(State gameState) {
+        this.gameState = gameState;
     }
 
     public static GameController getInstance() {

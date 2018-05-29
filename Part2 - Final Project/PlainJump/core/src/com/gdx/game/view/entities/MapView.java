@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.gdx.game.BodyInstance;
 
-public class MapView{
+public class MapView {
 
     private static MapView instance = null;
 
@@ -67,10 +67,10 @@ public class MapView{
         FreeTypeFontGenerator.FreeTypeFontParameter parameterScore = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameterScore.size = 45;
         scoreFont = generator.generateFont(parameterScore);
-        scoreFont.setUseIntegerPositions(false);
+        //scoreFont.setUseIntegerPositions(false);
 
         /*****/
-        stage = new Stage();
+        //stage = new Stage();
         stage = new Stage(new ExtendViewport(800, 1200));
 
         Gdx.input.setInputProcessor(stage);
@@ -127,17 +127,17 @@ public class MapView{
         instances.add(bv.getModelInstance());
     }
 
-    public void render(PerspectiveCamera camera) {
+    public void render(PerspectiveCamera camera, boolean moving) {
         clearScreen();
         scoreText = "score: " + score;
         modelBatch.begin(camera);
-
         modelBatch.render(instances, environment);
         modelBatch.end();
 
         spriteBatch.begin();
 
-        stage.draw();
+        if(moving)
+            stage.draw();
         //scoreFont.setColor(1.0f, 1.0f, 1.0f, 1.0f);
        // scoreFont.draw(spriteBatch, scoreText, 550, 450);
         text.setText(scoreText);
