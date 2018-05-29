@@ -106,7 +106,7 @@ public class MenuView {
 
         table.add(configsButton);
         //
-        table.debug();
+        //table.debug();
     }
 
     public void render() {

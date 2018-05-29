@@ -2,6 +2,7 @@ package com.gdx.game.controller.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.math.Vector3;
@@ -73,6 +74,8 @@ public class MapController  {
 
     private boolean moving = true;
 
+    private Sound bgMusic;
+
     class ControllerContactListener extends ContactListener {
         @Override
         public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
@@ -132,6 +135,10 @@ public class MapController  {
         buildPlains();
 
         buildBonus();
+
+        bgMusic = Gdx.audio.newSound(Gdx.files.internal("test.mp3"));
+
+        bgMusic.stop();
     }
 
     private void addPlains() {
@@ -411,6 +418,7 @@ public class MapController  {
     }
 
     public void dispose() {
+        bgMusic.dispose();
         view.dispose();
 
         for(PlainController pc : plains) {
@@ -467,6 +475,12 @@ public class MapController  {
 
     public void setMoving(boolean moving) {
         this.moving = moving;
+
+        if(moving) {
+            bgMusic.play();
+        } else {
+            bgMusic.stop();
+        }
     }
 
     public static MapController getInstance() {
