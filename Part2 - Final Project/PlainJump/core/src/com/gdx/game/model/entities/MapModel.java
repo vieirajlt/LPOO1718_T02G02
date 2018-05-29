@@ -1,4 +1,4 @@
-package com.gdx.game.model;
+package com.gdx.game.model.entities;
 
 
 public class MapModel {
@@ -13,7 +13,7 @@ public class MapModel {
 
     private float counter = 0;
 
-    private float counterLimit = 10;
+    private float counterLimit = 40;
 
     //nao sei se isto devia ser aqui ou na bola
     private boolean immune = false;

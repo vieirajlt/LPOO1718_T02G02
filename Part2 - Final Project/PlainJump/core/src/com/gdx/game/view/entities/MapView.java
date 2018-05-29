@@ -1,4 +1,4 @@
-package com.gdx.game.view;
+package com.gdx.game.view.entities;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -18,9 +18,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.gdx.game.BodyInstance;
-import com.gdx.game.view.entities.BallView;
-import com.gdx.game.view.entities.BonusView;
-import com.gdx.game.view.entities.PlainView;
 
 public class MapView{
 
@@ -95,7 +92,7 @@ public class MapView{
         button.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Game Over");
+                System.out.println("MAP Over");
                 //notificar o mapController nao sei bem como e terminar/ir para outro menu
 
             }
@@ -128,10 +125,6 @@ public class MapView{
 
     public void addInstance(BonusView bv) {
         instances.add(bv.getModelInstance());
-    }
-
-    public void create() {
-
     }
 
     public void render(PerspectiveCamera camera) {

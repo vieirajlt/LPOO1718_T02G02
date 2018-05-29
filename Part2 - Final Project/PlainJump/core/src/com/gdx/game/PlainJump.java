@@ -1,20 +1,18 @@
 package com.gdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.physics.bullet.Bullet;
-import com.gdx.game.controller.MapController;
+import com.gdx.game.controller.GameController;
+import com.gdx.game.controller.entities.MapController;
 
 public class PlainJump extends ApplicationAdapter {
 
 
-	private MapController controller;
+	private GameController controller;
 	private PerspectiveCamera camera;
 	private CameraInputController cameraController;
 
@@ -23,7 +21,7 @@ public class PlainJump extends ApplicationAdapter {
 	public void create () {
 
 		Bullet.init();
-		controller = MapController.getInstance();
+		controller = GameController.getInstance();
 		controller.create();
 
 
@@ -45,33 +43,8 @@ public class PlainJump extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-
-		handleInputs();
 		controller.render(camera);
-
 	}
-
-	private void handleInputs() {
-		if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			controller.moveLeft();
-		}
-		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			controller.moveRight();
-		}
-		if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-			controller.jump();
-		}
-		if (Gdx.input.getGyroscopeX() > 0.2) {
-			controller.moveRight();
-		}
-		if (Gdx.input.getGyroscopeX() < -0.2) {
-			controller.moveLeft();
-		}
-		if (Gdx.input.isTouched()) {
-			controller.jump();
-		}
-	}
-
 
 	@Override
 	public void dispose () {

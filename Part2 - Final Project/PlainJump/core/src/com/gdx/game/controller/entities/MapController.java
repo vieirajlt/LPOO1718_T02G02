@@ -1,13 +1,12 @@
-package com.gdx.game.controller;
+package com.gdx.game.controller.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.DebugDrawer;
 import com.badlogic.gdx.physics.bullet.collision.Collision;
-import com.badlogic.gdx.physics.bullet.collision.CollisionObjectWrapper;
 import com.badlogic.gdx.physics.bullet.collision.ContactListener;
 import com.badlogic.gdx.physics.bullet.collision.btBroadphaseInterface;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionConfiguration;
@@ -24,24 +23,15 @@ import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
-import com.gdx.game.controller.entities.BallController;
-import com.gdx.game.controller.entities.BonusController;
-import com.gdx.game.controller.entities.PlainController;
-import com.gdx.game.model.MapModel;
-import com.gdx.game.model.entities.BallModel;
+import com.gdx.game.model.entities.MapModel;
 import com.gdx.game.model.entities.BonusModel;
 import com.gdx.game.model.entities.PlainModel;
-import com.gdx.game.view.MapView;
+import com.gdx.game.view.entities.MapView;
 import com.gdx.game.view.entities.BallView;
 import com.gdx.game.view.entities.BonusView;
 import com.gdx.game.view.entities.PlainView;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Random;
-
-import static jdk.nashorn.internal.objects.NativeArray.sort;
 
 public class MapController  {
 
@@ -296,8 +286,6 @@ public class MapController  {
 
 
     public void create() {
-        view.create();
-
         startTime = TimeUtils.nanoTime();
         debugDrawer = new DebugDrawer();
         world.setDebugDrawer(debugDrawer);
@@ -305,6 +293,8 @@ public class MapController  {
     }
 
     public void render(PerspectiveCamera camera) {
+
+        handleInputs();
 
         final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
 
@@ -357,6 +347,27 @@ public class MapController  {
         world.debugDrawWorld();
         debugDrawer.end();*/
 
+    }
+
+    private void handleInputs() {
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            moveLeft();
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            moveRight();
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            jump();
+        }
+        if (Gdx.input.getGyroscopeX() > 0.2) {
+            moveRight();
+        }
+        if (Gdx.input.getGyroscopeX() < -0.2) {
+            moveLeft();
+        }
+        if (Gdx.input.isTouched()) {
+            jump();
+        }
     }
 
     private void updatePlains(PerspectiveCamera camera) {
