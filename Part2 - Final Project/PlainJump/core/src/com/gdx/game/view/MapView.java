@@ -97,7 +97,6 @@ public class MapView{
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Game Over");
                 //notificar o mapController nao sei bem como e terminar/ir para outro menu
-               // Gdx.app.exit();
 
             }
         } );
@@ -119,7 +118,7 @@ public class MapView{
         }
     }
 
-   public void addInstance(PlainView pv) {
+    public void addInstance(PlainView pv) {
         instances.add(pv.getModelInstance());
     }
 
@@ -147,7 +146,7 @@ public class MapView{
 
         stage.draw();
         //scoreFont.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-       // scoreFont.draw(spriteBatch, scoreText, 550, 450);
+        // scoreFont.draw(spriteBatch, scoreText, 550, 450);
         text.setText(scoreText);
         spriteBatch.end();
     }
