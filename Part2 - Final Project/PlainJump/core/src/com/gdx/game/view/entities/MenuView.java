@@ -4,10 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.gdx.game.controller.GameController;
 
 public class MenuView {
 
@@ -49,23 +52,35 @@ public class MenuView {
         //Play Button
         playButtonStyle = new TextButton.TextButtonStyle();
         playButtonStyle.font = buttonFont;
-
         playButton = new TextButton("PLAY", playButtonStyle);
-        //playButton.pad(5);
+        playButton.addListener( new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Into map");
+                GameController.getInstance().setGameState(GameController.State.MAP);
+
+            }
+        } );
+
         table.add(playButton).height(250).maxHeight(50).bottom();
         //
         table.row();
         //Configs Button
         configsButtonStyle = playButtonStyle;
-
         configsButton = new TextButton("SETTINGS", configsButtonStyle);
-        //configsButton.pad(5);
+        configsButton.addListener( new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Into configs");
+                //notificar o mapController nao sei bem como e terminar/ir para outro menu
+
+            }
+        } );
+
         table.add(configsButton);
         //
 
-
         table.debug();
-        stage.addActor(table);
     }
 
     public void render() {

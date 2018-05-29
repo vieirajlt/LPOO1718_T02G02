@@ -75,6 +75,16 @@ public class GameController {
 
     public void setGameState(State gameState) {
         this.gameState = gameState;
+        switch(gameState) {
+            case MENU:
+                map.reset();
+                break;
+            case CONFIGS:
+                break;
+            case MAP:
+                map.setMoving(true);
+                break;
+        }
     }
 
     public static GameController getInstance() {

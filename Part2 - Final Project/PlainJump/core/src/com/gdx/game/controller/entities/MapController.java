@@ -462,6 +462,10 @@ public class MapController  {
         ball.updateModel();
     }
 
+    public void reset() {
+        instance = null;
+    }
+
     public void setMoving(boolean moving) {
         this.moving = moving;
     }

@@ -13,11 +13,13 @@ import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.gdx.game.BodyInstance;
+import com.gdx.game.controller.GameController;
 
 public class MapView {
 
@@ -36,6 +38,7 @@ public class MapView {
     BitmapFont scoreFont;
 
     private  Stage stage;
+    private Table table;
     private Label text;
     private Label.LabelStyle textStyle;
 
@@ -60,31 +63,35 @@ public class MapView {
 
         instances = new Array<BodyInstance>();
 
+        stage = new Stage();
+
+        table = new Table();
+        table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        stage.addActor(table);
+        Gdx.input.setInputProcessor(stage);
+
         score = 0;
         scoreText = "score: 0";
 
         generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.ttf"));
+
+        //Score Label
         FreeTypeFontGenerator.FreeTypeFontParameter parameterScore = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameterScore.size = 45;
+        int letterSize = 40;
+        parameterScore.size = letterSize;
         scoreFont = generator.generateFont(parameterScore);
-        //scoreFont.setUseIntegerPositions(false);
-
-        /*****/
-        //stage = new Stage();
-        stage = new Stage(new ExtendViewport(800, 1200));
-
-        Gdx.input.setInputProcessor(stage);
 
         textStyle = new Label.LabelStyle();
         textStyle.font = scoreFont;
-
         text = new Label("score: 0",textStyle);
-        text.setBounds(75,365f,100,1500);
-        text.setFontScale(2f,2f);
-        stage.addActor(text);
+        table.add(text).height(Gdx.graphics.getHeight()/2).expandX().top().left().maxHeight(letterSize+10).padLeft(8);
+        //
 
+        //Exit Button
         FreeTypeFontGenerator.FreeTypeFontParameter parameterButton = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameterButton.size = 45;
+        letterSize = 30;
+        parameterButton.size = letterSize;
         buttonFont = generator.generateFont(parameterButton);
         textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = buttonFont;
@@ -92,19 +99,16 @@ public class MapView {
         button.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("MAP Over");
-                //notificar o mapController nao sei bem como e terminar/ir para outro menu
+                System.out.println("MAP Over-");
+                GameController.getInstance().setGameState(GameController.State.MENU);
 
             }
         } );
-        button.setBounds(50,-735f,100,1650/1.5f);
-        button.setTransform(true);
-        button.setScale(1.5f);
-        stage.addActor(button);
+        table.row();
+        table.add(button).height(Gdx.graphics.getHeight()/2).expandX().bottom().left().maxHeight(letterSize+10).padLeft(8);
+        //
 
-
-        /****/
-
+        //table.debug();
     }
 
     private void addLigthToEnvironment() {
