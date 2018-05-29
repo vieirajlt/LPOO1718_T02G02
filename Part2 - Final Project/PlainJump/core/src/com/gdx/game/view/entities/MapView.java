@@ -92,7 +92,7 @@ public class MapView{
         button.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Game Over");
+                System.out.println("MAP Over");
                 //notificar o mapController nao sei bem como e terminar/ir para outro menu
 
             }
@@ -125,10 +125,6 @@ public class MapView{
 
     public void addInstance(BonusView bv) {
         instances.add(bv.getModelInstance());
-    }
-
-    public void create() {
-
     }
 
     public void render(PerspectiveCamera camera) {

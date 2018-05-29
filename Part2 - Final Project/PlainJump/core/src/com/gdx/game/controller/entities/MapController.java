@@ -1,6 +1,7 @@
 package com.gdx.game.controller.entities;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.badlogic.gdx.math.Vector3;
@@ -285,8 +286,6 @@ public class MapController  {
 
 
     public void create() {
-        view.create();
-
         startTime = TimeUtils.nanoTime();
         debugDrawer = new DebugDrawer();
         world.setDebugDrawer(debugDrawer);
@@ -294,6 +293,8 @@ public class MapController  {
     }
 
     public void render(PerspectiveCamera camera) {
+
+        handleInputs();
 
         final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
 
@@ -346,6 +347,27 @@ public class MapController  {
         world.debugDrawWorld();
         debugDrawer.end();*/
 
+    }
+
+    private void handleInputs() {
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            moveLeft();
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            moveRight();
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            jump();
+        }
+        if (Gdx.input.getGyroscopeX() > 0.2) {
+            moveRight();
+        }
+        if (Gdx.input.getGyroscopeX() < -0.2) {
+            moveLeft();
+        }
+        if (Gdx.input.isTouched()) {
+            jump();
+        }
     }
 
     private void updatePlains(PerspectiveCamera camera) {
