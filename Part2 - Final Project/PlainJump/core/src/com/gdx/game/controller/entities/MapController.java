@@ -71,7 +71,7 @@ public class MapController  {
 
     private float speedIncrease = 0.05f;
 
-
+    private boolean moving = true;
 
     class ControllerContactListener extends ContactListener {
         @Override
@@ -82,7 +82,6 @@ public class MapController  {
                 for (BonusController bc : bonus) {
                     if (userValue1 == bc.getBody().getUserValue())
                     {
-                        System.out.println("Colision");
                         bc.setVisible(false);
                         model.setScoreMultiplier(((BonusModel)bc.getModel()).getValue());
                         model.setImmune(((BonusModel)bc.getModel()).isImmune());
@@ -109,7 +108,6 @@ public class MapController  {
             }
         }
     }
-
 
     private MapController() {
 
@@ -294,16 +292,25 @@ public class MapController  {
 
     public void render(PerspectiveCamera camera) {
 
+        update(camera);
+        view.render(camera, moving);
+
+        //a cena do debug
+     /* debugDrawer.begin(camera);
+        world.debugDrawWorld();
+        debugDrawer.end();*/
+
+    }
+
+    private void update(PerspectiveCamera camera) {
         handleInputs();
+
+        if(!moving)
+            return;
 
         final float delta = Math.min(1f / 30f, Gdx.graphics.getDeltaTime());
 
         world.stepSimulation(delta, 5, 1f / 60f);
-
-      /* for(PlainController pc : plains)
-        {
-            pc.getWorldTransform();
-        }*/
 
         updateBonus(camera);
 
@@ -313,8 +320,7 @@ public class MapController  {
             if (model.updateScore(1))
                 ball.incLinearVelocity(speedIncrease);
             startTime = TimeUtils.nanoTime();
-             System.out.println(model.getScoreCount());
-             view.setScore(model.getScoreCount());
+            view.setScore(model.getScoreCount());
         }
 
         final float delay = 0.1f;
@@ -330,8 +336,6 @@ public class MapController  {
 
         updatePlains(camera);
 
-
-
         camera.position.x = ball.getModel().getPosX();
         if(ball.getModel().getPosY() >= 0) {
             camera.position.y = ball.getModel().getPosY()+cameraBallDistance/3;
@@ -340,13 +344,6 @@ public class MapController  {
         }
         camera.position.z = ball.getModel().getPosZ()+cameraBallDistance;
         camera.update();
-        view.render(camera);
-
-        //a cena do debug
-     /* debugDrawer.begin(camera);
-        world.debugDrawWorld();
-        debugDrawer.end();*/
-
     }
 
     private void handleInputs() {
@@ -435,16 +432,22 @@ public class MapController  {
 
     public void jump()
     {
+        if(!moving)
+            return;
         ball.jump();
     }
 
     public void moveLeft()
     {
+        if(!moving)
+            return;
         ball.moveLeft();
     }
 
     public void moveRight()
     {
+        if(!moving)
+            return;
         ball.moveRight();
     }
 
@@ -459,6 +462,13 @@ public class MapController  {
         ball.updateModel();
     }
 
+    public void reset() {
+        instance = null;
+    }
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
+    }
 
     public static MapController getInstance() {
         if(instance == null)

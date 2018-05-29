@@ -16,7 +16,6 @@ public class PlainJump extends ApplicationAdapter {
 	private PerspectiveCamera camera;
 	private CameraInputController cameraController;
 
-
 	@Override
 	public void create () {
 

@@ -1,5 +1,7 @@
 package com.gdx.game.controller.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
 
 public class ConfigsController {
@@ -15,6 +17,14 @@ public class ConfigsController {
     }
 
     public void render(PerspectiveCamera camera) {
+        update();
+    }
+
+    private void update() {
+        handleInputs();
+    }
+
+    private void handleInputs() {
 
     }
 
