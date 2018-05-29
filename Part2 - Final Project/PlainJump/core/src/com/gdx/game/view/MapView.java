@@ -73,9 +73,7 @@ public class MapView{
         scoreFont = new BitmapFont();
 
         /*****/
-        stage = new Stage();
         stage = new Stage(new ExtendViewport(800, 840));
-
         Gdx.input.setInputProcessor(stage);
 
         textStyle = new Label.LabelStyle();
@@ -95,6 +93,7 @@ public class MapView{
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Game Over");
                 //notificar o mapController nao sei bem como e terminar/ir para outro menu
+               // Gdx.app.exit();
 
             }
         } );
