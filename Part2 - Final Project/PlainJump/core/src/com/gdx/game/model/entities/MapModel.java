@@ -56,16 +56,6 @@ public class MapModel {
         this.counter = 0;
     }
 
-   /* public void incCounter(float inc)
-    {
-        this.counter += inc;
-        if (this.counter >= this.counterLimit && (scoreMultiplier != 1 || immune == true))
-        {
-            scoreMultiplier = 1;
-            immune = false;
-        }
-    }*/
-
     public boolean incCounter(float inc)
     {
         this.counter += inc;
@@ -86,8 +76,8 @@ public class MapModel {
         this.immune = immune;
     }
 
-
-
-
+    public void reset() {
+        instance = null;
+    }
 
 }

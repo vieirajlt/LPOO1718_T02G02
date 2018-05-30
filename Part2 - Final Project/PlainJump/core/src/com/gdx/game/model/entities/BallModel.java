@@ -35,6 +35,7 @@ public class BallModel extends EntityModel{
         this.diameter = d;
 
         setModel(buildModel());
+
     }
 
     private Model buildModel() {
