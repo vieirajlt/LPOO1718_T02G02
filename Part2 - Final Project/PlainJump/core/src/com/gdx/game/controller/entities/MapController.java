@@ -401,18 +401,7 @@ public class MapController  {
             ball.updateModel();
             ball.setWorldTransform();
             ball.setIsFalling(false);
-            ball.setSwitchCounter(0);
         }
-
-        Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                if (!ball.incCounter())
-                    ball.switchColor(ball.getInitialColor(), Color.GREEN);
-            }
-        }, 0.1f);
-
-
     }
 
     public void dispose() {
