@@ -394,13 +394,11 @@ public class MapController  {
 
         if (model.isImmune() && ball.isFalling())
         {
-            //ball.getBody().applyCentralImpulse(new Vector3(0,90,0));
             replaceBall();
             ball.updateModel();
             ball.setWorldTransform();
             ball.setIsFalling(false);
             ball.setSwitchCounter(0);
-
         }
 
         Timer.schedule(new Timer.Task() {
