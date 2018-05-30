@@ -99,6 +99,7 @@ public class MenuView {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Into configs");
+                GameController.getInstance().setGameState(GameController.State.CONFIGS);
                 //notificar o mapController nao sei bem como e terminar/ir para outro menu
 
             }

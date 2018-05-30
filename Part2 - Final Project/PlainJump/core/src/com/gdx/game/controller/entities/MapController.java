@@ -492,7 +492,11 @@ public class MapController  {
         return view.getScore();
     }
 
-
+    public void setPlainsColor(Color color)
+    {
+        for(PlainController pc : plains)
+            pc.setColor(color);
+    }
 
 }
 

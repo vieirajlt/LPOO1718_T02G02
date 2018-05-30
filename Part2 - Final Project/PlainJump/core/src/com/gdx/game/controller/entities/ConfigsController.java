@@ -3,13 +3,20 @@ package com.gdx.game.controller.entities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.PerspectiveCamera;
+import com.gdx.game.model.entities.ConfigsModel;
+import com.gdx.game.view.entities.ConfigsView;
 
 public class ConfigsController {
 
     private static ConfigsController instance = null;
 
-    public ConfigsController() {
+    private ConfigsModel model;
 
+    private ConfigsView view;
+
+    public ConfigsController() {
+        model = new ConfigsModel();
+        view = new ConfigsView();
     }
 
     public void create() {
@@ -18,6 +25,7 @@ public class ConfigsController {
 
     public void render(PerspectiveCamera camera) {
         update();
+        view.render();
     }
 
     private void update() {
@@ -29,7 +37,7 @@ public class ConfigsController {
     }
 
     public void dispose() {
-
+        view.dispose();
     }
 
     public static ConfigsController getInstance() {
