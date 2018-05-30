@@ -468,7 +468,8 @@ public class MapController  {
         model.reset();
         view.reset();
         ball.reset();
-        instance = new MapController();
+        this.instance = null;
+        bgMusic.stop();
     }
 
     public void setMoving(boolean moving) {
@@ -490,6 +491,8 @@ public class MapController  {
     public Integer getScore() {
         return view.getScore();
     }
+
+
 
 }
 

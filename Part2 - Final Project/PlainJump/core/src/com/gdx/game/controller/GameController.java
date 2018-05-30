@@ -86,9 +86,8 @@ public class GameController {
         switch(gs) {
             case MENU:
                 updateBestScore();
-                //map.reset(); not working
                 setCamera();
-                System.out.println("RESET");
+                resetMap();
                 break;
             case CONFIGS:
                 break;
@@ -111,5 +110,10 @@ public class GameController {
         return instance;
     }
 
-
+    private void resetMap()
+    {
+        map.reset();
+        map = MapController.getInstance();
+        map.create();
+    }
 }
