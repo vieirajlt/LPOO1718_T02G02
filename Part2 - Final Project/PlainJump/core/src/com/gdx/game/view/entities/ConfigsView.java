@@ -82,7 +82,7 @@ public class ConfigsView {
         table.row();
 
 
-        pix = new Pixmap(20,20, Pixmap.Format.RGBA8888);
+        pix = new Pixmap(30,30, Pixmap.Format.RGBA8888);
 
         //orange
         addBallColorButton(com.badlogic.gdx.graphics.Color.ORANGE,orangeButton);
@@ -145,7 +145,7 @@ public class ConfigsView {
         pix.setColor(color);
         pix.fill();
         buttom = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(pix))));
-        table.add(buttom).width(50).height(45).expandY().expandX().left();
+        table.add(buttom).width(50).height(80).expandY().expandX().left();
         //table.add(buttom);
         buttom.addListener( new ClickListener() {
             @Override
@@ -160,7 +160,7 @@ public class ConfigsView {
         pix.setColor(color);
         pix.fill();
         buttom = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(pix))));
-        table.add(buttom).width(50).height(45).expandY().expandX().right();
+        table.add(buttom).width(50).height(80).expandY().expandX().right();
         //table.add(buttom);
         buttom.addListener( new ClickListener() {
             @Override
