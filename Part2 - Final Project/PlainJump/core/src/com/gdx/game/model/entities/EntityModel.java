@@ -1,5 +1,6 @@
 package com.gdx.game.model.entities;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.Model;
 
 public class EntityModel {
@@ -9,6 +10,10 @@ public class EntityModel {
     private float posZ;
 
     private Model model;
+
+    private Color initialColor;
+
+    private Color currentColor;
 
     public EntityModel(float x, float y, float z) {
         this.posX = x;
@@ -46,6 +51,22 @@ public class EntityModel {
 
     public Model getModel() {
         return model;
+    }
+
+    public Color getInitialColor() {
+        return initialColor;
+    }
+
+    public void setInitialColor(Color initialColor) {
+        this.initialColor = initialColor;
+    }
+
+    public Color getCurrentColor() {
+        return currentColor;
+    }
+
+    public void setCurrentColor(Color currentColor) {
+        this.currentColor = currentColor;
     }
 
     public void dispose() {

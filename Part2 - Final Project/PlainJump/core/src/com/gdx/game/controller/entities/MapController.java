@@ -89,7 +89,7 @@ public class MapController  {
                         model.setScoreMultiplier(((BonusModel)bc.getModel()).getValue());
                         model.setImmune(((BonusModel)bc.getModel()).isImmune());
                         isBonus = true;
-                        ball.setColor(bc.getColor());
+                        ball.setCurrentColor(bc.getInitialColor());
                         break;
                     }
                 }
@@ -331,7 +331,7 @@ public class MapController  {
             @Override
             public void run() {
                 if (model.incCounter(delay))
-                    ball.setColor(Color.ORANGE);
+                    ball.setCurrentColor(ball.getInitialColor());
             }
         }, delay);
 
@@ -408,7 +408,7 @@ public class MapController  {
             @Override
             public void run() {
                 if (!ball.incCounter())
-                    ball.switchColor(Color.ORANGE, Color.GREEN);
+                    ball.switchColor(ball.getInitialColor(), Color.GREEN);
             }
         }, 0.1f);
 
@@ -492,10 +492,15 @@ public class MapController  {
         return view.getScore();
     }
 
-    public void setPlainsColor(Color color)
+    public void setPlainsInitialColor(Color color)
     {
         for(PlainController pc : plains)
-            pc.setColor(color);
+            pc.setInitialColor(color);
+    }
+
+    public void setBallInitialColor(Color color)
+    {
+         ball.setInitialColor(color);
     }
 
 }

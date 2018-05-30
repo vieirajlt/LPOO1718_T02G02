@@ -18,10 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.gdx.game.controller.GameController;
 import com.gdx.game.controller.entities.BallController;
 import com.gdx.game.controller.entities.MapController;
-import com.gdx.game.controller.entities.PlainController;
-import com.gdx.game.model.entities.PlainModel;
 
-import java.awt.Color;
 
 public class ConfigsView {
 
@@ -84,19 +81,19 @@ public class ConfigsView {
 
         pix = new Pixmap(30,30, Pixmap.Format.RGBA8888);
 
-        //orange
+
         addBallColorButton(com.badlogic.gdx.graphics.Color.ORANGE,orangeButton);
         addPlainColorButton(com.badlogic.gdx.graphics.Color.VIOLET,violetButton);
         table.row();
-        //cyan
+
         addBallColorButton(com.badlogic.gdx.graphics.Color.CYAN,cyanButton);
         addPlainColorButton(com.badlogic.gdx.graphics.Color.NAVY,navyButton);
         table.row();
-        //purple
+
         addBallColorButton(com.badlogic.gdx.graphics.Color.PURPLE,purpleButton);
         addPlainColorButton(com.badlogic.gdx.graphics.Color.ROYAL,royalButton);
         table.row();
-        //forest
+
         addBallColorButton(com.badlogic.gdx.graphics.Color.FOREST,forestButton);
         addPlainColorButton(com.badlogic.gdx.graphics.Color.LIME,limeButton);
         table.row();
@@ -150,7 +147,7 @@ public class ConfigsView {
         buttom.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                BallController.getInstance().setColor(color);
+               MapController.getInstance().setBallInitialColor(color);
             }
         } );
     }
@@ -165,7 +162,7 @@ public class ConfigsView {
         buttom.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                MapController.getInstance().setPlainsColor(color);
+                MapController.getInstance().setPlainsInitialColor(color);
             }
         } );
     }

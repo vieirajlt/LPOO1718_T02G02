@@ -29,6 +29,8 @@ public class PlainModel extends EntityModel {
         this.depth = d;
 
         setModel(buildModel(id));
+
+        setInitialColor(Color.VIOLET);
     }
 
     private Model buildModel(int id) {

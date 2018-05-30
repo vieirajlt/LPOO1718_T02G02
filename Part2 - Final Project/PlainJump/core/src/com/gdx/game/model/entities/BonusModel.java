@@ -47,7 +47,7 @@ public class BonusModel extends EntityModel{
         this(0f, 1f, 0f, 1f, type);
     }
 
-    //falta mudar isto para cilindros? as capsulas se calhar sao mais engracadas xd, eu depois mudo
+
     private Model buildModel() {
         ModelBuilder modelBuilder = new ModelBuilder();
         modelBuilder.begin();
@@ -56,15 +56,6 @@ public class BonusModel extends EntityModel{
                 .sphere(this.diameter, this.diameter, this.diameter, 30, 30);
         return modelBuilder.end();
     }
-
-   /* private Model buildModel() {
-        ModelBuilder modelBuilder = new ModelBuilder();
-        modelBuilder.begin();
-        modelBuilder.node().id = id;
-        modelBuilder.part("capsule", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal, material)
-                .capsule(this.diameter/2,1f,10);
-        return modelBuilder.end();
-    }*/
 
 
     public float getDiameter() {
@@ -88,30 +79,26 @@ public class BonusModel extends EntityModel{
         switch (getType())
         {
             case DOUBLE:
-                this.value = 2;
-                this.immune = false;
-                material = new Material(ColorAttribute.createDiffuse(Color.WHITE));
-                id = "DoubleBonus";
+                buildBonus(2, false, Color.WHITE, "DoubleBonus");
                 break;
             case TRIPLE:
-                this.value = 3;
-                this.immune = false;
-                material = new Material(ColorAttribute.createDiffuse(Color.YELLOW));
-                id = "TripleBonus";
+                buildBonus(3, false, Color.YELLOW, "TripleBonus");
                 break;
             case QUADRUPLE:
-                this.value = 4;
-                this.immune = false;
-                material = new Material(ColorAttribute.createDiffuse(Color.RED));
-                id = "QuadrupleBonus";
+                buildBonus(4, false, Color.RED, "QuadrupleBonus");
                 break;
             case IMMUNITY:
-                this.value = 1;
-                this.immune = true;
-                material = new Material(ColorAttribute.createDiffuse(Color.GREEN));
-                id = "ImmunityBonus";
-
+                buildBonus(1, true, Color.GREEN, "ImmunityBonus");
+                break;
         }
+    }
+
+    private void buildBonus(int i, boolean b, Color color, String doubleBonus) {
+        this.value = i;
+        this.immune = b;
+        material = new Material(ColorAttribute.createDiffuse(color));
+        id = doubleBonus;
+        setInitialColor(color);
     }
 
     public String getId() {

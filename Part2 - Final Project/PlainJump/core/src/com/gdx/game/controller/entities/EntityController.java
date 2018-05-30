@@ -85,13 +85,26 @@ public class EntityController {
     }
 
 
-    public void setColor(Color color)
+    public void setInitialColor(Color color)
     {
-        ((ColorAttribute)getView().getModelInstance().materials.get(0).get(ColorAttribute.Diffuse)).color.set(color);
+        model.setInitialColor(color);
+        setCurrentColor(color);
     }
 
-    public Color getColor()
+    public Color getInitialColor()
     {
-        return ((ColorAttribute)getView().getModelInstance().materials.get(0).get(ColorAttribute.Diffuse)).color;
+        return model.getInitialColor();
+    }
+
+
+    public void setCurrentColor(Color color)
+    {
+        ((ColorAttribute)getView().getModelInstance().materials.get(0).get(ColorAttribute.Diffuse)).color.set(color);
+        model.setCurrentColor(color);
+    }
+
+    public Color getCurrentColor()
+    {
+        return model.getCurrentColor();
     }
 }

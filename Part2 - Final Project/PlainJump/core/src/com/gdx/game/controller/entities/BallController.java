@@ -149,17 +149,6 @@ public class BallController extends EntityController{
         this.frontalSpeed = frontalSpeed;
     }
 
-
-   /* public boolean isImmune()
-    {
-        return ((BallModel)getModel()).isImmune();
-    }
-
-    public void setImmune(boolean immune)
-    {
-        ((BallModel)getModel()).setImmune(immune);
-    }*/
-
     public int getCurrentPlainIndex() {
         return currentPlainIndex;
     }
@@ -171,11 +160,11 @@ public class BallController extends EntityController{
     public void switchColor(Color c1, Color c2)
     {
         Color c;
-      if (getColor().equals(c1))
+      if (getCurrentColor().equals(c1))
           c = c2;
       else
           c = c1;
-      setColor(c);
+      setCurrentColor(c);
     }
 
     public boolean incCounter()
