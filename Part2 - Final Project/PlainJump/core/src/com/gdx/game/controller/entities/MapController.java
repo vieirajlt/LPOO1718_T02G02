@@ -133,9 +133,9 @@ public class MapController  {
 
         lastZUpdated = 0;
 
-        positionsX = new float[]{-12, -8, -4, 0, 4, 8, 12};
+        positionsX = new float[]{-24, -20, -16, -12, -8, -4, 0, 4, 8, 12, 16, 20, 24};
 
-        positionsY = new float[]{-3, 0, 3};
+        positionsY = new float[]{-4, 0, 4};
 
         gravity = new Vector3(0, -75f, 0);
 
@@ -160,8 +160,8 @@ public class MapController  {
 
     private void addPlains() {
 
-        plainLevels = 15;
-        plainsPerLevel = 3;
+        plainLevels = 50;
+        plainsPerLevel = 5;
         positioningLevel = plainLevels;
 
         plains.clear();
@@ -187,10 +187,13 @@ public class MapController  {
             if(spawnPlain)
                 spawnPlain = false;
             else {
-                if (loc == 0)
-                    pc.setPos(positionsX[r1], 0, 0);
-                else
-                    pc.setPos(positionsX[r1], positionsY[r2], -loc * plainDepth);
+                if (loc == 0 || loc == 1) {
+                    r1 = (positionsX.length-1)/2;
+                    System.out.println(r1);
+                    r2 = (positionsY.length-1)/2;
+                    System.out.println(r2);
+                }
+                pc.setPos(positionsX[r1], positionsY[r2], -loc * plainDepth);
             }
                 //pc.getView().moveModelInstance(positionsX[r1], 0, -loc*(((PlainModel) (pc.getModel())).getDepth()));
             ++loc;
