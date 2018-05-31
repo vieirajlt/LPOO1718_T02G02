@@ -76,18 +76,10 @@ public class GameController {
     }
 
     public void resize(int width, int height) {
-        map.resize(width,height);
-        switch (gameState){
-            case MENU:
-                menu.resize(width,height);
-                break;
-            case CONFIGS:
-                configs.resize(width,height);
-                break;
-            default:
-                break;
-        }
 
+       menu.resize(width,height);
+       map.resize(width,height);
+       configs.resize(width,height);
     }
 
     public void setGameState(State gs) {
