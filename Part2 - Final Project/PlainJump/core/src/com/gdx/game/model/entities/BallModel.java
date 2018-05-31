@@ -12,9 +12,6 @@ public class BallModel extends EntityModel{
 
     private float diameter;
 
-
-    /*******nao sei isto devia estar aqui ou no controller apenas******/
-
     private boolean jump = true;
 
     private boolean falling = false;
@@ -32,20 +29,20 @@ public class BallModel extends EntityModel{
 
         this.diameter = d;
 
-        setModel(buildModel());
+       // setModel(buildModel());
 
         setInitialColor(Color.ORANGE);
 
     }
 
-    private Model buildModel() {
+   /* private Model buildModel() {
         ModelBuilder modelBuilder = new ModelBuilder();
         modelBuilder.begin();
         modelBuilder.node().id = String.format("ball");
         modelBuilder.part("sphere", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal, material)
                 .sphere(this.diameter, this.diameter, this.diameter, 30, 30);
         return modelBuilder.end();
-    }
+    }*/
 
     public float getDiameter() {
         return diameter;

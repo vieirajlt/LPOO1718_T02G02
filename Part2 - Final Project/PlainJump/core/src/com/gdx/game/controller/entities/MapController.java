@@ -321,7 +321,7 @@ public class MapController  {
         view.render(camera, moving);
 
         //a cena do debug
-     /* debugDrawer.begin(camera);
+    /* debugDrawer.begin(camera);
         world.debugDrawWorld();
         debugDrawer.end();*/
 
@@ -434,9 +434,9 @@ public class MapController  {
         bgMusic.dispose();
         view.dispose();
 
-        for(PlainController pc : plains) {
+      /*  for(PlainController pc : plains) {
             pc.dispose();
-        }
+        }*/
 
         world.dispose();
         constraintSolver.dispose();

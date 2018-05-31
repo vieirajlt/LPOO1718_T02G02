@@ -80,9 +80,9 @@ public class EntityController {
         getModel().setPosZ(getBody().getCenterOfMassPosition().z);
     }
 
-    public void dispose() {
+    /*public void dispose() {
         model.dispose();
-    }
+    }*/
 
 
     public void setInitialColor(Color color)
@@ -99,7 +99,7 @@ public class EntityController {
 
     public void setCurrentColor(Color color)
     {
-        ((ColorAttribute)getView().getModelInstance().materials.get(0).get(ColorAttribute.Diffuse)).color.set(color);
+       ((ColorAttribute)getView().getModelInstance().materials.get(0).get(ColorAttribute.Diffuse)).color.set(color);
         model.setCurrentColor(color);
     }
 }

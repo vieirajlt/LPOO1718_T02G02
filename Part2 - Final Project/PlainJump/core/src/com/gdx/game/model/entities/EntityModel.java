@@ -9,7 +9,8 @@ public class EntityModel {
     private float posY;
     private float posZ;
 
-    private Model model;
+    //nao apagues isto eu depois apago
+    //private Model model;
 
     private Color initialColor;
 
@@ -45,13 +46,13 @@ public class EntityModel {
         this.posZ = posZ;
     }
 
-    public void setModel(Model model) {
+   /* public void setModel(Model model) {
         this.model = model;
     }
 
     public Model getModel() {
         return model;
-    }
+    }*/
 
     public Color getInitialColor() {
         return initialColor;
@@ -65,8 +66,8 @@ public class EntityModel {
         this.currentColor = currentColor;
     }
 
-    public void dispose() {
+    /*public void dispose() {
         model.dispose();
-    }
+    }*/
 
 }

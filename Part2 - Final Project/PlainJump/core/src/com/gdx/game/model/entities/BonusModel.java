@@ -21,9 +21,9 @@ public class BonusModel extends EntityModel{
 
     private float diameter;
 
-    private static  Material material ;
+   // private static  Material material ;
 
-    private String id;
+   // private String id;
 
     public BonusModel(float x, float y, float z, float d, BonusType type) {
         super(x, y, z);
@@ -32,9 +32,11 @@ public class BonusModel extends EntityModel{
 
         this.type = type;
 
-        setValueMaterialAndId();
+        setValues();
 
-        setModel(buildModel());
+       // setValueMaterialAndId();
+
+       // setModel(buildModel());
     }
 
     public BonusModel(BonusType type)
@@ -43,14 +45,14 @@ public class BonusModel extends EntityModel{
     }
 
 
-    private Model buildModel() {
+   /* private Model buildModel() {
         ModelBuilder modelBuilder = new ModelBuilder();
         modelBuilder.begin();
         modelBuilder.node().id = id;
         modelBuilder.part("sphere", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal, material)
                 .sphere(this.diameter, this.diameter, this.diameter, 30, 30);
         return modelBuilder.end();
-    }
+    }*/
 
 
     public float getDiameter() {
@@ -65,7 +67,7 @@ public class BonusModel extends EntityModel{
         return value;
     }
 
-    private void setValueMaterialAndId() {
+   /* private void setValueMaterialAndId() {
         switch (getType())
         {
             case DOUBLE:
@@ -89,11 +91,36 @@ public class BonusModel extends EntityModel{
         material = new Material(ColorAttribute.createDiffuse(color));
         id = doubleBonus;
         setInitialColor(color);
+    }*/
+
+
+    private void setValues() {
+        switch (getType())
+        {
+            case DOUBLE:
+                setValueAndImmunity(2, false,Color.WHITE);
+                break;
+            case TRIPLE:
+                setValueAndImmunity(3, false,Color.YELLOW);
+                break;
+            case QUADRUPLE:
+                setValueAndImmunity(4, false,Color.RED);
+                break;
+            case IMMUNITY:
+                setValueAndImmunity(1, true,Color.GREEN);
+                break;
+        }
     }
 
-    public String getId() {
-        return id;
+    private void setValueAndImmunity(int i, boolean b, Color color) {
+        this.value = i;
+        this.immune = b;
+        setInitialColor(color);
     }
+
+   /* public String getId() {
+        return id;
+    }*/
 
     public boolean isImmune() {
         return immune;
