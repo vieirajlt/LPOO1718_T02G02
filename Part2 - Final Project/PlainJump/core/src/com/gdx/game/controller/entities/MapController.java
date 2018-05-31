@@ -172,8 +172,6 @@ public class MapController  {
     }
 
     private void placePlains() {
-        boolean spawnPlain = true;
-
         Random rand = new Random();
         int loc = 0;
         for(PlainController pc : plains) {
@@ -184,24 +182,16 @@ public class MapController  {
 
             float plainDepth = (((PlainModel) (pc.getModel())).getDepth());
 
-            if(spawnPlain)
-                spawnPlain = false;
-            else {
-                if (loc == 0 || loc == 1) {
-                    r1 = (positionsX.length-1)/2;
-                    System.out.println(r1);
-                    r2 = (positionsY.length-1)/2;
-                    System.out.println(r2);
-                }
-                pc.setPos(positionsX[r1], positionsY[r2], -loc * plainDepth);
+            if (loc <= 1) {
+                r1 = (positionsX.length-1)/2;
+                r2 = (positionsY.length-1)/2;
             }
-                //pc.getView().moveModelInstance(positionsX[r1], 0, -loc*(((PlainModel) (pc.getModel())).getDepth()));
+            pc.setPos(positionsX[r1], positionsY[r2], -loc * plainDepth);
             ++loc;
             if(loc%plainLevels == 0) {
                 loc = 0;
             }
         }
-
     }
 
     private void placePlainsLevel() {
