@@ -315,7 +315,12 @@ public class MapController  {
     }
 
     private void update(PerspectiveCamera camera) {
-        handleInputs();
+        if(!ball.isFalling()) {
+            handleInputs();
+        } else {
+            view.setGameOverView();
+        }
+
 
         if(!moving)
             return;

@@ -35,19 +35,22 @@ public class MapView {
 
     private int score;
     private String scoreText;
-    BitmapFont scoreFont;
+    private BitmapFont scoreFont;
 
     private  Stage stage;
     private Table table;
     private Label text;
+    private Label gameOverLabel;
     private Label.LabelStyle textStyle;
 
     private TextButton exitButton;
     private TextButton muteButton;
     private TextButton.TextButtonStyle textButtonStyle;
-    BitmapFont buttonFont;
+    private BitmapFont buttonFont;
 
     private FreeTypeFontGenerator generator;
+
+    private boolean gameOverView;
 
     private MapView() {
         modelBatch = new ModelBatch();
@@ -86,8 +89,10 @@ public class MapView {
         textStyle = new Label.LabelStyle();
         textStyle.font = scoreFont;
         text = new Label("score: 0",textStyle);
-        table.add(text).height(Gdx.graphics.getHeight()/2).expandX().top().left().maxHeight(letterSize+10).padLeft(8);
+        table.add(text).height(Gdx.graphics.getHeight()/3).expandX().top().left().maxHeight(letterSize+10).padLeft(8).colspan(2);
         //
+
+        addGameOverLabel();
 
         //Exit Button
         FreeTypeFontGenerator.FreeTypeFontParameter parameterButton = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -105,7 +110,7 @@ public class MapView {
             }
         } );
         table.row();
-        table.add(exitButton).height(Gdx.graphics.getHeight()/2).bottom().left().maxHeight(letterSize+10).padLeft(8);
+        table.add(exitButton).height(Gdx.graphics.getHeight()/3).bottom().left().maxHeight(letterSize+10).padLeft(8);
         //
 
         //Mute Button
@@ -127,10 +132,26 @@ public class MapView {
                 }
             }
         } );
-        table.add(muteButton).height(Gdx.graphics.getHeight()/2).bottom().left().maxHeight(letterSize+10).padRight(8);
+        table.add(muteButton).height(Gdx.graphics.getHeight()/3).bottom().right().maxHeight(letterSize+10).padRight(8);
         //
 
         //table.debug();
+
+        gameOverView = false;
+    }
+
+    private void addGameOverLabel() {
+        FreeTypeFontGenerator.FreeTypeFontParameter parameterScore = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        int letterSize = 90;
+        parameterScore.size = letterSize;
+        scoreFont = generator.generateFont(parameterScore);
+
+        textStyle = new Label.LabelStyle();
+        textStyle.font = scoreFont;
+        gameOverLabel = new Label("Game Over",textStyle);
+        gameOverLabel.setVisible(false);
+        table.row();
+        table.add(gameOverLabel).height(Gdx.graphics.getHeight()/3).expandX().colspan(2);
     }
 
     private void addLigthToEnvironment() {
@@ -221,5 +242,12 @@ public class MapView {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public void setGameOverView() {
+        if(!gameOverView) {
+            gameOverLabel.setVisible(true);
+            gameOverView = true;
+        }
     }
 }
