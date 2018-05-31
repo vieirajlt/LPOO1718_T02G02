@@ -49,6 +49,7 @@ public class GameController {
         menu.setBestScore(model.getHighscore());
         map.setBallInitialColor(model.getBallColor());
         map.setPlainsInitialColor(model.getPlainColor());
+        map.setScreenColor(model.getBackgroundColor().r, model.getBackgroundColor().g, model.getBackgroundColor().b);
     }
 
     private void setCamera() {
