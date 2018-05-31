@@ -76,6 +76,13 @@ public class MapController  {
 
     private Sound bgMusic;
 
+    private MusicState musicState;
+
+    public enum MusicState {
+        PAUSE,
+        PLAY;
+    }
+
     class ControllerContactListener extends ContactListener {
         @Override
         public boolean onContactAdded (int userValue0, int partId0, int index0, int userValue1, int partId1, int index1) {
@@ -139,6 +146,8 @@ public class MapController  {
         bgMusic = Gdx.audio.newSound(Gdx.files.internal("test.mp3"));
 
         bgMusic.stop();
+
+        musicState = MusicState.PAUSE;
     }
 
     private void addPlains() {
@@ -466,8 +475,10 @@ public class MapController  {
 
         if(moving) {
             bgMusic.play();
+            musicState = MusicState.PLAY;
         } else {
             bgMusic.stop();
+            musicState = MusicState.PAUSE;
         }
     }
 
@@ -490,6 +501,20 @@ public class MapController  {
     public void setBallInitialColor(Color color)
     {
          ball.setInitialColor(color);
+    }
+
+    public void resumeBgMusic() {
+        bgMusic.resume();
+        musicState = MusicState.PLAY;
+    }
+
+    public void pauseBgMusic() {
+        bgMusic.pause();
+        musicState = MusicState.PAUSE;
+    }
+
+    public MusicState getMusicState() {
+        return musicState;
     }
 
 }

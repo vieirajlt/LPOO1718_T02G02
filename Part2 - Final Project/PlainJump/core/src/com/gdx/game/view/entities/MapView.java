@@ -12,15 +12,14 @@ import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.environment.DirectionalLight;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.gdx.game.BodyInstance;
 import com.gdx.game.controller.GameController;
+import com.gdx.game.controller.entities.MapController;
 
 public class MapView {
 
@@ -43,7 +42,8 @@ public class MapView {
     private Label text;
     private Label.LabelStyle textStyle;
 
-    private TextButton button;
+    private TextButton exitButton;
+    private TextButton muteButton;
     private TextButton.TextButtonStyle textButtonStyle;
     BitmapFont buttonFont;
 
@@ -96,8 +96,8 @@ public class MapView {
         buttonFont = generator.generateFont(parameterButton);
         textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = buttonFont;
-        button = new TextButton("EXIT", textButtonStyle);
-        button.addListener( new ClickListener() {
+        exitButton = new TextButton("EXIT", textButtonStyle);
+        exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("MAP Over");
@@ -105,7 +105,29 @@ public class MapView {
             }
         } );
         table.row();
-        table.add(button).height(Gdx.graphics.getHeight()/2).expandX().bottom().left().maxHeight(letterSize+10).padLeft(8);
+        table.add(exitButton).height(Gdx.graphics.getHeight()/2).bottom().left().maxHeight(letterSize+10).padLeft(8);
+        //
+
+        //Mute Button
+        FreeTypeFontGenerator.FreeTypeFontParameter parameterMuteButton = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        letterSize = 30;
+        parameterMuteButton.size = letterSize;
+        buttonFont = generator.generateFont(parameterMuteButton);
+        textButtonStyle = new TextButton.TextButtonStyle();
+        textButtonStyle.font = buttonFont;
+        muteButton = new TextButton("MUTE", textButtonStyle);
+        muteButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Muted");
+                if(MapController.getInstance().getMusicState() == MapController.MusicState.PLAY) {
+                    MapController.getInstance().pauseBgMusic();
+                } else {
+                    MapController.getInstance().resumeBgMusic();
+                }
+            }
+        } );
+        table.add(muteButton).height(Gdx.graphics.getHeight()/2).bottom().left().maxHeight(letterSize+10).padRight(8);
         //
 
         //table.debug();
