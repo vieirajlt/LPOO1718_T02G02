@@ -53,7 +53,6 @@ public class MenuView {
 
         stage.addActor(table);
 
-
         //Font managing
         generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameterScore = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -61,37 +60,19 @@ public class MenuView {
         buttonFont = generator.generateFont(parameterScore);
         //
 
-        //loadSettings();
-        FreeTypeFontGenerator.FreeTypeFontParameter parameterLabel = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameterLabel.size = 50;
-        labelFont = generator.generateFont(parameterLabel);
-        labelStyle = new Label.LabelStyle();
-        labelStyle.font = labelFont;
-        highscoreLabel = new Label("highscore",labelStyle);
-        table.add(highscoreLabel);
-        table.row();
-        highscore = new Label(MenuModel.getInstance().getHighscore().toString(),labelStyle);
-        table.add(highscore);
-        table.row();
-        //saveSettings();
+        addHighScorelabels();
 
         //Play Button
-        playButtonStyle = new TextButton.TextButtonStyle();
-        playButtonStyle.font = buttonFont;
-        playButton = new TextButton("PLAY", playButtonStyle);
-        playButton.addListener( new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Into map");
-                GameController.getInstance().setGameState(GameController.State.MAP);
-
-            }
-        } );
-
-        table.add(playButton).height(250).maxHeight(50).bottom();
+        addPlayButton();
         //
         table.row();
         //Configs Button
+        addConfigsButton();
+        //
+        //table.debug();
+    }
+
+    private void addConfigsButton() {
         configsButtonStyle = playButtonStyle;
         configsButton = new TextButton("SETTINGS", configsButtonStyle);
         configsButton.addListener( new ClickListener() {
@@ -105,8 +86,36 @@ public class MenuView {
         } );
 
         table.add(configsButton);
-        //
-        //table.debug();
+    }
+
+    private void addPlayButton() {
+        playButtonStyle = new TextButton.TextButtonStyle();
+        playButtonStyle.font = buttonFont;
+        playButton = new TextButton("PLAY", playButtonStyle);
+        playButton.addListener( new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Into map");
+                GameController.getInstance().setGameState(GameController.State.MAP);
+
+            }
+        } );
+
+        table.add(playButton).height(250).maxHeight(50).bottom();
+    }
+
+    private void addHighScorelabels() {
+        FreeTypeFontGenerator.FreeTypeFontParameter parameterLabel = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameterLabel.size = 50;
+        labelFont = generator.generateFont(parameterLabel);
+        labelStyle = new Label.LabelStyle();
+        labelStyle.font = labelFont;
+        highscoreLabel = new Label("highscore",labelStyle);
+        table.add(highscoreLabel);
+        table.row();
+        highscore = new Label(MenuModel.getInstance().getHighscore().toString(),labelStyle);
+        table.add(highscore);
+        table.row();
     }
 
     public void render() {

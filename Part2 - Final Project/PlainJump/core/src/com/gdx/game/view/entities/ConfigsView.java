@@ -63,7 +63,22 @@ public class ConfigsView {
 
         generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.ttf"));
 
+        addLabels();
 
+        table.row();
+
+        pix = new Pixmap(30,30, Pixmap.Format.RGBA8888);
+
+        AddColorsButtons();
+
+        //exit button
+        addExitButton();
+
+      // table.debug();
+
+    }
+
+    private void addLabels() {
         FreeTypeFontGenerator.FreeTypeFontParameter parameterLabel = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameterLabel.size = 50;
         labelFont = generator.generateFont(parameterLabel);
@@ -71,23 +86,15 @@ public class ConfigsView {
         labelStyle.font = labelFont;
         ballLabel = new Label("Ball",labelStyle);
         table.add(ballLabel).width(100).height(45).left();
-        //table.row();
-
 
         screenLabel = new Label("BackGround", labelStyle);
         table.add(screenLabel).width(screenLabel.getWidth()).height(45).center();
 
         plainLabel = new Label("Plain",labelStyle);
         table.add(plainLabel).width(plainLabel.getWidth()).height(45).right();
+    }
 
-        table.row();
-
-
-        pix = new Pixmap(30,30, Pixmap.Format.RGBA8888);
-
-        AddColorsButtons();
-
-        //exit button
+    private void addExitButton() {
         FreeTypeFontGenerator.FreeTypeFontParameter parameterButton = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameterButton.size = 30;
         exitButtonFont = generator.generateFont(parameterButton);
@@ -103,9 +110,6 @@ public class ConfigsView {
         } );
         table.row();
         table.add(exitButton).height(Gdx.graphics.getHeight()/2).expandX().bottom().left().maxHeight(parameterButton.size+10).padLeft(8);
-
-      // table.debug();
-
     }
 
     private void AddColorsButtons() {
