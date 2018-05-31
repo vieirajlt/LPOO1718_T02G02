@@ -39,14 +39,14 @@ public class ConfigsView {
 
     private TextButton exitButton;
     private TextButton.TextButtonStyle exitButtonStyle;
-    BitmapFont exitButtonFont;
+    private BitmapFont exitButtonFont;
 
     private FreeTypeFontGenerator generator;
 
-    Pixmap pix;
+    private Pixmap pix;
 
     private Label.LabelStyle labelStyle;
-    BitmapFont labelFont;
+    private BitmapFont labelFont;
     private Label ballLabel;
     private Label plainLabel;
     private Label screenLabel;

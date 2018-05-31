@@ -17,11 +17,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
+import com.gdx.game.model.entities.MapModel;
 import com.gdx.game.utils.BodyInstance;
 import com.gdx.game.controller.GameController;
 import com.gdx.game.controller.entities.MapController;
 
 public class MapView {
+
+    private static final String FONT_PATH = "fonts/myfont.ttf";
+    private static final String MUTE_BTN_TEXT = "MUTE";
+    private static final String SCORE_LABEL_INI_TEXT = "score: 0";
+    private static final String SCORE_LABEL_TEXT = "score: ";
+    private static final String GAME_OVER_LABEL_TEXT = "Game Over";
+    private static final String EXIT_BTN_TEXT = "EXIT";
 
     private static MapView instance = null;
 
@@ -37,7 +45,6 @@ public class MapView {
 
     private SpriteBatch spriteBatch;
 
-    private int score;
     private String scoreText;
     private BitmapFont scoreFont;
 
@@ -78,10 +85,7 @@ public class MapView {
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
 
-        score = 0;
-        scoreText = "score: 0";
-
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal(FONT_PATH));
 
         //Score Label
         addScoreLabel();
@@ -109,7 +113,7 @@ public class MapView {
         buttonFont = generator.generateFont(parameterMuteButton);
         textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = buttonFont;
-        muteButton = new TextButton("MUTE", textButtonStyle);
+        muteButton = new TextButton(MUTE_BTN_TEXT, textButtonStyle);
         muteButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -131,7 +135,7 @@ public class MapView {
         buttonFont = generator.generateFont(parameterButton);
         textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.font = buttonFont;
-        exitButton = new TextButton("EXIT", textButtonStyle);
+        exitButton = new TextButton(EXIT_BTN_TEXT, textButtonStyle);
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -151,7 +155,7 @@ public class MapView {
 
         textStyle = new Label.LabelStyle();
         textStyle.font = scoreFont;
-        text = new Label("score: 0",textStyle);
+        text = new Label(SCORE_LABEL_INI_TEXT,textStyle);
         table.add(text).height(Gdx.graphics.getHeight()/3).expandX().top().left().maxHeight(letterSize+10).padLeft(8).colspan(2);
     }
 
@@ -163,7 +167,7 @@ public class MapView {
 
         textStyle = new Label.LabelStyle();
         textStyle.font = scoreFont;
-        gameOverLabel = new Label("Game Over",textStyle);
+        gameOverLabel = new Label(GAME_OVER_LABEL_TEXT,textStyle);
         gameOverLabel.setVisible(false);
         table.row();
         table.add(gameOverLabel).height(Gdx.graphics.getHeight()/3).expandX().colspan(2);
@@ -192,7 +196,7 @@ public class MapView {
     public void render(PerspectiveCamera camera, boolean moving) {
 
         clearScreen();
-        scoreText = "score: " + score;
+        scoreText = SCORE_LABEL_TEXT + MapModel.getInstance().getScoreCount();
         modelBatch.begin(camera);
         modelBatch.render(instances, environment);
         modelBatch.end();
@@ -242,14 +246,6 @@ public class MapView {
         if(instance == null)
             instance = new MapView();
         return instance;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
     }
 
     public void setGameOverView() {
