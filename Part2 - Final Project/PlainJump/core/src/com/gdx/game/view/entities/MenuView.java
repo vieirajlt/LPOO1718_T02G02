@@ -62,7 +62,7 @@ public class MenuView {
         buttonFont = generator.generateFont(parameterScore);
         //
 
-        //loadBestScore();
+        //loadSettings();
         FreeTypeFontGenerator.FreeTypeFontParameter parameterLabel = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameterLabel.size = 50;
         labelFont = generator.generateFont(parameterLabel);
@@ -74,7 +74,7 @@ public class MenuView {
         highscore = new Label(bestScore.toString(),labelStyle);
         table.add(highscore);
         table.row();
-        //saveBestScore();
+        //saveSettings();
 
         //Play Button
         playButtonStyle = new TextButton.TextButtonStyle();

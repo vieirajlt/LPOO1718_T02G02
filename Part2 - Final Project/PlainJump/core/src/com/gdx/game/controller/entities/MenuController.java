@@ -10,8 +10,6 @@ import com.gdx.game.view.entities.MenuView;
 
 public class MenuController {
 
-    private static final String HS_DATA_FILE = "data/hs-v1.json";
-
     private static MenuController instance = null;
 
     private MenuModel model;
@@ -21,7 +19,7 @@ public class MenuController {
     public MenuController() {
         model = new MenuModel();
         view = new MenuView();
-        loadBestScore();
+        //loadSettings();
     }
 
     public void create() {
@@ -51,19 +49,19 @@ public class MenuController {
         return instance;
     }
 
-    public void saveBestScore() {
+    /*public void saveSettings() {
         Json json = new Json();
         json.setOutputType(JsonWriter.OutputType.json);
-        FileHandle file = Gdx.files.internal(HS_DATA_FILE);
-        file.writeString(Base64Coder.encodeString(json.toJson(view.getBestScore())), false);
-    }
+        //FileHandle file = Gdx.files.internal(HS_DATA_FILE);
+        //file.writeString(Base64Coder.encodeString(json.toJson(view.getBestScore())), false);
+    }*/
 
-    public void loadBestScore() {
+    /*public void loadSettings() {
         Json json = new Json();
         FileHandle file = Gdx.files.internal(HS_DATA_FILE);
         Integer bs = json.fromJson(Integer.class, Base64Coder.decodeString(file.readString()));
         view.setBestScore(bs);
-    }
+    }*/
 
     public Integer getBestScore() {
         return view.getBestScore();

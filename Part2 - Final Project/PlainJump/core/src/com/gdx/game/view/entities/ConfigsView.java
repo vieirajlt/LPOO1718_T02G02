@@ -18,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.gdx.game.controller.GameController;
 import com.gdx.game.controller.entities.BallController;
 import com.gdx.game.controller.entities.MapController;
+import com.gdx.game.model.GameModel;
+import com.gdx.game.model.entities.MenuModel;
 
 
 public class ConfigsView {
@@ -148,6 +150,7 @@ public class ConfigsView {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                MapController.getInstance().setBallInitialColor(color);
+                GameModel.getInstance().setBallColor(color);
             }
         } );
     }
@@ -163,6 +166,7 @@ public class ConfigsView {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 MapController.getInstance().setPlainsInitialColor(color);
+                GameModel.getInstance().setPlainColor(color);
             }
         } );
     }

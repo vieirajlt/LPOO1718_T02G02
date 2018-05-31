@@ -12,7 +12,6 @@ import com.gdx.game.view.GameView;
 public class GameController {
 
     private PerspectiveCamera camera;
-    private CameraInputController cameraController;
 
     private static GameController instance = null;
 
@@ -36,12 +35,20 @@ public class GameController {
         menu = MenuController.getInstance();
         configs = ConfigsController.getInstance();
 
-        model = new GameModel();
+        model = GameModel.getInstance();
         view = new GameView();
+
+        model.loadSettings();
 
         setCamera();
 
         setGameState(State.MENU);
+    }
+
+    public void setSettings() {
+        menu.setBestScore(model.getHighscore());
+        map.setBallInitialColor(model.getBallColor());
+        map.setPlainsInitialColor(model.getPlainColor());
     }
 
     private void setCamera() {
@@ -100,7 +107,7 @@ public class GameController {
     private void updateBestScore() {
         if(menu.getBestScore() < map.getScore()) {
             menu.setBestScore(map.getScore());
-            menu.saveBestScore();
+            model.setHighscore(map.getScore());
         }
     }
 
@@ -115,5 +122,6 @@ public class GameController {
         map.reset();
         map = MapController.getInstance();
         map.create();
+        setSettings();
     }
 }
