@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Base64Coder;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 import com.gdx.game.controller.GameController;
+import com.gdx.game.model.entities.MenuModel;
 
 public class MenuView {
 
@@ -28,8 +29,6 @@ public class MenuView {
 
     private Label highscoreLabel;
     private Label highscore;
-
-    private Integer bestScore = 0;
 
     private Label.LabelStyle labelStyle;
 
@@ -71,7 +70,7 @@ public class MenuView {
         highscoreLabel = new Label("highscore",labelStyle);
         table.add(highscoreLabel);
         table.row();
-        highscore = new Label(bestScore.toString(),labelStyle);
+        highscore = new Label(MenuModel.getInstance().getHighscore().toString(),labelStyle);
         table.add(highscore);
         table.row();
         //saveSettings();
@@ -123,12 +122,7 @@ public class MenuView {
         generator.dispose();
     }
 
-    public Integer getBestScore() {
-        return bestScore;
-    }
-
     public void setBestScore(Integer bestScore) {
-        this.bestScore = bestScore;
         highscore.setText(bestScore.toString());
     }
 }

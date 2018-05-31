@@ -102,9 +102,4 @@ public class EntityController {
         ((ColorAttribute)getView().getModelInstance().materials.get(0).get(ColorAttribute.Diffuse)).color.set(color);
         model.setCurrentColor(color);
     }
-
-    public Color getCurrentColor()
-    {
-        return model.getCurrentColor();
-    }
 }

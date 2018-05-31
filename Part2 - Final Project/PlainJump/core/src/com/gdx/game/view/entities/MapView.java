@@ -17,11 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.gdx.game.BodyInstance;
+import com.gdx.game.utils.BodyInstance;
 import com.gdx.game.controller.GameController;
 import com.gdx.game.controller.entities.MapController;
-
-import java.awt.Color;
 
 public class MapView {
 
@@ -229,30 +227,14 @@ public class MapView {
         instance = null;
     }
 
-    public ColorAttribute getAmbientLigth() {
-        return ambientLigth;
-    }
-
-    public Array<DirectionalLight> getDirectLigths() {
-        return directLigths;
-    }
-
     public Array<BodyInstance> getInstances() {
         return instances;
-    }
-
-    public ModelBatch getModelBatch() {
-        return modelBatch;
     }
 
     public static MapView getInstance() {
         if(instance == null)
             instance = new MapView();
         return instance;
-    }
-
-    public Environment getEnvironment() {
-        return environment;
     }
 
     public int getScore() {

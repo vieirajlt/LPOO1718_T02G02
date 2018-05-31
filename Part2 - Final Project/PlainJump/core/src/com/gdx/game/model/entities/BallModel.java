@@ -45,16 +45,10 @@ public class BallModel extends EntityModel{
         modelBuilder.part("sphere", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal, material)
                 .sphere(this.diameter, this.diameter, this.diameter, 30, 30);
         return modelBuilder.end();
-        //return modelBuilder.createBox(this.width, this.heigth, this.depth, GL20.GL_TRIANGLES, material, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
     }
 
     public float getDiameter() {
         return diameter;
-    }
-
-    public void setDiameter(float d) {
-        this.diameter = d;
-        setModel(buildModel());
     }
 
     public boolean canJump() {

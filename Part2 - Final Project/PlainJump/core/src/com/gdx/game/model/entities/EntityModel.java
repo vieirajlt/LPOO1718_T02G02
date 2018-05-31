@@ -61,10 +61,6 @@ public class EntityModel {
         this.initialColor = initialColor;
     }
 
-    public Color getCurrentColor() {
-        return currentColor;
-    }
-
     public void setCurrentColor(Color currentColor) {
         this.currentColor = currentColor;
     }

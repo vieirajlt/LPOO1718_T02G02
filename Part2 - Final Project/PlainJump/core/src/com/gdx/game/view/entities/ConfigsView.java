@@ -20,7 +20,10 @@ import com.gdx.game.controller.GameController;
 import com.gdx.game.controller.entities.BallController;
 import com.gdx.game.controller.entities.MapController;
 import com.gdx.game.model.GameModel;
+import com.gdx.game.model.entities.ConfigsModel;
 import com.gdx.game.model.entities.MenuModel;
+
+import java.util.ArrayList;
 
 
 public class ConfigsView {
@@ -30,23 +33,9 @@ public class ConfigsView {
     private Table table;
     private Stage stage;
 
-    private ImageButton orangeButton;
-    private ImageButton cyanButton;
-    private ImageButton purpleButton;
-    private ImageButton forestButton;
-
-
-    private ImageButton violetButton;
-    private ImageButton navyButton;
-    private ImageButton royalButton;
-    private ImageButton limeButton;
-
-
-    private ImageButton grayButton;
-    private ImageButton blackButton;
-    private ImageButton skyButton;
-    private ImageButton fireButton;
-
+    private ArrayList<ImageButton> ballButtons;
+    private ArrayList<ImageButton> plainsButtons;
+    private ArrayList<ImageButton> screenButtons;
 
     private TextButton exitButton;
     private TextButton.TextButtonStyle exitButtonStyle;
@@ -96,29 +85,7 @@ public class ConfigsView {
 
         pix = new Pixmap(30,30, Pixmap.Format.RGBA8888);
 
-
-        addBallColorButton(com.badlogic.gdx.graphics.Color.ORANGE,orangeButton);
-        addScreenColorButton(Color.BLACK, blackButton);
-        addPlainColorButton(com.badlogic.gdx.graphics.Color.VIOLET,violetButton);
-        table.row();
-
-        addBallColorButton(com.badlogic.gdx.graphics.Color.CYAN,cyanButton);
-        addScreenColorButton(Color.GRAY, grayButton);
-        addPlainColorButton(com.badlogic.gdx.graphics.Color.NAVY,navyButton);
-        table.row();
-
-        addBallColorButton(com.badlogic.gdx.graphics.Color.PURPLE,purpleButton);
-        addScreenColorButton(Color.SKY, skyButton);
-        addPlainColorButton(com.badlogic.gdx.graphics.Color.ROYAL,royalButton);
-        table.row();
-
-        addBallColorButton(com.badlogic.gdx.graphics.Color.FOREST,forestButton);
-        addScreenColorButton(Color.FIREBRICK, fireButton);
-        addPlainColorButton(com.badlogic.gdx.graphics.Color.LIME,limeButton);
-        table.row();
-
-
-
+        AddColorsButtons();
 
         //exit button
         FreeTypeFontGenerator.FreeTypeFontParameter parameterButton = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -141,6 +108,23 @@ public class ConfigsView {
 
     }
 
+    private void AddColorsButtons() {
+        ArrayList<Color> bColors = ConfigsModel.getInstance().getBallColors();
+        ArrayList<Color> pColors = ConfigsModel.getInstance().getPlainColors();
+        ArrayList<Color> sColors = ConfigsModel.getInstance().getBackgroundColors();
+
+        ballButtons = new ArrayList<ImageButton>();
+        plainsButtons = new ArrayList<ImageButton>();
+        screenButtons = new ArrayList<ImageButton>();
+
+        for (int i = 0; i < bColors.size(); ++i) {
+            ballButtons.add(addBallColorButton(bColors.get(i)));
+            screenButtons.add(addScreenColorButton(sColors.get(i)));
+            plainsButtons.add(addPlainColorButton(pColors.get(i)));
+            table.row();
+        }
+    }
+
 
     public void render() {
         Gdx.input.setInputProcessor(stage);
@@ -156,11 +140,11 @@ public class ConfigsView {
     }
 
 
-    private void addBallColorButton(final com.badlogic.gdx.graphics.Color color, ImageButton buttom)
+    private ImageButton addBallColorButton(final com.badlogic.gdx.graphics.Color color)
     {
         pix.setColor(color);
         pix.fill();
-        buttom = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(pix))));
+        ImageButton buttom = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(pix))));
         table.add(buttom).width(50).height(80).expandY().expandX().left();
         //table.add(buttom);
         buttom.addListener( new ClickListener() {
@@ -170,13 +154,15 @@ public class ConfigsView {
                 GameModel.getInstance().setBallColor(color);
             }
         } );
+
+        return buttom;
     }
 
-    private void addPlainColorButton(final com.badlogic.gdx.graphics.Color color, ImageButton buttom)
+    private ImageButton addPlainColorButton(final com.badlogic.gdx.graphics.Color color)
     {
         pix.setColor(color);
         pix.fill();
-        buttom = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(pix))));
+        ImageButton buttom = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(pix))));
         table.add(buttom).width(50).height(80).expandY().expandX().right();
         //table.add(buttom);
         buttom.addListener( new ClickListener() {
@@ -186,13 +172,15 @@ public class ConfigsView {
                GameModel.getInstance().setPlainColor(color);
             }
         } );
+
+        return buttom;
     }
 
-    private void addScreenColorButton(final com.badlogic.gdx.graphics.Color color, ImageButton buttom)
+    private ImageButton addScreenColorButton(final com.badlogic.gdx.graphics.Color color)
     {
         pix.setColor(color);
         pix.fill();
-        buttom = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(pix))));
+        ImageButton buttom = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(pix))));
         table.add(buttom).width(50).height(80).expandY().expandX().center();
         //table.add(buttom);
         buttom.addListener( new ClickListener() {
@@ -202,6 +190,8 @@ public class ConfigsView {
                 GameModel.getInstance().setBackgroundColor(color);
             }
         } );
+
+        return buttom;
     }
 
 

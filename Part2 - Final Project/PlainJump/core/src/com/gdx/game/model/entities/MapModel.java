@@ -43,14 +43,6 @@ public class MapModel {
         return scoreCount;
     }
 
-    public void setScoreCount(int scoreCount) {
-        this.scoreCount = scoreCount;
-    }
-
-    public int getScoreMultiplier() {
-        return scoreMultiplier;
-    }
-
     public void setScoreMultiplier(int scoreMultiplier) {
         this.scoreMultiplier = scoreMultiplier;
         this.counter = 0;

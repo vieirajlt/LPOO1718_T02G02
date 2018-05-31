@@ -13,14 +13,6 @@ public class BonusController extends EntityController{
 
     private boolean visible = true; //nao sei se devia ser aqui ou na view ou no model
 
-    public BonusController() {
-        super();
-        BonusModel bonusModel = new BonusModel();
-        setModel(bonusModel);
-        setView(new BonusView(getModel().getModel(),new btSphereShape(bonusModel.getDiameter()/2),0f, bonusModel.getId()));
-       updatePosition();
-    }
-
     public BonusController(BonusModel.BonusType type){
         super();
         BonusModel bonusModel = new BonusModel(type);
@@ -28,22 +20,6 @@ public class BonusController extends EntityController{
         setView(new BonusView(getModel().getModel(),new btSphereShape(bonusModel.getDiameter()/2),0f, bonusModel.getId()));
         updatePosition();
 
-    }
-
-    public BonusController(float x, float y, float z, float d, BonusModel.BonusType type) {
-        super();
-
-        BonusModel bonusModel = new BonusModel(x, y, z, d, type);
-        setModel(bonusModel);
-        setView(new BonusView(getModel().getModel(),new btSphereShape(d/2),0f, bonusModel.getId()));
-        updatePosition();
-    }
-
-    public void setDiameter(float d) {
-        if(getModel() instanceof BonusModel) {
-            ((BonusModel) getModel()).setDiameter(d);
-            setView(new BonusView(getModel().getModel(),new btSphereShape(d/2),1f, ((BonusModel) getModel()).getId()));
-        }
     }
 
     public boolean isVisible() {

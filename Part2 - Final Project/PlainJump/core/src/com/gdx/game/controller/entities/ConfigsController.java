@@ -1,8 +1,5 @@
 package com.gdx.game.controller.entities;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
 import com.gdx.game.model.entities.ConfigsModel;
 import com.gdx.game.view.entities.ConfigsView;
 
@@ -19,21 +16,8 @@ public class ConfigsController {
         view = new ConfigsView();
     }
 
-    public void create() {
-
-    }
-
-    public void render(PerspectiveCamera camera) {
-        update();
+    public void render() {
         view.render();
-    }
-
-    private void update() {
-        handleInputs();
-    }
-
-    private void handleInputs() {
-
     }
 
     public void dispose() {
