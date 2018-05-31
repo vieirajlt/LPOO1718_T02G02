@@ -17,11 +17,13 @@ public class GameModel {
     private Integer highscore;
     private Color ballColor;
     private Color plainColor;
+    private Color backgroundColor;
 
     public GameModel() {
         highscore = 0;
         ballColor = Color.BLUE;
         plainColor = Color.BROWN;
+        backgroundColor = Color.GRAY;
     }
 
     public static GameModel getInstance() {
@@ -40,6 +42,15 @@ public class GameModel {
 
     public Color getPlainColor() {
         return plainColor;
+    }
+
+    public Color getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(Color backgroundColor) {
+        this.backgroundColor = backgroundColor;
+        saveSettings();
     }
 
     public void setHighscore(int highscore) {
@@ -77,6 +88,7 @@ public class GameModel {
                 highscore = tmp.getHighscore();
                 ballColor = tmp.getBallColor();
                 plainColor = tmp.getPlainColor();
+                backgroundColor = tmp.getBackgroundColor();
             }
         } catch (GdxRuntimeException rt) {
         }
