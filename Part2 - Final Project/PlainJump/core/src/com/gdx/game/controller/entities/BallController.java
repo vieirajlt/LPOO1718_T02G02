@@ -89,7 +89,7 @@ public class BallController extends EntityController{
 
     private void updateFalling()
     {
-        if (getModel().getPosY() < 0)
+        if (getModel().getPosY() < MapController.getInstance().getMinY() - 1)
             ((BallModel) getModel()).setFalling(true);
         else
             ((BallModel) getModel()).setFalling(false);

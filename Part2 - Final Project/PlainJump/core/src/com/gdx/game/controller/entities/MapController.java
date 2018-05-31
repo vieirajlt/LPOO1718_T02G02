@@ -50,7 +50,13 @@ public class MapController  {
     private int plainsPerLevel;
     private int positioningLevel;
     private float lastZUpdated;
-    private int[] positions;
+    private float[] positionsX;
+
+    public float getMinY() {
+        return positionsY[0];
+    }
+
+    private float[] positionsY;
 
     private btCollisionConfiguration collisionConfig;
     private btDispatcher dispatcher;
@@ -127,7 +133,9 @@ public class MapController  {
 
         lastZUpdated = 0;
 
-        positions = new int[]{-12, -8, -4, 0, 4, 8, 12};
+        positionsX = new float[]{-12, -8, -4, 0, 4, 8, 12};
+
+        positionsY = new float[]{-3, 0, 3};
 
         gravity = new Vector3(0, -75f, 0);
 
@@ -170,13 +178,21 @@ public class MapController  {
         int loc = 0;
         for(PlainController pc : plains) {
 
-            int r = rand.nextInt(positions.length);
+            int r1 = rand.nextInt(positionsX.length);
+
+            int r2 = rand.nextInt(positionsY.length);
+
+            float plainDepth = (((PlainModel) (pc.getModel())).getDepth());
 
             if(spawnPlain)
                 spawnPlain = false;
-            else
-                pc.setPos(positions[r], 0, -loc*(((PlainModel) (pc.getModel())).getDepth()));
-                //pc.getView().moveModelInstance(positions[r], 0, -loc*(((PlainModel) (pc.getModel())).getDepth()));
+            else {
+                if (loc == 0)
+                    pc.setPos(positionsX[r1], 0, 0);
+                else
+                    pc.setPos(positionsX[r1], positionsY[r2], -loc * plainDepth);
+            }
+                //pc.getView().moveModelInstance(positionsX[r1], 0, -loc*(((PlainModel) (pc.getModel())).getDepth()));
             ++loc;
             if(loc%plainLevels == 0) {
                 loc = 0;
@@ -193,9 +209,13 @@ public class MapController  {
         for(int it = lvl; it < plains.size; it += plainLevels) {
             PlainController pc = plains.get(it);
 
-            int r = rand.nextInt(positions.length);
+            int r1 = rand.nextInt(positionsX.length);
 
-            pc.moveToPos(positions[r], 0, -plainLevels*(((PlainModel) (pc.getModel())).getDepth()));
+            int r2 = rand.nextInt(positionsY.length);
+
+            float plainDepth = (((PlainModel) (pc.getModel())).getDepth());
+
+            pc.moveToPos(positionsX[r1], positionsY[r2], -plainLevels*plainDepth);
         }
         ++positioningLevel;
     }
