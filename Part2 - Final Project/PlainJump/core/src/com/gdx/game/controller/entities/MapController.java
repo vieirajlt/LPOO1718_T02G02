@@ -350,7 +350,6 @@ public class MapController  {
             if (model.updateScore(1))
                 ball.incLinearVelocity(speedIncrease);
             startTime = TimeUtils.nanoTime();
-            view.setScore(model.getScoreCount());
         }
 
         final float delay = 0.1f;
@@ -511,7 +510,7 @@ public class MapController  {
     }
 
     public Integer getScore() {
-        return view.getScore();
+        return model.getScoreCount();
     }
 
     public void setPlainsInitialColor(Color color)
