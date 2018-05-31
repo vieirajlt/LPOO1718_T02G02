@@ -258,4 +258,8 @@ public class MapView {
             gameOverView = true;
         }
     }
+
+    public void resize(int width, int height) {
+        stage.getViewport().update(width,height);
+    }
 }

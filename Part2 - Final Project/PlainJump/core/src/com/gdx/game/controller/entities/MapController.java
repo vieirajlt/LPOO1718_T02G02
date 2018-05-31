@@ -448,6 +448,10 @@ public class MapController  {
         contactListener.dispose();
     }
 
+    public void resize(int width, int height) {
+        view.resize(width,height);
+    }
+
     public void jump()
     {
         if(!moving)

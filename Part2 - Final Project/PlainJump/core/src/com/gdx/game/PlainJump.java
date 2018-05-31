@@ -31,4 +31,10 @@ public class PlainJump extends ApplicationAdapter {
 	public void dispose () {
 		controller.dispose();
 	}
+
+	@Override
+	public void resize(int width, int height)
+	{
+		controller.resize(width,height);
+	}
 }

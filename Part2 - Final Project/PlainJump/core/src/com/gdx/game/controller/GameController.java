@@ -17,6 +17,8 @@ public class GameController {
     private MenuController menu;
     private ConfigsController configs;
 
+
+
     public enum State {
         MAP,
         MENU,
@@ -71,6 +73,21 @@ public class GameController {
         map.dispose();
         menu.dispose();
         configs.dispose();
+    }
+
+    public void resize(int width, int height) {
+        map.resize(width,height);
+        switch (gameState){
+            case MENU:
+                menu.resize(width,height);
+                break;
+            case CONFIGS:
+                configs.resize(width,height);
+                break;
+            default:
+                break;
+        }
+
     }
 
     public void setGameState(State gs) {

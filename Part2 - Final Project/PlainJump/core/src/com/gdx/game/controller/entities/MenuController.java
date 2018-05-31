@@ -38,4 +38,7 @@ public class MenuController {
         view.setBestScore(bs);
     }
 
+    public void resize(int width, int height) {
+        view.resize(width,height);
+    }
 }

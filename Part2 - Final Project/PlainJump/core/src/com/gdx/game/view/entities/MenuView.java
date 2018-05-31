@@ -134,4 +134,8 @@ public class MenuView {
     public void setBestScore(Integer bestScore) {
         highscore.setText(bestScore.toString());
     }
+
+    public void resize(int width, int height) {
+        stage.getViewport().update(width,height);
+    }
 }

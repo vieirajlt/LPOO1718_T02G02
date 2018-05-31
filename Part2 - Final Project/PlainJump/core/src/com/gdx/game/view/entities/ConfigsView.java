@@ -137,6 +137,10 @@ public class ConfigsView {
         spriteBatch.end();
     }
 
+    public void resize(int width, int height) {
+        stage.getViewport().update(width,height);
+    }
+
     public void dispose() {
         spriteBatch.dispose();
         stage.dispose();

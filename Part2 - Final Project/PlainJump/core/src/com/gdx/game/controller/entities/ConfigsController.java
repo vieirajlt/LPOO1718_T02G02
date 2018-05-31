@@ -20,6 +20,8 @@ public class ConfigsController {
         view.render();
     }
 
+
+
     public void dispose() {
         view.dispose();
     }
@@ -28,5 +30,9 @@ public class ConfigsController {
         if(instance == null)
             instance = new ConfigsController();
         return instance;
+    }
+
+    public void resize(int width, int height) {
+        view.resize(width,height);
     }
 }
