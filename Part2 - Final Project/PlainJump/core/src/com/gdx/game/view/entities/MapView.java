@@ -21,6 +21,8 @@ import com.gdx.game.BodyInstance;
 import com.gdx.game.controller.GameController;
 import com.gdx.game.controller.entities.MapController;
 
+import java.awt.Color;
+
 public class MapView {
 
     private static MapView instance = null;
@@ -30,6 +32,10 @@ public class MapView {
     private Array<BodyInstance> instances;
     private Environment environment;
     private ModelBatch modelBatch;
+
+    private float screenRed;
+    private float screenGreen;
+    private float screenBlue;
 
     private SpriteBatch spriteBatch;
 
@@ -66,6 +72,10 @@ public class MapView {
         addLigthToEnvironment();
 
         instances = new Array<BodyInstance>();
+
+       // setScreenColor(0.3f,0.3f,0.3f);
+        setScreenColor(Color.BLACK.getRed(),Color.BLACK.getGreen(), Color.BLACK.getBlue() );
+
 
         stage = new Stage();
 
@@ -202,8 +212,17 @@ public class MapView {
     }
 
     private void clearScreen() {
-        Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
+        //Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
+        Gdx.gl.glClearColor(screenRed, screenGreen, screenBlue, 1.f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+    }
+
+
+    public void setScreenColor(float r, float g, float b)
+    {
+        screenRed = r;
+        screenGreen = g;
+        screenBlue = b;
     }
 
     public void reset() {

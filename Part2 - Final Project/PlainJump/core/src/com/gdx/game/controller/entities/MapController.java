@@ -522,5 +522,10 @@ public class MapController  {
         return musicState;
     }
 
+    public void setScreenColor(float r, float g, float b)
+    {
+        view.setScreenColor(r,g,b);
+    }
+
 }
 
