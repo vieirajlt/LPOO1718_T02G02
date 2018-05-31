@@ -15,7 +15,6 @@ public class MapModel {
 
     private float counterLimit = 40;
 
-    //nao sei se isto devia ser aqui ou na bola
     private boolean immune = false;
 
     public MapModel() {

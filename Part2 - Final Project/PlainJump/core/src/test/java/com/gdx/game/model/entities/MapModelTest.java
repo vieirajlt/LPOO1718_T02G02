@@ -12,6 +12,7 @@ public class MapModelTest {
     public void updateScore() {
         mapModel.updateScore(1);
         assertEquals(mapModel.getScoreCount(),1);
+        assertEquals(mapModel.updateScore(1),false);
     }
 
 
