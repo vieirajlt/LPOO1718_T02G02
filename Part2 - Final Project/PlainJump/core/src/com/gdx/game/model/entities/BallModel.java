@@ -15,7 +15,7 @@ public class BallModel extends EntityModel{
 
     /*******nao sei isto devia estar aqui ou no controller apenas******/
 
-    private boolean jump = false;
+    private boolean jump = true;
 
     private boolean falling = false;
 

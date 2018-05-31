@@ -167,7 +167,7 @@ public class ConfigsView {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                MapController.getInstance().setBallInitialColor(color);
-                //GameModel.getInstance().setBallColor(color);
+               GameModel.getInstance().setBallColor(color);
             }
         } );
     }
@@ -183,7 +183,7 @@ public class ConfigsView {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 MapController.getInstance().setPlainsInitialColor(color);
-               // GameModel.getInstance().setPlainColor(color);
+                GameModel.getInstance().setPlainColor(color);
             }
         } );
     }
@@ -198,7 +198,7 @@ public class ConfigsView {
         buttom.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                   MapController.getInstance().setScreenColor(color.r, color.g, color.b);
+                   MapController.getInstance().setScreenColor(color);
             }
         } );
     }

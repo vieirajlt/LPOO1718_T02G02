@@ -74,7 +74,7 @@ public class MapView {
         instances = new Array<BodyInstance>();
 
        // setScreenColor(0.3f,0.3f,0.3f);
-        setScreenColor(Color.BLACK.getRed(),Color.BLACK.getGreen(), Color.BLACK.getBlue() );
+        setScreenColor(com.badlogic.gdx.graphics.Color.BLACK );
 
 
         stage = new Stage();
@@ -218,11 +218,11 @@ public class MapView {
     }
 
 
-    public void setScreenColor(float r, float g, float b)
+    public void setScreenColor(com.badlogic.gdx.graphics.Color color)
     {
-        screenRed = r;
-        screenGreen = g;
-        screenBlue = b;
+        screenRed = color.r;
+        screenGreen = color.g;
+        screenBlue = color.b;
     }
 
     public void reset() {
