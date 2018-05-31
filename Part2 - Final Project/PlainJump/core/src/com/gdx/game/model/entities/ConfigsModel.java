@@ -22,17 +22,17 @@ public class ConfigsModel {
 
         plainColors = new ArrayList<Color>();
 
-        plainColors.add(Color.BLACK);
-        plainColors.add(Color.GRAY);
-        plainColors.add(Color.SKY);
-        plainColors.add(Color.FIREBRICK);
+        plainColors.add(Color.VIOLET);
+        plainColors.add(Color.NAVY);
+        plainColors.add(Color.ROYAL);
+        plainColors.add(Color.LIME);
 
         backgroundColors = new ArrayList<Color>();
 
-        backgroundColors.add(Color.VIOLET);
-        backgroundColors.add(Color.NAVY);
-        backgroundColors.add(Color.ROYAL);
-        backgroundColors.add(Color.LIME);
+        backgroundColors.add(Color.BLACK);
+        backgroundColors.add(Color.GRAY);
+        backgroundColors.add(Color.SKY);
+        backgroundColors.add(Color.FIREBRICK);
     }
 
     public ArrayList<Color> getBallColors() {

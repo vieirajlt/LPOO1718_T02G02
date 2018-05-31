@@ -32,9 +32,9 @@ public class PlainJump extends ApplicationAdapter {
 		controller.dispose();
 	}
 
-	@Override
+	/*@Override
 	public void resize(int width, int height)
 	{
 		controller.resize(width,height);
-	}
+	}*/
 }
