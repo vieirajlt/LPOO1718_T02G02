@@ -33,14 +33,14 @@ public class PlainModel extends EntityModel {
         setInitialColor(Color.VIOLET);
     }
 
-    private Model buildModel(int id) {
+   /* private Model buildModel(int id) {
         ModelBuilder modelBuilder = new ModelBuilder();
         modelBuilder.begin();
         modelBuilder.node().id = String.format("plain%d", id);
         modelBuilder.part("box", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal, material)
                 .box(this.width, this.heigth, this.depth);
         return modelBuilder.end();
-    }
+    }*/
 
     public float getWidth() {
         return width;

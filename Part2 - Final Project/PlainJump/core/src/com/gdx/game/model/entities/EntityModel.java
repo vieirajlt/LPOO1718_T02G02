@@ -3,6 +3,7 @@ package com.gdx.game.model.entities;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g3d.Model;
 
+//isto se calhar devia ser abstrato nao?
 public class EntityModel {
 
     private float posX;
@@ -12,9 +13,9 @@ public class EntityModel {
     //nao apagues isto eu depois apago
     //private Model model;
 
-    private Color initialColor;
+    private Color initialColor = Color.BLACK;
 
-    private Color currentColor;
+    private Color currentColor = initialColor;
 
     public EntityModel(float x, float y, float z) {
         this.posX = x;

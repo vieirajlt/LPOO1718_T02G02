@@ -18,7 +18,7 @@ public class BallModel extends EntityModel{
 
     /******************************************************************/
 
-    private static final Material material = new Material(ColorAttribute.createDiffuse(Color.ORANGE));
+   // private static final Material material = new Material(ColorAttribute.createDiffuse(Color.ORANGE));
 
     public BallModel() {
         this(0f, 2f, 3f, 2f);
