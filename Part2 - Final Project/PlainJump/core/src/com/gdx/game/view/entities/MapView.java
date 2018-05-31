@@ -17,11 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.gdx.game.BodyInstance;
+import com.gdx.game.utils.BodyInstance;
 import com.gdx.game.controller.GameController;
 import com.gdx.game.controller.entities.MapController;
-
-import java.awt.Color;
 
 public class MapView {
 
@@ -73,12 +71,7 @@ public class MapView {
 
         instances = new Array<BodyInstance>();
 
-       // setScreenColor(0.3f,0.3f,0.3f);
-        setScreenColor(com.badlogic.gdx.graphics.Color.BLACK );
-
-
         stage = new Stage();
-
         table = new Table();
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -91,40 +84,26 @@ public class MapView {
         generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.ttf"));
 
         //Score Label
-        FreeTypeFontGenerator.FreeTypeFontParameter parameterScore = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        int letterSize = 40;
-        parameterScore.size = letterSize;
-        scoreFont = generator.generateFont(parameterScore);
-
-        textStyle = new Label.LabelStyle();
-        textStyle.font = scoreFont;
-        text = new Label("score: 0",textStyle);
-        table.add(text).height(Gdx.graphics.getHeight()/3).expandX().top().left().maxHeight(letterSize+10).padLeft(8).colspan(2);
+        addScoreLabel();
         //
 
         addGameOverLabel();
 
         //Exit Button
-        FreeTypeFontGenerator.FreeTypeFontParameter parameterButton = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        letterSize = 30;
-        parameterButton.size = letterSize;
-        buttonFont = generator.generateFont(parameterButton);
-        textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.font = buttonFont;
-        exitButton = new TextButton("EXIT", textButtonStyle);
-        exitButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                System.out.println("MAP Over");
-                GameController.getInstance().setGameState(GameController.State.MENU);
-            }
-        } );
-        table.row();
-        table.add(exitButton).height(Gdx.graphics.getHeight()/3).bottom().left().maxHeight(letterSize+10).padLeft(8);
+        addExitButton();
         //
 
         //Mute Button
-        FreeTypeFontGenerator.FreeTypeFontParameter parameterMuteButton = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        addMuteButton();
+        //
+
+        //table.debug();
+
+        gameOverView = false;
+    }
+
+    private void addMuteButton() {
+        int letterSize;FreeTypeFontGenerator.FreeTypeFontParameter parameterMuteButton = new FreeTypeFontGenerator.FreeTypeFontParameter();
         letterSize = 30;
         parameterMuteButton.size = letterSize;
         buttonFont = generator.generateFont(parameterMuteButton);
@@ -143,11 +122,37 @@ public class MapView {
             }
         } );
         table.add(muteButton).height(Gdx.graphics.getHeight()/3).bottom().right().maxHeight(letterSize+10).padRight(8);
-        //
+    }
 
-        //table.debug();
+    private void addExitButton() {
+        int letterSize;FreeTypeFontGenerator.FreeTypeFontParameter parameterButton = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        letterSize = 30;
+        parameterButton.size = letterSize;
+        buttonFont = generator.generateFont(parameterButton);
+        textButtonStyle = new TextButton.TextButtonStyle();
+        textButtonStyle.font = buttonFont;
+        exitButton = new TextButton("EXIT", textButtonStyle);
+        exitButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("MAP Over");
+                GameController.getInstance().setGameState(GameController.State.MENU);
+            }
+        } );
+        table.row();
+        table.add(exitButton).height(Gdx.graphics.getHeight()/3).bottom().left().maxHeight(letterSize+10).padLeft(8);
+    }
 
-        gameOverView = false;
+    private void addScoreLabel() {
+        FreeTypeFontGenerator.FreeTypeFontParameter parameterScore = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        int letterSize = 40;
+        parameterScore.size = letterSize;
+        scoreFont = generator.generateFont(parameterScore);
+
+        textStyle = new Label.LabelStyle();
+        textStyle.font = scoreFont;
+        text = new Label("score: 0",textStyle);
+        table.add(text).height(Gdx.graphics.getHeight()/3).expandX().top().left().maxHeight(letterSize+10).padLeft(8).colspan(2);
     }
 
     private void addGameOverLabel() {
@@ -229,30 +234,14 @@ public class MapView {
         instance = null;
     }
 
-    public ColorAttribute getAmbientLigth() {
-        return ambientLigth;
-    }
-
-    public Array<DirectionalLight> getDirectLigths() {
-        return directLigths;
-    }
-
     public Array<BodyInstance> getInstances() {
         return instances;
-    }
-
-    public ModelBatch getModelBatch() {
-        return modelBatch;
     }
 
     public static MapView getInstance() {
         if(instance == null)
             instance = new MapView();
         return instance;
-    }
-
-    public Environment getEnvironment() {
-        return environment;
     }
 
     public int getScore() {

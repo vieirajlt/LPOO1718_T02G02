@@ -1,13 +1,8 @@
 package com.gdx.game.view.entities;
 
-import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.ModelInstance;
-import com.gdx.game.BodyInstance;
+import com.gdx.game.utils.BodyInstance;
 
 public class EntityView {
-
-   // private ModelInstance modelInstance;
-    private float x;
 
     private BodyInstance bodyInstance;
 

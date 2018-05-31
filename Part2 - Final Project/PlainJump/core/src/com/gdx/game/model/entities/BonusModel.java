@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 
-
 //Nao sei se devia fazer classes derivadas
 public class BonusModel extends EntityModel{
 
@@ -25,10 +24,6 @@ public class BonusModel extends EntityModel{
     private static  Material material ;
 
     private String id;
-
-    public BonusModel() {
-        this(BonusType.DOUBLE);
-    }
 
     public BonusModel(float x, float y, float z, float d, BonusType type) {
         super(x, y, z);
@@ -60,11 +55,6 @@ public class BonusModel extends EntityModel{
 
     public float getDiameter() {
         return diameter;
-    }
-
-    public void setDiameter(float d) {
-        this.diameter = d;
-        setModel(buildModel());
     }
 
     public BonusType getType() {

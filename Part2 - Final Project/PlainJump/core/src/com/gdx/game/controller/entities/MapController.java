@@ -24,12 +24,12 @@ import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
-import com.gdx.game.model.entities.MapModel;
 import com.gdx.game.model.entities.BonusModel;
+import com.gdx.game.model.entities.MapModel;
 import com.gdx.game.model.entities.PlainModel;
-import com.gdx.game.view.entities.MapView;
 import com.gdx.game.view.entities.BallView;
 import com.gdx.game.view.entities.BonusView;
+import com.gdx.game.view.entities.MapView;
 import com.gdx.game.view.entities.PlainView;
 
 import java.util.Random;

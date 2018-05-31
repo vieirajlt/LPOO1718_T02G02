@@ -40,7 +40,6 @@ public class PlainModel extends EntityModel {
         modelBuilder.part("box", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal, material)
                 .box(this.width, this.heigth, this.depth);
         return modelBuilder.end();
-        //return modelBuilder.createBox(this.width, this.heigth, this.depth, GL20.GL_TRIANGLES, material, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
     }
 
     public float getWidth() {
@@ -53,21 +52,6 @@ public class PlainModel extends EntityModel {
 
     public float getDepth() {
         return depth;
-    }
-
-    public void setWidth(int id, float width) {
-        this.width = width;
-        setModel(buildModel(id));
-    }
-
-    public void setHeight(int id, float height) {
-        this.heigth = height;
-        setModel(buildModel(id));
-    }
-
-    public void setDepth(int id, float depth) {
-        this.depth = depth;
-        setModel(buildModel(id));
     }
 
 }

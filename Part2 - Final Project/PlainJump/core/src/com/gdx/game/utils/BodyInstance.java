@@ -1,4 +1,4 @@
-package com.gdx.game;
+package com.gdx.game.utils;
 
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;

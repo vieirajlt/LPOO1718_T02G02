@@ -17,14 +17,9 @@ public class PlainJump extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-
 		Bullet.init();
 		controller = GameController.getInstance();
 		controller.create();
-
-		//cameraController = new CameraInputController(camera);
-		//Gdx.input.setInputProcessor(cameraController);
-
 	}
 
 	@Override

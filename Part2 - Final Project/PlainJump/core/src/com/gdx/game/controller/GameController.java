@@ -1,8 +1,5 @@
 package com.gdx.game.controller;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.PerspectiveCamera;
-import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.gdx.game.controller.entities.ConfigsController;
 import com.gdx.game.controller.entities.MapController;
 import com.gdx.game.controller.entities.MenuController;
@@ -10,8 +7,6 @@ import com.gdx.game.model.GameModel;
 import com.gdx.game.view.GameView;
 
 public class GameController {
-
-    private PerspectiveCamera camera;
 
     private static GameController instance = null;
 
@@ -40,8 +35,6 @@ public class GameController {
 
         model.loadSettings();
 
-        setCamera();
-
         setGameState(State.MENU);
     }
 
@@ -49,34 +42,24 @@ public class GameController {
         menu.setBestScore(model.getHighscore());
         map.setBallInitialColor(model.getBallColor());
         map.setPlainsInitialColor(model.getPlainColor());
-       // map.setScreenColor(model.getBackgroundColor().r, model.getBackgroundColor().g, model.getBackgroundColor().b);
         map.setScreenColor(model.getBackgroundColor());
     }
 
-    private void setCamera() {
-        camera = new PerspectiveCamera(80, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.position.set(0f, 7f, 10f);
-        camera.lookAt(0, 4f, 0);
-        camera.far = 100f;
-        camera.near = 1f;
-        camera.update();
-    }
+
 
     public void create() {
         map.create();
-        menu.create();
-        configs.create();
     }
 
     public void render() {
-        map.render(camera);
+        map.render(view.getCamera());
         switch(gameState) {
             case MENU:
                 menu.render();
                 map.setMoving(false);
                 break;
             case CONFIGS:
-                configs.render(camera);
+                configs.render();
                 map.setMoving(false);
                 break;
             default:
@@ -95,8 +78,7 @@ public class GameController {
         switch(gs) {
             case MENU:
                 updateBestScore();
-                setCamera();
-                resetMap();
+                resetGame();
                 break;
             case CONFIGS:
                 break;
@@ -119,8 +101,10 @@ public class GameController {
         return instance;
     }
 
-    private void resetMap()
+    private void resetGame()
     {
+        view.reset();
+        view = GameView.getInstance();
         map.reset();
         map = MapController.getInstance();
         map.create();

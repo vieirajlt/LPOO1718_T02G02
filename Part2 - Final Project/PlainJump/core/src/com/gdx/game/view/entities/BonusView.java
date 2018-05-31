@@ -2,7 +2,7 @@ package com.gdx.game.view.entities;
 
 import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
-import com.gdx.game.BodyInstance;
+import com.gdx.game.utils.BodyInstance;
 
 public class BonusView extends EntityView {
 
