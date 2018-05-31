@@ -7,8 +7,8 @@ Susana Maria de Sousa Lima      |   201603634   |   up201603634@fe.up.pt <br />
 
 [__] Change music to something decent<br />
 [__] Change icon (if we have the time)<br />
-[__] Config game reset to work<br />
-[__] Create a configs menu to change ball color<br />
+[__] Comment code<br />
+[__] Do Unit tests<br />
 
 
 Javadoc: https://vieirajlt.github.io/LPOO1718_T02G02/ <br />
