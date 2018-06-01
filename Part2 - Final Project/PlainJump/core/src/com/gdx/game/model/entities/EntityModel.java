@@ -2,12 +2,10 @@ package com.gdx.game.model.entities;
 
 import com.badlogic.gdx.graphics.Color;
 
-//isto se calhar devia ser abstrato nao?
-
 /**
  *
  */
-public class EntityModel {
+public abstract class EntityModel {
 
 
     /**

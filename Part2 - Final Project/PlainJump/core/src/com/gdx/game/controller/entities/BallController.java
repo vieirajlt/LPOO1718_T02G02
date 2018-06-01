@@ -5,6 +5,9 @@ import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.gdx.game.model.entities.BallModel;
 import com.gdx.game.view.entities.BallView;
 
+/**
+ *
+ */
 public class BallController extends EntityController{
 
     private static BallController instance = null;

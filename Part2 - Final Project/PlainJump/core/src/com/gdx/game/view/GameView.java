@@ -17,7 +17,7 @@ public class GameView {
         camera = new PerspectiveCamera(80, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.set(0f, 7f, 10f);
         camera.lookAt(0, 4f, 0);
-        camera.far = 100f;
+        camera.far = 235f;
         camera.near = 1f;
         camera.update();
     }

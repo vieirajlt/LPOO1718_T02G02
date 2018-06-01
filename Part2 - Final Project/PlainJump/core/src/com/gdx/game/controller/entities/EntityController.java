@@ -6,13 +6,12 @@ import com.badlogic.gdx.physics.bullet.dynamics.btRigidBody;
 import com.gdx.game.model.entities.EntityModel;
 import com.gdx.game.view.entities.EntityView;
 
-public class EntityController {
+public abstract class EntityController {
 
     private EntityModel model;
     private EntityView view;
 
     public EntityController() {
-
     }
 
     public EntityModel getModel() {

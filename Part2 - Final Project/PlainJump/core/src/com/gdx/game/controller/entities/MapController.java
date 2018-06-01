@@ -166,7 +166,7 @@ public class MapController  {
 
     private void addPlains() {
 
-        plainLevels = 50;
+        plainLevels = 20;
         plainsPerLevel = 5;
         positioningLevel = plainLevels;
 
