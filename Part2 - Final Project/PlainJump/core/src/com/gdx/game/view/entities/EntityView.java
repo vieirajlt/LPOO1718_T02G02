@@ -2,7 +2,7 @@ package com.gdx.game.view.entities;
 
 import com.gdx.game.utils.BodyInstance;
 
-public class EntityView {
+public abstract class EntityView {
 
     private BodyInstance bodyInstance;
 
