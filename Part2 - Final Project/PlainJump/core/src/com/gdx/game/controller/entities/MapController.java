@@ -434,9 +434,11 @@ public class MapController  {
         bgMusic.dispose();
         view.dispose();
 
-      /*  for(PlainController pc : plains) {
+        for(PlainController pc : plains) {
             pc.dispose();
-        }*/
+        }
+
+        ball.dispose();
 
         world.dispose();
         constraintSolver.dispose();

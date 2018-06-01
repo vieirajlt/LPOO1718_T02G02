@@ -50,6 +50,7 @@ public class EntityModel {
 
     public void setInitialColor(Color initialColor) {
         this.initialColor = initialColor;
+        setCurrentColor(initialColor);
     }
 
     public void setCurrentColor(Color currentColor) {
