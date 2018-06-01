@@ -32,8 +32,6 @@ public class PlainJump extends ApplicationAdapter {
 		controller.dispose();
 	}
 
-
-	//nao apagues as funcoes que dizem resize
 	@Override
 	public void resize(int width, int height)
 	{

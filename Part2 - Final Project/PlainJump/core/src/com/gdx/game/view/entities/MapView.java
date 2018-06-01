@@ -212,8 +212,6 @@ public class MapView {
             stage.draw();
             Gdx.input.setInputProcessor(stage);
         }
-        //scoreFont.setColor(1.0f, 1.0f, 1.0f, 1.0f);
-        // scoreFont.draw(spriteBatch, scoreText, 550, 450);
         text.setText(scoreText);
         spriteBatch.end();
     }
@@ -226,7 +224,6 @@ public class MapView {
     }
 
     private void clearScreen() {
-        //Gdx.gl.glClearColor(0.3f, 0.3f, 0.3f, 1.f);
         Gdx.gl.glClearColor(screenRed, screenGreen, screenBlue, 1.f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
     }

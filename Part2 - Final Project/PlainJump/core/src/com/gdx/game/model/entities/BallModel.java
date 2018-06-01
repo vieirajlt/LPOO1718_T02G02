@@ -27,10 +27,7 @@ public class BallModel extends EntityModel{
 
         this.diameter = d;
 
-       // setModel(buildModel());
-
         setInitialColor(Color.ORANGE);
-
     }
 
     public float getDiameter() {
@@ -52,6 +49,5 @@ public class BallModel extends EntityModel{
     public void setFalling(boolean falling) {
         this.falling = falling;
     }
-
 
 }
