@@ -24,6 +24,7 @@ import com.badlogic.gdx.physics.bullet.linearmath.btIDebugDraw;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
+import com.gdx.game.model.GameModel;
 import com.gdx.game.model.entities.BonusModel;
 import com.gdx.game.model.entities.MapModel;
 import com.gdx.game.model.entities.PlainModel;
@@ -84,7 +85,10 @@ public class MapController  {
 
     private MusicState musicState;
 
+    private boolean musicOnFlag;
+
     public enum MusicState {
+        STOP,
         PAUSE,
         PLAY;
     }
@@ -155,7 +159,9 @@ public class MapController  {
 
         bgMusic.stop();
 
-        musicState = MusicState.PAUSE;
+        musicState = MusicState.STOP;
+
+        musicOnFlag = true;
     }
 
     private void addPlains() {
@@ -334,7 +340,6 @@ public class MapController  {
             view.setGameOverView();
         }
 
-
         if(!moving)
             return;
 
@@ -496,12 +501,12 @@ public class MapController  {
     public void setMoving(boolean moving) {
         this.moving = moving;
 
-        if(moving) {
+        if(moving && musicOnFlag) {
             bgMusic.play();
             musicState = MusicState.PLAY;
         } else {
             bgMusic.stop();
-            musicState = MusicState.PAUSE;
+            musicState = MusicState.STOP;
         }
     }
 
@@ -531,6 +536,11 @@ public class MapController  {
         musicState = MusicState.PLAY;
     }
 
+    public void startBgMusic() {
+        bgMusic.play();
+        musicState = MusicState.PLAY;
+    }
+
     public void pauseBgMusic() {
         bgMusic.pause();
         musicState = MusicState.PAUSE;
@@ -543,6 +553,11 @@ public class MapController  {
     public void setScreenColor(Color color)
     {
         view.setScreenColor(color);
+    }
+
+    public void setMusicOnFlag(boolean musicOnFlag) {
+        this.musicOnFlag = musicOnFlag;
+        GameModel.getInstance().setMusicOnFlag(musicOnFlag);
     }
 
 }

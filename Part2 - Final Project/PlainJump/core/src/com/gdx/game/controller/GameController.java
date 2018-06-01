@@ -17,8 +17,6 @@ public class GameController {
     private MenuController menu;
     private ConfigsController configs;
 
-
-
     public enum State {
         MAP,
         MENU,
@@ -45,6 +43,8 @@ public class GameController {
         map.setBallInitialColor(model.getBallColor());
         map.setPlainsInitialColor(model.getPlainColor());
         map.setScreenColor(model.getBackgroundColor());
+        map.setMusicOnFlag(model.isMusicOnFlag());
+        System.out.println(model.isMusicOnFlag());
     }
 
 

@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.gdx.game.model.GameModel;
 import com.gdx.game.model.entities.MapModel;
 import com.gdx.game.utils.BodyInstance;
 import com.gdx.game.controller.GameController;
@@ -123,10 +124,22 @@ public class MapView {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 System.out.println("Muted");
-                if(MapController.getInstance().getMusicState() == MapController.MusicState.PLAY) {
-                    MapController.getInstance().pauseBgMusic();
-                } else {
-                    MapController.getInstance().resumeBgMusic();
+                switch (MapController.getInstance().getMusicState()) {
+                    case PLAY:
+                        System.out.println("from PLAY");
+                        MapController.getInstance().pauseBgMusic();
+                        MapController.getInstance().setMusicOnFlag(false);
+                        break;
+                    case PAUSE:
+                        System.out.println("from PAUSE");
+                        MapController.getInstance().resumeBgMusic();
+                        MapController.getInstance().setMusicOnFlag(true);
+                        break;
+                    case STOP:
+                        System.out.println("from STOP");
+                        MapController.getInstance().startBgMusic();
+                        MapController.getInstance().setMusicOnFlag(true);
+                        break;
                 }
             }
         } );

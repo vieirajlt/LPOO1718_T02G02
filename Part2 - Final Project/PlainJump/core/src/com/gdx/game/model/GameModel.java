@@ -18,12 +18,14 @@ public class GameModel {
     private Color ballColor;
     private Color plainColor;
     private Color backgroundColor;
+    private boolean musicOnFlag;
 
     public GameModel() {
         highscore = 0;
         ballColor = Color.BLUE;
         plainColor = Color.BROWN;
         backgroundColor = Color.GRAY;
+        musicOnFlag = true;
     }
 
     public static GameModel getInstance() {
@@ -48,6 +50,10 @@ public class GameModel {
         return backgroundColor;
     }
 
+    public boolean isMusicOnFlag() {
+        return musicOnFlag;
+    }
+
     public void setBackgroundColor(Color backgroundColor) {
         this.backgroundColor = backgroundColor;
         saveSettings();
@@ -70,6 +76,12 @@ public class GameModel {
         System.out.println("\tPlain set");
     }
 
+    public void setMusicOnFlag(boolean musicOnFlag) {
+        this.musicOnFlag = musicOnFlag;
+        saveSettings();
+        System.out.printf("MusicFlag set to %s\n", musicOnFlag ? "true" : "false");
+    }
+
     public void saveSettings() {
         Json json = new Json();
         json.setOutputType(JsonWriter.OutputType.json);
@@ -89,6 +101,7 @@ public class GameModel {
                 ballColor = tmp.getBallColor();
                 plainColor = tmp.getPlainColor();
                 backgroundColor = tmp.getBackgroundColor();
+                musicOnFlag = tmp.isMusicOnFlag();
             }
         } catch (GdxRuntimeException rt) {
         }
