@@ -8,6 +8,9 @@ import com.gdx.game.view.entities.ConfigsView;
  */
 public class ConfigsController {
 
+    /**
+     * this Singleton Instance
+     */
     private static ConfigsController instance = null;
 
     /**

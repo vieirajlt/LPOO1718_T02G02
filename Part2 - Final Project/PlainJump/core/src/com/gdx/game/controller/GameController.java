@@ -6,8 +6,12 @@ import com.gdx.game.controller.entities.MapController;
 import com.gdx.game.model.GameModel;
 import com.gdx.game.view.GameView;
 
+//TODO Commenting
 public class GameController {
 
+    /**
+     * this Singleton Instance
+     */
     private static GameController instance = null;
 
     private GameModel model;

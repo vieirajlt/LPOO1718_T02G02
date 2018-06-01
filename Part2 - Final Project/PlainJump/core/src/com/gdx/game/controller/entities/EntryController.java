@@ -8,6 +8,9 @@ import com.gdx.game.view.entities.EntryView;
  */
 public class EntryController {
 
+    /**
+     * this Singleton Instance
+     */
     private static EntryController instance = null;
 
     /**

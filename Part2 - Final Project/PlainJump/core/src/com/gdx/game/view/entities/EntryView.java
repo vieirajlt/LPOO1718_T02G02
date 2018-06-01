@@ -15,33 +15,89 @@ import com.gdx.game.model.entities.EntryModel;
 
 public class EntryView {
 
+    /**
+     * this used font path
+     */
     private static final String FONT_PATH = "fonts/myfont.ttf";
+
+    /**
+     * this settings button text
+     */
     private static final String SETTINGS_BTN_TEXT = "SETTINGS";
+
+    /**
+     * this play button text
+     */
     private static final String PLAY_BTN_TEXT = "PLAY";
+
+    /**
+     * this highscore label text
+     */
     private static final String HIGHSCORE_LABEL_TEXT = "highscore";
 
+    /**
+     * this play button
+     */
     private TextButton playButton;
+
+    /**
+     * this play button style
+     */
     private TextButton.TextButtonStyle playButtonStyle;
 
+    /**
+     * this settings button
+     */
     private TextButton configsButton;
+
+    /**
+     * this settings button style
+     */
     private TextButton.TextButtonStyle configsButtonStyle;
 
-    BitmapFont buttonFont;
+    /**
+     * this bitmap font
+     */
+    BitmapFont font;
 
+    /**
+     * this highscore label
+     */
     private Label highscoreLabel;
+
+    /**
+     * this highscore actual value label
+     */
     private Label highscore;
 
+    /**
+     * this labels style
+     */
     private Label.LabelStyle labelStyle;
 
-    BitmapFont labelFont;
-
+    /**
+     * this FreeType extension font generator
+     */
     private FreeTypeFontGenerator generator;
 
+    /**
+     * this sprite batch
+     */
     private SpriteBatch spriteBatch;
 
+    /**
+     * this stage table
+     */
     private Table table;
+
+    /**
+     * this table
+     */
     private Stage stage;
 
+    /**
+     * Creates a default entry view menu.
+     */
     public EntryView() {
 
         spriteBatch = new SpriteBatch();
@@ -57,7 +113,7 @@ public class EntryView {
         generator = new FreeTypeFontGenerator(Gdx.files.internal(FONT_PATH));
         FreeTypeFontGenerator.FreeTypeFontParameter parameterScore = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameterScore.size = 45;
-        buttonFont = generator.generateFont(parameterScore);
+        font = generator.generateFont(parameterScore);
 
         addHighScorelabels();
 
@@ -81,7 +137,7 @@ public class EntryView {
 
     private void addPlayButton() {
         playButtonStyle = new TextButton.TextButtonStyle();
-        playButtonStyle.font = buttonFont;
+        playButtonStyle.font = font;
         playButton = new TextButton(PLAY_BTN_TEXT, playButtonStyle);
         playButton.addListener( new ClickListener() {
             @Override
@@ -97,9 +153,9 @@ public class EntryView {
     private void addHighScorelabels() {
         FreeTypeFontGenerator.FreeTypeFontParameter parameterLabel = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameterLabel.size = 50;
-        labelFont = generator.generateFont(parameterLabel);
+        font = generator.generateFont(parameterLabel);
         labelStyle = new Label.LabelStyle();
-        labelStyle.font = labelFont;
+        labelStyle.font = font;
         highscoreLabel = new Label(HIGHSCORE_LABEL_TEXT,labelStyle);
         table.add(highscoreLabel);
         table.row();
@@ -108,6 +164,9 @@ public class EntryView {
         table.row();
     }
 
+    /**
+     * Renders this EntryView.
+     */
     public void render() {
         Gdx.input.setInputProcessor(stage);
         spriteBatch.begin();
@@ -115,16 +174,28 @@ public class EntryView {
         spriteBatch.end();
     }
 
+    /**
+     * Disposes of this EntryView.
+     */
     public void dispose() {
         spriteBatch.dispose();
         stage.dispose();
         generator.dispose();
     }
 
+    /**
+     * Sets this shown highscore.
+     * @param bestScore the new value of this highscore
+     */
     public void setBestScore(Integer bestScore) {
         highscore.setText(bestScore.toString());
     }
 
+    /**
+     * Resizes this stage viewport accordingly to the given parameters.
+     * @param width this stage new width
+     * @param height this stage new height
+     */
     public void resize(int width, int height) {
         stage.getViewport().update(width,height);
     }

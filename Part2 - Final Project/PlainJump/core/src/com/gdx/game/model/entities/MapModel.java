@@ -1,8 +1,5 @@
 package com.gdx.game.model.entities;
 
-//TODO ver melhor a incCounter
-
-
 /**
  * This class contains all the information regarding the game's high score count.
  */
@@ -106,7 +103,8 @@ public class MapModel {
     /**
      * Increase this MapModel counter by the given inc.
      * @param inc the value to increment the counter
-     * @return standard true or false
+     * @return true if "immunity" or "score multiplication" are not default
+     * and this counter exceeded set limit, else false
      */
     public boolean incCounter(float inc)
     {
@@ -131,7 +129,6 @@ public class MapModel {
             return true;
         return false;
     }
-
 
     /**
      * Reset this MapModel instance (set to null)

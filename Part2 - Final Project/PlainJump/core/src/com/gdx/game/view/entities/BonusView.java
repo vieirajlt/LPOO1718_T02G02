@@ -10,9 +10,21 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
 import com.gdx.game.utils.BodyInstance;
 
-
+/**
+ * This class is used to store a BodyInstance that represents the visual
+ * concept of the bonus that we represent to play the game as the bonus
+ * the player can catch.
+ */
 public class BonusView extends EntityView {
 
+    /**
+     * Creates a bonus with a sphere BodyInstance with
+     * specified diameter, color, shape and mass.
+     * @param diameter this BodyInstance sphere diameter value
+     * @param color this BodyInstance sphere color
+     * @param shape this BodyInstance sphere shape
+     * @param mass this BodyInstance sphere mass value
+     */
     public BonusView(String id, Color color, float diameter, btCollisionShape shape, float mass)
     {
         super();

@@ -8,7 +8,6 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 
-//TODO musicOnFlag e ultimos 2 metodos
 /**
  * This class is responsible for loading and saving the ball, plains and background colours as well as the high score
  */
@@ -45,7 +44,7 @@ public class GameModel {
     private Color backgroundColor;
 
     /**
-     *
+     * This music status flag
      */
     private boolean musicOnFlag;
 
@@ -159,8 +158,9 @@ public class GameModel {
         System.out.printf("MusicFlag set to %s\n", musicOnFlag ? "true" : "false");
     }
 
-    /**************************************************/
-
+    /**
+     * Save this class to a json file, encoded for game preferences saving.
+     */
     public void saveSettings() {
         Json json = new Json();
         json.setOutputType(JsonWriter.OutputType.json);
@@ -169,6 +169,10 @@ public class GameModel {
         file.writeString(Base64Coder.encodeString(json.toJson(this)), false);
     }
 
+    /**
+     * Reads json file with this class, decoding the info and setting this class
+     * accordingly in order to load game preferences.
+     */
     public void loadSettings() {
         Json json = new Json();
         FileHandle file = Gdx.files.local(HS_DATA_FILE);

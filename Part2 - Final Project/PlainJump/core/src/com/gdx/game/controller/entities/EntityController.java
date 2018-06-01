@@ -50,7 +50,7 @@ public abstract class EntityController {
      */
     public btRigidBody getBody()
     {
-        return getView().getModelInstance().getRigidBody();
+        return getView().getBodyInstance().getRigidBody();
     }
 
     /**
@@ -110,7 +110,7 @@ public abstract class EntityController {
      */
     public void getWorldTransform()
     {
-        this.getView().getModelInstance().getRigidBody().getWorldTransform(this.getView().getModelInstance().transform);
+        this.getView().getBodyInstance().getRigidBody().getWorldTransform(this.getView().getBodyInstance().transform);
     }
 
     /**
@@ -119,7 +119,7 @@ public abstract class EntityController {
      */
     public void setWorldTransform()
     {
-        this.getView().getModelInstance().getRigidBody().setWorldTransform(this.getView().getModelInstance().transform);
+        this.getView().getBodyInstance().getRigidBody().setWorldTransform(this.getView().getBodyInstance().transform);
     }
 
     /**
@@ -165,7 +165,7 @@ public abstract class EntityController {
      */
     public void setCurrentColor(Color color)
     {
-       ((ColorAttribute)getView().getModelInstance().materials.get(0).get(ColorAttribute.Diffuse)).color.set(color);
+       ((ColorAttribute)getView().getBodyInstance().materials.get(0).get(ColorAttribute.Diffuse)).color.set(color);
         model.setCurrentColor(color);
     }
 }

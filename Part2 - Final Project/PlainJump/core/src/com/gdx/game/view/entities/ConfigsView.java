@@ -23,7 +23,7 @@ import com.gdx.game.model.entities.ConfigsModel;
 
 import java.util.ArrayList;
 
-
+//TODO Commenting
 public class ConfigsView {
 
     private static final String FONT_PATH = "fonts/myfont.ttf";

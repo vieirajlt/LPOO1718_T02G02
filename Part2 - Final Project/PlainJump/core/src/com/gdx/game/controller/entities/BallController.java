@@ -11,6 +11,9 @@ import com.gdx.game.view.entities.BallView;
  */
 public class BallController extends EntityController{
 
+    /**
+     * this Singleton Instance
+     */
     private static BallController instance = null;
 
     /**
@@ -102,8 +105,8 @@ public class BallController extends EntityController{
         updatePosition();
         getBody().translate(new Vector3(0,0,-frontalSpeed));
         getWorldTransform();
-        getView().getModelInstance().transform.rotate(new Vector3(1,0,0),rotationDegree);
-        getBody().setWorldTransform(getView().getModelInstance().transform);
+        getView().getBodyInstance().transform.rotate(new Vector3(1,0,0),rotationDegree);
+        getBody().setWorldTransform(getView().getBodyInstance().transform);
         updateModel();
         updateFalling();
     }

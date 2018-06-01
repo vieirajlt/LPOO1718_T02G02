@@ -10,10 +10,22 @@ import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.physics.bullet.collision.btCollisionShape;
 import com.gdx.game.utils.BodyInstance;
 
+/**
+ * This class is used to store a BodyInstance that represents the visual
+ * concept of the ball that we represent to play the game as the player.
+ */
 public class BallView extends EntityView {
 
     /*******************CONSTRUCTORS*******************/
 
+    /**
+     * Creates a ball with a sphere BodyInstance with
+     * specified diameter, color, shape and mass.
+     * @param diameter this BodyInstance sphere diameter value
+     * @param color this BodyInstance sphere color
+     * @param shape this BodyInstance sphere shape
+     * @param mass this BodyInstance sphere mass value
+     */
     public BallView(float diameter, Color color, btCollisionShape shape, float mass)
     {
         super();

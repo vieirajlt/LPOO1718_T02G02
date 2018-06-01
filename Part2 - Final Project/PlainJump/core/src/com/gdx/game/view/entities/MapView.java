@@ -22,6 +22,7 @@ import com.gdx.game.controller.entities.MapController;
 import com.gdx.game.model.entities.MapModel;
 import com.gdx.game.utils.BodyInstance;
 
+//TODO Commenting
 public class MapView {
 
     private static final String FONT_PATH = "fonts/myfont.ttf";
@@ -31,6 +32,9 @@ public class MapView {
     private static final String GAME_OVER_LABEL_TEXT = "Game Over";
     private static final String EXIT_BTN_TEXT = "EXIT";
 
+    /**
+     * this Singleton Instance
+     */
     private static MapView instance = null;
 
     private ColorAttribute ambientLigth;
@@ -187,15 +191,15 @@ public class MapView {
     }
 
     public void addInstance(PlainView pv) {
-        instances.add(pv.getModelInstance());
+        instances.add(pv.getBodyInstance());
     }
 
     public void addInstance(BallView bv) {
-        instances.add(bv.getModelInstance());
+        instances.add(bv.getBodyInstance());
     }
 
     public void addInstance(BonusView bv) {
-        instances.add(bv.getModelInstance());
+        instances.add(bv.getBodyInstance());
     }
 
     public void render(PerspectiveCamera camera, boolean moving) {

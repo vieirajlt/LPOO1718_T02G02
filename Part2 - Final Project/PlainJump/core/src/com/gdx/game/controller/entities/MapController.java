@@ -35,10 +35,14 @@ import com.gdx.game.view.entities.PlainView;
 
 import java.util.Random;
 
+//TODO Commenting
 public class MapController  {
 
     private static final String SOUND_PATH = "sounds/test48000.mp3";
 
+    /**
+     * this Singleton Instance
+     */
     private static MapController instance = null;
 
     private MapModel model;
@@ -224,7 +228,7 @@ public class MapController  {
     {
         for (PlainController pc : plains)
         {
-            pc.getBody().proceedToTransform(pc.getView().getModelInstance().transform);
+            pc.getBody().proceedToTransform(pc.getView().getBodyInstance().transform);
             pc.getBody().setUserValue(view.getInstances().size);
             pc.getBody().setCollisionFlags( pc.getBody().getCollisionFlags() | btCollisionObject.CollisionFlags.CF_KINEMATIC_OBJECT);
             view.addInstance((PlainView) (pc.getView()));
@@ -259,7 +263,7 @@ public class MapController  {
 
         ball = BallController.getInstance();
 
-        ball.getBody().proceedToTransform(ball.getView().getModelInstance().transform);
+        ball.getBody().proceedToTransform(ball.getView().getBodyInstance().transform);
 
         view.addInstance((BallView) (ball.getView()));
 
@@ -305,7 +309,7 @@ public class MapController  {
    {
        for (BonusController bc : bonus)
        {
-           bc.getBody().proceedToTransform(bc.getView().getModelInstance().transform);
+           bc.getBody().proceedToTransform(bc.getView().getBodyInstance().transform);
            bc.getBody().setUserValue(view.getInstances().size);
            bc.getBody().setCollisionFlags( bc.getBody().getCollisionFlags() | btCollisionObject.CollisionFlags.CF_NO_CONTACT_RESPONSE);
            view.addInstance((BonusView) (bc.getView()));
@@ -486,7 +490,7 @@ public class MapController  {
         //mudar isto para chamar o model em vez do body
         float x = plains.get(ball.getCurrentPlainIndex()-1).getBody().getCenterOfMassPosition().x;
         float z = plains.get(ball.getCurrentPlainIndex()-1).getBody().getCenterOfMassPosition().z;
-        ball.getView().getModelInstance().transform.setToTranslation(x,1,z);
+        ball.getView().getBodyInstance().transform.setToTranslation(x,1,z);
         ball.setWorldTransform();
         ball.updateModel();
     }
