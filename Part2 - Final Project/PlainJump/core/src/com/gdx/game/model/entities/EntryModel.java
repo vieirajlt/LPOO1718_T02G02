@@ -17,7 +17,7 @@ public class EntryModel {
 
     /*******************CONSTRUCTORS*******************/
 
-    public EntryModel() {
+    private EntryModel() {
         Highscore = 0;
     }
 
