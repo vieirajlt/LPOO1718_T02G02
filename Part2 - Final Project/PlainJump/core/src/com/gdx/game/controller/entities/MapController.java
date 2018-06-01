@@ -124,7 +124,7 @@ public class MapController  {
         public void onContactEnded(int userValue0, int userValue1) {
             if (userValue1 != 0)
             {
-                ball.setJump(false);  //para que so se possa saltar 1 vez de cada vez
+                ball.setJump(false);
             }
         }
     }
