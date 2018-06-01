@@ -20,11 +20,9 @@ public class BallController extends EntityController{
 
     private BallController() {
         super();
-
         BallModel ballModel = new BallModel();
         setModel(ballModel);
-       // setView(new BallView(getModel().getModel(),new btSphereShape(ballModel.getDiameter()/2),1f));
-        setView(new BallView(((BallModel)getModel()).getDiameter(),new btSphereShape(ballModel.getDiameter()/2),1f));
+        setView(new BallView(((BallModel)getModel()).getDiameter(), getModel().getInitialColor(),new btSphereShape(ballModel.getDiameter()/2),1f));
         lateralSpeed = 1.5f;
         frontalSpeed = 0.3f;
         jumpImpulse = 1000f;

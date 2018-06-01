@@ -18,8 +18,6 @@ public class BallModel extends EntityModel{
 
     /******************************************************************/
 
-   // private static final Material material = new Material(ColorAttribute.createDiffuse(Color.ORANGE));
-
     public BallModel() {
         this(0f, 2f, 3f, 2f);
     }
@@ -34,15 +32,6 @@ public class BallModel extends EntityModel{
         setInitialColor(Color.ORANGE);
 
     }
-
-   /* private Model buildModel() {
-        ModelBuilder modelBuilder = new ModelBuilder();
-        modelBuilder.begin();
-        modelBuilder.node().id = String.format("ball");
-        modelBuilder.part("sphere", GL20.GL_TRIANGLES, VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal, material)
-                .sphere(this.diameter, this.diameter, this.diameter, 30, 30);
-        return modelBuilder.end();
-    }*/
 
     public float getDiameter() {
         return diameter;

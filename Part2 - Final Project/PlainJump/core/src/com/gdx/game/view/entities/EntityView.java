@@ -1,21 +1,16 @@
 package com.gdx.game.view.entities;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Model;
+import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.gdx.game.utils.BodyInstance;
 
 public class EntityView {
 
     private BodyInstance bodyInstance;
 
-    //private Model model;
-
     public EntityView(){
-
-    }
-
-    public EntityView(BodyInstance bi) {
-
-        bodyInstance = bi;
     }
 
     public void moveModelInstance(float mX, float mY, float mZ) {
@@ -31,15 +26,7 @@ public class EntityView {
         this.bodyInstance = bodyInstance;
     }
 
-    /*public void setModel(Model model) {
-        this.model = model;
-    }
-
-    public Model getModel() {
-        return model;
-    }
-
     public void dispose() {
-        model.dispose();
-    }*/
+        bodyInstance.dispose();
+    }
 }

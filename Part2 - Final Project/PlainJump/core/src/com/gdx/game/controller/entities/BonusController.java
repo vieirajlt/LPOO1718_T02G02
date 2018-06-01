@@ -11,18 +11,14 @@ import java.util.Random;
 
 public class BonusController extends EntityController{
 
-    private boolean visible = true; //nao sei se devia ser aqui ou na view ou no model
+    private boolean visible = true;
 
     public BonusController(BonusModel.BonusType type){
         super();
         BonusModel bonusModel = new BonusModel(type);
         setModel(bonusModel);
-       // setView(new BonusView(getModel().getModel(),new btSphereShape(bonusModel.getDiameter()/2),0f, bonusModel.getId()));
-
-        setView(new BonusView(type,bonusModel.getDiameter(),new btSphereShape(bonusModel.getDiameter()/2),0f));
-
+        setView(new BonusView(bonusModel.getId(),bonusModel.getInitialColor(),bonusModel.getDiameter(),new btSphereShape(bonusModel.getDiameter()/2),0f));
         updatePosition();
-
     }
 
     public boolean isVisible() {

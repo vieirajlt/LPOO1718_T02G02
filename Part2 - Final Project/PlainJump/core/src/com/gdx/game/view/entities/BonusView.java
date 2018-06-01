@@ -14,28 +14,14 @@ import com.gdx.game.utils.BodyInstance;
 
 public class BonusView extends EntityView {
 
-    private float diameter;
-
-    private static  Material material ;
-
-    private String id;
-
-
-
-  /* public BonusView(Model model, btCollisionShape shape, float mass, String id )
-   {
-       super(new BodyInstance(model, id, shape, mass));
-   }*/
-
-    public BonusView(BonusModel.BonusType type, float diameter, btCollisionShape shape, float mass)
+    public BonusView(String id, Color color, float diameter, btCollisionShape shape, float mass)
     {
         super();
-        setMaterialAndId(type);
-        setBodyInstance(new BodyInstance(buildModel(diameter), id, shape,mass));
-
+        setBodyInstance(new BodyInstance(buildModel(diameter,id,color), id, shape,mass));
     }
 
-    private Model buildModel(float diameter) {
+    private Model buildModel(float diameter, String id, Color color) {
+        Material material = new Material(ColorAttribute.createDiffuse(color));
         ModelBuilder modelBuilder = new ModelBuilder();
         modelBuilder.begin();
         modelBuilder.node().id = id;
@@ -43,28 +29,4 @@ public class BonusView extends EntityView {
                 .sphere(diameter, diameter, diameter, 30, 30);
         return modelBuilder.end();
     }
-
-    private void setMaterialAndId(BonusModel.BonusType type) {
-        switch (type)
-        {
-            case DOUBLE:
-                buildBonus(Color.WHITE, "DoubleBonus");
-                break;
-            case TRIPLE:
-                buildBonus(Color.YELLOW, "TripleBonus");
-                break;
-            case QUADRUPLE:
-                buildBonus(Color.RED, "QuadrupleBonus");
-                break;
-            case IMMUNITY:
-                buildBonus(Color.GREEN, "ImmunityBonus");
-                break;
-        }
-    }
-
-    private void buildBonus(Color color, String id) {
-        this.material = new Material(ColorAttribute.createDiffuse(color));
-       this.id = id;
-    }
-
 }

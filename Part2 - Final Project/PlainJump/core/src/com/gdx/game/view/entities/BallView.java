@@ -12,22 +12,14 @@ import com.gdx.game.utils.BodyInstance;
 
 public class BallView extends EntityView {
 
-  /* public BallView(Model model, btCollisionShape shape, float mass)
-   {
-       super(new BodyInstance(model, "ball", shape, mass));
-   }*/
-
-    private static final Material material = new Material(ColorAttribute.createDiffuse(Color.ORANGE));
-
-
-    public BallView(float diameter, btCollisionShape shape, float mass)
+    public BallView(float diameter, Color color, btCollisionShape shape, float mass)
     {
         super();
-        setBodyInstance(new BodyInstance(buildModel(diameter),"ball",shape,mass));
-
+        setBodyInstance(new BodyInstance(buildModel(diameter,color),"ball",shape,mass));
     }
 
-    private Model buildModel(float diameter) {
+    private Model buildModel(float diameter, Color color) {
+        Material material = new Material(ColorAttribute.createDiffuse(color));
         ModelBuilder modelBuilder = new ModelBuilder();
         modelBuilder.begin();
         modelBuilder.node().id = String.format("ball");
@@ -35,6 +27,4 @@ public class BallView extends EntityView {
                 .sphere(diameter,diameter,diameter, 30, 30);
         return modelBuilder.end();
     }
-
-
 }

@@ -41,4 +41,14 @@ public class BonusModelTest {
         assertEquals(quadBonus.isImmune(),false);
         assertEquals(imBonus.isImmune(),true);
     }
+
+    @Test
+    public void getId() {
+        assertEquals(doubleBonus.getId(), "DoubleBonus");
+        assertEquals(tripleBonus.getId(), "TripleBonus");
+        assertEquals(quadBonus.getId(), "QuadrupleBonus");
+        assertEquals(imBonus.getId(), "ImmunityBonus");
+    }
+
+
 }

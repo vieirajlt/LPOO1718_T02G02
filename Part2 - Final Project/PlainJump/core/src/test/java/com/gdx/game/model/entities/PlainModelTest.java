@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class PlainModelTest {
 
-    PlainModel plainModel = new PlainModel(0);
+    PlainModel plainModel = new PlainModel();
     @Test
     public void getWidth() {
         assertEquals(plainModel.getWidth(),4,0.01f);

@@ -52,11 +52,7 @@ public class EntityController {
         setWorldTransform();
     }
 
-    //acho que aqui podes usar o updateModel que fica melhor
     public void moveToPos(float posX, float posY, float posZ) {
-       // model.setPosX(model.getPosX()+posX);
-       // model.setPosY(model.getPosY()+posY);
-       // model.setPosZ(model.getPosZ()+posZ);
         view.moveModelInstance(posX, posY, posZ);
         setWorldTransform();
         updateModel();
@@ -80,9 +76,9 @@ public class EntityController {
         getModel().setPosZ(getBody().getCenterOfMassPosition().z);
     }
 
-    /*public void dispose() {
-        model.dispose();
-    }*/
+    public void dispose() {
+        view.dispose();
+    }
 
 
     public void setInitialColor(Color color)

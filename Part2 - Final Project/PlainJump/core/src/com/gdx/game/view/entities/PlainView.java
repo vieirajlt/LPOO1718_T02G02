@@ -12,17 +12,16 @@ import com.gdx.game.utils.BodyInstance;
 
 public class PlainView extends EntityView {
 
-    private static final Material material = new Material(ColorAttribute.createDiffuse(Color.VIOLET));
 
-    public  PlainView(int id, float w, float h, float d, btCollisionShape shape, float mass)
+    public  PlainView(int id, float w, float h, float d,Color color, btCollisionShape shape, float mass)
     {
-       // super(new BodyInstance(model, String.format("plain%d", id), shape, mass));
         super();
-        setBodyInstance(new BodyInstance(buildModel(id,w,h,d), String.format("plain%d", id), shape, mass));
+        setBodyInstance(new BodyInstance(buildModel(id,w,h,d, color), String.format("plain%d", id), shape, mass));
     }
 
 
-    private Model buildModel(int id,float w, float h, float d) {
+    private Model buildModel(int id,float w, float h, float d, Color color) {
+        Material material = new Material(ColorAttribute.createDiffuse(color));
         ModelBuilder modelBuilder = new ModelBuilder();
         modelBuilder.begin();
         modelBuilder.node().id = String.format("plain%d", id);
@@ -30,6 +29,4 @@ public class PlainView extends EntityView {
                 .box(w, h, d);
         return modelBuilder.end();
     }
-
-
 }
