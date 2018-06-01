@@ -12,8 +12,8 @@ public class ConfigsController {
     private ConfigsView view;
 
     public ConfigsController() {
-       model = ConfigsModel.getInstance();
-        view = new ConfigsView();
+      model = ConfigsModel.getInstance();
+      view = new ConfigsView();
     }
 
     public void render() {

@@ -1,5 +1,8 @@
 package com.gdx.game.model.entities;
 
+//TODO ver melhor a incCounter
+
+
 /**
  * This class contains all the information regarding the game's high score count.
  */
@@ -20,10 +23,22 @@ public class MapModel {
      */
     private int scoreMultiplier = 1;
 
+    /**
+     * This MapModel score velocity limit
+     * used to know when to increase the game's velocity
+     */
     private int scoreVelocityLimit = 1000;
 
+    /**
+     * This MapModel counter
+     * used to keep track of a bonus duration
+     */
     private float counter = 0;
 
+    /**
+     * This MapModel counter Limit
+     * limits a bonus duration
+     */
     private float counterLimit = 40;
 
     /**
@@ -31,8 +46,29 @@ public class MapModel {
      */
     private boolean immune = false;
 
+    /*******************CONSTRUCTORS*******************/
+
     private MapModel() {
 
+    }
+
+
+    /*******************GET FUNCTIONS*******************/
+
+    /**
+     * Retrieve the value of this MapModel immune.
+     * @return this MapModel diameter
+     */
+    public boolean isImmune() {
+        return immune;
+    }
+
+    /**
+     * Retrieve the value of this MapModel scoreCount.
+     * @return this MapModel scoreCount
+     */
+    public int getScoreCount() {
+        return scoreCount;
     }
 
     /**
@@ -45,26 +81,33 @@ public class MapModel {
         return instance;
     }
 
-    /******************************************/
+    /*******************SET FUNCTIONS*******************/
 
-
-    //update ScoreCount tendo em considerecao o multiplier (parte dos bonus)
-    public boolean updateScore(int delta) {
-        scoreCount += scoreMultiplier*delta;
-        if (scoreCount % scoreVelocityLimit == 0)
-            return true;
-        return false;
+    /**
+     * Set this MapModel jump value.
+     * @param immune the new value of immune
+     */
+    public void setImmune(boolean immune) {
+        this.immune = immune;
     }
 
-    public int getScoreCount() {
-        return scoreCount;
-    }
-
+    /**
+     * Set this MapModel jump value.
+     * @param scoreMultiplier the new value of scoreMultiplier
+     */
     public void setScoreMultiplier(int scoreMultiplier) {
         this.scoreMultiplier = scoreMultiplier;
         this.counter = 0;
     }
 
+
+    /*********************OTHERS***********************/
+
+    /**
+     * Increase this MapModel counter by the given inc.
+     * @param inc the value to increment the counter
+     * @return standard true or false
+     */
     public boolean incCounter(float inc)
     {
         this.counter += inc;
@@ -77,14 +120,22 @@ public class MapModel {
         return false;
     }
 
-    public boolean isImmune() {
-        return immune;
+    /**
+     * Increase this MapModel scoreCount by the given delta scoreMultiplier times.
+     * @param delta the value increment the scoreCount
+     * @return true if scoreCount is less than scoreVelocityLimit, false otherwise
+     */
+    public boolean updateScore(int delta) {
+        scoreCount += scoreMultiplier*delta;
+        if (scoreCount % scoreVelocityLimit == 0)
+            return true;
+        return false;
     }
 
-    public void setImmune(boolean immune) {
-        this.immune = immune;
-    }
 
+    /**
+     * Reset this MapModel instance (set to null)
+     */
     public void reset() {
         instance = null;
     }

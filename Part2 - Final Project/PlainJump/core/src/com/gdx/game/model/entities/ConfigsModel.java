@@ -33,7 +33,7 @@ public class ConfigsModel {
     /*******************CONSTRUCTORS*******************/
 
 
-    private ConfigsModel() {
+    public ConfigsModel() {
         ballColors = new ArrayList<Color>();
 
         ballColors.add(Color.ORANGE);

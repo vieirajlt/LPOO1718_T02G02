@@ -17,7 +17,7 @@ public class MenuModel {
 
     /*******************CONSTRUCTORS*******************/
 
-    private MenuModel() {
+    public MenuModel() {
         Highscore = 0;
     }
 
