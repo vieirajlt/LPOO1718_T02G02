@@ -12,15 +12,13 @@ public class ConfigsController {
     private ConfigsView view;
 
     public ConfigsController() {
-        model = new ConfigsModel();
+       model = ConfigsModel.getInstance();
         view = new ConfigsView();
     }
 
     public void render() {
         view.render();
     }
-
-
 
     public void dispose() {
         view.dispose();

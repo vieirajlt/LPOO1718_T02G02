@@ -11,7 +11,7 @@ public class MenuController {
     private MenuView view;
 
     public MenuController() {
-        model = new MenuModel();
+        model = MenuModel.getInstance();
         view = new MenuView();
     }
 

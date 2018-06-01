@@ -12,6 +12,8 @@ import com.gdx.game.utils.BodyInstance;
 
 public class BallView extends EntityView {
 
+    /*******************CONSTRUCTORS*******************/
+
     public BallView(float diameter, Color color, btCollisionShape shape, float mass)
     {
         super();

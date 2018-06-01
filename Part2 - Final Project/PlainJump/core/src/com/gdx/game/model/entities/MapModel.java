@@ -1,12 +1,23 @@
 package com.gdx.game.model.entities;
 
-
+/**
+ * This class contains all the information regarding the game's high score count.
+ */
 public class MapModel {
 
+    /**
+     * The singleton instance of this MapModel
+     */
     private static MapModel instance = null;
 
+    /**
+     * This MapModel current scoreCount
+     */
     private int scoreCount = 0;
 
+    /**
+     * This MapModel current scoreMultiplier
+     */
     private int scoreMultiplier = 1;
 
     private int scoreVelocityLimit = 1000;
@@ -15,12 +26,19 @@ public class MapModel {
 
     private float counterLimit = 40;
 
+    /**
+     * immune is a flag representing this MapModel current immunity
+     */
     private boolean immune = false;
 
-    public MapModel() {
+    private MapModel() {
 
     }
 
+    /**
+     * Retrieves a singleton instance of a MapModel.
+     * @return the singleton instance
+     */
     public static MapModel getInstance() {
         if(instance == null)
             instance = new MapModel();

@@ -21,7 +21,6 @@ public class EntityView {
         return bodyInstance;
     }
 
-
     public void setBodyInstance(BodyInstance bodyInstance) {
         this.bodyInstance = bodyInstance;
     }
