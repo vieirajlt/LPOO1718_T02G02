@@ -5,12 +5,25 @@ import com.badlogic.gdx.physics.bullet.collision.btBoxShape;
 import com.gdx.game.model.entities.PlainModel;
 import com.gdx.game.view.entities.PlainView;
 
+/**
+ * This class controlles plain placement.
+ * This are the areas where the player(Ball) will move.
+ */
 public class PlainController extends EntityController{
 
+    /**
+     * this class id counter for id distribution
+     */
     private static int idCounter = 0;
 
+    /**
+     * this plain id
+     */
     private int id;
 
+    /**
+     * Creates a default plain with sequential id.
+     */
     public PlainController() {
         super();
 

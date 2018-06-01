@@ -3,27 +3,27 @@ package com.gdx.game.model.entities;
 /**
  * This class contains all the information transmitted in the main menu.
  */
-public class MenuModel {
+public class EntryModel {
 
     /**
-     * The singleton instance of this MenuModel
+     * The singleton instance of this EntryModel
      */
-    private static MenuModel instance = null;
+    private static EntryModel instance = null;
 
     /**
-     * This MenuModel current high score
+     * This EntryModel current high score
      */
     private Integer Highscore;
 
     /*******************CONSTRUCTORS*******************/
 
-    public MenuModel() {
+    public EntryModel() {
         Highscore = 0;
     }
 
     /*******************SET FUNCTIONS*******************/
     /**
-     * Set this MenuModel Highscore value.
+     * Set this EntryModel Highscore value.
      * @param highscore the new value of Highscore
      */
     public void setHighscore(Integer highscore) {
@@ -33,20 +33,20 @@ public class MenuModel {
     /*******************GET FUNCTIONS*******************/
 
     /**
-     * Retrieve the value of this MenuModel Highscore.
-     * @return this MenuModel Highscore
+     * Retrieve the value of this EntryModel Highscore.
+     * @return this EntryModel Highscore
      */
     public Integer getHighscore() {
         return Highscore;
     }
 
     /**
-     * Retrieves a singleton instance of a MenuModel.
+     * Retrieves a singleton instance of a EntryModel.
      * @return the singleton instance
      */
-    public static MenuModel getInstance() {
+    public static EntryModel getInstance() {
         if(instance == null)
-            instance = new MenuModel();
+            instance = new EntryModel();
         return instance;
     }
 }

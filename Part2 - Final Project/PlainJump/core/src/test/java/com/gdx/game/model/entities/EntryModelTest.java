@@ -4,9 +4,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class MenuModelTest {
+public class EntryModelTest {
 
-    MenuModel menuModel = MenuModel.getInstance();
+    EntryModel menuModel = EntryModel.getInstance();
 
     @Test
     public void getHighscore() {

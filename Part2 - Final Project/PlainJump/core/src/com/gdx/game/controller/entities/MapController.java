@@ -423,7 +423,7 @@ public class MapController  {
 
     private void updateBall()
     {
-        ball.setLinearVelocity();
+        ball.setFrontalLinearVelocity();
         ball.moveFront();
 
         if (model.isImmune() && ball.isFalling())
