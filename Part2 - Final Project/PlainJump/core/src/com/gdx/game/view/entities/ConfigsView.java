@@ -17,11 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.gdx.game.controller.GameController;
-import com.gdx.game.controller.entities.BallController;
 import com.gdx.game.controller.entities.MapController;
 import com.gdx.game.model.GameModel;
 import com.gdx.game.model.entities.ConfigsModel;
-import com.gdx.game.model.entities.MenuModel;
 
 import java.util.ArrayList;
 
