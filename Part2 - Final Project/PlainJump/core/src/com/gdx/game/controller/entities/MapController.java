@@ -37,8 +37,9 @@ import java.util.Random;
 
 public class MapController  {
 
-    private static MapController instance = null;
+    private static final String SOUND_PATH = "sounds/test48000.mp3";
 
+    private static MapController instance = null;
 
     private MapModel model;
     private MapView view;
@@ -155,7 +156,7 @@ public class MapController  {
 
         buildBonus();
 
-        bgMusic = Gdx.audio.newSound(Gdx.files.internal("test.mp3"));
+        bgMusic = Gdx.audio.newSound(Gdx.files.internal(SOUND_PATH));
 
         bgMusic.stop();
 
