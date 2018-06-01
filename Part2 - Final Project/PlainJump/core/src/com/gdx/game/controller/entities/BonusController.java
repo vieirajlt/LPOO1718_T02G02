@@ -2,9 +2,7 @@ package com.gdx.game.controller.entities;
 
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
-import com.gdx.game.model.entities.BallModel;
 import com.gdx.game.model.entities.BonusModel;
-import com.gdx.game.view.entities.BallView;
 import com.gdx.game.view.entities.BonusView;
 
 import java.util.Random;

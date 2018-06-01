@@ -17,15 +17,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.gdx.game.model.GameModel;
-import com.gdx.game.model.entities.MapModel;
-import com.gdx.game.utils.BodyInstance;
 import com.gdx.game.controller.GameController;
 import com.gdx.game.controller.entities.MapController;
+import com.gdx.game.model.entities.MapModel;
+import com.gdx.game.utils.BodyInstance;
 
 public class MapView {
 

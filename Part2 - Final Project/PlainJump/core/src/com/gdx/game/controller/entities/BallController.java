@@ -1,7 +1,5 @@
 package com.gdx.game.controller.entities;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.bullet.collision.btSphereShape;
 import com.gdx.game.model.entities.BallModel;

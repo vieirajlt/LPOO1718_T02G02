@@ -1,7 +1,6 @@
 package com.gdx.game.model.entities;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g3d.Model;
 
 //isto se calhar devia ser abstrato nao?
 

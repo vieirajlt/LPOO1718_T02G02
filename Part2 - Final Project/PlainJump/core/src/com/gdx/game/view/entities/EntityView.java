@@ -1,9 +1,5 @@
 package com.gdx.game.view.entities;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g3d.Material;
-import com.badlogic.gdx.graphics.g3d.Model;
-import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
 import com.gdx.game.utils.BodyInstance;
 
 public class EntityView {
