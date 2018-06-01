@@ -3,7 +3,7 @@ package com.gdx.game.model.entities;
 import com.badlogic.gdx.graphics.Color;
 
 /**
- *
+ * This Abstract class is used as base for all model classes that have world placement
  */
 public abstract class EntityModel {
 

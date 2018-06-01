@@ -103,11 +103,20 @@ public abstract class EntityController {
         updateModel();
     }
 
+    /**
+     * Calls bullet's getWorldTransform function
+     *  For kinematic bodies this method is called to inform about the position every update
+     *  For dynamic bodies this method is called once to get the initial state
+     */
     public void getWorldTransform()
     {
         this.getView().getModelInstance().getRigidBody().getWorldTransform(this.getView().getModelInstance().transform);
     }
 
+    /**
+     * Calls bullet's setWorldTransform function
+     *  For dynamic bodies this method is called to inform about the body's position every update
+     */
     public void setWorldTransform()
     {
         this.getView().getModelInstance().getRigidBody().setWorldTransform(this.getView().getModelInstance().transform);

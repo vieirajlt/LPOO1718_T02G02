@@ -3,7 +3,7 @@ package com.gdx.game.model.entities;
 import com.badlogic.gdx.graphics.Color;
 
 /**
- *
+ * This class represents the model for the plain
  */
 public class PlainModel extends EntityModel {
 

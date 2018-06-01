@@ -30,7 +30,7 @@ public class BonusController extends EntityController{
     }
 
     /**
-     * Indicates if this ball is set to be visible or not.
+     * Indicates if this bonus is set to be visible or not.
      * @return this BallController visible
      */
     public boolean isVisible() {
@@ -38,7 +38,7 @@ public class BonusController extends EntityController{
     }
 
     /**
-     * Sets this ball visibility options.
+     * Sets this bonus visibility options.
      * @param visible this BallController visible new value
      */
     public void setVisible(boolean visible) {
@@ -46,6 +46,13 @@ public class BonusController extends EntityController{
     }
 
 
+    /**
+     * Places this bonus in a semi random position
+     * the x position is an int between -16 and 16
+     * the y position is always set to 1
+     * the z position is an int between -500 and 0 plus a given z coordinate
+     * @param ballCurrentZ represents a z position from which the bonus placement will be done
+     */
     public void placeBonus(float ballCurrentZ)
     {
         Random rand = new Random();
@@ -58,7 +65,13 @@ public class BonusController extends EntityController{
         updateModel();
     }
 
-
+    /**
+     * Replaces this bonus in a semi random position
+     * the x position is an int between -16 and 16
+     * the y position is always set to 0
+     * the z position is an int between -500 and 0 plus a given z coordinate
+     * @param ballCurrentZ represents a z position from which the bonus placement will be done
+     */
     public void replaceBonus(float ballCurrentZ)
     {
         setVisible(true);

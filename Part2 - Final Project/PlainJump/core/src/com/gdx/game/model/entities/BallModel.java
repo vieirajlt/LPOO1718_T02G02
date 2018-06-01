@@ -3,7 +3,7 @@ package com.gdx.game.model.entities;
 import com.badlogic.gdx.graphics.Color;
 
 /**
- * This class represents the user ball.
+ * This class represents the model for the ball
  */
 public class BallModel extends EntityModel{
 
