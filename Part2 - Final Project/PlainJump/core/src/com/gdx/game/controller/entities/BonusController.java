@@ -7,10 +7,20 @@ import com.gdx.game.view.entities.BonusView;
 
 import java.util.Random;
 
+/**
+ * This class is used to control bonus placement.
+ */
 public class BonusController extends EntityController{
 
+    /**
+     * this ball visibility
+     */
     private boolean visible = true;
 
+    /**
+     * Creates a new bonus with said type.
+     * @param type this bonus type of advantage
+     */
     public BonusController(BonusModel.BonusType type){
         super();
         BonusModel bonusModel = new BonusModel(type);
@@ -19,10 +29,18 @@ public class BonusController extends EntityController{
         updatePosition();
     }
 
+    /**
+     * Indicates if this ball is set to be visible or not.
+     * @return this BallController visible
+     */
     public boolean isVisible() {
         return visible;
     }
 
+    /**
+     * Sets this ball visibility options.
+     * @param visible this BallController visible new value
+     */
     public void setVisible(boolean visible) {
         this.visible = visible;
     }

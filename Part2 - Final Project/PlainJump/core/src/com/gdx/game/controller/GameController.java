@@ -1,8 +1,8 @@
 package com.gdx.game.controller;
 
 import com.gdx.game.controller.entities.ConfigsController;
+import com.gdx.game.controller.entities.EntryController;
 import com.gdx.game.controller.entities.MapController;
-import com.gdx.game.controller.entities.MenuController;
 import com.gdx.game.model.GameModel;
 import com.gdx.game.view.GameView;
 
@@ -14,7 +14,7 @@ public class GameController {
     private GameView view;
 
     private MapController map;
-    private MenuController menu;
+    private EntryController menu;
     private ConfigsController configs;
 
     public enum State {
@@ -27,7 +27,7 @@ public class GameController {
 
     public GameController() {
         map = MapController.getInstance();
-        menu = MenuController.getInstance();
+        menu = EntryController.getInstance();
         configs = ConfigsController.getInstance();
 
         model = GameModel.getInstance();

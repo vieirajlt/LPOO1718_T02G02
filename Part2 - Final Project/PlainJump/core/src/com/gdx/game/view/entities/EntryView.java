@@ -11,9 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.gdx.game.controller.GameController;
-import com.gdx.game.model.entities.MenuModel;
+import com.gdx.game.model.entities.EntryModel;
 
-public class MenuView {
+public class EntryView {
 
     private static final String FONT_PATH = "fonts/myfont.ttf";
     private static final String SETTINGS_BTN_TEXT = "SETTINGS";
@@ -42,7 +42,7 @@ public class MenuView {
     private Table table;
     private Stage stage;
 
-    public MenuView() {
+    public EntryView() {
 
         spriteBatch = new SpriteBatch();
 
@@ -103,7 +103,7 @@ public class MenuView {
         highscoreLabel = new Label(HIGHSCORE_LABEL_TEXT,labelStyle);
         table.add(highscoreLabel);
         table.row();
-        highscore = new Label(MenuModel.getInstance().getHighscore().toString(),labelStyle);
+        highscore = new Label(EntryModel.getInstance().getHighscore().toString(),labelStyle);
         table.add(highscore);
         table.row();
     }
