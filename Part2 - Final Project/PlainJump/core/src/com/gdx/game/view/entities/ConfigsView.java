@@ -26,6 +26,11 @@ import java.util.ArrayList;
 
 public class ConfigsView {
 
+    private static final String FONT_PATH = "fonts/myfont.ttf";
+    private static final String PLAY_BTN_TEXT = "PLAY";
+    private static final String BALL_LABEL_TEXT = "Ball";
+    private static final String PLAIN_LABEL_TEXT = "Plain";
+    private static final String BG_LABEL_TEXT = "BackGround";
 
     private SpriteBatch spriteBatch;
     private Table table;
@@ -35,9 +40,9 @@ public class ConfigsView {
     private ArrayList<ImageButton> plainsButtons;
     private ArrayList<ImageButton> screenButtons;
 
-    private TextButton exitButton;
-    private TextButton.TextButtonStyle exitButtonStyle;
-    private BitmapFont exitButtonFont;
+    private TextButton playButton;
+    private TextButton.TextButtonStyle playButtonStyle;
+    private BitmapFont playButtonFont;
 
     private FreeTypeFontGenerator generator;
 
@@ -59,7 +64,7 @@ public class ConfigsView {
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.addActor(table);
 
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal(FONT_PATH));
 
         addLabels();
 
@@ -69,10 +74,7 @@ public class ConfigsView {
 
         AddColorsButtons();
 
-        //exit button
-        addExitButton();
-
-      // table.debug();
+        addPlayButton();
 
     }
 
@@ -82,32 +84,31 @@ public class ConfigsView {
         labelFont = generator.generateFont(parameterLabel);
         labelStyle = new Label.LabelStyle();
         labelStyle.font = labelFont;
-        ballLabel = new Label("Ball",labelStyle);
+        ballLabel = new Label(BALL_LABEL_TEXT,labelStyle);
         table.add(ballLabel).width(100).height(45).left();
 
-        screenLabel = new Label("BackGround", labelStyle);
+        screenLabel = new Label(BG_LABEL_TEXT, labelStyle);
         table.add(screenLabel).width(screenLabel.getWidth()).height(45).center();
 
-        plainLabel = new Label("Plain",labelStyle);
+        plainLabel = new Label(PLAIN_LABEL_TEXT,labelStyle);
         table.add(plainLabel).width(plainLabel.getWidth()).height(45).right();
     }
 
-    private void addExitButton() {
+    private void addPlayButton() {
         FreeTypeFontGenerator.FreeTypeFontParameter parameterButton = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameterButton.size = 30;
-        exitButtonFont = generator.generateFont(parameterButton);
-        exitButtonStyle = new TextButton.TextButtonStyle();
-        exitButtonStyle.font = exitButtonFont;
-        exitButton = new TextButton("PLAY", exitButtonStyle);
-        exitButton.addListener( new ClickListener() {
+        playButtonFont = generator.generateFont(parameterButton);
+        playButtonStyle = new TextButton.TextButtonStyle();
+        playButtonStyle.font = playButtonFont;
+        playButton = new TextButton(PLAY_BTN_TEXT, playButtonStyle);
+        playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("MAP Over");
                 GameController.getInstance().setGameState(GameController.State.MAP);
             }
         } );
         table.row();
-        table.add(exitButton).height(Gdx.graphics.getHeight()/2).expandX().bottom().left().maxHeight(parameterButton.size+10).padLeft(8);
+        table.add(playButton).height(Gdx.graphics.getHeight()/2).expandX().bottom().left().maxHeight(parameterButton.size+10).padLeft(8);
     }
 
     private void AddColorsButtons() {
@@ -152,7 +153,6 @@ public class ConfigsView {
         pix.fill();
         ImageButton buttom = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(pix))));
         table.add(buttom).width(50).height(80).expandY().expandX().left();
-        //table.add(buttom);
         buttom.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -170,7 +170,6 @@ public class ConfigsView {
         pix.fill();
         ImageButton buttom = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(pix))));
         table.add(buttom).width(50).height(80).expandY().expandX().right();
-        //table.add(buttom);
         buttom.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -188,7 +187,6 @@ public class ConfigsView {
         pix.fill();
         ImageButton buttom = new ImageButton(new TextureRegionDrawable(new TextureRegion(new Texture(pix))));
         table.add(buttom).width(50).height(80).expandY().expandX().center();
-        //table.add(buttom);
         buttom.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

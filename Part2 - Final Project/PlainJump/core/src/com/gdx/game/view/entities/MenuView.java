@@ -15,6 +15,11 @@ import com.gdx.game.model.entities.MenuModel;
 
 public class MenuView {
 
+    private static final String FONT_PATH = "fonts/myfont.ttf";
+    private static final String SETTINGS_BTN_TEXT = "SETTINGS";
+    private static final String PLAY_BTN_TEXT = "PLAY";
+    private static final String HIGHSCORE_LABEL_TEXT = "highscore";
+
     private TextButton playButton;
     private TextButton.TextButtonStyle playButtonStyle;
 
@@ -49,32 +54,24 @@ public class MenuView {
 
         stage.addActor(table);
 
-        //Font managing
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/myfont.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal(FONT_PATH));
         FreeTypeFontGenerator.FreeTypeFontParameter parameterScore = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameterScore.size = 45;
         buttonFont = generator.generateFont(parameterScore);
-        //
 
         addHighScorelabels();
 
-        //Play Button
         addPlayButton();
-        //
         table.row();
-        //Configs Button
         addConfigsButton();
-        //
-        //table.debug();
     }
 
     private void addConfigsButton() {
         configsButtonStyle = playButtonStyle;
-        configsButton = new TextButton("SETTINGS", configsButtonStyle);
+        configsButton = new TextButton(SETTINGS_BTN_TEXT, configsButtonStyle);
         configsButton.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Into configs");
                 GameController.getInstance().setGameState(GameController.State.CONFIGS);
             }
         } );
@@ -85,11 +82,10 @@ public class MenuView {
     private void addPlayButton() {
         playButtonStyle = new TextButton.TextButtonStyle();
         playButtonStyle.font = buttonFont;
-        playButton = new TextButton("PLAY", playButtonStyle);
+        playButton = new TextButton(PLAY_BTN_TEXT, playButtonStyle);
         playButton.addListener( new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Into map");
                 GameController.getInstance().setGameState(GameController.State.MAP);
 
             }
@@ -104,7 +100,7 @@ public class MenuView {
         labelFont = generator.generateFont(parameterLabel);
         labelStyle = new Label.LabelStyle();
         labelStyle.font = labelFont;
-        highscoreLabel = new Label("highscore",labelStyle);
+        highscoreLabel = new Label(HIGHSCORE_LABEL_TEXT,labelStyle);
         table.add(highscoreLabel);
         table.row();
         highscore = new Label(MenuModel.getInstance().getHighscore().toString(),labelStyle);

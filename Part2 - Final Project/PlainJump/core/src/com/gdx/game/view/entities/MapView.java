@@ -88,21 +88,13 @@ public class MapView {
 
         generator = new FreeTypeFontGenerator(Gdx.files.internal(FONT_PATH));
 
-        //Score Label
         addScoreLabel();
-        //
 
         addGameOverLabel();
 
-        //Exit Button
         addExitButton();
-        //
 
-        //Mute Button
         addMuteButton();
-        //
-
-        //table.debug();
 
         gameOverView = false;
     }
