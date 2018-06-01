@@ -22,8 +22,8 @@ public class GameModel {
 
     public GameModel() {
         highscore = 0;
-        ballColor = Color.BLUE;
-        plainColor = Color.BROWN;
+        ballColor = Color.ORANGE;
+        plainColor = Color.VIOLET;
         backgroundColor = Color.GRAY;
         musicOnFlag = true;
     }
