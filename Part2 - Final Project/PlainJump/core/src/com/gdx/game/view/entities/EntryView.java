@@ -91,7 +91,7 @@ public class EntryView {
     private Table table;
 
     /**
-     * this table
+     * this stage
      */
     private Stage stage;
 

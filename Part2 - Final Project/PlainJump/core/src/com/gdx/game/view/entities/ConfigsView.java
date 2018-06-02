@@ -23,38 +23,102 @@ import com.gdx.game.model.entities.ConfigsModel;
 
 import java.util.ArrayList;
 
-//TODO Commenting
+/**
+ * This class represents the view for the game's configuration menu.
+ */
 public class ConfigsView {
 
+    /**
+     * this used font path
+     */
     private static final String FONT_PATH = "fonts/myfont.ttf";
+    /**
+     * this play button text
+     */
     private static final String PLAY_BTN_TEXT = "PLAY";
+    /**
+     * this ball settings label text
+     */
     private static final String BALL_LABEL_TEXT = "Ball";
+    /**
+     * this plain settings label text
+     */
     private static final String PLAIN_LABEL_TEXT = "Plain";
+    /**
+     * this background settings label text
+     */
     private static final String BG_LABEL_TEXT = "BackGround";
-
+    /**
+     * this sprite batch
+     */
     private SpriteBatch spriteBatch;
+    /**
+     * this stage table
+     */
     private Table table;
+    /**
+     * this stage
+     */
     private Stage stage;
-
+    /**
+     * this ball configuration buttons list
+     */
     private ArrayList<ImageButton> ballButtons;
+    /**
+     * this plain configuration buttons list
+     */
     private ArrayList<ImageButton> plainsButtons;
+    /**
+     * this background configuration buttons list
+     */
     private ArrayList<ImageButton> screenButtons;
-
+    /**
+     * this play button
+     */
     private TextButton playButton;
+    /**
+     * this play button style
+     */
     private TextButton.TextButtonStyle playButtonStyle;
+    /**
+     * this bitmap font
+     */
     private BitmapFont playButtonFont;
 
+    /**
+     * this FreeType extension font generator
+     */
     private FreeTypeFontGenerator generator;
 
+    /**
+     * this pixmap
+     */
     private Pixmap pix;
 
+    /**
+     * this labels style
+     */
     private Label.LabelStyle labelStyle;
+    /**
+     * this labels font
+     */
     private BitmapFont labelFont;
+    /**
+     * this ball settings label
+     */
     private Label ballLabel;
+    /**
+     * this plain settings label
+     */
     private Label plainLabel;
+    /**
+     * this background settings label
+     */
     private Label screenLabel;
 
-
+    /**
+     * Creates a default configs view menu.
+     */
     public ConfigsView() {
 
         spriteBatch = new SpriteBatch();
@@ -128,7 +192,9 @@ public class ConfigsView {
         }
     }
 
-
+    /**
+     * Renders this ConfigsView.
+     */
     public void render() {
         Gdx.input.setInputProcessor(stage);
         spriteBatch.begin();
@@ -136,10 +202,18 @@ public class ConfigsView {
         spriteBatch.end();
     }
 
+    /**
+     * Resizes this stage viewport accordingly to the given parameters.
+     * @param width this stage new width
+     * @param height this stage new height
+     */
     public void resize(int width, int height) {
         stage.getViewport().update(width,height);
     }
 
+    /**
+     * Disposes of this ConfigsView.
+     */
     public void dispose() {
         spriteBatch.dispose();
         stage.dispose();
@@ -197,6 +271,4 @@ public class ConfigsView {
 
         return buttom;
     }
-
-
 }
