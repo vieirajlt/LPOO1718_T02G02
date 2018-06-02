@@ -14,6 +14,7 @@ public class GameController {
      */
     private static GameController instance = null;
 
+    //TODO
     private GameModel model;
     private GameView view;
 
@@ -21,15 +22,21 @@ public class GameController {
     private EntryController menu;
     private ConfigsController configs;
 
+    /**
+     * This GameController possible states
+     */
     public enum State {
         MAP,
         MENU,
         CONFIGS;
     }
 
+    /**
+     * This GameController current state
+     */
     private State gameState;
 
-    public GameController() {
+    private GameController() {
         map = MapController.getInstance();
         menu = EntryController.getInstance();
         configs = ConfigsController.getInstance();
@@ -42,6 +49,9 @@ public class GameController {
         setGameState(State.MENU);
     }
 
+    /**
+     * TODO
+     */
     public void setSettings() {
         menu.setBestScore(model.getHighscore());
         map.setBallInitialColor(model.getBallColor());
@@ -52,11 +62,16 @@ public class GameController {
     }
 
 
-
+    /**
+     * Creates this GameController map
+     */
     public void create() {
         map.create();
     }
 
+    /**
+     * Renders this GameController.
+     */
     public void render() {
         map.render(view.getCamera());
         switch(gameState) {
@@ -73,12 +88,20 @@ public class GameController {
         }
     }
 
+    /**
+     * Disposes of this GameController.
+     */
     public void dispose() {
         map.dispose();
         menu.dispose();
         configs.dispose();
     }
 
+    /**
+     * Resizes this EntryController, MapController and ConfigsController to specified size.
+     * @param width this entry menu view new width
+     * @param height this entry menu view new height
+     */
     public void resize(int width, int height) {
 
        menu.resize(width,height);
@@ -86,6 +109,10 @@ public class GameController {
        configs.resize(width,height);
     }
 
+    /**
+     * TODO
+     * @param gs
+     */
     public void setGameState(State gs) {
         this.gameState = gs;
         switch(gs) {
@@ -108,6 +135,10 @@ public class GameController {
         }
     }
 
+    /**
+     * Gets GameController Singleton instance.
+     * @return this GameController
+     */
     public static GameController getInstance() {
         if(instance == null)
             instance = new GameController();

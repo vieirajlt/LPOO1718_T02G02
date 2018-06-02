@@ -14,7 +14,7 @@ public class GameView {
     private static GameView instance = null;
 
     /**
-     * this prespective camera
+     * this perspective camera
      */
     private PerspectiveCamera camera;
 

@@ -78,7 +78,7 @@ public class BallModel extends EntityModel{
     }
 
     /**
-     * Retrive the value of this BallModel jump.
+     * Retrieve the value of this BallModel jump.
      * @return this BallModel jump
      */
     public boolean canJump() {
@@ -86,7 +86,7 @@ public class BallModel extends EntityModel{
     }
 
     /**
-     * Retrive the value of this BallModel falling.
+     * Retrieve the value of this BallModel falling.
      * @return this BallModel falling
      */
     public boolean isFalling() {

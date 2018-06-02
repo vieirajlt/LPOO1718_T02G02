@@ -22,14 +22,30 @@ import com.gdx.game.controller.entities.MapController;
 import com.gdx.game.model.entities.MapModel;
 import com.gdx.game.utils.BodyInstance;
 
-//TODO Commenting
+//TODO descricao da classe mais 4 todos
 public class MapView {
 
+    /**
+     * this used font path
+     */
     private static final String FONT_PATH = "fonts/myfont.ttf";
+    /**
+     * this mute button text
+     */
     private static final String MUTE_BTN_TEXT = "MUTE";
+    //TODO QUE E ISTO?
     private static final String SCORE_LABEL_INI_TEXT = "score: 0";
+    /**
+     * this score label text
+     */
     private static final String SCORE_LABEL_TEXT = "score: ";
+    /**
+     * this game over label text
+     */
     private static final String GAME_OVER_LABEL_TEXT = "Game Over";
+    /**
+     * this exit label text
+     */
     private static final String EXIT_BTN_TEXT = "EXIT";
 
     /**
@@ -37,34 +53,92 @@ public class MapView {
      */
     private static MapView instance = null;
 
+    /**
+     * This ambient light
+     */
     private ColorAttribute ambientLigth;
+    /**
+     * This directional lights
+     */
     private Array<DirectionalLight> directLigths;
+    /**
+     * This instances
+     */
     private Array<BodyInstance> instances;
+    /**
+     * This environment
+     */
     private Environment environment;
+    /**
+     * this model batch
+     */
     private ModelBatch modelBatch;
-
+    /**
+     * This background rgb red value
+     */
     private float screenRed;
+    /**
+     * This background rgb green value
+     */
     private float screenGreen;
+    /**
+     * This background rgb blue value
+     */
     private float screenBlue;
-
+    /**
+     * this sprite batch
+     */
     private SpriteBatch spriteBatch;
-
+    /**
+     * this score text
+     */
     private String scoreText;
+    /**
+     * this bitmap font
+     */
     private BitmapFont scoreFont;
-
+    /**
+     * this stage
+     */
     private  Stage stage;
+    /**
+     * this stage table
+     */
     private Table table;
+    /**
+     * This score label
+     */
     private Label text;
+    /**
+     * This game over label
+     */
     private Label gameOverLabel;
+    /**
+     * This labels style
+     */
     private Label.LabelStyle textStyle;
-
+    /**
+     * This exit button
+     */
     private TextButton exitButton;
+    /**
+     * This mute button
+     */
     private TextButton muteButton;
+    /**
+     * This buttons style
+     */
     private TextButton.TextButtonStyle textButtonStyle;
+    /**
+     * This buttons bitmap font
+     */
     private BitmapFont buttonFont;
-
+    /**
+     * this FreeType extension font generator
+     */
     private FreeTypeFontGenerator generator;
 
+    //TODO
     private boolean gameOverView;
 
     private MapView() {
@@ -190,18 +264,35 @@ public class MapView {
         }
     }
 
+    /**
+     * Add to this MapView instances list the preferred PlainView
+     * @param pv PlainView to be added
+     */
     public void addInstance(PlainView pv) {
         instances.add(pv.getBodyInstance());
     }
 
+    /**
+     * Add to this MapView instances list the preferred BallView
+     * @param bv BallView to be added
+     */
     public void addInstance(BallView bv) {
         instances.add(bv.getBodyInstance());
     }
 
+    /**
+     * Add to this MapView instances list the preferred BonusView
+     * @param bv BonusView to be added
+     */
     public void addInstance(BonusView bv) {
         instances.add(bv.getBodyInstance());
     }
 
+    /**
+     * Renders this MapView
+     * @param camera perspective camera
+     * @param moving TODO
+     */
     public void render(PerspectiveCamera camera, boolean moving) {
 
         clearScreen();
@@ -220,6 +311,9 @@ public class MapView {
         spriteBatch.end();
     }
 
+    /**
+     * Disposes of this MapView.
+     */
     public void dispose() {
         modelBatch.dispose();
         spriteBatch.dispose();
@@ -232,7 +326,10 @@ public class MapView {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
     }
 
-
+    /**
+     * Sets this background rgb values to the ones from the preferred color
+     * @param color to set the background values to
+     */
     public void setScreenColor(com.badlogic.gdx.graphics.Color color)
     {
         screenRed = color.r;
@@ -240,20 +337,32 @@ public class MapView {
         screenBlue = color.b;
     }
 
+    /**
+     * Restarts this instance.
+     */
     public void reset() {
         instance = null;
     }
 
+    /**
+     * Retrieve the value of this MapView instances.
+     * @return this MapView instances
+     */
     public Array<BodyInstance> getInstances() {
         return instances;
     }
 
+    /**
+     * Gets MapView Singleton instance.
+     * @return this MapView
+     */
     public static MapView getInstance() {
         if(instance == null)
             instance = new MapView();
         return instance;
     }
 
+    //TODO
     public void setGameOverView() {
         if(!gameOverView) {
             gameOverLabel.setVisible(true);
@@ -261,6 +370,11 @@ public class MapView {
         }
     }
 
+    /**
+     * Resizes this stage viewport accordingly to the given parameters.
+     * @param width this stage new width
+     * @param height this stage new height
+     */
     public void resize(int width, int height) {
         stage.getViewport().update(width,height);
     }

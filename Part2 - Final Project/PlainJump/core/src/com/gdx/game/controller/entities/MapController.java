@@ -35,23 +35,40 @@ import com.gdx.game.view.entities.PlainView;
 
 import java.util.Random;
 
-//TODO Commenting
+//TODO descricao da classe + 5 (+/-) todos
 public class MapController  {
 
+    /**
+     * This used music
+     */
     private static final String SOUND_PATH = "sounds/test48000.mp3";
 
     /**
      * this Singleton Instance
      */
     private static MapController instance = null;
-
+    /**
+     * This map model
+     */
     private MapModel model;
+    /**
+     * This map view
+     */
     private MapView view;
-
+    /**
+     * This MapController plains
+     */
     private Array<PlainController> plains;
+    /**
+     * This MapController ball
+     */
     private BallController ball;
+    /**
+     * This MapController bonus
+     */
     private Array<BonusController> bonus;
 
+    //TODO
     private int plainLevels;
     private int plainsPerLevel;
     private int positioningLevel;
@@ -64,34 +81,82 @@ public class MapController  {
 
     private float[] positionsY;
 
+    /**
+     * This collision configuration
+     */
     private btCollisionConfiguration collisionConfig;
+    /**
+     * This dispatcher
+     */
     private btDispatcher dispatcher;
+    /**
+     * This broadphase
+     */
     private btBroadphaseInterface broadphase;
+    /**
+     * This dynamics world
+     */
     private btDynamicsWorld world;
+    /**
+     * This constraint solver
+     */
     private btConstraintSolver constraintSolver;
 
+    /**
+     * Distance in the z axis from the camera position to the this ball position
+     */
     private float cameraBallDistance;
 
+    /**
+     * TODO
+     */
     private float xLimit;
 
     private Vector3 gravity;
 
+    /**
+     * This contact listener
+     */
     private ControllerContactListener contactListener;
 
+    /**
+     * This debug drawer
+     */
     private DebugDrawer debugDrawer;
 
+    /**
+     * This start time
+     */
     private long startTime = TimeUtils.nanoTime() ;
 
+    /**
+     * Represents the speed increment to this ball
+     */
     private float speedIncrease = 0.05f;
 
+    /**
+     * TODO
+     */
     private boolean moving = true;
 
+    /**
+     * This music
+     */
     private Sound bgMusic;
 
+    /**
+     * This current music state
+     */
     private MusicState musicState;
 
+    /**
+     * This music status flag
+     */
     private boolean musicOnFlag;
 
+    /**
+     * This music possible states
+     */
     public enum MusicState {
         STOP,
         PAUSE,
@@ -318,7 +383,9 @@ public class MapController  {
        }
    }
 
-
+    /**
+     * Creates this MapController
+     */
     public void create() {
         startTime = TimeUtils.nanoTime();
         debugDrawer = new DebugDrawer();
@@ -326,6 +393,10 @@ public class MapController  {
         debugDrawer.setDebugMode(btIDebugDraw.DebugDrawModes.DBG_MAX_DEBUG_DRAW_MODE);
     }
 
+    /**
+     * Renders this MapController
+     * @param camera perspective camera
+     */
     public void render(PerspectiveCamera camera) {
 
         update(camera);
@@ -354,7 +425,6 @@ public class MapController  {
 
         updateBonus(camera);
 
-        //faz update do score, se a bola tiver caido ele para
         if (TimeUtils.timeSinceNanos(startTime) > 10000 && !ball.isFalling())
         {
             if (model.updateScore(1))
@@ -440,6 +510,9 @@ public class MapController  {
         }
     }
 
+     /**
+     * Disposes of this MapController.
+     */
     public void dispose() {
         bgMusic.dispose();
         view.dispose();
@@ -459,10 +532,18 @@ public class MapController  {
         contactListener.dispose();
     }
 
+    /**
+     * Resizes this MapController view.
+     * @param width this stage new width
+     * @param height this stage new height
+     */
     public void resize(int width, int height) {
         view.resize(width,height);
     }
 
+    /**
+     * Makes this ball jump.
+     */
     public void jump()
     {
         if(!moving)
@@ -470,6 +551,9 @@ public class MapController  {
         ball.jump();
     }
 
+    /**
+     * Makes this ball move to the left.
+     */
     public void moveLeft()
     {
         if(!moving)
@@ -477,6 +561,9 @@ public class MapController  {
         ball.moveLeft();
     }
 
+    /**
+     * Makes this ball move to the right.
+     */
     public void moveRight()
     {
         if(!moving)
@@ -484,10 +571,9 @@ public class MapController  {
         ball.moveRight();
     }
 
-    //nao sei se o model dos planos esta a ser atualizado
+
     private void replaceBall()
     {
-        //mudar isto para chamar o model em vez do body
         float x = plains.get(ball.getCurrentPlainIndex()-1).getBody().getCenterOfMassPosition().x;
         float z = plains.get(ball.getCurrentPlainIndex()-1).getBody().getCenterOfMassPosition().z;
         ball.getView().getBodyInstance().transform.setToTranslation(x,1,z);
@@ -495,6 +581,9 @@ public class MapController  {
         ball.updateModel();
     }
 
+    /**
+     * Restarts this MapController
+     */
     public void reset() {
         model.reset();
         view.reset();
@@ -503,6 +592,10 @@ public class MapController  {
         bgMusic.stop();
     }
 
+    /**
+     * TODO
+     * @param moving
+     */
     public void setMoving(boolean moving) {
         this.moving = moving;
 
@@ -515,51 +608,89 @@ public class MapController  {
         }
     }
 
+    /**
+     * Gets MapController Singleton instance.
+     * @return this MapController
+     */
     public static MapController getInstance() {
         if(instance == null)
             instance = new MapController();
         return instance;
     }
 
+    /**
+     * Retrieves the value of this MapController model score count.
+     * @return this MapController model score count
+     */
     public Integer getScore() {
         return model.getScoreCount();
     }
 
+    /**
+     * Sets this plains initial color.
+     * @param color this model color new value
+     */
     public void setPlainsInitialColor(Color color)
     {
         for(PlainController pc : plains)
             pc.setInitialColor(color);
     }
 
+    /**
+     * Sets this ball initial color.
+     * @param color this model color new value
+     */
     public void setBallInitialColor(Color color)
     {
          ball.setInitialColor(color);
     }
 
+    /**
+     * TODO
+     */
     public void resumeBgMusic() {
         bgMusic.resume();
         musicState = MusicState.PLAY;
     }
 
+    /**
+     * Plays this MapController bgMusic
+     */
     public void startBgMusic() {
         bgMusic.play();
         musicState = MusicState.PLAY;
     }
 
+    /**
+     * Pauses this MapController bgMusic.
+     */
     public void pauseBgMusic() {
         bgMusic.pause();
         musicState = MusicState.PAUSE;
     }
 
+    /**
+     * Retrieves the value of this MapController musicState.
+     * @return this MapControlle musicState
+     */
     public MusicState getMusicState() {
         return musicState;
     }
 
+    /**
+     * Sets this MapController view's background rgb values to the ones from the preferred color
+     * @param color to set this view's background to
+     */
     public void setScreenColor(Color color)
     {
         view.setScreenColor(color);
     }
 
+    /**
+     * Set the value of this MapController musicOnFlag.
+     * Set and save GameModel musicOnFlag value.
+     * @param musicOnFlag the new value of musicOnFlag
+     */
     public void setMusicOnFlag(boolean musicOnFlag) {
         this.musicOnFlag = musicOnFlag;
         GameModel.getInstance().setMusicOnFlag(musicOnFlag);
