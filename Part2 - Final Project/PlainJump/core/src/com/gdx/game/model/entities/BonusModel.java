@@ -65,7 +65,6 @@ public class BonusModel extends EntityModel{
      */
     public BonusModel(BonusType type)
     {
-        // this(0f, 1f, 0f, 1f, type);
         this(DEFAULT_POS_X,DEFAULT_POS_Y,DEFAULT_POS_Z,DEFAULT_DIAMETER, type);
     }
 

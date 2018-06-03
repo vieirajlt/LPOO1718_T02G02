@@ -48,7 +48,6 @@ public class BallModel extends EntityModel{
      * Creates a new BallModel with the stipulated default values.
      */
     public BallModel() {
-       // this(0f, 2f, 3f, 2f);
         this(DEFAULT_POS_X,DEFAULT_POS_Y,DEFAULT_POS_Z,DEFAULT_DIAMETER);
     }
 

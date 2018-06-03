@@ -51,7 +51,6 @@ public class PlainModel extends EntityModel {
      * Creates a new BallModel with the stipulated default values.
      */
     public PlainModel() {
-       // this(0, 0, 0, 4, 1, 12);
         this(DEFAULT_POS_X,DEFAULT_POS_Y,DEFAULT_POS_Z,DEFAULT_WIDTH,DEFAULT_HEIGTH,DEFAULT_DEPTH);
     }
 
