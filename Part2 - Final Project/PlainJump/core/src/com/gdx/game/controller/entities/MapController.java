@@ -25,6 +25,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.gdx.game.model.GameModel;
+import com.gdx.game.model.entities.BallModel;
 import com.gdx.game.model.entities.BonusModel;
 import com.gdx.game.model.entities.MapModel;
 import com.gdx.game.model.entities.PlainModel;
@@ -573,7 +574,8 @@ public class MapController  {
     {
         float x = plains.get(ball.getCurrentPlainIndex()-1).getBody().getCenterOfMassPosition().x;
         float z = plains.get(ball.getCurrentPlainIndex()-1).getBody().getCenterOfMassPosition().z;
-        ball.getView().getBodyInstance().transform.setToTranslation(x,1,z);
+        float y = plains.get(ball.getCurrentPlainIndex()-1).getBody().getCenterOfMassPosition().y;
+        ball.getView().getBodyInstance().transform.setToTranslation(x,y+((BallModel)ball.getModel()).getDiameter(),z);
         ball.setWorldTransform();
         ball.updateModel();
     }
