@@ -9,6 +9,9 @@ Javadoc: https://vieirajlt.github.io/LPOO1718_T02G02/ <br />
 
 (docs folder only has part2 relevant info) <br />
 
+**Source-code**<br />
+- On /Part2 - Final Project/PlainJump/
+
 **Setup/Installation**<br />
 - Android : Run .apk file on /Part2 - Final Project/release/android/
 - Desktop : Run .jar file on /Part2 - Final Project/release/android/desktop/
