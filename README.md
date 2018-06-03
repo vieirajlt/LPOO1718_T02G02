@@ -17,4 +17,5 @@ Javadoc: https://vieirajlt.github.io/LPOO1718_T02G02/ <br />
 - On the report.pdf on /Part2 - Final Project/ **(TODO)**
 
 **User manual**
--TODO
+- The entry point of the game is the **Main Menu**:
+![Alt text](Part2 - Final Project/tutorialImages/mainmenu.png "mainmenu")
