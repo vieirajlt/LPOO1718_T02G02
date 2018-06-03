@@ -6,7 +6,9 @@ import com.gdx.game.controller.entities.MapController;
 import com.gdx.game.model.GameModel;
 import com.gdx.game.view.GameView;
 
-//TODO Commenting
+/**
+ * This class controls all game states, from menus to gameplay.
+ */
 public class GameController {
 
     /**
@@ -14,12 +16,26 @@ public class GameController {
      */
     private static GameController instance = null;
 
-    //TODO
+    /**
+     * This GameController GameModel
+     */
     private GameModel model;
+    /**
+     * This GameController GameView
+     */
     private GameView view;
 
+    /**
+     * This GameController MapController
+     */
     private MapController map;
+    /**
+     * This GameController EntryController
+     */
     private EntryController menu;
+    /**
+     * This GameController ConfigsController
+     */
     private ConfigsController configs;
 
     /**
@@ -36,6 +52,12 @@ public class GameController {
      */
     private State gameState;
 
+    /**
+     * Creates a default GameController getting menus, map ands model instances
+     * as well as creates a new view. Also loads previous runs defined settings
+     * to this model.
+     * Default GameState is set to MENU.
+     */
     private GameController() {
         map = MapController.getInstance();
         menu = EntryController.getInstance();
@@ -50,7 +72,7 @@ public class GameController {
     }
 
     /**
-     * TODO
+     * Sets this model defined settings to this Game.
      */
     public void setSettings() {
         menu.setBestScore(model.getHighscore());
@@ -110,8 +132,8 @@ public class GameController {
     }
 
     /**
-     * TODO
-     * @param gs
+     * Sets this GameState, changing this GameController state.
+     * @param gs this game new state
      */
     public void setGameState(State gs) {
         this.gameState = gs;

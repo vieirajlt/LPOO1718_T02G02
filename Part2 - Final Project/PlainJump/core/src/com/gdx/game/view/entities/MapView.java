@@ -22,7 +22,10 @@ import com.gdx.game.controller.entities.MapController;
 import com.gdx.game.model.entities.MapModel;
 import com.gdx.game.utils.BodyInstance;
 
-//TODO descricao da classe mais 4 todos
+/**
+ * This class is used to load the entire level making it
+ * visible for the player to see it.
+ */
 public class MapView {
 
     /**
@@ -33,8 +36,6 @@ public class MapView {
      * this mute button text
      */
     private static final String MUTE_BTN_TEXT = "MUTE";
-    //TODO QUE E ISTO?
-    private static final String SCORE_LABEL_INI_TEXT = "score: 0";
     /**
      * this score label text
      */
@@ -138,7 +139,9 @@ public class MapView {
      */
     private FreeTypeFontGenerator generator;
 
-    //TODO
+    /**
+     * This view flag announcing that GameOver Label is already being shown
+     */
     private boolean gameOverView;
 
     private MapView() {
@@ -238,7 +241,7 @@ public class MapView {
 
         textStyle = new Label.LabelStyle();
         textStyle.font = scoreFont;
-        text = new Label(SCORE_LABEL_INI_TEXT,textStyle);
+        text = new Label(SCORE_LABEL_TEXT + 0,textStyle);
         table.add(text).height(Gdx.graphics.getHeight()/3).expandX().top().left().maxHeight(letterSize+10).padLeft(8).colspan(2);
     }
 
@@ -291,7 +294,7 @@ public class MapView {
     /**
      * Renders this MapView
      * @param camera perspective camera
-     * @param moving TODO
+     * @param moving indicator of map state
      */
     public void render(PerspectiveCamera camera, boolean moving) {
 
@@ -362,7 +365,10 @@ public class MapView {
         return instance;
     }
 
-    //TODO
+    /**
+     * Sets gameOverLabel visibility to true and gameOverView
+     * flag accordingly.
+     */
     public void setGameOverView() {
         if(!gameOverView) {
             gameOverLabel.setVisible(true);
