@@ -25,7 +25,7 @@ Javadoc: https://vieirajlt.github.io/LPOO1718_T02G02/ <br />
 - Here you can change the ball, plains or background colors by clicking on the available options.
 - From here, you can play the game. The game will start like this:<br />
 ![image](https://github.com/vieirajlt/LPOO1718_T02G02/blob/master/Part2%20-%20Final%20Project/tutorialImages/play.png)<br />
--The main objective is to run from plain to plain, never allowing the ball to fall, accumulating the biggest number of points possible.
+- The main objective is to run from plain to plain, never allowing the ball to fall, accumulating the biggest number of points possible.
 - There are many bonus that you can get in order to help you like invulnerability (green bonus) or points multipliers that may vary accordingly to the multiplication factor.
 - When you died the screen will stay like this until you decide to exit returning to the Main Menu.
 ![image](https://github.com/vieirajlt/LPOO1718_T02G02/blob/master/Part2%20-%20Final%20Project/tutorialImages/gameover.png)<br />
