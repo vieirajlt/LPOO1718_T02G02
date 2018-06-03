@@ -18,17 +18,17 @@ Javadoc: https://vieirajlt.github.io/LPOO1718_T02G02/ <br />
 
 **User manual**
 - The entry point of the game is the **Main Menu**: <br />
-![image](https://github.com/vieirajlt/LPOO1718_T02G02/blob/master/Part2%20-%20Final%20Project/tutorialImages/mainmenu.png)
+![image](https://github.com/vieirajlt/LPOO1718_T02G02/blob/master/Part2%20-%20Final%20Project/tutorialImages/mainmenu.png)<br />
 - Here the play can go directly to the map (**Play** option) or to settings menu (**Settings** option) to change the game appearance.<br />
 - This is the **Settings Menu**:<br />
-![image](https://github.com/vieirajlt/LPOO1718_T02G02/blob/master/Part2%20-%20Final%20Project/tutorialImages/settingsmenu.png)
+![image](https://github.com/vieirajlt/LPOO1718_T02G02/blob/master/Part2%20-%20Final%20Project/tutorialImages/settingsmenu.png)<br />
 - Here you can change the ball, plains or background colors by clicking on the available options.
 - From here, you can play the game. The game will start like this:<br />
-![image](https://github.com/vieirajlt/LPOO1718_T02G02/blob/master/Part2%20-%20Final%20Project/tutorialImages/play.png)
+![image](https://github.com/vieirajlt/LPOO1718_T02G02/blob/master/Part2%20-%20Final%20Project/tutorialImages/play.png)<br />
 -The main objective is to run from plain to plain, never allowing the ball to fall, accumulating the biggest number of points possible.
 - There are many bonus that you can get in order to help you like invulnerability (green bonus) or points multipliers that may vary accordingly to the multiplication factor.
 - When you died the screen will stay like this until you decide to exit returning to the Main Menu.
-![image](https://github.com/vieirajlt/LPOO1718_T02G02/blob/master/Part2%20-%20Final%20Project/tutorialImages/gameover.png)
+![image](https://github.com/vieirajlt/LPOO1718_T02G02/blob/master/Part2%20-%20Final%20Project/tutorialImages/gameover.png)<br />
 
 **Controls**
 - Android: gyroscope used for lateral ball movement and touch for option selection and jumping.
