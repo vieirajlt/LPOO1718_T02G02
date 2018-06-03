@@ -44,7 +44,7 @@ public class MapController  {
     /**
      * This used music
      */
-    private static final String SOUND_PATH = "sounds/test48000.mp3";
+    private static final String SOUND_PATH = "sounds/surrealchaseloop.mp3";
 
     /**
      * this Singleton Instance
@@ -597,7 +597,7 @@ public class MapController  {
         this.moving = moving;
 
         if(moving && musicOnFlag) {
-            bgMusic.play();
+            bgMusic.loop();
             musicState = MusicState.PLAY;
         } else {
             bgMusic.stop();
@@ -654,7 +654,7 @@ public class MapController  {
      * Plays this MapController bgMusic
      */
     public void startBgMusic() {
-        bgMusic.play();
+        bgMusic.loop();
         musicState = MusicState.PLAY;
     }
 
