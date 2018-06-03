@@ -18,4 +18,4 @@ Javadoc: https://vieirajlt.github.io/LPOO1718_T02G02/ <br />
 
 **User manual**
 - The entry point of the game is the **Main Menu**: <br />
-![image](Part2\ -\ Final\ Project/tutorialImages/mainmenu.png)
+![image](https://github.com/vieirajlt/LPOO1718_T02G02/blob/master/Part2%20-%20Final%20Project/tutorialImages/mainmenu.png)
