@@ -83,9 +83,10 @@ public abstract class EntityController {
         float mX = posX - model.getPosX();
         model.setPosX(posX);
         float mY = posY - model.getPosY();
-        model.setPosX(posY);
+        model.setPosY(posY);
         float mZ = posZ - model.getPosZ();
-        model.setPosX(posZ);
+        model.setPosZ(posZ);
+
 
         view.moveModelInstance(mX, mY, mZ);
         setWorldTransform();

@@ -36,6 +36,11 @@ import com.gdx.game.view.entities.PlainView;
 import java.util.Random;
 
 //TODO descricao da classe + 5 (+/-) todos
+
+/**
+ * This class serves as a junction for all other entities that
+ * are involved somehow with level creation.
+ */
 public class MapController  {
 
     /**
@@ -68,10 +73,19 @@ public class MapController  {
      */
     private Array<BonusController> bonus;
 
-    //TODO
+    /**
+     * This map number of plains levels
+     */
     private int plainLevels;
+    /**
+     * This map number of plains per level
+     */
     private int plainsPerLevel;
+    /**
+     * This map next level for plains positioning
+     */
     private int positioningLevel;
+
     private float lastZUpdated;
     private float[] positionsX;
 
@@ -209,7 +223,7 @@ public class MapController  {
 
         positionsX = new float[]{-24, -20, -16, -12, -8, -4, 0, 4, 8, 12, 16, 20, 24};
 
-        positionsY = new float[]{-4, 0, 4};
+        positionsY = new float[]{0, 4};
 
         gravity = new Vector3(0, -75f, 0);
 
@@ -284,7 +298,7 @@ public class MapController  {
 
             float plainDepth = (((PlainModel) (pc.getModel())).getDepth());
 
-            pc.moveToPos(positionsX[r1], positionsY[r2], -plainLevels*plainDepth);
+            pc.moveToPos(positionsX[r1] - pc.getModel().getPosX(), positionsY[r2] - pc.getModel().getPosY(), -plainLevels*plainDepth);
         }
         ++positioningLevel;
     }
