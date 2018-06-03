@@ -1,5 +1,7 @@
 package com.gdx.game.model.entities;
 
+import com.badlogic.gdx.math.Vector3;
+
 /**
  * This class contains all the information regarding the game's high score count.
  */
@@ -43,10 +45,31 @@ public class MapModel {
      */
     private boolean immune = false;
 
+    /**
+     * This map gravity (physics component)
+     */
+    private Vector3 gravity;
+
+    /**
+     * This map possible plain position along X axis
+     */
+    private float[] positionsX;
+
+    /**
+     * This map possible plain position along Y axis
+     */
+    private float[] positionsY;
+
+
+
     /*******************CONSTRUCTORS*******************/
 
     private MapModel() {
+        positionsX = new float[]{-24, -20, -16, -12, -8, -4, 0, 4, 8, 12, 16, 20, 24};
 
+        positionsY = new float[]{0, 4};
+
+        gravity = new Vector3(0, -75f, 0);
     }
 
 
@@ -136,5 +159,38 @@ public class MapModel {
     public void reset() {
         instance = null;
     }
+
+    /**
+     * Gets minimum plain positioning on Y axis
+     * @return the minimum value ([0]) on this map positionsY
+     */
+    public float getMinY() {
+        return positionsY[0];
+    }
+
+    /**
+     * Gets this map array of possible plain positioning on X axis
+     * @return this model positionsX
+     */
+    public float[] getPositionsX() {
+        return positionsX;
+    }
+
+    /**
+     * Gets this map array of possible plain positioning on X axis
+     * @return this model positionsY
+     */
+    public float[] getPositionsY() {
+        return positionsY;
+    }
+
+    /**
+     * Gets this model gravity vector
+     * @return this model gravity
+     */
+    public Vector3 getGravity() {
+        return gravity;
+    }
+
 
 }

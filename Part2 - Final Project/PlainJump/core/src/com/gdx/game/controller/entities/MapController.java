@@ -35,8 +35,6 @@ import com.gdx.game.view.entities.PlainView;
 
 import java.util.Random;
 
-//TODO descricao da classe + 5 (+/-) todos
-
 /**
  * This class serves as a junction for all other entities that
  * are involved somehow with level creation.
@@ -85,15 +83,11 @@ public class MapController  {
      * This map next level for plains positioning
      */
     private int positioningLevel;
-
+    /**
+     * This map last position of camera on map tracked on Z axis
+     */
     private float lastZUpdated;
-    private float[] positionsX;
 
-    public float getMinY() {
-        return positionsY[0];
-    }
-
-    private float[] positionsY;
 
     /**
      * This collision configuration
@@ -121,12 +115,7 @@ public class MapController  {
      */
     private float cameraBallDistance;
 
-    /**
-     * TODO
-     */
-    private float xLimit;
 
-    private Vector3 gravity;
 
     /**
      * This contact listener
@@ -149,7 +138,7 @@ public class MapController  {
     private float speedIncrease = 0.05f;
 
     /**
-     * TODO
+     * This map setting for allowing game movement pause
      */
     private boolean moving = true;
 
@@ -221,14 +210,6 @@ public class MapController  {
 
         lastZUpdated = 0;
 
-        positionsX = new float[]{-24, -20, -16, -12, -8, -4, 0, 4, 8, 12, 16, 20, 24};
-
-        positionsY = new float[]{0, 4};
-
-        gravity = new Vector3(0, -75f, 0);
-
-        xLimit = 5;
-
         cameraBallDistance = 15;
 
         buildWorld();
@@ -266,17 +247,17 @@ public class MapController  {
         int loc = 0;
         for(PlainController pc : plains) {
 
-            int r1 = rand.nextInt(positionsX.length);
+            int r1 = rand.nextInt(model.getPositionsX().length);
 
-            int r2 = rand.nextInt(positionsY.length);
+            int r2 = rand.nextInt(model.getPositionsY().length);
 
             float plainDepth = (((PlainModel) (pc.getModel())).getDepth());
 
             if (loc <= 1) {
-                r1 = (positionsX.length-1)/2;
-                r2 = (positionsY.length-1)/2;
+                r1 = (model.getPositionsX().length-1)/2;
+                r2 = (model.getPositionsY().length-1)/2;
             }
-            pc.setPos(positionsX[r1], positionsY[r2], -loc * plainDepth);
+            pc.setPos(model.getPositionsX()[r1], model.getPositionsY()[r2], -loc * plainDepth);
             ++loc;
             if(loc%plainLevels == 0) {
                 loc = 0;
@@ -292,13 +273,15 @@ public class MapController  {
         for(int it = lvl; it < plains.size; it += plainLevels) {
             PlainController pc = plains.get(it);
 
-            int r1 = rand.nextInt(positionsX.length);
+            int r1 = rand.nextInt(model.getPositionsX().length);
 
-            int r2 = rand.nextInt(positionsY.length);
+            int r2 = rand.nextInt(model.getPositionsY().length);
 
             float plainDepth = (((PlainModel) (pc.getModel())).getDepth());
 
-            pc.moveToPos(positionsX[r1] - pc.getModel().getPosX(), positionsY[r2] - pc.getModel().getPosY(), -plainLevels*plainDepth);
+            pc.moveToPos(model.getPositionsX()[r1] - pc.getModel().getPosX(),
+                    model.getPositionsY()[r2] - pc.getModel().getPosY(),
+                    -plainLevels*plainDepth);
         }
         ++positioningLevel;
     }
@@ -324,7 +307,7 @@ public class MapController  {
         constraintSolver = new btSequentialImpulseConstraintSolver();
         world = new btDiscreteDynamicsWorld(dispatcher, broadphase, constraintSolver, collisionConfig);
 
-        world.setGravity(gravity);
+        world.setGravity(model.getGravity());
     }
 
 
@@ -607,8 +590,8 @@ public class MapController  {
     }
 
     /**
-     * TODO
-     * @param moving
+     * Sets this map moving, updating this map bgMusic accordingly
+     * @param moving this map moving new value
      */
     public void setMoving(boolean moving) {
         this.moving = moving;
@@ -660,7 +643,7 @@ public class MapController  {
     }
 
     /**
-     * TODO
+     * Resumes this MapController bgMusic
      */
     public void resumeBgMusic() {
         bgMusic.resume();
@@ -710,5 +693,12 @@ public class MapController  {
         GameModel.getInstance().setMusicOnFlag(musicOnFlag);
     }
 
+    /**
+     * Gets minimum plain positioning on Y axis
+     * @return the minimum value ([0]) on this map model positionsY
+     */
+    public float getMinY() {
+        return model.getMinY();
+    }
 }
 
